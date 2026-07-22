@@ -1,0 +1,88 @@
+{% render 'creste-tokens' %}
+{%- assign cats = section.blocks | where: 'type', 'category' -%}
+{%- assign first_url = '' -%}{% if cats.size > 0 and cats.first.settings.collection != blank %}{% assign first_url = cats.first.settings.collection.url %}{% endif %}
+<style>
+#creste-play-{{ section.id }}{position:relative;background-color:var(--creste-blue-bg);background-size:cover;background-position:center;background-repeat:no-repeat;padding:52px 16px 56px;overflow:hidden;text-align:center;}
+#creste-play-{{ section.id }} .cp-wtop,#creste-play-{{ section.id }} .cp-wbot{position:absolute;left:0;right:0;height:22px;z-index:1;}
+#creste-play-{{ section.id }} .cp-wtop{top:0;background:{{ section.settings.wave_top }};-webkit-mask:radial-gradient(11px at 11px 22px,#0000 99%,#000) 0 0/22px 22px repeat-x;mask:radial-gradient(11px at 11px 22px,#0000 99%,#000) 0 0/22px 22px repeat-x;}
+#creste-play-{{ section.id }} .cp-wbot{bottom:0;background:{{ section.settings.wave_bottom }};-webkit-mask:radial-gradient(11px at 11px 0,#0000 99%,#000) 0 0/22px 22px repeat-x;mask:radial-gradient(11px at 11px 0,#0000 99%,#000) 0 0/22px 22px repeat-x;}
+#creste-play-{{ section.id }} .cp-in{position:relative;z-index:2;max-width:1180px;margin:0 auto;}
+#creste-play-{{ section.id }} .cp-h{margin:0 0 8px;font-family:'Nunito',sans-serif;font-weight:900;font-size:30px;line-height:1.1;color:var(--creste-ink2);}
+#creste-play-{{ section.id }} .cp-h em{font-style:normal;color:var(--creste-cyan);}
+#creste-play-{{ section.id }} .cp-sub{font-family:'Poppins',sans-serif;font-size:16px;line-height:1.5;color:var(--creste-brown);margin:0 auto 22px;max-width:520px;}
+#creste-play-{{ section.id }} .cp-cats{display:flex;flex-wrap:nowrap;justify-content:flex-start;gap:10px;margin:0 0 26px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding-bottom:4px;}
+#creste-play-{{ section.id }} .cp-cats::-webkit-scrollbar{display:none;}
+#creste-play-{{ section.id }} .cp-cat{display:inline-flex;align-items:center;gap:10px;border-radius:9999px;padding:7px 18px 7px 7px;background:rgba(255,255,255,.85);border:1px solid rgba(0,0,0,.06);cursor:pointer;text-align:left;flex:0 0 auto;scroll-snap-align:start;}
+#creste-play-{{ section.id }} .cp-cat.on{background:var(--creste-teal2);border-color:var(--creste-teal2);}
+#creste-play-{{ section.id }} .cp-cat.on .cp-cn{color:#fff;}#creste-play-{{ section.id }} .cp-cat.on .cp-cs{color:rgba(255,255,255,.85);}
+#creste-play-{{ section.id }} .cp-cic{width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;font-size:18px;}
+#creste-play-{{ section.id }} .cp-cat.on .cp-cic{background:rgba(255,255,255,.22);}
+#creste-play-{{ section.id }} .cp-cic img{width:22px;height:22px;object-fit:contain;}
+#creste-play-{{ section.id }} .cp-cn{display:block;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.3px;color:var(--creste-ink2);white-space:nowrap;}
+#creste-play-{{ section.id }} .cp-cs{display:block;font-family:'Poppins',sans-serif;font-weight:500;font-size:11px;color:#6b6258;white-space:nowrap;}
+#creste-play-{{ section.id }} .cp-stage{position:relative;padding:0 12px;}
+#creste-play-{{ section.id }} .cp-track{display:flex;align-items:stretch;gap:16px;overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;padding:6px 2px;scrollbar-width:none;}
+#creste-play-{{ section.id }} .cp-track::-webkit-scrollbar{display:none;}
+#creste-play-{{ section.id }} .cp-card{flex:0 0 82%;scroll-snap-align:start;background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;text-align:left;}
+#creste-play-{{ section.id }} .cp-img{aspect-ratio:1/1;background:#f6efe3;overflow:hidden;display:block;}
+#creste-play-{{ section.id }} .cp-img img,#creste-play-{{ section.id }} .cp-img svg{width:100%;height:100%;object-fit:cover;display:block;}
+#creste-play-{{ section.id }} .cp-body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1;}
+#creste-play-{{ section.id }} .cp-ctop{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:24px;}
+#creste-play-{{ section.id }} .cp-rate{display:inline-flex;align-items:center;gap:4px;background:#FBE9C0;border-radius:9999px;padding:3px 9px;font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:13px;color:#2B1702;}
+#creste-play-{{ section.id }} .cp-rate em{font-style:normal;color:#111;}
+#creste-play-{{ section.id }} .cp-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(90deg,#ff90b2,#f4679a);color:#fff;border-radius:9999px;padding:4px 9px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:11px;}
+#creste-play-{{ section.id }} .cp-badge em{font-style:normal;color:#FFCE00;}
+#creste-play-{{ section.id }} .cp-title{margin:0;font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;line-height:1.15;color:var(--creste-brown2);text-decoration:none;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.3em;}
+#creste-play-{{ section.id }} .cp-meta{margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:11px;letter-spacing:.4px;color:rgba(87,66,57,.75);text-transform:uppercase;min-height:1.2em;}
+#creste-play-{{ section.id }} .cp-price{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+#creste-play-{{ section.id }} .cp-price b{font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:18px;color:var(--creste-orange);}
+#creste-play-{{ section.id }} .cp-price s{font-family:'Poppins',sans-serif;font-size:13px;color:var(--creste-brown2);opacity:.4;}
+#creste-play-{{ section.id }} .cp-price i{font-family:'Poppins',sans-serif;font-weight:700;font-style:normal;font-size:11px;color:var(--creste-green2);}
+#creste-play-{{ section.id }} .cp-cart{margin-top:auto;padding-top:4px;}
+#creste-play-{{ section.id }} .cp-cart button{width:100%;height:44px;border:none;border-radius:24px;background:var(--creste-orange);color:#fff;font-family:'Quicksand',sans-serif;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+#creste-play-{{ section.id }} .cp-arrow{position:absolute;top:38%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:none;box-shadow:0 6px 16px rgba(0,0,0,.18);color:#5b5b5b;font-size:22px;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;}
+#creste-play-{{ section.id }} .cp-arrow.prev{left:-8px;}#creste-play-{{ section.id }} .cp-arrow.next{right:-8px;}
+#creste-play-{{ section.id }} .cp-dots{display:none;justify-content:center;gap:8px;margin-top:14px;}
+#creste-play-{{ section.id }} .cp-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(0,0,0,.22);padding:0;cursor:pointer;transition:all .2s;}
+#creste-play-{{ section.id }} .cp-dots button.on{background:var(--creste-teal2);width:22px;border-radius:9999px;}
+#creste-play-{{ section.id }} .cp-allwrap{margin-top:22px;}
+#creste-play-{{ section.id }} .cp-all{display:inline-flex;align-items:center;gap:10px;background:var(--creste-blue);color:#fff;height:46px;border-radius:24px;padding:0 40px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:16px;box-shadow:0 12px 22px rgba(62,146,181,.35);text-decoration:none;}
+@media(max-width:749px){#creste-play-{{ section.id }} .cp-arrow{display:none;}#creste-play-{{ section.id }} .cp-stage{padding:0;}#creste-play-{{ section.id }} .cp-dots{display:flex;}}
+@media(min-width:750px){#creste-play-{{ section.id }}{padding:64px 24px 68px;}{% if section.settings.bg_desktop != blank %}#creste-play-{{ section.id }}{background-image:url({{ section.settings.bg_desktop | image_url: width: 2600 }});}{% endif %}#creste-play-{{ section.id }} .cp-h{font-size:40px;}#creste-play-{{ section.id }} .cp-cats{flex-wrap:wrap;overflow:visible;justify-content:center;gap:12px;}#creste-play-{{ section.id }} .cp-stage{padding:0 62px;}#creste-play-{{ section.id }} .cp-track{padding:6px 0;gap:20px;}#creste-play-{{ section.id }} .cp-card{flex:0 0 calc((100% - 60px)/4);}#creste-play-{{ section.id }} .cp-arrow.prev{left:6px;}#creste-play-{{ section.id }} .cp-arrow.next{right:6px;}}
+</style>
+<div id='creste-play-{{ section.id }}' class='creste-section' style='{% if section.settings.bg_mobile != blank %}background-image:url({{ section.settings.bg_mobile | image_url: width: 1200 }});{% elsif section.settings.bg_desktop != blank %}background-image:url({{ section.settings.bg_desktop | image_url: width: 2600 }});{% endif %}'>
+<div class='cp-wtop'></div>
+<div class='cp-in'>
+<h2 class='cp-h'>{{ section.settings.title_a }}<em>{{ section.settings.title_b }}</em></h2>
+<p class='cp-sub'>{{ section.settings.subtitle }}</p>
+<div class='cp-cats'>
+{% for block in cats %}<button type='button' class='cp-cat{% if forloop.first %} on{% endif %}' data-i='{{ forloop.index0 }}' data-url='{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% endif %}' {{ block.shopify_attributes }}><span class='cp-cic'>{% if block.settings.icon != blank %}<img src='{{ block.settings.icon | image_url: width: 60 }}' alt=''>{% else %}{{ block.settings.emoji }}{% endif %}</span><span><span class='cp-cn'>{{ block.settings.name }}</span><span class='cp-cs'>{{ block.settings.subtitle }}</span></span></button>{% endfor %}
+</div>
+<div class='cp-stage'>
+<button type='button' class='cp-arrow prev' aria-label='Previous'>&#8249;</button>
+{% for block in cats %}<div class='cp-panel' data-i='{{ forloop.index0 }}'{% unless forloop.first %} hidden{% endunless %}>
+<div class='cp-track'>
+{% if block.settings.collection != blank %}{% for product in block.settings.collection.products limit: 12 %}{% assign prating = product.metafields.reviews.rating.value | default: '4.9' %}<div class='cp-card'><a class='cp-img' href='{{ product.url }}'>{% if product.featured_image %}<img src='{{ product.featured_image | image_url: width: 500 }}' alt='{{ product.title | escape }}' loading='lazy'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a><div class='cp-body'><div class='cp-ctop'><span class='cp-rate'><em>&#9733;</em>{{ prating }}</span>{% if product.tags contains 'top pick' %}<span class='cp-badge'><em>&#9733;</em>TOP PICK</span>{% endif %}</div><a class='cp-title' href='{{ product.url }}'>{{ product.title }}</a>{% if product.type != blank %}<p class='cp-meta'>{{ product.type }}</p>{% else %}<p class='cp-meta'></p>{% endif %}<div class='cp-price'><b>{{ product.price | money }}</b>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s>{% assign disc = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}<i>{{ disc }}% off</i>{% endif %}</div><div class='cp-cart'><form method='post' action='/cart/add'><input type='hidden' name='id' value='{{ product.selected_or_first_available_variant.id }}'><button type='submit'>&#128722; Add To Cart</button></form></div></div></div>{% endfor %}{% else %}{% assign ph_titles = 'Bouquet Candle Kit,DIY Hand Casting Kit,Bouquet Candle Kit,DIY Hand Casting Kit' | split: ',' %}{% assign ph_meta = 'AGES 4-8 - SKILL BUILDER,AGES 7+ - STEAM KIT,AGES 4-8 - SKILL BUILDER,AGES 7+ - STEAM KIT' | split: ',' %}{% for i in (0..3) %}<div class='cp-card'><span class='cp-img'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='cp-body'><div class='cp-ctop'><span class='cp-rate'><em>&#9733;</em>4.9</span>{% assign md = i | modulo: 2 %}{% if md == 0 %}<span class='cp-badge'><em>&#9733;</em>TOP PICK</span>{% endif %}</div><span class='cp-title'>{{ ph_titles[i] }}</span><p class='cp-meta'>{{ ph_meta[i] }}</p><div class='cp-price'><b>Rs. 1,299</b><s>2,299</s><i>20% off</i></div><div class='cp-cart'><button type='button'>&#128722; Add To Cart</button></div></div></div>{% endfor %}{% endif %}
+</div>
+</div>{% endfor %}
+{% if cats.size == 0 %}<div class='cp-panel'><div class='cp-track'>{% for i in (1..4) %}<div class='cp-card'><span class='cp-img'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='cp-body'><span class='cp-title'>Sample Kit</span><p class='cp-meta'></p><div class='cp-price'><b>Rs. 1,299</b></div><div class='cp-cart'><button type='button'>Add To Cart</button></div></div></div>{% endfor %}</div></div>{% endif %}
+<button type='button' class='cp-arrow next' aria-label='Next'>&#8250;</button>
+</div>
+<div class='cp-dots' id='cpdots-{{ section.id }}'></div>
+<div class='cp-allwrap'><a class='cp-all' id='cpall-{{ section.id }}' href='{% if first_url != blank %}{{ first_url }}{% else %}{{ section.settings.view_all_fallback | default: '/collections/all' }}{% endif %}'>{{ section.settings.view_all_label }} &rarr;</a></div>
+</div>
+<div class='cp-wbot'></div>
+</div>
+<script>
+(function(){var r=document.getElementById('creste-play-{{ section.id }}');if(!r)return;var pills=r.querySelectorAll('.cp-cat'),panels=r.querySelectorAll('.cp-panel'),va=document.getElementById('cpall-{{ section.id }}'),dotsEl=document.getElementById('cpdots-{{ section.id }}');function at(){return r.querySelector('.cp-panel:not([hidden]) .cp-track');}function cw(t){var c=t.querySelector('.cp-card');if(!c)return 270;var g=parseInt(getComputedStyle(t).columnGap||getComputedStyle(t).gap)||16;return c.getBoundingClientRect().width+g;}function buildDots(){if(!dotsEl)return;var t=at();dotsEl.innerHTML='';if(!t)return;var cards=t.querySelectorAll('.cp-card');if(cards.length<2)return;cards.forEach(function(c,i){var d=document.createElement('button');d.type='button';if(i===0)d.className='on';d.addEventListener('click',function(){t.scrollTo({left:i*cw(t),behavior:'smooth'});});dotsEl.appendChild(d);});}function updateDots(){if(!dotsEl)return;var t=at();if(!t)return;var idx=Math.round(t.scrollLeft/cw(t));dotsEl.querySelectorAll('button').forEach(function(d,i){d.classList.toggle('on',i===idx);});}function act(k){pills.forEach(function(p,j){p.classList.toggle('on',j===k);});panels.forEach(function(pn,j){pn.hidden=(j!==k);});var u=pills[k].getAttribute('data-url');if(u&&va)va.setAttribute('href',u);buildDots();}pills.forEach(function(p,k){p.addEventListener('click',function(){act(k);});});panels.forEach(function(p){var t=p.querySelector('.cp-track');if(t)t.addEventListener('scroll',function(){if(!p.hidden)updateDots();});});function step(dir){var t=at();if(!t)return;t.scrollBy({left:dir*cw(t),behavior:'smooth'});}var pv=r.querySelector('.cp-arrow.prev'),nx=r.querySelector('.cp-arrow.next');if(pv)pv.addEventListener('click',function(){step(-1);});if(nx)nx.addEventListener('click',function(){step(1);});buildDots();})();
+</script>
+{% schema %}
+{
+  "name": "Creste Play w/ Purpose",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"}, {"type":"text","id":"title_a","label":"Title","default":"Play with "}, {"type":"text","id":"title_b","label":"Title accent","default":"Purpose"}, {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Creativity builds confidence, curiosity opens doors, and hands-on making sparks joy."}, {"type":"text","id":"view_all_label","label":"View all label","default":"View All"}, {"type":"url","id":"view_all_fallback","label":"View all fallback link"}, {"type":"color","id":"wave_top","label":"Top wave color","default":"#62A66B"}, {"type":"color","id":"wave_bottom","label":"Bottom wave color","default":"#C9B8E8"} ],
+  "blocks": [ {"type":"category","name":"Category","settings":[ {"type":"image_picker","id":"icon","label":"Icon"}, {"type":"text","id":"emoji","label":"Emoji fallback","default":"🎨"}, {"type":"text","id":"name","label":"Name","default":"CRAFTY CREW"}, {"type":"text","id":"subtitle","label":"Subtitle","default":"Cognitive Development"}, {"type":"collection","id":"collection","label":"Collection"} ]} ],
+  "max_blocks": 12,
+  "presets": [ {"name":"Creste Play w/ Purpose"} ]
+}
+{% endschema %}

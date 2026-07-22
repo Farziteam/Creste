@@ -1,0 +1,50 @@
+{% render 'creste-tokens' %}
+{%- assign _bgid = 'creste-hib-' | append: section.id -%}
+{%- assign tiles = section.blocks | where: 'type', 'tile' -%}
+{%- assign dogm = section.settings.dog_w | times: 0.5 | round -%}
+<style>
+#creste-hib-{{ section.id }}{position:relative;padding:24px 16px 44px;background:{{ section.settings.section_bg }};background-size:cover;background-position:center;}
+#creste-hib-{{ section.id }} .hib-dog{position:absolute;top:{{ section.settings.dog_top }}px;z-index:5;width:{{ dogm }}px;pointer-events:none;}
+#creste-hib-{{ section.id }} .hib-dog.l{left:{{ section.settings.dog_side }}px;}
+#creste-hib-{{ section.id }} .hib-dog.r{right:{{ section.settings.dog_side }}px;}
+#creste-hib-{{ section.id }} .hib-dog img{display:block;width:100%;height:auto;}
+#creste-hib-{{ section.id }} .hib-in{position:relative;max-width:1120px;margin:0 auto;}
+#creste-hib-{{ section.id }} .hib-h{text-align:center;margin:0 0 20px;font-family:'Fredoka One',cursive;font-weight:400;font-size:34px;line-height:1.1;color:#2B1702;}
+#creste-hib-{{ section.id }} .hib-stack{display:flex;flex-direction:column;gap:{{ section.settings.gap }}px;}
+#creste-hib-{{ section.id }} .hib-card{position:sticky;background:var(--tile,#F4793A);border-radius:24px;padding:14px;box-shadow:0 14px 30px rgba(0,0,0,.15);}
+#creste-hib-{{ section.id }} .hib-inner{display:flex;flex-direction:column;gap:14px;}
+#creste-hib-{{ section.id }} .hib-photo img,#creste-hib-{{ section.id }} .hib-photo .ph svg{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:16px;background:#eadfce;}
+#creste-hib-{{ section.id }} .hib-content{padding:2px 6px 6px;}
+#creste-hib-{{ section.id }} .hib-ct{margin:0 0 8px;font-family:'Fredoka One',cursive;font-weight:400;font-size:21px;line-height:1.15;color:#fff;}
+#creste-hib-{{ section.id }} .hib-cb{margin:0;font-family:'Poppins',sans-serif;font-weight:400;font-size:14px;line-height:1.55;color:rgba(255,255,255,.95);}
+#creste-hib-{{ section.id }} .hib-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+#creste-hib-{{ section.id }} .hib-btn{background:#fff;color:#2B1702;border-radius:9999px;padding:10px 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;text-decoration:none;}
+#creste-hib-{{ section.id }} .hib-btn.alt{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.7);}
+@media(min-width:750px){#creste-hib-{{ section.id }}{padding:40px 24px 90px;}#creste-hib-{{ section.id }} .hib-dog{width:{{ section.settings.dog_w }}px;}#creste-hib-{{ section.id }} .hib-h{font-size:48px;margin-bottom:26px;}#creste-hib-{{ section.id }} .hib-card{padding:26px;border-radius:32px;}#creste-hib-{{ section.id }} .hib-inner{flex-direction:row;align-items:center;gap:34px;}#creste-hib-{{ section.id }} .hib-photo{flex:0 0 42%;}#creste-hib-{{ section.id }} .hib-photo img,#creste-hib-{{ section.id }} .hib-photo .ph svg{aspect-ratio:5/4;border-radius:20px;}#creste-hib-{{ section.id }} .hib-content{flex:1;padding:0;}#creste-hib-{{ section.id }} .hib-ct{font-size:40px;margin-bottom:16px;}#creste-hib-{{ section.id }} .hib-cb{font-size:17px;}}
+</style>
+{% render 'creste-bg', id: _bgid, d: section.settings.bg_desktop, m: section.settings.bg_mobile %}
+<div id='creste-hib-{{ section.id }}' class='creste-section'>
+{% if section.settings.dog_left != blank %}<div class='hib-dog l'><img src='{{ section.settings.dog_left | image_url: width: 400 }}' alt='' loading='lazy'></div>{% endif %}
+{% if section.settings.dog_right != blank %}<div class='hib-dog r'><img src='{{ section.settings.dog_right | image_url: width: 400 }}' alt='' loading='lazy'></div>{% endif %}
+<div class='hib-in'>
+{% if section.settings.heading != blank %}<h2 class='hib-h'>{{ section.settings.heading }}</h2>{% endif %}
+<div class='hib-stack'>
+{% for block in tiles %}{% assign toff = forloop.index0 | times: 16 | plus: section.settings.offset %}<div class='hib-card' style='top:{{ toff }}px;--tile:{{ block.settings.color }};' {{ block.shopify_attributes }}>
+<div class='hib-inner'>
+<div class='hib-photo'>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 900 }}' alt='{{ block.settings.heading | escape }}'>{% else %}<span class='ph'>{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</span>{% endif %}</div>
+<div class='hib-content'><h3 class='hib-ct'>{{ block.settings.heading }}</h3><p class='hib-cb'>{{ block.settings.body | newline_to_br }}</p>{% if block.settings.btn1_label != blank or block.settings.btn2_label != blank %}<div class='hib-btns'>{% if block.settings.btn1_label != blank %}<a class='hib-btn' href='{{ block.settings.btn1_link | default: '#' }}'>{{ block.settings.btn1_label }}</a>{% endif %}{% if block.settings.btn2_label != blank %}<a class='hib-btn alt' href='{{ block.settings.btn2_link | default: '#' }}'>{{ block.settings.btn2_label }}</a>{% endif %}</div>{% endif %}</div>
+</div>
+</div>{% endfor %}
+</div>
+</div>
+</div>
+{% schema %}
+{
+  "name": "Creste Stacking Tiles",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"}, {"type":"color","id":"section_bg","label":"Background color","default":"#FCEDE6"}, {"type":"text","id":"heading","label":"Heading","default":"How It All Began"}, {"type":"header","content":"Corner dogs"}, {"type":"image_picker","id":"dog_left","label":"Left dog image"}, {"type":"image_picker","id":"dog_right","label":"Right dog image"}, {"type":"range","id":"dog_w","min":60,"max":260,"step":5,"unit":"px","label":"Dog width (desktop)","default":130}, {"type":"range","id":"dog_top","min":-40,"max":120,"step":2,"unit":"px","label":"Dog distance from top","default":0}, {"type":"range","id":"dog_side","min":0,"max":120,"step":2,"unit":"px","label":"Dog distance from sides","default":12}, {"type":"header","content":"Layout"}, {"type":"range","id":"offset","min":40,"max":160,"step":4,"unit":"px","label":"Stick offset from top","default":80}, {"type":"range","id":"gap","min":10,"max":80,"step":2,"unit":"px","label":"Gap between tiles","default":24} ],
+  "blocks": [ {"type":"tile","name":"Story tile","settings":[ {"type":"image_picker","id":"image","label":"Photo"}, {"type":"color","id":"color","label":"Tile color","default":"#F4793A"}, {"type":"text","id":"heading","label":"Heading","default":"Started In the middle of the 2020 lockdown"}, {"type":"textarea","id":"body","label":"Body","default":"Most kids today know how to swipe before they learn how to hold a crayon.\nThat shift did not sit right with Nidhi Sethia. In the middle of the 2020 lockdown, she saw something worrying."}, {"type":"text","id":"btn1_label","label":"Button 1 label"}, {"type":"url","id":"btn1_link","label":"Button 1 link"}, {"type":"text","id":"btn2_label","label":"Button 2 label"}, {"type":"url","id":"btn2_link","label":"Button 2 link"} ]} ],
+  "max_blocks": 8,
+  "presets": [ {"name":"Creste Stacking Tiles","blocks":[ {"type":"tile"}, {"type":"tile"}, {"type":"tile"}, {"type":"tile"} ]} ]
+}
+{% endschema %}

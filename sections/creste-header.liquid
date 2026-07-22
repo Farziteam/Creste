@@ -1,0 +1,93 @@
+{% render 'creste-tokens' %}
+{%- assign ages = section.blocks | where: 'type', 'age' -%}
+{%- assign cats = section.blocks | where: 'type', 'category' -%}
+{%- assign navs = section.blocks | where: 'type', 'nav' -%}
+<style>
+#creste-hd-{{ section.id }}{background:{{ section.settings.bg }};padding:10px 12px;{% if section.settings.sticky %}position:sticky;top:0;{% else %}position:relative;{% endif %}z-index:9999;}
+#creste-hd-{{ section.id }} .hd-bar{background:{{ section.settings.bar_bg }};border-radius:24px;border-bottom:2px solid {{ section.settings.accent }};display:flex;flex-wrap:nowrap;align-items:center;gap:12px;padding:8px 14px;max-width:1440px;margin:0 auto;box-shadow:0 6px 16px rgba(0,0,0,.12);}
+#creste-hd-{{ section.id }} .hd-burger{display:none;background:none;border:none;cursor:pointer;color:#2B1702;padding:6px;flex:0 0 auto;align-items:center;}
+#creste-hd-{{ section.id }} .hd-logo{display:flex;align-items:center;text-decoration:none;flex:0 0 auto;}
+#creste-hd-{{ section.id }} .hd-logo img{height:44px;width:auto;display:block;}
+#creste-hd-{{ section.id }} .hd-name{font-family:'Fredoka One',cursive;font-size:24px;color:#2B1702;white-space:nowrap;}
+#creste-hd-{{ section.id }} .hd-nav{display:flex;flex-wrap:nowrap;align-items:center;gap:22px;flex:1 1 auto;justify-content:center;}
+#creste-hd-{{ section.id }} .hd-nav a{color:#2B1702;text-decoration:none;font-family:'Poppins',sans-serif;font-weight:500;font-size:15px;white-space:nowrap;}
+#creste-hd-{{ section.id }} .hd-shoptrigger{cursor:pointer;display:inline-flex;align-items:center;gap:4px;}
+#creste-hd-{{ section.id }} .hd-quizw{position:relative;display:inline-block;flex:0 0 auto;}
+#creste-hd-{{ section.id }} .hd-rec{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:{{ section.settings.rec_bg }};color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:9px;padding:2px 8px;border-radius:9999px;white-space:nowrap;}
+#creste-hd-{{ section.id }} .hd-quiz{background:{{ section.settings.accent }};color:#2B1702;border-radius:9999px;padding:9px 16px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;text-decoration:none;white-space:nowrap;}
+#creste-hd-{{ section.id }} .hd-right{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
+#creste-hd-{{ section.id }} .hd-ic{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;position:relative;flex:0 0 auto;}
+#creste-hd-{{ section.id }} .hd-ic svg{width:18px;height:18px;}
+#creste-hd-{{ section.id }} .hd-badge{position:absolute;top:-4px;right:-4px;background:var(--creste-teal);color:#fff;border:2px solid {{ section.settings.bar_bg }};border-radius:9999px;min-width:20px;height:20px;font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+#creste-hd-{{ section.id }} .hd-mega{display:none;position:absolute;left:0;right:0;top:100%;z-index:40;padding:6px 12px 16px;}
+#creste-hd-{{ section.id }} .hd-mega.open{display:block;}
+#creste-hd-{{ section.id }} .hd-mega-in{max-width:1440px;margin:0 auto;background:#fff;border-radius:22px;box-shadow:0 24px 50px rgba(0,0,0,.2);display:grid;grid-template-columns:0.8fr 1.75fr 1.2fr;overflow:hidden;}
+#creste-hd-{{ section.id }} .hd-mcol{padding:26px 28px;}
+#creste-hd-{{ section.id }} .hd-mcol+.hd-mcol{border-left:1px solid #f0ece3;}
+#creste-hd-{{ section.id }} .hd-mtitle{margin:0 0 18px;font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;color:#2B1702;}
+#creste-hd-{{ section.id }} .hd-agelist{display:flex;flex-direction:column;gap:11px;}
+#creste-hd-{{ section.id }} .hd-agepill{display:inline-flex;align-items:baseline;gap:6px;border-radius:9999px;padding:11px 20px;text-decoration:none;}
+#creste-hd-{{ section.id }} .hd-agepill b{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:#2B1702;}
+#creste-hd-{{ section.id }} .hd-agepill span{font-family:'Poppins',sans-serif;font-size:12px;color:#6b6258;}
+#creste-hd-{{ section.id }} .hd-catgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px;}
+#creste-hd-{{ section.id }} .hd-catitem{display:flex;gap:11px;align-items:center;text-decoration:none;}
+#creste-hd-{{ section.id }} .hd-catthumb{width:48px;height:48px;border-radius:11px;overflow:hidden;flex:0 0 auto;background:#f2ede4;}
+#creste-hd-{{ section.id }} .hd-catthumb img,#creste-hd-{{ section.id }} .hd-catthumb svg{width:100%;height:100%;object-fit:cover;}
+#creste-hd-{{ section.id }} .hd-catname{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;color:#2B1702;}
+#creste-hd-{{ section.id }} .hd-catsub{display:block;font-family:'Poppins',sans-serif;font-size:11px;color:#6b6258;}
+#creste-hd-{{ section.id }} .hd-na{background:{{ section.settings.na_bg }};padding:26px;color:#fff;display:flex;flex-direction:column;justify-content:center;}
+#creste-hd-{{ section.id }} .hd-na h4{margin:0 0 18px;font-family:'Nunito',sans-serif;font-weight:900;font-size:24px;}
+#creste-hd-{{ section.id }} .hd-nacard{background:#fff;border-radius:16px;padding:12px;color:#2B1702;display:flex;gap:12px;}
+#creste-hd-{{ section.id }} .hd-naimg{width:44%;flex:0 0 auto;border-radius:12px;overflow:hidden;background:#f6efe3;aspect-ratio:1/1;}
+#creste-hd-{{ section.id }} .hd-naimg img,#creste-hd-{{ section.id }} .hd-naimg svg{width:100%;height:100%;object-fit:cover;}
+#creste-hd-{{ section.id }} .hd-nabody{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;}
+#creste-hd-{{ section.id }} .hd-narate{display:inline-flex;align-items:center;gap:4px;background:#FBE9C0;border-radius:9999px;padding:2px 9px;font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:12px;color:#2B1702;align-self:flex-start;}
+#creste-hd-{{ section.id }} .hd-nat{margin:2px 0 0;font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;color:#2B1702;}
+#creste-hd-{{ section.id }} .hd-nap b{font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:16px;color:var(--creste-orange);}
+#creste-hd-{{ section.id }} .hd-nacart{margin-top:8px;background:var(--creste-orange);color:#fff;border:none;border-radius:9999px;height:38px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;}
+#creste-hd-{{ section.id }} .hd-mobile{display:none;max-width:1440px;margin:8px auto 0;background:{{ section.settings.bar_bg }};border-radius:16px;padding:12px;flex-direction:column;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,.12);}
+#creste-hd-{{ section.id }} .hd-mobile.open{display:flex;}
+#creste-hd-{{ section.id }} .hd-mobile a{color:#2B1702;text-decoration:none;font-family:'Poppins',sans-serif;font-weight:500;font-size:16px;padding:6px 4px;}
+@media(max-width:1024px){#creste-hd-{{ section.id }} .hd-nav{display:none;}#creste-hd-{{ section.id }} .hd-burger{display:flex;}#creste-hd-{{ section.id }} .hd-logo{flex:1 1 auto;justify-content:center;}#creste-hd-{{ section.id }} .hd-logo img{height:40px;}#creste-hd-{{ section.id }} .hd-mega{display:none !important;}}
+</style>
+<div id='creste-hd-{{ section.id }}' class='creste-section'>
+<div class='hd-bar'>
+<button type='button' class='hd-burger' aria-label='Menu' onclick="var m=document.getElementById('hdm-{{ section.id }}');m.classList.toggle('open');"><svg viewBox='0 0 24 24' width='26' height='26' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><path d='M3 6h18M3 12h18M3 18h18'/></svg></button>
+<a href='{{ routes.root_url }}' class='hd-logo'>{% if section.settings.logo != blank %}<img src='{{ section.settings.logo | image_url: width: 280 }}' alt='{{ shop.name | escape }}'>{% else %}<span class='hd-name'>Creste</span>{% endif %}</a>
+<nav class='hd-nav'>
+<span class='hd-shop'><a class='hd-shoptrigger' href='{{ section.settings.shop_link | default: '/collections/all' }}'>{{ section.settings.shop_label }} &#9662;</a></span>
+{% for block in navs %}<a href='{{ block.settings.link | default: '#' }}' {{ block.shopify_attributes }}>{{ block.settings.label }}</a>{% endfor %}
+{% if section.settings.quiz_label != blank %}<span class='hd-quizw'>{% if section.settings.rec_label != blank %}<span class='hd-rec'>{{ section.settings.rec_label }}</span>{% endif %}<a class='hd-quiz' href='{{ section.settings.quiz_link | default: '#' }}'>{{ section.settings.quiz_label }}</a></span>{% endif %}
+</nav>
+<div class='hd-right'>
+<a class='hd-ic' style='background:rgba(255,206,0,.2);color:#B8860B;' href='{{ routes.search_url }}' aria-label='Search'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M21 21l-4.3-4.3'/></svg></a>
+<a class='hd-ic' style='background:rgba(244,121,58,.2);color:#F4793A;' href='{{ routes.cart_url }}' aria-label='Cart'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='20' r='1.4'/><circle cx='18' cy='20' r='1.4'/><path d='M2 3h3l2.4 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6'/></svg>{% if cart.item_count > 0 %}<span class='hd-badge'>{{ cart.item_count }}</span>{% endif %}</a>
+<a class='hd-ic' style='background:rgba(0,103,126,.2);color:#00677E;' href='{% if shop.customer_accounts_enabled %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}' aria-label='Account'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='8' r='4'/><path d='M4 21c0-4 4-6.5 8-6.5s8 2.5 8 6.5'/></svg></a>
+</div>
+</div>
+<div class='hd-mega'>
+<div class='hd-mega-in'>
+<div class='hd-mcol'><h4 class='hd-mtitle'>{{ section.settings.age_heading }}</h4><div class='hd-agelist'>{% for block in ages %}<a class='hd-agepill' href='{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}' style='background:{{ block.settings.tint }};' {{ block.shopify_attributes }}><b>{{ block.settings.label }}</b><span>{{ block.settings.suffix }}</span></a>{% endfor %}</div></div>
+<div class='hd-mcol'><h4 class='hd-mtitle'>{{ section.settings.cat_heading }}</h4><div class='hd-catgrid'>{% for block in cats %}<a class='hd-catitem' href='{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}' {{ block.shopify_attributes }}><span class='hd-catthumb'>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 100 }}' alt=''>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</span><span><span class='hd-catname'>{{ block.settings.name }}</span><span class='hd-catsub'>{{ block.settings.subtitle }}</span></span></a>{% endfor %}</div></div>
+<div class='hd-na'><h4>{{ section.settings.na_heading }}</h4>{% assign nacoll = collections[section.settings.na_collection] %}{% assign p = nacoll.products.first %}<div class='hd-nacard'>{% if p != blank %}<a class='hd-naimg' href='{{ p.url }}'>{% if p.featured_image %}<img src='{{ p.featured_image | image_url: width: 300 }}' alt='{{ p.title | escape }}'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a><div class='hd-nabody'><span class='hd-narate'>&#9733; {{ p.metafields.reviews.rating.value | default: '4.9' }}</span><p class='hd-nat'>{{ p.title }}</p><div class='hd-nap'><b>{{ p.price | money }}</b></div><a class='hd-nacart' href='{{ p.url }}'>&#128722; View</a></div>{% else %}<span class='hd-naimg'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='hd-nabody'><span class='hd-narate'>&#9733; 4.9</span><p class='hd-nat'>Bouquet Candle Kit</p><div class='hd-nap'><b>Rs. 1,299</b></div><a class='hd-nacart' href='#'>&#128722; View</a></div>{% endif %}</div></div>
+</div>
+</div>
+<div class='hd-mobile' id='hdm-{{ section.id }}'>
+<a href='{{ section.settings.shop_link | default: '/collections/all' }}'>{{ section.settings.shop_label }}</a>
+{% for block in navs %}<a href='{{ block.settings.link | default: '#' }}'>{{ block.settings.label }}</a>{% endfor %}
+{% if section.settings.quiz_label != blank %}<a class='hd-quiz' style='align-self:flex-start;' href='{{ section.settings.quiz_link | default: '#' }}'>{{ section.settings.quiz_label }}</a>{% endif %}
+</div>
+</div>
+<script>
+(function(){var r=document.getElementById('creste-hd-{{ section.id }}');if(!r)return;var trig=r.querySelector('.hd-shoptrigger'),mega=r.querySelector('.hd-mega');if(trig&&mega){var t;function sh(){clearTimeout(t);mega.classList.add('open');}function hd(){t=setTimeout(function(){mega.classList.remove('open');},160);}[trig,mega].forEach(function(el){el.addEventListener('mouseenter',sh);el.addEventListener('mouseleave',hd);});}})();
+</script>
+{% schema %}
+{
+  "name": "Creste Header",
+  "tag": "header",
+  "settings": [ {"type":"image_picker","id":"logo","label":"Logo"}, {"type":"text","id":"shop_label","label":"Shop menu label","default":"Shop"}, {"type":"url","id":"shop_link","label":"Shop link"}, {"type":"color","id":"bg","label":"Bar background band","default":"#F4793A"}, {"type":"color","id":"bar_bg","label":"Nav pill background","default":"#FBF1E3"}, {"type":"color","id":"accent","label":"Accent (border + quiz)","default":"#FFCE00"}, {"type":"checkbox","id":"sticky","label":"Sticky header","default":false}, {"type":"text","id":"quiz_label","label":"Quiz button label","default":"TAKE THE QUIZ"}, {"type":"url","id":"quiz_link","label":"Quiz link"}, {"type":"text","id":"rec_label","label":"Recommended badge","default":"Recommended"}, {"type":"color","id":"rec_bg","label":"Badge color","default":"#5BAD6F"}, {"type":"header","content":"Mega menu"}, {"type":"text","id":"age_heading","label":"Age column heading","default":"Shop by Age"}, {"type":"text","id":"cat_heading","label":"Category column heading","default":"Shop by Category"}, {"type":"text","id":"na_heading","label":"Featured heading","default":"New Arrivals"}, {"type":"color","id":"na_bg","label":"Featured panel color","default":"#62A66B"}, {"type":"collection","id":"na_collection","label":"Featured collection"} ],
+  "blocks": [ {"type":"nav","name":"Nav link","settings":[ {"type":"text","id":"label","label":"Label","default":"Our Tribe"}, {"type":"url","id":"link","label":"Link"} ]}, {"type":"age","name":"Age link","settings":[ {"type":"text","id":"label","label":"Age","default":"0-3"}, {"type":"text","id":"suffix","label":"Suffix","default":"years"}, {"type":"color","id":"tint","label":"Pill color","default":"#FDE7D6"}, {"type":"url","id":"link","label":"Link"} ]}, {"type":"category","name":"Category link","settings":[ {"type":"image_picker","id":"image","label":"Thumbnail"}, {"type":"text","id":"name","label":"Name","default":"Arts & Crafts"}, {"type":"text","id":"subtitle","label":"Subtitle","default":"Paint, create & imagine"}, {"type":"url","id":"link","label":"Link"} ]} ],
+  "max_blocks": 30,
+  "presets": [ {"name":"Creste Header"} ]
+}
+{% endschema %}

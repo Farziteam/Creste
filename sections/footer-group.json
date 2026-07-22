@@ -1,1 +1,19 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","settings":{"color_scheme":"scheme-1","newsletter_enable":true,"newsletter_heading":"Subscribe to our emails","enable_follow_on_shop":true,"show_social":true,"enable_country_selector":true,"enable_language_selector":true,"payment_enable":true,"show_policy":true,"margin_top":0,"padding_top":36,"padding_bottom":36}}},"order":["footer"]}
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "creste_footer": {
+      "type": "creste-footer",
+      "blocks": {
+        "m1": { "type": "menu", "settings": { "heading": "Explore", "underline": "#FFD400", "links": "Our Story|/pages/our-story\nHow it Works|/pages/how-it-works\nBulk Orders|/pages/bulk-orders\nSustainability|/pages/sustainability" } },
+        "m2": { "type": "menu", "settings": { "heading": "Help Desk", "underline": "#00677E", "links": "Contact Us|/pages/contact\nTrack Order|/pages/track-order\nShipping Policy|/pages/shipping-policy\nFAQ's|#faq" } },
+        "so1": { "type": "social", "settings": { "emoji": "📷", "url": "https://instagram.com" } },
+        "so2": { "type": "social", "settings": { "emoji": "▶", "url": "https://youtube.com" } },
+        "so3": { "type": "social", "settings": { "emoji": "👥", "url": "https://facebook.com" } }
+      },
+      "block_order": ["m1","m2","so1","so2","so3"],
+      "settings": {}
+    }
+  },
+  "order": ["creste_footer"]
+}

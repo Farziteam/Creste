@@ -1,0 +1,56 @@
+{% render 'creste-tokens' %}
+{%- assign reviews = section.blocks | where: 'type', 'review' -%}
+{%- assign has_bg = false -%}{%- if section.settings.bg_desktop != blank or section.settings.bg_mobile != blank -%}{%- assign has_bg = true -%}{%- endif -%}
+{%- assign ovt = section.settings.overlap_top | default: 0 -%}
+{%- assign ovb = section.settings.overlap_bottom | default: 0 -%}
+<style>
+#creste-tst-{{ section.id }}{position:relative;z-index:1;padding:40px 16px 44px;{% if has_bg %}background-size:100% 100%;background-repeat:no-repeat;background-position:center top;margin-top:-{{ ovt }}px;margin-bottom:-{{ ovb }}px;{% else %}background:{{ section.settings.section_bg }};background-size:cover;background-position:center;overflow:hidden;{% endif %}}
+{%- if has_bg -%}
+@media(min-width:750px){#creste-tst-{{ section.id }}{background-image:url({{ section.settings.bg_desktop | default: section.settings.bg_mobile | image_url: width: 2400 }});}}
+@media(max-width:749px){#creste-tst-{{ section.id }}{background-image:url({{ section.settings.bg_mobile | default: section.settings.bg_desktop | image_url: width: 1200 }});}}
+{%- endif -%}
+#creste-tst-{{ section.id }} .ct-wtop{position:absolute;top:0;left:0;right:0;height:20px;background:{{ section.settings.wave_color }};-webkit-mask:radial-gradient(10px at 10px 0,#0000 99%,#000) 0 0/20px 20px repeat-x;mask:radial-gradient(10px at 10px 0,#0000 99%,#000) 0 0/20px 20px repeat-x;}
+#creste-tst-{{ section.id }} .ct-in{position:relative;z-index:1;max-width:1200px;margin:0 auto;}
+#creste-tst-{{ section.id }} .ct-h{text-align:center;margin:0 0 24px;}
+#creste-tst-{{ section.id }} .ct-h b{display:block;font-family:'Nunito',sans-serif;font-weight:900;font-size:26px;color:#2B1702;}
+#creste-tst-{{ section.id }} .ct-h span{display:block;font-family:'Fredoka One',cursive;font-size:44px;line-height:1.1;color:#7E57C2;}
+#creste-tst-{{ section.id }} .ct-list{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none;}
+#creste-tst-{{ section.id }} .ct-list::-webkit-scrollbar{display:none;}
+#creste-tst-{{ section.id }} .ct-card{flex:0 0 86%;scroll-snap-align:center;background:#F3F3F3;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 6px 16px rgba(0,0,0,.05);}
+#creste-tst-{{ section.id }} .ct-thumb{width:78px;height:88px;border-radius:10px;overflow:hidden;flex:0 0 auto;box-shadow:0 2px 8px rgba(0,0,0,.12);background:#fff;}
+#creste-tst-{{ section.id }} .ct-thumb img,#creste-tst-{{ section.id }} .ct-thumb svg{width:100%;height:100%;object-fit:cover;display:block;}
+#creste-tst-{{ section.id }} .ct-body{flex:1;min-width:0;}
+#creste-tst-{{ section.id }} .ct-title{margin:0 0 6px;font-family:'Fredoka One',cursive;font-size:18px;line-height:1.1;letter-spacing:.2px;color:var(--creste-brown);}
+#creste-tst-{{ section.id }} .ct-quote{margin:0 0 10px;font-family:'Poppins',sans-serif;font-size:12px;line-height:1.5;color:rgba(0,0,0,.6);}
+#creste-tst-{{ section.id }} .ct-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+#creste-tst-{{ section.id }} .ct-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:13px;color:#333;}
+#creste-tst-{{ section.id }} .ct-role{font-family:'Poppins',sans-serif;font-weight:500;font-size:11px;color:var(--creste-green2);}
+#creste-tst-{{ section.id }} .ct-rate{background:#fff;border-radius:99px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;font-family:'Poppins',sans-serif;font-weight:500;font-size:14px;color:#333;flex:0 0 auto;}
+#creste-tst-{{ section.id }} .ct-rate em{font-style:normal;color:var(--creste-yellow);}
+#creste-tst-{{ section.id }} .ct-morewrap{text-align:center;margin-top:24px;}
+#creste-tst-{{ section.id }} .ct-more{display:inline-flex;align-items:center;gap:10px;background:var(--creste-orange);color:#fff;height:46px;border-radius:9999px;padding:0 34px;border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 12px 22px rgba(244,121,58,.32);}
+@media(min-width:750px){#creste-tst-{{ section.id }} .ct-h b{font-size:30px;}#creste-tst-{{ section.id }} .ct-h span{font-size:56px;}#creste-tst-{{ section.id }} .ct-list{display:block;column-count:{{ section.settings.columns }};column-gap:20px;overflow:visible;padding-bottom:0;}#creste-tst-{{ section.id }} .ct-card{display:flex;width:100%;margin:0 0 20px;break-inside:avoid;-webkit-column-break-inside:avoid;flex:none;}#creste-tst-{{ section.id }} .ct-card.is-hidden{display:none;}}
+</style>
+<div id='creste-tst-{{ section.id }}' class='creste-section'>
+{% unless has_bg %}<div class='ct-wtop'></div>{% endunless %}
+<div class='ct-in'>
+<h2 class='ct-h'><b>{{ section.settings.heading_a }}</b><span>{{ section.settings.heading_b }}</span></h2>
+<div class='ct-list'>
+{% for block in reviews %}<div class='ct-card{% if forloop.index0 >= section.settings.visible %} is-hidden{% endif %}' {{ block.shopify_attributes }}><div class='ct-thumb'>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 200 }}' alt='{{ block.settings.name | escape }}'>{% else %}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</div><div class='ct-body'><p class='ct-title'>{{ block.settings.title }}</p><p class='ct-quote'>{{ block.settings.quote }}</p><div class='ct-foot'><div><div class='ct-name'>{{ block.settings.name }}</div><div class='ct-role'>{{ block.settings.role }}</div></div><span class='ct-rate'><em>&#9733;</em> {{ block.settings.rating }}</span></div></div></div>{% endfor %}
+</div>
+{% if reviews.size > section.settings.visible %}<div class='ct-morewrap'><button type='button' class='ct-more' id='ctmore-{{ section.id }}'>{{ section.settings.button_label }} &rarr;</button></div>{% endif %}
+</div>
+</div>
+<script>
+(function(){var r=document.getElementById('creste-tst-{{ section.id }}');if(!r)return;var b=document.getElementById('ctmore-{{ section.id }}');if(!b)return;b.addEventListener('click',function(){r.querySelectorAll('.ct-card.is-hidden').forEach(function(c){c.classList.remove('is-hidden');});b.parentNode.style.display='none';});})();
+</script>
+{% schema %}
+{
+  "name": "Creste Testimonials",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"}, {"type":"range","id":"overlap_top","label":"Overlap section above (top zigzag)","min":0,"max":80,"step":2,"unit":"px","default":0}, {"type":"range","id":"overlap_bottom","label":"Overlap section below (bottom zigzag)","min":0,"max":80,"step":2,"unit":"px","default":0}, {"type":"color","id":"section_bg","label":"Background color (no image)","default":"#DCC9F5"}, {"type":"color","id":"wave_color","label":"Top wave color (no image)","default":"#EDE4FB"}, {"type":"text","id":"heading_a","label":"Heading line 1","default":"Loved By"}, {"type":"text","id":"heading_b","label":"Heading line 2","default":"50k+ Little Makers"}, {"type":"select","id":"columns","label":"Columns (desktop)","default":"3","options":[{"value":"2","label":"2"},{"value":"3","label":"3"}]}, {"type":"range","id":"visible","min":1,"max":12,"step":1,"label":"Reviews shown before Load More","default":5}, {"type":"text","id":"button_label","label":"Button label","default":"View More Reviews"} ],
+  "blocks": [ {"type":"review","name":"Review","settings":[ {"type":"image_picker","id":"image","label":"Photo"}, {"type":"text","id":"title","label":"Title","default":"Super YouTube alternative!"}, {"type":"textarea","id":"quote","label":"Quote","default":"How to get a 5yo from wanting to watch YouTube to wanting to learn by playing."}, {"type":"text","id":"name","label":"Name","default":"Sarah Johnson"}, {"type":"text","id":"role","label":"Role","default":"Mother of a 5 year old"}, {"type":"text","id":"rating","label":"Rating","default":"5"} ]} ],
+  "max_blocks": 30,
+  "presets": [ {"name":"Creste Testimonials","blocks":[ {"type":"review"}, {"type":"review","settings":{"title":"My 2yo cant get enough!","quote":"It helps my guilt about screen time because I feel she is actually learning.","name":"Priya Sharma","role":"Mother of a 2 year old"}}, {"type":"review","settings":{"name":"Aisha Khan","role":"Mother of a 6 year old"}} ]} ]
+}
+{% endschema %}

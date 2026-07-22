@@ -1,0 +1,40 @@
+{% render 'creste-tokens' %}
+{%- assign _bgid = 'creste-faq-' | append: section.id -%}
+<style>
+#creste-faq-{{ section.id }}{padding:36px 16px;background:{{ section.settings.section_bg }};background-size:cover;background-position:center;}
+#creste-faq-{{ section.id }} .faq-inner{max-width:860px;margin:0 auto;}
+#creste-faq-{{ section.id }} .faq-h{text-align:center;margin:0 0 24px;font-family:'Fredoka One',cursive;font-weight:400;font-size:38px;line-height:1.1;color:#2B1702;}
+#creste-faq-{{ section.id }} .faq-sub{text-align:center;margin:-12px 0 24px;font-family:'Poppins',sans-serif;font-size:15px;color:var(--creste-brown);}
+#creste-faq-{{ section.id }} .faq-item{border:2px solid var(--bc);border-radius:24px;background:#fff;margin-bottom:16px;box-shadow:0 6px 16px rgba(0,0,0,.05);}
+#creste-faq-{{ section.id }} .faq-item[open]{background:var(--tc);}
+#creste-faq-{{ section.id }} summary{list-style:none;cursor:pointer;padding:18px 20px;font-family:'Nunito',sans-serif;font-weight:700;font-size:17px;color:#2B1702;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+#creste-faq-{{ section.id }} summary::-webkit-details-marker{display:none;}
+#creste-faq-{{ section.id }} .faq-ico{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:2px solid var(--bc);color:var(--bc);display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;}
+#creste-faq-{{ section.id }} .faq-ico::before{content:'+';}
+#creste-faq-{{ section.id }} .faq-item[open] .faq-ico::before{content:'\2212';}
+#creste-faq-{{ section.id }} .faq-a{padding:0 20px 18px;font-family:'Poppins',sans-serif;font-weight:400;font-size:15px;line-height:1.6;color:#5b5b5b;}
+@media(min-width:750px){#creste-faq-{{ section.id }}{padding:64px 24px;}#creste-faq-{{ section.id }} .faq-h{font-size:52px;}}
+</style>
+{% render 'creste-bg', id: _bgid, d: section.settings.bg_desktop, m: section.settings.bg_mobile %}
+<div id='creste-faq-{{ section.id }}' class='creste-section'>
+<div class='faq-inner'>
+{% if section.settings.heading != blank %}<h2 class='faq-h'>{{ section.settings.heading }}</h2>{% endif %}
+{% if section.settings.subtitle != blank %}<p class='faq-sub'>{{ section.settings.subtitle }}</p>{% endif %}
+{% assign bcolors = '#00677E,#F4793A,#5BAD6F,#6E2DC4,#E87BAC' | split: ',' %}
+{% assign tcolors = '#EAF3F5,#FEF0E9,#EFF7F0,#F3EEFF,#FDEDF4' | split: ',' %}
+{% for block in section.blocks %}{% if block.type == 'faq' %}{% assign ci = forloop.index0 | modulo: 5 %}<details class='faq-item' name='cfaq-{{ section.id }}'{% if forloop.first %} open{% endif %} style='--bc:{{ bcolors[ci] }};--tc:{{ tcolors[ci] }};' {{ block.shopify_attributes }}><summary>{{ block.settings.question }}<span class='faq-ico'></span></summary><div class='faq-a'>{{ block.settings.answer }}</div></details>{% endif %}{% endfor %}
+</div>
+</div>
+<script>
+(function(){var r=document.getElementById('creste-faq-{{ section.id }}');if(!r)return;var items=r.querySelectorAll('.faq-item');items.forEach(function(d){d.addEventListener('toggle',function(){if(d.open){items.forEach(function(o){if(o!==d){o.open=false;}});}});});})();
+</script>
+{% schema %}
+{
+  "name": "Creste FAQ",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"}, {"type":"color","id":"section_bg","label":"Background color","default":"#FFFFFF"}, {"type":"text","id":"heading","label":"Heading","default":"Parents Often Ask..."}, {"type":"text","id":"subtitle","label":"Subtitle"} ],
+  "blocks": [ {"type":"faq","name":"Question","settings":[ {"type":"text","id":"question","label":"Question","default":"Are the materials safe for young children?"}, {"type":"textarea","id":"answer","label":"Answer","default":"Yes. All our materials are non-toxic, quality-tested, and child-safe."} ]} ],
+  "max_blocks": 20,
+  "presets": [ {"name":"Creste FAQ","blocks":[ {"type":"faq","settings":{"question":"Are the materials safe for young children?","answer":"Yes. All our materials are non-toxic, quality-tested, and child-safe."}}, {"type":"faq","settings":{"question":"How difficult are the projects?","answer":"Each kit is age-graded, with clear step-by-step instructions so kids can build confidence at their own pace."}}, {"type":"faq","settings":{"question":"What age groups are your kits for?","answer":"Our kits span from 0-3 years all the way to adults, with age-appropriate activities for every stage."}}, {"type":"faq","settings":{"question":"How long does delivery take?","answer":"Orders are typically delivered within 3-5 business days across India."}}, {"type":"faq","settings":{"question":"Do you offer returns?","answer":"Yes, unused kits can be returned within 7 days of delivery."}} ]} ]
+}
+{% endschema %}
