@@ -1,17 +1,18 @@
 {% render 'creste-tokens' %}
 <style>
-#creste-fav-{{ section.id }}{position:relative;padding:32px 8px;background-color:{{ section.settings.fallback_bg }};background-size:cover;background-position:center;background-repeat:no-repeat;}
+#creste-fav-{{ section.id }}{position:relative;padding:32px 8px;background-color:{{ section.settings.fallback_bg }};background-size: contain;background-position:center;background-repeat:no-repeat;}
 #creste-fav-{{ section.id }}::before{content:'';position:absolute;inset:0;background:#000;opacity:{{ section.settings.overlay | divided_by: 100.0 }};pointer-events:none;}
 #creste-fav-{{ section.id }} .fav-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;}
-#creste-fav-{{ section.id }} .fav-h{text-align:center;margin:0 0 6px;font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;line-height:1.1;color:{{ section.settings.heading_color }};}
-#creste-fav-{{ section.id }} .fav-sub{text-align:center;margin:0 0 20px;font-family:'Poppins',sans-serif;font-size:15px;color:{{ section.settings.heading_color }};opacity:.9;}
+#creste-fav-{{ section.id }} .fav-h{margin:0 0 6px;font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;line-height:1.1;color:{{ section.settings.heading_color }};}
+#creste-fav-{{ section.id }} .fav-h span{font-style: italic; color: #fff;}
+#creste-fav-{{ section.id }} .fav-sub{margin:0 0 20px;font-family:'Poppins',sans-serif;font-size:15px;color:{{ section.settings.heading_color }};opacity:.9;}
 #creste-fav-{{ section.id }} .fav-carousel{position:relative;}
-#creste-fav-{{ section.id }} .fav-track{display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-behavior:smooth;scroll-snap-type:x mandatory;padding:4px 8px;scrollbar-width:none;}
+#creste-fav-{{ section.id }} .fav-track{display:flex;gap:28px;overflow-x:auto;overflow-y:hidden;scroll-behavior:smooth;scroll-snap-type:x mandatory;padding:4px 8px;scrollbar-width:none;}
 #creste-fav-{{ section.id }} .fav-track::-webkit-scrollbar{display:none;}
-#creste-fav-{{ section.id }} .fav-card{flex:0 0 {{ section.settings.card_width }}px;scroll-snap-align:start;background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;}
+#creste-fav-{{ section.id }} .fav-card{flex:0 0 {{ section.settings.card_width }}px;scroll-snap-align:start;background:#fff;border:3px solid #0000004D;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;}
 #creste-fav-{{ section.id }} .fav-img{aspect-ratio:1/1;background:#f6efe3;overflow:hidden;display:block;}
 #creste-fav-{{ section.id }} .fav-img img,#creste-fav-{{ section.id }} .fav-img svg{width:100%;height:100%;object-fit:cover;display:block;}
-#creste-fav-{{ section.id }} .fav-body{padding:12px;display:flex;flex-direction:column;gap:8px;}
+#creste-fav-{{ section.id }} .fav-body{padding:12px;display:flex;flex-direction:column;gap:8px; flex: 1;}
 #creste-fav-{{ section.id }} .fav-top{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:24px;}
 #creste-fav-{{ section.id }} .fav-rate{display:inline-flex;align-items:center;gap:4px;background:#FBE9C0;border-radius:9999px;padding:3px 9px;font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:13px;color:#2B1702;}
 #creste-fav-{{ section.id }} .fav-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(90deg,#ff90b2,#f4679a);color:#fff;border-radius:9999px;padding:4px 9px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:11px;}
@@ -19,23 +20,105 @@
 #creste-fav-{{ section.id }} .fav-badge em{font-style:normal;color:#FFCE00;}
 #creste-fav-{{ section.id }} .fav-title{margin:0;font-family:'Nunito',sans-serif;font-weight:800;font-size:17px;line-height:1.15;color:var(--creste-brown2);text-decoration:none;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
 #creste-fav-{{ section.id }} .fav-meta{margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:11px;letter-spacing:.4px;color:rgba(87,66,57,.75);text-transform:uppercase;}
-#creste-fav-{{ section.id }} .fav-price{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+#creste-fav-{{ section.id }} .fav-price{display:flex;align-items:center;gap:2px;flex-wrap:wrap;}
 #creste-fav-{{ section.id }} .fav-price b{font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:19px;color:var(--creste-orange);}
 #creste-fav-{{ section.id }} .fav-price s{font-family:'Poppins',sans-serif;font-size:14px;color:var(--creste-brown2);opacity:.4;}
 #creste-fav-{{ section.id }} .fav-price i{font-family:'Poppins',sans-serif;font-weight:700;font-style:normal;font-size:12px;color:var(--creste-green2);}
 #creste-fav-{{ section.id }} .fav-cart button{width:100%;height:46px;border:none;border-radius:24px;background:var(--creste-orange);color:#fff;font-family:'Quicksand',sans-serif;font-weight:700;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
-#creste-fav-{{ section.id }} .fav-nav{position:absolute;top:34%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:none;box-shadow:0 6px 16px rgba(0,0,0,.2);color:var(--creste-orange);font-size:24px;line-height:1;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;}
+#creste-fav-{{ section.id }} .fav-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:none;box-shadow:0 6px 16px rgba(0,0,0,.2);color:var(--creste-orange);font-size:24px;line-height:1;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;}
 #creste-fav-{{ section.id }} .fav-nav.prev{left:0;}
 #creste-fav-{{ section.id }} .fav-nav.next{right:0;}
 #creste-fav-{{ section.id }} .fav-dots{display:none;justify-content:center;gap:8px;margin-top:16px;}
 #creste-fav-{{ section.id }} .fav-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(0,0,0,.25);padding:0;cursor:pointer;transition:all .2s;}
 #creste-fav-{{ section.id }} .fav-dots button.on{background:var(--creste-orange);width:22px;border-radius:9999px;}
-@media(max-width:749px){#creste-fav-{{ section.id }} .fav-nav{display:none;}#creste-fav-{{ section.id }} .fav-dots{display:flex;}}
-@media(min-width:750px){#creste-fav-{{ section.id }}{padding:56px 16px;}#creste-fav-{{ section.id }} .fav-h{font-size:40px;}#creste-fav-{{ section.id }} .fav-carousel{padding:0 50px;}#creste-fav-{{ section.id }} .fav-card{flex-basis:{{ section.settings.card_width | plus: 40 }}px;}}
+#creste-fav-{{ section.id }} .fav-top .cp-badge{   
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(90deg, #ff90b2, #f4679a);
+    color: #fff;
+    border-radius: 9999px;
+    padding: 4px 9px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+#creste-fav-{{ section.id }} .fav-top .cp-badge em{ 
+   font-style: normal;
+   color: #FFCE00;
+}
+@media(max-width:749px){#creste-fav-{{ section.id }} .fav-nav{display:none;}#creste-fav-{{ section.id }} .fav-dots{display:flex;}
+   #creste-fav-{{ section.id }}  .fav-track{
+    gap: 12px !important;
+  }
+  #creste-fav-{{ section.id }} .fav-card{flex:0 0 50%}
+  #creste-fav-{{ section.id }} .fav-rate{ font-size: 11px; padding: 2px 6px;}
+  #creste-fav-{{ section.id }} .fav-body{
+    padding: 8px;
+  }
+  #creste-fav-{{ section.id }} .fav-top .cp-badge{
+    padding: 2px 6px;
+    font-size: 10px;
+  }
+  #creste-fav-{{ section.id }} .fav-title{
+    font-size: 13px;
+  }
+  #creste-fav-{{ section.id }} .fav-price b{
+    font-size: 14px;
+  }
+  #creste-fav-{{ section.id }} .fav-price s{
+    font-size: 13px;
+    margin-right: 5px;
+  }
+  #creste-fav-{{ section.id }} .fav-price i{font-size: 10px;}
+  #creste-fav-{{ section.id }} .product-sub-heading{
+    gap: 4px !important;
+    {% comment %} font-size: 10px; {% endcomment %}
+    letter-spacing: 0px !important;
+  }
+  #creste-fav-{{ section.id }} .product-sub-heading p{
+    font-weight: 500 !important;
+    letter-spacing: 0px !important;
+    font-size: 10px !important;
+  }
+  
+  
+}
+@media(min-width:750px){#creste-fav-{{ section.id }}{padding:56px 16px;}#creste-fav-{{ section.id }} .fav-h{font-size:48px;}  #creste-fav-{{ section.id }} .fav-carousel{padding:0 50px;}#creste-fav-{{ section.id }} .fav-card{flex-basis:{{ section.settings.card_width | plus: 40 }}px;}
+ #creste-fav-{{ section.id }} .fav-price i{font-size: 14px;}
+ #creste-fav-{{ section.id }} .fav-sub{font-size: 20px; text-align: left;font-weight: 700;}
+  {% if section.settings.background != blank %}
+    #creste-fav-{{ section.id }} {
+       background-image: url({{ section.settings.background | image_url: width: 2600 }}) !important;
+       background-size: cover !important;
+    }
+  {% endif %}
+  #creste-fav-{{ section.id }} .fav-price{
+    gap: 7px !important;
+  }
+}
+
+#creste-fav-{{ section.id }} .product-sub-heading{
+  display: flex;
+  gap: 7px;
+}
+#creste-fav-{{ section.id }} .product-sub-heading p{
+  font-size: 13px;
+  line-height: 20px;
+  margin:0;
+  font-family: 'Poppins', sans-sarif;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+}
+#creste-fav-{{ section.id }} .fav-cart{
+  margin-top: auto;
+  padding-top: 4px;
+}
 </style>
-<div id='creste-fav-{{ section.id }}' class='creste-section'{% if section.settings.background != blank %} style='background-image:url({{ section.settings.background | image_url: width: 2400 }});'{% endif %}>
+<div id='creste-fav-{{ section.id }}' class='creste-section'{%  if section.settings.bg_mobile != blank %}style="background-image:url({{ section.settings.bg_mobile | image_url: width: 1200 }});"{% elsif section.settings.background != blank %} style='background-image:url({{ section.settings.background | image_url: width: 2400 }});'{% endif %}>
 <div class='fav-inner'>
-{% if section.settings.heading != blank %}<h2 class='fav-h'>{{ section.settings.heading }}</h2>{% endif %}
+{% if section.settings.heading != blank %}<h2 class='fav-h'>{{ section.settings.heading }} <span>{{ section.settings.heading_italic }}</span></h2>{% endif %}
 {% if section.settings.subtitle != blank %}<p class='fav-sub'>{{ section.settings.subtitle }}</p>{% endif %}
 <div class='fav-carousel'>
 <button type='button' class='fav-nav prev' aria-label='Previous' onclick="document.getElementById('favtrack-{{ section.id }}').scrollBy({left:-{{ section.settings.card_width | plus: 56 }},behavior:'smooth'});">&#8249;</button>
@@ -48,11 +131,12 @@
 <div class='fav-card'>
 <a class='fav-img' href='{{ product.url }}'>{% if product.featured_image %}<img src='{{ product.featured_image | image_url: width: 600 }}' alt='{{ product.title | escape }}' loading='lazy'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a>
 <div class='fav-body'>
-<div class='fav-top'><span class='fav-rate'><em>&#9733;</em>{{ prating }}</span>{% if product.tags contains section.settings.badge_tag %}<span class='fav-badge'><em>&#9733;</em>{{ section.settings.badge_text }}</span>{% endif %}</div>
+<div class='fav-top'><span class='fav-rate'><em>&#9733;</em>{{ prating }}</span>{% comment %}{% if product.tags contains section.settings.badge_tag %}<span class='fav-badge'><em>&#9733;</em>{{ section.settings.badge_text }}</span>{% endif %} {% endcomment %} {% if product.metafields.custom.product_tag != blank %}<span class='cp-badge'><em>&#9733;</em>{{ product.metafields.custom.product_tag }}</span>{% endif %}</div>
 <a class='fav-title' href='{{ product.url }}'>{{ product.title }}</a>
+<div class="product-sub-heading">{% if product.metafields.custom.age_group != blank %}<p>{{ product.metafields.custom.age_group }}</p>{% endif %}{% if product.metafields.custom.product_category != blank %}<p>•&nbsp;&nbsp;{{ product.metafields.custom.product_category }}</p>{% endif %}</div>
 {% if pmeta != blank %}<p class='fav-meta'>{{ pmeta }}</p>{% endif %}
-<div class='fav-price'><b>{{ product.price | money }}</b>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s>{% assign disc = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}<i>{{ disc }}% off</i>{% endif %}</div>
-<div class='fav-cart'><form method='post' action='/cart/add' enctype='multipart/form-data'><input type='hidden' name='id' value='{{ product.selected_or_first_available_variant.id }}'><button type='submit'{% unless product.available %} disabled{% endunless %}>&#128722; {% if product.available %}{{ section.settings.button_label }}{% else %}Sold out{% endif %}</button></form></div>
+<div class='fav-price'><b>{{ product.price | money_without_trailing_zeros }}</b>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money_without_currency | replace: '.00', '' }}</s>{% assign disc = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}<i>{{ disc }}% off</i>{% endif %}</div>
+<div class='fav-cart'><form method='post' action='/cart/add' enctype='multipart/form-data'><input type='hidden' name='id' value='{{ product.selected_or_first_available_variant.id }}'><button type='submit'{% unless product.available %} disabled{% endunless %}>{{ 'icon-add-to-cart.svg' | inline_asset_content }} {% if product.available %}{{ section.settings.button_label }}{% else %}Sold out{% endif %}</button></form></div>
 </div>
 </div>
 {% endfor %}
@@ -74,7 +158,7 @@
 {
   "name": "Creste Favourites",
   "tag": "section",
-  "settings": [ {"type":"image_picker","id":"background","label":"Background image"}, {"type":"color","id":"fallback_bg","label":"Fallback background","default":"#F5C518"}, {"type":"range","id":"overlay","min":0,"max":70,"step":5,"unit":"%","label":"Background overlay","default":0}, {"type":"text","id":"heading","label":"Heading","default":"Our Favourites"}, {"type":"text","id":"subtitle","label":"Subtitle"}, {"type":"color","id":"heading_color","label":"Heading color","default":"#2B1702"}, {"type":"collection","id":"collection","label":"Collection"}, {"type":"range","id":"count","min":2,"max":20,"step":1,"label":"Products to show","default":10}, {"type":"range","id":"card_width","min":180,"max":320,"step":10,"unit":"px","label":"Card width","default":250}, {"type":"text","id":"default_rating","label":"Default rating","default":"4.9"}, {"type":"text","id":"badge_tag","label":"Badge product tag","default":"top pick"}, {"type":"text","id":"badge_text","label":"Badge text","default":"TOP PICK"}, {"type":"text","id":"button_label","label":"Button label","default":"Add To Cart"} ],
+  "settings": [ {"type":"image_picker","id":"background","label":"Background image"},{"type":"image_picker","id":"bg_mobile","label":"Mobile Background image"}, {"type":"color","id":"fallback_bg","label":"Fallback background","default":"#F5C518"}, {"type":"range","id":"overlay","min":0,"max":70,"step":5,"unit":"%","label":"Background overlay","default":0}, {"type":"text","id":"heading","label":"Heading","default":"The"},{"type":"text","id":"heading_italic","label":"Heading Italic","default":"Favorites"}, {"type":"text","id":"subtitle","label":"Subtitle"}, {"type":"color","id":"heading_color","label":"Heading color","default":"#2B1702"}, {"type":"collection","id":"collection","label":"Collection"}, {"type":"range","id":"count","min":2,"max":20,"step":1,"label":"Products to show","default":10}, {"type":"range","id":"card_width","min":180,"max":320,"step":10,"unit":"px","label":"Card width","default":250}, {"type":"text","id":"default_rating","label":"Default rating","default":"4.9"}, {"type":"text","id":"badge_tag","label":"Badge product tag","default":"top pick"}, {"type":"text","id":"badge_text","label":"Badge text","default":"TOP PICK"}, {"type":"text","id":"button_label","label":"Button label","default":"Add To Cart"} ],
   "presets": [ {"name":"Creste Favourites"} ]
 }
 {% endschema %}
