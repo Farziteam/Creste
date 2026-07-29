@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer",
@@ -5,15 +14,74 @@
     "creste_footer": {
       "type": "creste-footer",
       "blocks": {
-        "m1": { "type": "menu", "settings": { "heading": "Explore", "underline": "#FFD400", "links": "Our Story|/pages/our-story\nHow it Works|/pages/how-it-works\nBulk Orders|/pages/bulk-orders\nSustainability|/pages/sustainability" } },
-        "m2": { "type": "menu", "settings": { "heading": "Help Desk", "underline": "#00677E", "links": "Contact Us|/pages/contact\nTrack Order|/pages/track-order\nShipping Policy|/pages/shipping-policy\nFAQ's|#faq" } },
-        "so1": { "type": "social", "settings": { "emoji": "📷", "url": "https://instagram.com" } },
-        "so2": { "type": "social", "settings": { "emoji": "▶", "url": "https://youtube.com" } },
-        "so3": { "type": "social", "settings": { "emoji": "👥", "url": "https://facebook.com" } }
+        "m1": {
+          "type": "menu",
+          "settings": {
+            "heading": "Explore",
+            "underline": "#ffd400",
+            "links": "Our Story|/pages/our-story\nHow it Works|/pages/how-it-works\nBulk Orders|/pages/bulk-orders\nSustainability|/pages/sustainability"
+          }
+        },
+        "m2": {
+          "type": "menu",
+          "settings": {
+            "heading": "Help Desk",
+            "underline": "#00677e",
+            "links": "Contact Us|/pages/contact\nTrack Order|/pages/track-order\nShipping Policy|/pages/shipping-policy\nFAQ's|#faq"
+          }
+        },
+        "so1": {
+          "type": "social",
+          "settings": {
+            "icon": "shopify://shop_images/Icon.png",
+            "emoji": "📷",
+            "url": "https://instagram.com"
+          }
+        },
+        "so2": {
+          "type": "social",
+          "settings": {
+            "icon": "shopify://shop_images/Icon_1.png",
+            "emoji": "▶",
+            "url": "https://youtube.com"
+          }
+        },
+        "so3": {
+          "type": "social",
+          "settings": {
+            "icon": "shopify://shop_images/Container_06032109-dea9-4032-ae75-23e5e60ff3d5.png",
+            "emoji": "👥",
+            "url": "https://facebook.com"
+          }
+        }
       },
-      "block_order": ["m1","m2","so1","so2","so3"],
-      "settings": {}
+      "block_order": [
+        "m1",
+        "m2",
+        "so1",
+        "so2",
+        "so3"
+      ],
+      "settings": {
+        "bg": "#fcebb6",
+        "top_border": "#ffd400",
+        "tagline": "Gifts, Giggle, Gang",
+        "about": "Made for messy hands and big, wild imaginations. Crafting future innovators one kit at a time.",
+        "contact_heading": "Say Hello!",
+        "contact_underline": "#f4793a",
+        "phone": "+91 8081026320",
+        "email": "contact@crestekids.com",
+        "address": "3 Gokhle Marg, Near Red Hill School, Lucknow-226001",
+        "banner_bg": "#f4793a",
+        "banner_title": "Find a Creste Store near you",
+        "banner_text": "Discover a world of play and learning. Visit our physical spaces to experience our DIY kits and toy collections firsthand.",
+        "banner_btn": "SEARCH NOW",
+        "banner_link": "",
+        "copyright": "© 2024 Creste DIY. Made By Farziengineer ."
+      }
     }
   },
-  "order": ["creste_footer"]
+  "order": [
+    "creste_footer"
+  ]
 }
