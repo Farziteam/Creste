@@ -192,6 +192,7 @@
         "c10"
       ],
       "settings": {
+        "logo": "shopify://shop_images/logo_web_1.png",
         "shop_label": "Shop",
         "shop_link": "",
         "bg": "rgba(0,0,0,0)",

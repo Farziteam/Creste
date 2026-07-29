@@ -1,1 +1,958 @@
-{"sections":{"creste_hero":{"type":"creste-hero","blocks":{"slide_EH4BV7":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/Property_1_Variant2.png","link":"","alt":"Creste banner"}},"slide_3jWpxH":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/Frame_2147228149_99479d0c-43f6-41c7-8888-989a22bd5b1a.png","image_mobile":"shopify:\/\/shop_images\/HERO_3ff9b233-e559-450e-9886-71cec7077a5a.png","link":"","alt":"Creste banner"}}},"block_order":["slide_EH4BV7","slide_3jWpxH"],"settings":{"bg":"#f4793a","show_dots":true,"show_arrows":true,"speed":5}},"creste_stats":{"type":"creste-stats","blocks":{"s1":{"type":"stat","settings":{"icon":"shopify:\/\/shop_images\/image_39_4.png","number":"50,000+","label":"HAPPY FACES","color":"teal"}},"s2":{"type":"stat","settings":{"icon":"shopify:\/\/shop_images\/image_39_2.png","number":"170+","label":"WORKSHOP FORMATS","color":"orange"}},"s3":{"type":"stat","settings":{"icon":"shopify:\/\/shop_images\/image_39_5.png","number":"13+","label":"SCHOOLS ENGAGED","color":"teal"}},"s4":{"type":"stat","settings":{"icon":"shopify:\/\/shop_images\/image_39_c011c364-9921-42bd-9686-f7e4b5d5532a.png","number":"14000+","label":"EVENT ATTENDEES","color":"orange"}},"s5":{"type":"stat","settings":{"icon":"shopify:\/\/shop_images\/image_39_c011c364-9921-42bd-9686-f7e4b5d5532a.png","number":"70+","label":"DIY PRODUCTS","color":"brown"}}},"block_order":["s1","s2","s3","s4","s5"],"settings":{"bg_desktop":"shopify:\/\/shop_images\/Section_-_Trust_Banner_1.png","section_bg":"#ffffff","tagline":"Creste Makes Learning through play easy , purposeful & Joyful!"}},"creste_age":{"type":"creste-age","blocks":{"a1":{"type":"age","settings":{"image":"shopify:\/\/shop_images\/Container_2.png","label":"0 - 3 yrs","desc":"Little hands, big fun","tint":"#e0f7ff","collection":"","link":""}},"a2":{"type":"age","settings":{"image":"shopify:\/\/shop_images\/image_3_3a4e5c18-52fb-4ed4-a631-ac64369546d1.png","label":"4-6 yrs","desc":"Creative adventures","tint":"#ffeea8","collection":"","link":""}},"a3":{"type":"age","settings":{"image":"shopify:\/\/shop_images\/image_4_470679b2-43ef-4815-a664-2865a12aad36.png","label":"7-10 yrs","desc":"First real projects","tint":"#eaf7d8","collection":"","link":""}},"a4":{"type":"age","settings":{"image":"shopify:\/\/shop_images\/image_5_4b25eccf-d3a3-4ed2-b39a-a497462cfea6.png","label":"11-15 yrs","desc":"Level-up skills","tint":"#f3eeff","collection":"","link":""}},"a5":{"type":"age","settings":{"image":"shopify:\/\/shop_images\/image_6_a0fde401-000b-4248-bbc3-a9b9e5e7f469.png","label":"16 yrs +","desc":"Craft for the soul","tint":"#fffae5","collection":"","link":""}},"a6":{"type":"age","settings":{"image":"shopify:\/\/shop_images\/image_7_ed28fe6d-ff40-4857-a19c-c7983e6405fd.png","label":"Adult","desc":"Craft for the soul","tint":"#e0f7ff","collection":"","link":""}}},"block_order":["a1","a2","a3","a4","a5","a6"],"settings":{"background":"shopify:\/\/shop_images\/Shop_by_Age_1_7ba846c1-d787-4714-9249-e007c16c5585.png","overlap":30,"character":"shopify:\/\/shop_images\/attachment-large_1.png","title_a":"Shop by","title_b":"Age","subtitle":"Perfectly leveled fun for every stage!"}},"creste_play":{"type":"creste-play","blocks":{"cat1":{"type":"category","settings":{"emoji":"✂","name":"CRAFTY CREW","subtitle":"Cognitive Development","collection":"demo"}},"cat2":{"type":"category","settings":{"emoji":"🧪","name":"SCIENCE LABS","subtitle":"Brain Development","collection":"demo"}},"cat3":{"type":"category","settings":{"emoji":"🎨","name":"ART STUDIO","subtitle":"Social Development","collection":"demo"}},"cat4":{"type":"category","settings":{"emoji":"🧠","name":"BRAIN POWER","subtitle":"Social Development","collection":"demo"}},"cat5":{"type":"category","settings":{"emoji":"📖","name":"STORY WORLDS","subtitle":"Language & Literacy","collection":"demo"}},"cat6":{"type":"category","settings":{"emoji":"🛠","name":"DIY KIT","subtitle":"Cognitive Development","collection":"demo"}},"cat7":{"type":"category","settings":{"emoji":"👟","name":"ADULT","subtitle":"Physical Development","collection":"demo"}}},"block_order":["cat1","cat2","cat3","cat4","cat5","cat6","cat7"],"settings":{"bg_desktop":"shopify:\/\/shop_images\/Play_with_Purpose-d_9d1521c6-96b8-43b3-a117-298289dd2970.png","bg_mobile":"shopify:\/\/shop_images\/Play_with_Purpose-m.png","title_a":"Play with","title_b":"Purpose","subtitle":"Creativity builds confidence, curiosity opens doors, and hands-on making sparks joy.","view_all_label":"View All","view_all_fallback":"","wave_top":"#62a66b","wave_bottom":"#c9b8e8"}},"creste_testimonials":{"type":"creste-testimonials","blocks":{"r1":{"type":"review","settings":{"title":"Super YouTube alternative!","quote":"How to get a 5yo from wanting to watch YouTube to wanting to learn by playing.","name":"Sarah Johnson","role":"Mother of a 5 year old","rating":"5"}},"r2":{"type":"review","settings":{"title":"My 2yo cant get enough!","quote":"It helps my guilt about screen time because I feel she is actually learning. It genuinely keeps her busy for hours and I never worry that it is wasted time anymore.","name":"Priya Sharma","role":"Mother of a 2 year old","rating":"5"}},"r3":{"type":"review","settings":{"title":"Super YouTube alternative!","quote":"How to get a 5yo from wanting to watch YouTube to wanting to learn by playing.","name":"Aisha Khan","role":"Mother of a 6 year old","rating":"5"}},"r4":{"type":"review","settings":{"title":"My 2yo cant get enough!","quote":"It helps my guilt about screen time because I feel she is actually learning.","name":"Neha Verma","role":"Mother of a 2 year old","rating":"5"}},"r5":{"type":"review","settings":{"title":"Best purchase this year!","quote":"My kids ask for their Creste kit before the TV now.","name":"Ritu Mehra","role":"Mother of a 4 year old","rating":"5"}},"r6":{"type":"review","settings":{"title":"Screen-free wins!","quote":"Finally an activity that keeps them engaged and learning at the same time. The instructions are clear and the whole family ends up joining in every single weekend.","name":"Kavya Nair","role":"Mother of a 7 year old","rating":"5"}},"r7":{"type":"review","settings":{"title":"So much fun!","quote":"Weekend afternoons are sorted.","name":"Anjali Rao","role":"Mother of a 3 year old","rating":"5"}},"r8":{"type":"review","settings":{"title":"Highly recommend","quote":"Great quality materials and thoughtful, age-appropriate projects.","name":"Meera Iyer","role":"Mother of an 8 year old","rating":"5"}}},"block_order":["r1","r2","r3","r4","r5","r6","r7","r8"],"settings":{"bg_desktop":"shopify:\/\/shop_images\/Testimonials-_d.png","bg_mobile":"shopify:\/\/shop_images\/Testimonials_Section_-m.png","overlap_top":24,"overlap_bottom":0,"section_bg":"#dcc9f5","wave_color":"#ede4fb","heading_a":"Loved By","heading_b":"50k+ Little Makers","columns":"3","visible":5,"button_label":"View More Reviews"}},"creste_giftfinder":{"type":"creste-giftfinder","settings":{"image":"shopify:\/\/shop_images\/Section_-_Trust_Banner.png","image_mobile":"shopify:\/\/shop_images\/Gift_finder.png","link":"","alt":"Creste banner","max_width":1200,"radius":24,"padding_top":16,"padding_bottom":16}},"creste_howitbegan":{"type":"creste-howitbegan","blocks":{"t1":{"type":"tile","settings":{"image":"shopify:\/\/shop_images\/IMAGE_1981e49e-d93b-4f66-ba34-e60e9385e708.png","color":"#f4793a","heading":"Started In the middle of the 2020 lockdown","body":"Most kids today know how to swipe before they learn how to hold a crayon.\nThat shift didn't sit right with Nidhi Sethia. In the middle of the 2020 lockdown, she saw something worrying.","btn1_label":"","btn1_link":"","btn2_label":"","btn2_link":""}},"t2":{"type":"tile","settings":{"image":"shopify:\/\/shop_images\/image_50.png","color":"#3aa6c0","heading":"Imagination & Joy of making is missing!","body":"What was missing was something bigger: imagination, real-world fun, and the joy of hands-on making with their own hands.","btn1_label":"","btn1_link":"","btn2_label":"","btn2_link":""}},"t3":{"type":"tile","settings":{"image":"shopify:\/\/shop_images\/image_51.png","color":"#8e6fd6","heading":"That's when Nidhi decided to build something better.","body":"It is what led Creste to life for kids, fun and screen-free ways to explore, create and learn. What began as a few DIY craft kits turned into Creste.","btn1_label":"","btn1_link":"","btn2_label":"","btn2_link":""}},"t4":{"type":"tile","settings":{"image":"shopify:\/\/shop_images\/100_Pure_Himalayan_Kapiva_Shilajit_Resin_-_30gm.png","color":"#6bb07a","heading":"A few DIY craft kits turned into Creste","body":"Today, Creste is that place where kids learn through play by doing DIY techniques, crafts and art forms. Every kit is designed to be exciting and fun to make.","btn1_label":"Learn More About Us","btn1_link":"\/pages\/our-story","btn2_label":"Explore Products","btn2_link":"\/collections\/all"}}},"block_order":["t1","t2","t3","t4"],"settings":{"bg_desktop":"shopify:\/\/shop_images\/How_it_all_began1.png","bg_mobile":"shopify:\/\/shop_images\/How_it_all_began-m.png","section_bg":"#fcede6","heading":"How It All Began","dog_left":"shopify:\/\/shop_images\/Jack-_dog1.png","dog_right":"shopify:\/\/shop_images\/dog2.png","dog_w":130,"dog_top":0,"dog_side":12,"offset":80,"gap":24}},"creste_featured":{"type":"creste-featured","blocks":{"l1":{"type":"logo","settings":{"image":"shopify:\/\/shop_images\/Frame_2147228131_1.png","name":"BRAND","row":"top"}},"l2":{"type":"logo","settings":{"image":"shopify:\/\/shop_images\/Frame_2147228133_1.png","name":"MEDIA","row":"top"}},"l3":{"type":"logo","settings":{"image":"shopify:\/\/shop_images\/Frame_2147228135.png","name":"PRESS","row":"top"}},"l4":{"type":"logo","settings":{"image":"shopify:\/\/shop_images\/Frame_2147228132_2.png","name":"NEWS","row":"top"}},"l5":{"type":"logo","settings":{"image":"shopify:\/\/shop_images\/Frame_2147228132_1.png","name":"TIMES","row":"bottom"}},"l6":{"type":"logo","settings":{"image":"shopify:\/\/shop_images\/Frame_2147228131.png","name":"DAILY","row":"bottom"}},"logo_acQqQX":{"type":"logo","settings":{"image":"shopify:\/\/shop_images\/Screenshot_2026-06-29_123028_1.png","name":"LOGO","row":"top"}},"l8":{"type":"logo","settings":{"image":"shopify:\/\/shop_images\/Frame_2147228133.png","name":"POST","row":"bottom"}}},"block_order":["l1","l2","l3","l4","l5","l6","logo_acQqQX","l8"],"settings":{"heading":"Featured In","bg":"#ffffff","speed":32}},"creste_stages":{"type":"creste-stages","blocks":{"g1":{"type":"stage","settings":{"emoji":"💡","title":"Spark Curiosity","desc":"Every activity sparks curiosity and imagination."}},"g2":{"type":"stage","settings":{"emoji":"🛠","title":"Build Skills","desc":"They learn, explore and build real-life skills."}},"g3":{"type":"stage","settings":{"emoji":"🤝","title":"Stronger Bonds","desc":"Shared moments today build unbreakable bonds."}},"g4":{"type":"stage","settings":{"emoji":"⭐","title":"Confidence Grows","desc":"Every step builds real self-belief."}},"g5":{"type":"stage","settings":{"emoji":"🎓","title":"Confident Tomorrow","desc":"Growing into confident, creative and kind adults."}}},"block_order":["g1","g2","g3","g4","g5"],"settings":{"section_bg":"#ffffff","heading_1":"From Happy Childhoods","heading_2":"To Happy Adulthoods","subtitle":"The little moments you create today shape the confident, creative adults of tomorrow.","card_bg":"#ede9f8","badge_color":"#7e6bb8"}},"creste_events":{"type":"creste-events","blocks":{"sv1":{"type":"service","settings":{"icon":"shopify:\/\/shop_images\/svg.png","icon_bg":"#e1f1f6","title":"Corporate Events","desc":"Engage your teams with creative, hands-on experiences."}},"sv2":{"type":"service","settings":{"icon":"shopify:\/\/shop_images\/svg_1.png","icon_bg":"#e3f0e5","title":"School Workshops","desc":"Enrich learning with interactive DIY & STEM workshops."}},"sv3":{"type":"service","settings":{"icon":"shopify:\/\/shop_images\/svg_3.png","icon_bg":"#ece4f7","title":"DIY Craft Workshops","desc":"Make birthdays extra special with fun DIY activities and memories."}},"sv4":{"type":"service","settings":{"icon":"shopify:\/\/shop_images\/svg_4.png","icon_bg":"#fbe4e4","title":"Community & Family Events","desc":"Make birthdays extra special with fun DIY activities and memories."}},"sv5":{"type":"service","settings":{"icon":"shopify:\/\/shop_images\/svg_7.png","icon_bg":"#fbefcb","title":"STEM & Science Sessions","desc":"Fun and educational science experiments for curious minds."}},"sv6":{"type":"service","settings":{"icon":"shopify:\/\/shop_images\/svg_1.png","icon_bg":"#fbe9d6","title":"Birthday Parties","desc":"Unforgettable, craft-filled celebrations for kids."}},"sv7":{"type":"service","settings":{"icon":"shopify:\/\/shop_images\/svg_4.png","icon_bg":"#e8f0fe","title":"Holiday Camps","desc":"Multi-day maker camps packed with hands-on fun."}},"sv8":{"type":"service","settings":{"icon":"shopify:\/\/shop_images\/svg_3.png","icon_bg":"#fdecec","title":"Team Building","desc":"Creative group challenges that bring teams together."}},"ac1":{"type":"activity","settings":{"image":"shopify:\/\/shop_images\/ic_7.png","label":"Slime Making"}},"ac2":{"type":"activity","settings":{"image":"shopify:\/\/shop_images\/ic_6.png","label":"Candle Making"}},"ac3":{"type":"activity","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/ic_3.png","label":"Tie-Dye"}},"ac4":{"type":"activity","settings":{"image":"shopify:\/\/shop_images\/ic_3.png","label":"Painting"}},"ac5":{"type":"activity","settings":{"image":"shopify:\/\/shop_images\/ic_6.png","label":"DIY Crafts"}},"ac6":{"type":"activity","settings":{"image":"shopify:\/\/shop_images\/ic_2.png","label":"Experiments"}},"ac7":{"type":"activity","settings":{"image":"shopify:\/\/shop_images\/ic_5.png","label":"Texture Art"}},"ac8":{"type":"activity","settings":{"image":"shopify:\/\/shop_images\/ic_7.png","label":"Bookmark DIY"}},"ac9":{"type":"activity","disabled":true,"settings":{"label":"Hand Casting"}}},"block_order":["sv1","sv2","sv3","sv4","sv5","sv6","sv7","sv8","ac1","ac2","ac3","ac4","ac5","ac6","ac7","ac8","ac9"],"settings":{"bg_desktop":"shopify:\/\/shop_images\/FAQ_Section.png","section_bg":"#f9d8e8","heading_a":"We create","heading_accent":"meaningful","heading_b":"learning experiences together","subtitle":"We host engaging DIY & STEM based events for every occasion.","hint":"Swipe to see more","act_count":"170+","act_suffix":"Activities We Offer","act_speed":26,"form_a":"Our activities are designed for all age groups —","form_pre":"because","form_accent1":"creativity","form_mid":"has","form_accent2":"no age!","button_label":"Get In touch","note":"Drop us a message - our team responds within 24 hours."}},"creste_favourites":{"type":"creste-favourites","settings":{"background":"shopify:\/\/shop_images\/Section_-_Best_Sellers.png","fallback_bg":"#f5c518","overlay":0,"heading":"Our Favourites","subtitle":"","heading_color":"#2b1702","collection":"demo","count":10,"card_width":250,"default_rating":"4.9","badge_tag":"top pick","badge_text":"TOP PICK","button_label":"Add To Cart"}},"creste_buildbox":{"type":"creste-buildbox","settings":{"image":"shopify:\/\/shop_images\/Build_Box_-D_1.png","image_mobile":"shopify:\/\/shop_images\/Build_box_-_m.png","link":"","alt":"Build your own box","full_width":true,"section_bg":"#ffffff","max_width":1200,"radius":24,"padding_top":16,"padding_bottom":16}},"creste_families":{"type":"creste-families","blocks":{"f1":{"type":"reel","settings":{"video":"shopify:\/\/files\/videos\/Video-269.mp4","video_url":"","caption":"","product":"bouquet-candle-kit"}},"f2":{"type":"reel","settings":{"video":"shopify:\/\/files\/videos\/Video-446.mp4","video_url":"","caption":"","product":"diy-block-printing-craft-kit-print-press-create"}},"f3":{"type":"reel","settings":{"video":"shopify:\/\/files\/videos\/TEDDY CANDLE - a.mp4","video_url":"","caption":"","product":"color-your-bag-kit-combo-pack-of-6"}},"f4":{"type":"reel","settings":{"video":"shopify:\/\/files\/videos\/Video-348.mp4","video_url":"","caption":"","product":"diy-baby-hand-casting-kit-2years"}}},"block_order":["f1","f2","f3","f4"],"settings":{"section_bg":"#fff3f7","heading":"From Our Families to Yours","subtitle":""}},"creste_faq":{"type":"creste-faq","blocks":{"q1":{"type":"faq","settings":{"question":"Are the materials safe for young children?","answer":"Yes. All our materials are non-toxic, quality-tested, and child-safe."}},"q2":{"type":"faq","settings":{"question":"How difficult are the projects?","answer":"Each kit is age-graded, with clear step-by-step instructions so kids can build confidence at their own pace."}},"q3":{"type":"faq","settings":{"question":"What age groups are your kits for?","answer":"Our kits span from 0-3 years all the way to adults, with age-appropriate activities for every stage."}},"q4":{"type":"faq","settings":{"question":"How long does delivery take?","answer":"Orders are typically delivered within 3-5 business days across India."}},"q5":{"type":"faq","settings":{"question":"Do you offer returns?","answer":"Yes, unused kits can be returned within 7 days of delivery."}}},"block_order":["q1","q2","q3","q4","q5"],"settings":{"section_bg":"#ffffff","heading":"Parents Often Ask...","subtitle":""}}},"order":["creste_hero","creste_stats","creste_age","creste_play","creste_testimonials","creste_giftfinder","creste_howitbegan","creste_featured","creste_stages","creste_events","creste_favourites","creste_buildbox","creste_families","creste_faq"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "creste_hero": {
+      "type": "creste-hero",
+      "blocks": {
+        "slide_EH4BV7": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Property_1_Variant2.png",
+            "link": "",
+            "alt": "Creste banner"
+          }
+        },
+        "slide_3jWpxH": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2147228149_99479d0c-43f6-41c7-8888-989a22bd5b1a.png",
+            "image_mobile": "shopify://shop_images/HERO_3ff9b233-e559-450e-9886-71cec7077a5a.png",
+            "link": "",
+            "alt": "Creste banner"
+          }
+        }
+      },
+      "block_order": [
+        "slide_EH4BV7",
+        "slide_3jWpxH"
+      ],
+      "settings": {
+        "bg": "#f4793a",
+        "show_dots": true,
+        "show_arrows": true,
+        "speed": 5
+      }
+    },
+    "creste_stats": {
+      "type": "creste-stats",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "icon": "shopify://shop_images/image_39_4.png",
+            "number": "50,000+",
+            "label": "HAPPY FACES",
+            "color": "teal"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "icon": "shopify://shop_images/image_39_2.png",
+            "number": "170+",
+            "label": "WORKSHOP FORMATS",
+            "color": "orange"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "icon": "shopify://shop_images/image_39_5.png",
+            "number": "13+",
+            "label": "SCHOOLS ENGAGED",
+            "color": "teal"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "icon": "shopify://shop_images/image_39_c011c364-9921-42bd-9686-f7e4b5d5532a.png",
+            "number": "14000+",
+            "label": "EVENT ATTENDEES",
+            "color": "orange"
+          }
+        },
+        "s5": {
+          "type": "stat",
+          "settings": {
+            "icon": "shopify://shop_images/image_39_c011c364-9921-42bd-9686-f7e4b5d5532a.png",
+            "number": "70+",
+            "label": "DIY PRODUCTS",
+            "color": "brown"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/Section_-_Trust_Banner_1.png",
+        "section_bg": "#ffffff",
+        "tagline": "Creste Makes Learning through play easy , purposeful & Joyful!"
+      }
+    },
+    "creste_age": {
+      "type": "creste-age",
+      "blocks": {
+        "a1": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/Container_2.png",
+            "label": "0 - 3 yrs",
+            "desc": "Little hands, big fun",
+            "tint": "#e0f7ff",
+            "collection": "",
+            "link": ""
+          }
+        },
+        "a2": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/image_3_3a4e5c18-52fb-4ed4-a631-ac64369546d1.png",
+            "label": "4-6 yrs",
+            "desc": "Creative adventures",
+            "tint": "#ffeea8",
+            "collection": "",
+            "link": ""
+          }
+        },
+        "a3": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/image_4_470679b2-43ef-4815-a664-2865a12aad36.png",
+            "label": "7-10 yrs",
+            "desc": "First real projects",
+            "tint": "#eaf7d8",
+            "collection": "",
+            "link": ""
+          }
+        },
+        "a4": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/image_5_4b25eccf-d3a3-4ed2-b39a-a497462cfea6.png",
+            "label": "11-15 yrs",
+            "desc": "Level-up skills",
+            "tint": "#f3eeff",
+            "collection": "",
+            "link": ""
+          }
+        },
+        "a5": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/image_6_a0fde401-000b-4248-bbc3-a9b9e5e7f469.png",
+            "label": "16 yrs +",
+            "desc": "Craft for the soul",
+            "tint": "#fffae5",
+            "collection": "",
+            "link": ""
+          }
+        },
+        "a6": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/image_7_ed28fe6d-ff40-4857-a19c-c7983e6405fd.png",
+            "label": "Adult",
+            "desc": "Craft for the soul",
+            "tint": "#e0f7ff",
+            "collection": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5",
+        "a6"
+      ],
+      "settings": {
+        "background": "shopify://shop_images/Shop_by_Age_1_7ba846c1-d787-4714-9249-e007c16c5585.png",
+        "overlap": 30,
+        "character": "shopify://shop_images/attachment-large_1.png",
+        "title_a": "Shop by",
+        "title_b": "Age",
+        "subtitle": "Perfectly leveled fun for every stage!"
+      }
+    },
+    "creste_play": {
+      "type": "creste-play",
+      "blocks": {
+        "cat1": {
+          "type": "category",
+          "settings": {
+            "emoji": "✂",
+            "name": "CRAFTY CREW",
+            "subtitle": "Cognitive Development",
+            "collection": "demo"
+          }
+        },
+        "cat2": {
+          "type": "category",
+          "settings": {
+            "emoji": "🧪",
+            "name": "SCIENCE LABS",
+            "subtitle": "Brain Development",
+            "collection": "demo"
+          }
+        },
+        "cat3": {
+          "type": "category",
+          "settings": {
+            "emoji": "🎨",
+            "name": "ART STUDIO",
+            "subtitle": "Social Development",
+            "collection": "demo"
+          }
+        },
+        "cat4": {
+          "type": "category",
+          "settings": {
+            "emoji": "🧠",
+            "name": "BRAIN POWER",
+            "subtitle": "Social Development",
+            "collection": "demo"
+          }
+        },
+        "cat5": {
+          "type": "category",
+          "settings": {
+            "emoji": "📖",
+            "name": "STORY WORLDS",
+            "subtitle": "Language & Literacy",
+            "collection": "demo"
+          }
+        },
+        "cat6": {
+          "type": "category",
+          "settings": {
+            "emoji": "🛠",
+            "name": "DIY KIT",
+            "subtitle": "Cognitive Development",
+            "collection": "demo"
+          }
+        },
+        "cat7": {
+          "type": "category",
+          "settings": {
+            "emoji": "👟",
+            "name": "ADULT",
+            "subtitle": "Physical Development",
+            "collection": "demo"
+          }
+        }
+      },
+      "block_order": [
+        "cat1",
+        "cat2",
+        "cat3",
+        "cat4",
+        "cat5",
+        "cat6",
+        "cat7"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/Play_with_Purpose-d_9d1521c6-96b8-43b3-a117-298289dd2970.png",
+        "bg_mobile": "shopify://shop_images/Play_with_Purpose-m.png",
+        "title_a": "Play with",
+        "title_b": "Purpose",
+        "subtitle": "Creativity builds confidence, curiosity opens doors, and hands-on making sparks joy.",
+        "view_all_label": "View All",
+        "view_all_fallback": "",
+        "wave_top": "#62a66b",
+        "wave_bottom": "#c9b8e8"
+      }
+    },
+    "creste_testimonials": {
+      "type": "creste-testimonials",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "title": "Super YouTube alternative!",
+            "quote": "How to get a 5yo from wanting to watch YouTube to wanting to learn by playing.",
+            "name": "Sarah Johnson",
+            "role": "Mother of a 5 year old",
+            "rating": "5"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "title": "My 2yo cant get enough!",
+            "quote": "It helps my guilt about screen time because I feel she is actually learning. It genuinely keeps her busy for hours and I never worry that it is wasted time anymore.",
+            "name": "Priya Sharma",
+            "role": "Mother of a 2 year old",
+            "rating": "5"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "title": "Super YouTube alternative!",
+            "quote": "How to get a 5yo from wanting to watch YouTube to wanting to learn by playing.",
+            "name": "Aisha Khan",
+            "role": "Mother of a 6 year old",
+            "rating": "5"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "title": "My 2yo cant get enough!",
+            "quote": "It helps my guilt about screen time because I feel she is actually learning.",
+            "name": "Neha Verma",
+            "role": "Mother of a 2 year old",
+            "rating": "5"
+          }
+        },
+        "r5": {
+          "type": "review",
+          "settings": {
+            "title": "Best purchase this year!",
+            "quote": "My kids ask for their Creste kit before the TV now.",
+            "name": "Ritu Mehra",
+            "role": "Mother of a 4 year old",
+            "rating": "5"
+          }
+        },
+        "r6": {
+          "type": "review",
+          "settings": {
+            "title": "Screen-free wins!",
+            "quote": "Finally an activity that keeps them engaged and learning at the same time. The instructions are clear and the whole family ends up joining in every single weekend.",
+            "name": "Kavya Nair",
+            "role": "Mother of a 7 year old",
+            "rating": "5"
+          }
+        },
+        "r7": {
+          "type": "review",
+          "settings": {
+            "title": "So much fun!",
+            "quote": "Weekend afternoons are sorted.",
+            "name": "Anjali Rao",
+            "role": "Mother of a 3 year old",
+            "rating": "5"
+          }
+        },
+        "r8": {
+          "type": "review",
+          "settings": {
+            "title": "Highly recommend",
+            "quote": "Great quality materials and thoughtful, age-appropriate projects.",
+            "name": "Meera Iyer",
+            "role": "Mother of an 8 year old",
+            "rating": "5"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6",
+        "r7",
+        "r8"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/Testimonials-_d.png",
+        "bg_mobile": "shopify://shop_images/Testimonials_Section_-m.png",
+        "overlap_top": 24,
+        "overlap_bottom": 0,
+        "section_bg": "#dcc9f5",
+        "wave_color": "#ede4fb",
+        "heading_a": "Loved By",
+        "heading_b": "50k+ Little Makers",
+        "columns": "3",
+        "visible": 5,
+        "button_label": "View More Reviews"
+      }
+    },
+    "creste_giftfinder": {
+      "type": "creste-giftfinder",
+      "settings": {
+        "image": "shopify://shop_images/Section_-_Trust_Banner.png",
+        "image_mobile": "shopify://shop_images/Gift_finder.png",
+        "link": "",
+        "alt": "Creste banner",
+        "max_width": 1280,
+        "radius": 24,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "creste_howitbegan": {
+      "type": "creste-howitbegan",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/IMAGE_1981e49e-d93b-4f66-ba34-e60e9385e708.png",
+            "color": "#f4793a",
+            "heading": "Started In the middle of the 2020 lockdown",
+            "body": "Most kids today know how to swipe before they learn how to hold a crayon.\nThat shift didn't sit right with Nidhi Sethia. In the middle of the 2020 lockdown, she saw something worrying.",
+            "btn1_label": "",
+            "btn1_link": "",
+            "btn2_label": "",
+            "btn2_link": ""
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_50.png",
+            "color": "#3aa6c0",
+            "heading": "Imagination & Joy of making is missing!",
+            "body": "What was missing was something bigger: imagination, real-world fun, and the joy of hands-on making with their own hands.",
+            "btn1_label": "",
+            "btn1_link": "",
+            "btn2_label": "",
+            "btn2_link": ""
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_51.png",
+            "color": "#8e6fd6",
+            "heading": "That's when Nidhi decided to build something better.",
+            "body": "It is what led Creste to life for kids, fun and screen-free ways to explore, create and learn. What began as a few DIY craft kits turned into Creste.",
+            "btn1_label": "",
+            "btn1_link": "",
+            "btn2_label": "",
+            "btn2_link": ""
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/100_Pure_Himalayan_Kapiva_Shilajit_Resin_-_30gm.png",
+            "color": "#6bb07a",
+            "heading": "A few DIY craft kits turned into Creste",
+            "body": "Today, Creste is that place where kids learn through play by doing DIY techniques, crafts and art forms. Every kit is designed to be exciting and fun to make.",
+            "btn1_label": "Learn More About Us",
+            "btn1_link": "/pages/our-story",
+            "btn2_label": "Explore Products",
+            "btn2_link": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/How_it_all_began1.png",
+        "bg_mobile": "shopify://shop_images/How_it_all_began-m.png",
+        "section_bg": "#fcede6",
+        "heading": "How It All Began",
+        "dog_left": "shopify://shop_images/Jack-_dog1.png",
+        "dog_right": "shopify://shop_images/dog2.png",
+        "dog_w": 130,
+        "dog_top": 0,
+        "dog_side": 12,
+        "offset": 80,
+        "gap": 24
+      }
+    },
+    "creste_featured": {
+      "type": "creste-featured",
+      "blocks": {
+        "l1": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2147228131_1.png",
+            "name": "BRAND",
+            "row": "top"
+          }
+        },
+        "l2": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2147228133_1.png",
+            "name": "MEDIA",
+            "row": "top"
+          }
+        },
+        "l3": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2147228135.png",
+            "name": "PRESS",
+            "row": "top"
+          }
+        },
+        "l4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2147228132_2.png",
+            "name": "NEWS",
+            "row": "top"
+          }
+        },
+        "l5": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2147228132_1.png",
+            "name": "TIMES",
+            "row": "bottom"
+          }
+        },
+        "l6": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2147228131.png",
+            "name": "DAILY",
+            "row": "bottom"
+          }
+        },
+        "logo_acQqQX": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-06-29_123028_1.png",
+            "name": "LOGO",
+            "row": "top"
+          }
+        },
+        "l8": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2147228133.png",
+            "name": "POST",
+            "row": "bottom"
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l5",
+        "l6",
+        "logo_acQqQX",
+        "l8"
+      ],
+      "settings": {
+        "heading": "Featured In",
+        "bg": "#ffffff",
+        "speed": 32
+      }
+    },
+    "creste_stages": {
+      "type": "creste-stages",
+      "blocks": {
+        "g1": {
+          "type": "stage",
+          "settings": {
+            "emoji": "💡",
+            "title": "Spark Curiosity",
+            "desc": "Every activity sparks curiosity and imagination."
+          }
+        },
+        "g2": {
+          "type": "stage",
+          "settings": {
+            "emoji": "🛠",
+            "title": "Build Skills",
+            "desc": "They learn, explore and build real-life skills."
+          }
+        },
+        "g3": {
+          "type": "stage",
+          "settings": {
+            "emoji": "🤝",
+            "title": "Stronger Bonds",
+            "desc": "Shared moments today build unbreakable bonds."
+          }
+        },
+        "g4": {
+          "type": "stage",
+          "settings": {
+            "emoji": "⭐",
+            "title": "Confidence Grows",
+            "desc": "Every step builds real self-belief."
+          }
+        },
+        "g5": {
+          "type": "stage",
+          "settings": {
+            "emoji": "🎓",
+            "title": "Confident Tomorrow",
+            "desc": "Growing into confident, creative and kind adults."
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5"
+      ],
+      "settings": {
+        "section_bg": "#ffffff",
+        "heading_1": "From Happy Childhoods",
+        "heading_2": "To Happy Adulthoods",
+        "subtitle": "The little moments you create today shape the confident, creative adults of tomorrow.",
+        "card_bg": "#ede9f8",
+        "badge_color": "#7e6bb8"
+      }
+    },
+    "creste_events": {
+      "type": "creste-events",
+      "blocks": {
+        "sv1": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg.png",
+            "icon_bg": "#e1f1f6",
+            "title": "Corporate Events",
+            "desc": "Engage your teams with creative, hands-on experiences."
+          }
+        },
+        "sv2": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_1.png",
+            "icon_bg": "#e3f0e5",
+            "title": "School Workshops",
+            "desc": "Enrich learning with interactive DIY & STEM workshops."
+          }
+        },
+        "sv3": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_3.png",
+            "icon_bg": "#ece4f7",
+            "title": "DIY Craft Workshops",
+            "desc": "Make birthdays extra special with fun DIY activities and memories."
+          }
+        },
+        "sv4": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_4.png",
+            "icon_bg": "#fbe4e4",
+            "title": "Community & Family Events",
+            "desc": "Make birthdays extra special with fun DIY activities and memories."
+          }
+        },
+        "sv5": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_7.png",
+            "icon_bg": "#fbefcb",
+            "title": "STEM & Science Sessions",
+            "desc": "Fun and educational science experiments for curious minds."
+          }
+        },
+        "sv6": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_1.png",
+            "icon_bg": "#fbe9d6",
+            "title": "Birthday Parties",
+            "desc": "Unforgettable, craft-filled celebrations for kids."
+          }
+        },
+        "sv7": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_4.png",
+            "icon_bg": "#e8f0fe",
+            "title": "Holiday Camps",
+            "desc": "Multi-day maker camps packed with hands-on fun."
+          }
+        },
+        "sv8": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_3.png",
+            "icon_bg": "#fdecec",
+            "title": "Team Building",
+            "desc": "Creative group challenges that bring teams together."
+          }
+        },
+        "ac1": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_7.png",
+            "label": "Slime Making"
+          }
+        },
+        "ac2": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_6.png",
+            "label": "Candle Making"
+          }
+        },
+        "ac3": {
+          "type": "activity",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/ic_3.png",
+            "label": "Tie-Dye"
+          }
+        },
+        "ac4": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_3.png",
+            "label": "Painting"
+          }
+        },
+        "ac5": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_6.png",
+            "label": "DIY Crafts"
+          }
+        },
+        "ac6": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_2.png",
+            "label": "Experiments"
+          }
+        },
+        "ac7": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_5.png",
+            "label": "Texture Art"
+          }
+        },
+        "ac8": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_7.png",
+            "label": "Bookmark DIY"
+          }
+        },
+        "ac9": {
+          "type": "activity",
+          "disabled": true,
+          "settings": {
+            "label": "Hand Casting"
+          }
+        }
+      },
+      "block_order": [
+        "sv1",
+        "sv2",
+        "sv3",
+        "sv4",
+        "sv5",
+        "sv6",
+        "sv7",
+        "sv8",
+        "ac1",
+        "ac2",
+        "ac3",
+        "ac4",
+        "ac5",
+        "ac6",
+        "ac7",
+        "ac8",
+        "ac9"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/FAQ_Section.png",
+        "section_bg": "#f9d8e8",
+        "heading_a": "We create",
+        "heading_accent": "meaningful",
+        "heading_b": "learning experiences together",
+        "subtitle": "We host engaging DIY & STEM based events for every occasion.",
+        "hint": "Swipe to see more",
+        "act_count": "170+",
+        "act_suffix": "Activities We Offer",
+        "act_speed": 26,
+        "form_a": "Our activities are designed for all age groups —",
+        "form_pre": "because",
+        "form_accent1": "creativity",
+        "form_mid": "has",
+        "form_accent2": "no age!",
+        "button_label": "Get In touch",
+        "note": "Drop us a message - our team responds within 24 hours."
+      }
+    },
+    "creste_favourites": {
+      "type": "creste-favourites",
+      "settings": {
+        "background": "shopify://shop_images/Section_-_Best_Sellers.png",
+        "fallback_bg": "#f5c518",
+        "overlay": 0,
+        "heading": "Our Favourites",
+        "heading_italic": "Favorites",
+        "subtitle": "",
+        "heading_color": "#2b1702",
+        "collection": "demo",
+        "count": 10,
+        "card_width": 250,
+        "default_rating": "4.9",
+        "badge_tag": "top pick",
+        "badge_text": "TOP PICK",
+        "button_label": "Add To Cart"
+      }
+    },
+    "creste_buildbox": {
+      "type": "creste-buildbox",
+      "settings": {
+        "image": "shopify://shop_images/Build_Box_-D_1.png",
+        "image_mobile": "shopify://shop_images/Build_box_-_m.png",
+        "link": "",
+        "alt": "Build your own box",
+        "full_width": true,
+        "section_bg": "#ffffff",
+        "max_width": 1200,
+        "radius": 24,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "creste_families": {
+      "type": "creste-families",
+      "blocks": {
+        "f1": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Video-269.mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "bouquet-candle-kit"
+          }
+        },
+        "f2": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Video-446.mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "diy-block-printing-craft-kit-print-press-create"
+          }
+        },
+        "f3": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/TEDDY CANDLE - a.mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "color-your-bag-kit-combo-pack-of-6"
+          }
+        },
+        "f4": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Video-348.mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "diy-baby-hand-casting-kit-2years"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "section_bg": "#fff3f7",
+        "heading": "From Our Families to Yours",
+        "heading_italic": "Yours",
+        "heading_italic_color": "#8b5cf6",
+        "subtitle": ""
+      }
+    },
+    "creste_faq": {
+      "type": "creste-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the materials safe for young children?",
+            "answer": "Yes. All our materials are non-toxic, quality-tested, and child-safe."
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "How difficult are the projects?",
+            "answer": "Each kit is age-graded, with clear step-by-step instructions so kids can build confidence at their own pace."
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "What age groups are your kits for?",
+            "answer": "Our kits span from 0-3 years all the way to adults, with age-appropriate activities for every stage."
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "Orders are typically delivered within 3-5 business days across India."
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer returns?",
+            "answer": "Yes, unused kits can be returned within 7 days of delivery."
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {
+        "section_bg": "#ffffff",
+        "heading": "Parents Often Ask...",
+        "subtitle": ""
+      }
+    }
+  },
+  "order": [
+    "creste_hero",
+    "creste_stats",
+    "creste_age",
+    "creste_play",
+    "creste_testimonials",
+    "creste_giftfinder",
+    "creste_howitbegan",
+    "creste_featured",
+    "creste_stages",
+    "creste_events",
+    "creste_favourites",
+    "creste_buildbox",
+    "creste_families",
+    "creste_faq"
+  ]
+}
