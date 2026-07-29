@@ -1,36 +1,29 @@
 {
   "sections": {
-    "banner": {
-      "type": "main-collection-banner",
+    "creste-collection": {
+      "type": "custom-collection",
       "settings": {
-        "show_collection_description": true,
-        "show_collection_image": false,
-        "color_scheme": "scheme-1"
-      }
-    },
-    "product-grid": {
-      "type": "main-collection-product-grid",
-      "settings": {
+        "show_hero": true,
+        "hero_title": "Ages 7–10 years",
+        "hero_subtitle": "Science experiments, candle studios, art kits and slime labs — built for big kid energy.",
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "show_category_pills": true,
+        "category_menu": "collection-categories",
         "products_per_page": 16,
         "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": false,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "enable_filtering": true,
-        "filter_type": "horizontal",
-        "enable_sorting": true,
-        "columns_mobile": "2",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "show_add_to_cart": true,
+        "badge_by_rating": true,
+        "show_promo": true,
+        "promo_title": "Birthday coming up?",
+        "promo_text": "Return gifts from Rs. 375 · DIY Party Box Kits for the whole gang!",
+        "promo_button_label": "Explore Now",
+        "promo_bg": "#7d4ac7",
+        "color_scheme": "scheme-1"
       }
     }
   },
   "order": [
-    "banner",
-    "product-grid"
+    "creste-collection"
   ]
 }

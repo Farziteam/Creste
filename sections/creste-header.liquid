@@ -35,7 +35,10 @@
 #creste-hd-{{ section.id }} .hd-catthumb img,#creste-hd-{{ section.id }} .hd-catthumb svg{width:100%;height:100%;object-fit:cover;}
 #creste-hd-{{ section.id }} .hd-catname{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;color:#2B1702;}
 #creste-hd-{{ section.id }} .hd-catsub{display:block;font-family:'Poppins',sans-serif;font-size:11px;color:#6b6258;}
-#creste-hd-{{ section.id }} .hd-na{background:{{ section.settings.na_bg }};padding:26px;color:#fff;display:flex;flex-direction:column;justify-content:center;}
+#creste-hd-{{ section.id }} .hd-na{position:relative;overflow:hidden;background:radial-gradient(120% 80% at 85% 0%, rgba(255,255,255,.18), rgba(255,255,255,0) 55%),{{ section.settings.na_bg }};padding:26px;color:#fff;display:flex;flex-direction:column;justify-content:center;}
+#creste-hd-{{ section.id }} .hd-na::before{content:'';position:absolute;top:-70px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none;}
+#creste-hd-{{ section.id }} .hd-na::after{content:'';position:absolute;bottom:-80px;left:-60px;width:220px;height:220px;border-radius:50%;background:rgba(0,0,0,.05);pointer-events:none;}
+#creste-hd-{{ section.id }} .hd-na>*{position:relative;z-index:1;}
 #creste-hd-{{ section.id }} .hd-na h4{margin:0 0 18px;font-family:'Nunito',sans-serif;font-weight:900;font-size:24px;}
 #creste-hd-{{ section.id }} .hd-nacard{background:#fff;border-radius:16px;padding:12px;color:#2B1702;display:flex;gap:12px;}
 #creste-hd-{{ section.id }} .hd-naimg{width:44%;flex:0 0 auto;border-radius:12px;overflow:hidden;background:#f6efe3;aspect-ratio:1/1;}
@@ -45,14 +48,56 @@
 #creste-hd-{{ section.id }} .hd-nat{margin:2px 0 0;font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;color:#2B1702;}
 #creste-hd-{{ section.id }} .hd-nap b{font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:16px;color:var(--creste-orange);}
 #creste-hd-{{ section.id }} .hd-nacart{margin-top:8px;background:var(--creste-orange);color:#fff;border:none;border-radius:9999px;height:38px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;}
-#creste-hd-{{ section.id }} .hd-mobile{display:none;max-width:1440px;margin:8px auto 0;background:{{ section.settings.bar_bg }};border-radius:16px;padding:12px;flex-direction:column;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,.12);}
-#creste-hd-{{ section.id }} .hd-mobile.open{display:flex;}
-#creste-hd-{{ section.id }} .hd-mobile a{color:#2B1702;text-decoration:none;font-family:'Poppins',sans-serif;font-weight:500;font-size:16px;padding:6px 4px;}
+
+/* ===== Mobile drawer (Figma node 782:1559) ===== */
+#creste-hd-{{ section.id }} .hd-drawer{position:fixed;inset:0;z-index:10000;display:none;}
+#creste-hd-{{ section.id }} .hd-drawer.open{display:block;}
+#creste-hd-{{ section.id }} .hd-drawer__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45);}
+#creste-hd-{{ section.id }} .hd-drawer__panel{position:absolute;top:0;left:0;bottom:0;width:86%;max-width:340px;background:#fff;overflow-y:auto;font-family:'Poppins',sans-serif;transform:translateX(-100%);transition:transform .28s ease;display:flex;flex-direction:column;padding-bottom:24px;}
+#creste-hd-{{ section.id }} .hd-drawer.open .hd-drawer__panel{transform:translateX(0);}
+#creste-hd-{{ section.id }} .hd-d-top{display:flex;align-items:center;justify-content:space-between;padding:16px;}
+#creste-hd-{{ section.id }} .hd-d-top img{max-height:44px;width:auto;}
+#creste-hd-{{ section.id }} .hd-d-close{width:34px;height:34px;border-radius:50%;border:0;background:#f1efee;color:#2B1702;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+#creste-hd-{{ section.id }} .hd-d-gift{display:flex;align-items:center;gap:10px;margin:4px 16px 12px;padding:10px 12px;background:rgba(125,74,199,.10);border-radius:14px;text-decoration:none;}
+#creste-hd-{{ section.id }} .hd-d-gift .ic{font-size:20px;}
+#creste-hd-{{ section.id }} .hd-d-gift .tx{flex:1;min-width:0;display:flex;flex-direction:column;}
+#creste-hd-{{ section.id }} .hd-d-gift .t1{font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:#2B1702;}
+#creste-hd-{{ section.id }} .hd-d-gift .t2{font-size:12px;color:#7a6a60;}
+#creste-hd-{{ section.id }} .hd-d-gift .qb{background:{{ section.settings.na_bg | default: '#7d4ac7' }};background:#7d4ac7;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;padding:8px 12px;border-radius:10px;text-align:center;line-height:1.2;max-width:74px;}
+#creste-hd-{{ section.id }} .hd-d-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:16px;color:#2B1702;text-decoration:none;border-top:1px solid #f0ece8;}
+#creste-hd-{{ section.id }} .hd-d-acc{border-top:1px solid #f0ece8;}
+#creste-hd-{{ section.id }} .hd-d-acc>summary{list-style:none;cursor:pointer;border-top:0;}
+#creste-hd-{{ section.id }} .hd-d-acc>summary::-webkit-details-marker{display:none;}
+#creste-hd-{{ section.id }} .hd-d-acc .cv{transition:transform .2s ease;}
+#creste-hd-{{ section.id }} .hd-d-acc[open] .cv{transform:rotate(180deg);}
+#creste-hd-{{ section.id }} .hd-d-body{padding:0 16px 12px;}
+#creste-hd-{{ section.id }} .hd-d-label{margin:8px 0 10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7a6a60;}
+#creste-hd-{{ section.id }} .hd-d-ages{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px;}
+#creste-hd-{{ section.id }} .hd-d-age{display:flex;align-items:center;justify-content:center;padding:13px 6px;border-radius:12px;font-weight:600;font-size:13px;color:#2B1702;text-decoration:none;text-align:center;}
+#creste-hd-{{ section.id }} .hd-d-acts{display:flex;flex-wrap:wrap;gap:10px;}
+#creste-hd-{{ section.id }} .hd-d-act{padding:7px 15px;border-radius:9999px;font-weight:600;font-size:13px;color:#2B1702;text-decoration:none;}
+#creste-hd-{{ section.id }} .hd-d-na{position:relative;margin:16px 16px 0;background:radial-gradient(130% 85% at 82% 0%, rgba(255,255,255,.16), rgba(255,255,255,0) 58%),{{ section.settings.na_bg }};border-radius:18px;padding:16px 12px 14px;overflow:hidden;}
+#creste-hd-{{ section.id }} .hd-d-na::before{content:'';position:absolute;top:-46px;right:-34px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none;}
+#creste-hd-{{ section.id }} .hd-d-na::after{content:'';position:absolute;bottom:-54px;left:-40px;width:150px;height:150px;border-radius:50%;background:rgba(0,0,0,.05);pointer-events:none;}
+#creste-hd-{{ section.id }} .hd-d-na>*{position:relative;z-index:1;}
+#creste-hd-{{ section.id }} .hd-d-na h4{text-align:center;font-family:'Nunito',sans-serif;font-weight:800;font-size:18px;color:#fff;margin:0 0 10px;}
+#creste-hd-{{ section.id }} .hd-d-nacard{display:flex;gap:10px;background:#fff;border-radius:12px;padding:8px;}
+#creste-hd-{{ section.id }} .hd-d-namedia{flex:0 0 64px;height:64px;border-radius:8px;overflow:hidden;background:#f6f3ef;display:block;}
+#creste-hd-{{ section.id }} .hd-d-namedia img,#creste-hd-{{ section.id }} .hd-d-namedia svg{width:100%;height:100%;object-fit:cover;}
+#creste-hd-{{ section.id }} .hd-d-nainfo{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;}
+#creste-hd-{{ section.id }} .hd-d-naname{font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;color:#2B1702;text-decoration:none;line-height:1.2;}
+#creste-hd-{{ section.id }} .hd-d-naprice{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px;}
+#creste-hd-{{ section.id }} .hd-d-naprice b{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:var(--creste-orange);}
+#creste-hd-{{ section.id }} .hd-d-nasub{font-family:'Poppins',sans-serif;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:#8a7c70;margin-top:1px;}
+#creste-hd-{{ section.id }} .hd-d-naprice s{font-family:'Nunito',sans-serif;font-size:12px;color:#9a8d80;}
+#creste-hd-{{ section.id }} .hd-d-nadisc{font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;color:#2e9e5b;}
+#creste-hd-{{ section.id }} .hd-d-nabtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--creste-orange);color:#fff;border-radius:9999px;padding:12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:15px;text-decoration:none;margin-top:10px;}
+
 @media(max-width:1024px){#creste-hd-{{ section.id }} .hd-nav{display:none;}#creste-hd-{{ section.id }} .hd-burger{display:flex;}#creste-hd-{{ section.id }} .hd-logo{flex:1 1 auto;justify-content:center;}#creste-hd-{{ section.id }} .hd-logo img{height:40px;}#creste-hd-{{ section.id }} .hd-mega{display:none !important;}}
 </style>
 <div id='creste-hd-{{ section.id }}' class='creste-section'>
 <div class='hd-bar'>
-<button type='button' class='hd-burger' aria-label='Menu' onclick="var m=document.getElementById('hdm-{{ section.id }}');m.classList.toggle('open');"><svg viewBox='0 0 24 24' width='26' height='26' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><path d='M3 6h18M3 12h18M3 18h18'/></svg></button>
+<button type='button' class='hd-burger' aria-label='Menu' onclick="document.getElementById('hdm-{{ section.id }}').classList.add('open');document.body.style.overflow='hidden';"><svg viewBox='0 0 24 24' width='26' height='26' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><path d='M3 6h18M3 12h18M3 18h18'/></svg></button>
 <a href='{{ routes.root_url }}' class='hd-logo'>{% if section.settings.logo != blank %}<img src='{{ section.settings.logo | image_url: width: 280 }}' alt='{{ shop.name | escape }}'>{% else %}<span class='hd-name'>Creste</span>{% endif %}</a>
 <nav class='hd-nav'>
 <span class='hd-shop'><a class='hd-shoptrigger' href='{{ section.settings.shop_link | default: '/collections/all' }}'>{{ section.settings.shop_label }} &#9662;</a></span>
@@ -72,14 +117,56 @@
 <div class='hd-na'><h4>{{ section.settings.na_heading }}</h4>{% assign nacoll = collections[section.settings.na_collection] %}{% assign p = nacoll.products.first %}<div class='hd-nacard'>{% if p != blank %}<a class='hd-naimg' href='{{ p.url }}'>{% if p.featured_image %}<img src='{{ p.featured_image | image_url: width: 300 }}' alt='{{ p.title | escape }}'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a><div class='hd-nabody'><span class='hd-narate'>&#9733; {{ p.metafields.reviews.rating.value | default: '4.9' }}</span><p class='hd-nat'>{{ p.title }}</p><div class='hd-nap'><b>{{ p.price | money }}</b></div><a class='hd-nacart' href='{{ p.url }}'>&#128722; View</a></div>{% else %}<span class='hd-naimg'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='hd-nabody'><span class='hd-narate'>&#9733; 4.9</span><p class='hd-nat'>Bouquet Candle Kit</p><div class='hd-nap'><b>Rs. 1,299</b></div><a class='hd-nacart' href='#'>&#128722; View</a></div>{% endif %}</div></div>
 </div>
 </div>
-<div class='hd-mobile' id='hdm-{{ section.id }}'>
-<a href='{{ section.settings.shop_link | default: '/collections/all' }}'>{{ section.settings.shop_label }}</a>
-{% for block in navs %}<a href='{{ block.settings.link | default: '#' }}'>{{ block.settings.label }}</a>{% endfor %}
-{% if section.settings.quiz_label != blank %}<a class='hd-quiz' style='align-self:flex-start;' href='{{ section.settings.quiz_link | default: '#' }}'>{{ section.settings.quiz_label }}</a>{% endif %}
+
+{%- comment -%} ===== Mobile drawer (redesigned to match Figma 782:1559) ===== {%- endcomment -%}
+<div class='hd-drawer' id='hdm-{{ section.id }}' aria-hidden='true'>
+<div class='hd-drawer__backdrop js-hd-close'></div>
+<aside class='hd-drawer__panel' role='dialog' aria-label='Menu'>
+<div class='hd-d-top'>
+<a href='{{ routes.root_url }}' class='hd-logo'>{% if section.settings.logo != blank %}<img src='{{ section.settings.logo | image_url: width: 240 }}' alt='{{ shop.name | escape }}'>{% else %}<span class='hd-name'>Creste</span>{% endif %}</a>
+<button type='button' class='hd-d-close js-hd-close' aria-label='Close menu'><svg width='16' height='16' viewBox='0 0 24 24' fill='none'><path d='M6 6l12 12M18 6L6 18' stroke='currentColor' stroke-width='2' stroke-linecap='round'/></svg></button>
+</div>
+{% if section.settings.quiz_label != blank %}<a href='{{ section.settings.quiz_link | default: '#' }}' class='hd-d-gift'><span class='ic'>&#127873;</span><span class='tx'><span class='t1'>Not sure what to pick?</span><span class='t2'>1-min Gift Finder, perfect kit</span></span><span class='qb'>{{ section.settings.quiz_label }}</span></a>{% endif %}
+<details class='hd-d-acc' open>
+<summary class='hd-d-row'><span>{{ section.settings.shop_label | default: 'Shop' }}</span><svg class='cv' width='18' height='18' viewBox='0 0 24 24' fill='none'><path d='M6 9l6 6 6-6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></summary>
+<div class='hd-d-body'>
+<p class='hd-d-label'>{{ section.settings.age_heading | default: 'By Age' }}</p>
+<div class='hd-d-ages'>{% for block in ages %}<a class='hd-d-age' href='{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}' style='background:{{ block.settings.tint | default: '#f2ede4' }};'>{{ block.settings.label }}</a>{% endfor %}</div>
+<p class='hd-d-label'>{{ section.settings.cat_heading | default: 'By Activity' }}</p>
+<div class='hd-d-acts'>{% assign tints = 'e3f0fb,fdece0,ece7fb,e3f5e9,fde4ee,fbf3df' | split: ',' %}{% for block in cats %}{% assign ci = forloop.index0 | modulo: 6 %}<a class='hd-d-act' href='{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}' style='background:#{{ tints[ci] }};'>{{ block.settings.name }}</a>{% endfor %}</div>
+</div>
+</details>
+<nav>{% for block in navs %}<a class='hd-d-row' href='{{ block.settings.link | default: '#' }}'>{{ block.settings.label }}</a>{% endfor %}</nav>
+{% assign dnacoll = collections[section.settings.na_collection] %}{% assign dp = dnacoll.products.first %}
+<div class='hd-d-na'>
+<h4>{{ section.settings.na_heading | default: 'New Arrivals' }}</h4>
+<div class='hd-d-nacard'>
+{% if dp != blank %}
+<a href='{{ dp.url }}' class='hd-d-namedia'>{% if dp.featured_image %}<img src='{{ dp.featured_image | image_url: width: 180 }}' alt='{{ dp.title | escape }}'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a>
+<div class='hd-d-nainfo'>
+<a href='{{ dp.url }}' class='hd-d-naname'>{{ dp.title }}</a>
+{% if dp.type != blank %}<span class='hd-d-nasub'>{{ dp.type }}</span>{% endif %}
+<div class='hd-d-naprice'><b>{{ dp.price | money }}</b>{% if dp.compare_at_price > dp.price %}<s>{{ dp.compare_at_price | money }}</s>{% assign pct = dp.compare_at_price | minus: dp.price | times: 100 | divided_by: dp.compare_at_price %}<span class='hd-d-nadisc'>{{ pct }}% off</span>{% endif %}</div>
+</div>
+{% else %}
+<span class='hd-d-namedia'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span>
+<div class='hd-d-nainfo'>
+<span class='hd-d-naname'>DIY Hand Casting Kit</span>
+<span class='hd-d-nasub'>AGES 7+ &bull; STEAM KIT</span>
+<div class='hd-d-naprice'><b>Rs.&nbsp;1,299</b><s>Rs.&nbsp;2,299</s><span class='hd-d-nadisc'>20% off</span></div>
+</div>
+{% endif %}
+</div>
+<a class='hd-d-nabtn' href='{% if dp != blank %}{{ dp.url }}{% else %}#{% endif %}'>&#128722; Add to Cart</a>
+</div>
+</aside>
 </div>
 </div>
 <script>
-(function(){var r=document.getElementById('creste-hd-{{ section.id }}');if(!r)return;var trig=r.querySelector('.hd-shoptrigger'),mega=r.querySelector('.hd-mega');if(trig&&mega){var t;function sh(){clearTimeout(t);mega.classList.add('open');}function hd(){t=setTimeout(function(){mega.classList.remove('open');},160);}[trig,mega].forEach(function(el){el.addEventListener('mouseenter',sh);el.addEventListener('mouseleave',hd);});}})();
+(function(){var r=document.getElementById('creste-hd-{{ section.id }}');if(!r)return;
+var trig=r.querySelector('.hd-shoptrigger'),mega=r.querySelector('.hd-mega');if(trig&&mega){var t;function sh(){clearTimeout(t);mega.classList.add('open');}function hd(){t=setTimeout(function(){mega.classList.remove('open');},160);}[trig,mega].forEach(function(el){el.addEventListener('mouseenter',sh);el.addEventListener('mouseleave',hd);});}
+var drawer=document.getElementById('hdm-{{ section.id }}');if(drawer){drawer.querySelectorAll('.js-hd-close').forEach(function(el){el.addEventListener('click',function(){drawer.classList.remove('open');document.body.style.overflow='';});});}
+})();
 </script>
 {% schema %}
 {
