@@ -196,6 +196,7 @@
         "cat1": {
           "type": "category",
           "settings": {
+            "icon": "shopify://shop_images/crafty-crew_1.png",
             "emoji": "✂",
             "name": "CRAFTY CREW",
             "subtitle": "Cognitive Development",
@@ -205,6 +206,7 @@
         "cat2": {
           "type": "category",
           "settings": {
+            "icon": "shopify://shop_images/image_47.png",
             "emoji": "🧪",
             "name": "SCIENCE LABS",
             "subtitle": "Brain Development",
@@ -214,6 +216,7 @@
         "cat3": {
           "type": "category",
           "settings": {
+            "icon": "shopify://shop_images/image_47_1.png",
             "emoji": "🎨",
             "name": "ART STUDIO",
             "subtitle": "Social Development",
@@ -223,6 +226,7 @@
         "cat4": {
           "type": "category",
           "settings": {
+            "icon": "shopify://shop_images/image_47_2.png",
             "emoji": "🧠",
             "name": "BRAIN POWER",
             "subtitle": "Social Development",
@@ -232,6 +236,7 @@
         "cat5": {
           "type": "category",
           "settings": {
+            "icon": "shopify://shop_images/Container_1.png",
             "emoji": "📖",
             "name": "STORY WORLDS",
             "subtitle": "Language & Literacy",
@@ -241,6 +246,7 @@
         "cat6": {
           "type": "category",
           "settings": {
+            "icon": "shopify://shop_images/image_47_3.png",
             "emoji": "🛠",
             "name": "DIY KIT",
             "subtitle": "Cognitive Development",
