@@ -1,0 +1,342 @@
+{%- comment -%}
+============================================================
+Creste — Custom Collection Page  (Figma node 782:1650)
+Hero banner + horizontal toolbar (Show Filters / Sort /
+category pills) + collapsible filter panel + product grid +
+promo CTA banner + pagination. Data-driven from products.
+============================================================
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@700;900&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap">
+{%- liquid
+assign ppp = section.settings.products_per_page
+assign cols = section.settings.columns_desktop
+assign tints = 'rgba(139,92,246,0.10),rgba(255,206,0,0.12),rgba(58,172,204,0.12),rgba(91,173,111,0.12),rgba(244,121,58,0.10),rgba(236,72,153,0.10)' | split: ','
+assign hero_title = section.settings.hero_title | default: collection.title
+-%}
+<section class="cr-collection color-{{ section.settings.color_scheme }}" data-section-id="{{ section.id }}">
+{%- comment -%} ===== HERO BANNER ===== {%- endcomment -%}
+{%- if section.settings.show_hero -%}
+<div class="cr-hero">
+<div class="cr-hero-inner">
+<p class="cr-hero-count">{{ collection.all_products_count }} Products</p>
+<h1 class="cr-hero-title">{{ hero_title | escape }}</h1>
+{%- if section.settings.hero_subtitle != blank -%}
+<p class="cr-hero-sub">{{ section.settings.hero_subtitle | escape }}</p>
+{%- elsif collection.description != blank -%}
+<p class="cr-hero-sub">{{ collection.description | strip_html | truncatewords: 26 }}</p>
+{%- endif -%}
+</div>
+</div>
+{%- endif -%}
+<div class="cr-wrap">
+{%- comment -%} ===== BREADCRUMB ===== {%- endcomment -%}
+<nav class="cr-breadcrumb" aria-label="Breadcrumb">
+<a href="{{ routes.root_url }}">Home</a>
+<span class="cr-crumb-sep" aria-hidden="true">
+<svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span>
+<span class="cr-crumb-current">{{ hero_title | escape }}</span>
+</nav>
+{%- comment -%} ===== TOOLBAR ===== {%- endcomment -%}
+<div class="cr-toolbar">
+<div class="cr-toolbar-left">
+{%- if section.settings.enable_filtering and collection.filters.size > 0 -%}
+<button type="button" class="cr-pill cr-pill--ghost js-cr-toggle-filters" aria-expanded="false">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+Show Filters
+</button>
+{%- endif -%}
+{%- if section.settings.enable_sorting -%}
+{%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+<div class="cr-sort-pill">
+<span>Sort:</span>
+<select class="js-cr-sort" aria-label="Sort by">
+{%- for opt in collection.sort_options -%}
+<option value="{{ opt.value }}" {% if opt.value == current_sort %}selected{% endif %}>{{ opt.name }}</option>
+{%- endfor -%}
+</select>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+{%- endif -%}
+</div>
+{%- if section.settings.show_category_pills and section.settings.category_menu != blank -%}
+<div class="cr-cats">
+<a class="cr-pill {% if collection.current_tags == empty or collection.current_tags == blank %}is-active{% endif %}" href="{{ collection.url }}">All Kits</a>
+{%- for link in linklists[section.settings.category_menu].links -%}
+<a class="cr-pill {% if link.active %}is-active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+{%- endfor -%}
+</div>
+{%- endif -%}
+</div>
+<div class="cr-layout" data-filters="closed">
+{%- comment -%} ===== COLLAPSIBLE FILTER SIDEBAR ===== {%- endcomment -%}
+{%- if section.settings.enable_filtering and collection.filters.size > 0 -%}
+<aside class="cr-sidebar" hidden>
+<form id="CrFacetForm" class="cr-facets">
+<div class="cr-facets-head">
+<span class="cr-facets-title">Filters</span>
+<a class="cr-clear" href="{{ collection.url }}?sort_by={{ collection.sort_by | default: collection.default_sort_by }}">Clear all</a>
+</div>
+{%- assign active_count = 0 -%}
+{%- for f in collection.filters -%}{%- assign active_count = active_count | plus: f.active_values.size -%}{%- endfor -%}
+{%- if active_count > 0 -%}
+<div class="cr-chips">
+{%- for f in collection.filters -%}
+{%- for v in f.active_values -%}
+<a class="cr-chip" href="{{ v.url_to_remove }}">
+<span>{{ v.label | escape }}</span>
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+</a>
+{%- endfor -%}
+{%- endfor -%}
+</div>
+{%- endif -%}
+{%- for f in collection.filters -%}
+<details class="cr-facet" open>
+<summary class="cr-facet-summary">
+<span>{{ f.label | escape }}</span>
+<svg class="cr-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</summary>
+<div class="cr-facet-body">
+{%- case f.type -%}
+{%- when 'list', 'boolean' -%}
+<ul class="cr-options" role="list">
+{%- for v in f.values -%}
+<li>
+<a class="cr-opt {% if v.active %}is-active{% endif %} {% if v.count == 0 and v.active == false %}is-disabled{% endif %}"
+href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}">
+<span class="cr-box" aria-hidden="true">
+<svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-6.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span>
+<span class="cr-opt-label">{{ v.label | escape }}</span>
+{%- if v.count and v.count > 0 -%}<span class="cr-opt-count">{{ v.count }}</span>{%- endif -%}
+</a>
+</li>
+{%- endfor -%}
+</ul>
+{%- when 'price_range' -%}
+<div class="cr-price">
+<div class="cr-price-fields">
+<label class="cr-price-field"><span>{{ cart.currency.symbol }}</span>
+<input type="number" name="{{ f.min_value.param_name }}" inputmode="decimal" placeholder="0" min="0" max="{{ f.range_max | money_without_currency | replace: ',', '' }}" {% if f.min_value.value %}value="{{ f.min_value.value | money_without_currency | replace: ',', '' }}"{% endif %}>
+</label>
+<span class="cr-price-dash">–</span>
+<label class="cr-price-field"><span>{{ cart.currency.symbol }}</span>
+<input type="number" name="{{ f.max_value.param_name }}" inputmode="decimal" placeholder="{{ f.range_max | money_without_currency | replace: ',', '' }}" min="0" max="{{ f.range_max | money_without_currency | replace: ',', '' }}" {% if f.max_value.value %}value="{{ f.max_value.value | money_without_currency | replace: ',', '' }}"{% endif %}>
+</label>
+</div>
+<button type="submit" class="cr-price-apply">Apply</button>
+</div>
+{%- endcase -%}
+</div>
+</details>
+{%- endfor -%}
+{%- if collection.sort_by != blank -%}<input type="hidden" name="sort_by" value="{{ collection.sort_by }}">{%- endif -%}
+</form>
+</aside>
+{%- endif -%}
+{%- comment -%} ===== PRODUCT GRID ===== {%- endcomment -%}
+<div class="cr-main">
+{%- paginate collection.products by ppp -%}
+{%- if collection.products.size == 0 -%}
+<div class="cr-empty">
+<p>No products found. Try clearing a filter.</p>
+<a class="cr-atc" style="max-width:220px;margin:12px auto 0;" href="{{ collection.url }}">Clear filters</a>
+</div>
+{%- else -%}
+<ul class="cr-grid" style="--cr-cols: {{ cols }};" role="list">
+{%- for product in collection.products -%}
+{%- liquid
+assign tint_index = forloop.index0 | modulo: tints.size
+assign tint = tints[tint_index]
+assign rating_num = product.metafields.reviews.rating.value.rating
+assign rating_out = ''
+if rating_num != blank and rating_num > 0
+assign rating_out = rating_num | round: 1
+endif
+assign age_label = ''
+for t in product.tags
+assign tl = t | downcase
+if tl contains 'year' or tl contains 'yrs'
+assign age_label = t
+break
+endif
+endfor
+assign skill_label = ''
+for t in product.tags
+assign tl = t | downcase
+if tl contains '&' or tl contains 'skill' or tl contains 'build' or tl contains 'paint' or tl contains 'art' or tl contains 'science' or tl contains 'craft' or tl contains 'creat'
+assign skill_label = t
+break
+endif
+endfor
+assign is_top = false
+if product.tags contains 'top-pick' or product.tags contains 'Top Pick' or product.tags contains 'bestseller' or product.tags contains 'Bestseller'
+assign is_top = true
+elsif section.settings.badge_by_rating and rating_num != blank and rating_num >= 4.5
+assign is_top = true
+endif
+assign on_sale = false
+if product.compare_at_price > product.price
+assign on_sale = true
+assign pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+endif
+assign img_alt = product.featured_media.alt | default: product.title | escape
+-%}
+<li class="cr-card-cell">
+<div class="cr-card">
+<a class="cr-card-media" href="{{ product.url }}" style="--tint: {{ tint }};">
+{%- if product.featured_media -%}
+{{ product.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(min-width:990px) 300px, 45vw', widths: '200,300,400,600', class: 'cr-card-img', alt: img_alt }}
+{%- else -%}
+{{ 'product-apparel-1' | placeholder_svg_tag: 'cr-card-img cr-placeholder' }}
+{%- endif -%}
+</a>
+<div class="cr-card-body">
+<div class="cr-card-top">
+{%- if rating_out != blank -%}
+<span class="cr-rating">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="#f5b301"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z"/></svg>
+{{ rating_out }}
+</span>
+{%- else -%}<span></span>{%- endif -%}
+{%- if is_top -%}
+<span class="cr-badge">
+<svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z"/></svg>
+TOP PICK
+</span>
+{%- endif -%}
+</div>
+<a class="cr-card-title" href="{{ product.url }}">{{ product.title | escape }}</a>
+{%- if age_label != blank or skill_label != blank -%}
+<p class="cr-card-meta">
+{%- if age_label != blank -%}AGES {{ age_label | remove: 'years' | remove: 'year' | remove: 'yrs' | strip }}{%- endif -%}
+{%- if age_label != blank and skill_label != blank -%} • {% endif -%}
+{%- if skill_label != blank -%}{{ skill_label }}{%- endif -%}
+</p>
+{%- endif -%}
+<div class="cr-price-row">
+<span class="cr-price-now">{{ product.price | money }}</span>
+{%- if on_sale -%}
+<span class="cr-price-was">{{ product.compare_at_price | money }}</span>
+<span class="cr-price-off">{{ pct }}% off</span>
+{%- endif -%}
+</div>
+{%- if section.settings.show_add_to_cart -%}
+{%- assign first_available = product.selected_or_first_available_variant -%}
+{%- if product.available and first_available -%}
+<product-form class="cr-atc-wrap">
+{%- form 'product', product, id: null, class: 'cr-atc-form', novalidate: 'novalidate' -%}
+<input type="hidden" name="id" value="{{ first_available.id }}">
+<button type="submit" name="add" class="cr-atc">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 3h2l2.4 12.3a2 2 0 002 1.7h7.7a2 2 0 002-1.6L21 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20" r="1.4" fill="currentColor"/></svg>
+Add To Cart
+</button>
+{%- endform -%}
+</product-form>
+{%- else -%}
+<a class="cr-atc is-sold" href="{{ product.url }}">Sold out</a>
+{%- endif -%}
+{%- endif -%}
+</div>
+</div>
+</li>
+{%- endfor -%}
+</ul>
+{%- if paginate.pages > 1 -%}
+<nav class="cr-pagination" aria-label="Pagination">
+{%- if paginate.previous -%}<a class="cr-page cr-page-arrow" href="{{ paginate.previous.url }}" aria-label="Previous">‹</a>{%- endif -%}
+{%- for part in paginate.parts -%}
+{%- if part.is_link -%}<a class="cr-page" href="{{ part.url }}">{{ part.title }}</a>
+{%- elsif part.title == paginate.current_page -%}<span class="cr-page is-current" aria-current="page">{{ part.title }}</span>
+{%- else -%}<span class="cr-page cr-page-gap">{{ part.title }}</span>{%- endif -%}
+{%- endfor -%}
+{%- if paginate.next -%}<a class="cr-page cr-page-arrow" href="{{ paginate.next.url }}" aria-label="Next">›</a>{%- endif -%}
+</nav>
+{%- endif -%}
+{%- endif -%}
+{%- endpaginate -%}
+</div>
+</div>
+</div>
+{%- comment -%} ===== PROMO CTA BANNER ===== {%- endcomment -%}
+{%- if section.settings.show_promo -%}
+<div class="cr-promo" style="--promo-bg: {{ section.settings.promo_bg }};">
+<div class="cr-promo-left">
+<div class="cr-promo-ic">
+{%- if section.settings.promo_image != blank -%}{{ section.settings.promo_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+{%- else -%}<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="3.6" r="1" fill="#fff"/><path d="M12 4.6v3" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M6.5 13v-1.2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2V13" stroke="#fff" stroke-width="1.3" stroke-linejoin="round"/><rect x="4.5" y="13" width="15" height="6.5" rx="1.5" stroke="#fff" stroke-width="1.3"/><path d="M4.5 16c1.1 0 1.1 1 2.2 1s1.1-1 2.2-1 1.1 1 2.2 1 1.1-1 2.2-1 1.1 1 2.2 1 1.1-1 2.2-1" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>{%- endif -%}
+</div>
+<div>
+<p class="cr-promo-title">{{ section.settings.promo_title | escape }}</p>
+{%- if section.settings.promo_text != blank -%}<p class="cr-promo-text">{{ section.settings.promo_text | escape }}</p>{%- endif -%}
+</div>
+</div>
+{%- if section.settings.promo_button_label != blank -%}
+<a class="cr-promo-btn" href="{{ section.settings.promo_button_link | default: '#' }}">{{ section.settings.promo_button_label | escape }}</a>
+{%- endif -%}
+</div>
+{%- endif -%}
+</section>
+<script>
+(function () {
+var root = document.querySelector('.cr-collection[data-section-id="{{ section.id }}"]');
+if (!root) return;
+var sort = root.querySelector('.js-cr-sort');
+if (sort) {
+sort.addEventListener('change', function () {
+var url = new URL(window.location.href);
+url.searchParams.set('sort_by', sort.value);
+url.searchParams.delete('page');
+window.location.href = url.toString();
+});
+}
+var toggle = root.querySelector('.js-cr-toggle-filters');
+var layout = root.querySelector('.cr-layout');
+var sidebar = root.querySelector('.cr-sidebar');
+if (toggle && layout && sidebar) {
+toggle.addEventListener('click', function () {
+var open = layout.getAttribute('data-filters') === 'open';
+layout.setAttribute('data-filters', open ? 'closed' : 'open');
+toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+if (open) { sidebar.setAttribute('hidden', ''); } else { sidebar.removeAttribute('hidden'); }
+});
+}
+})();
+</script>
+{{ 'custom-collection.css' | asset_url | stylesheet_tag }}
+{% schema %}
+{
+"name": "Creste Collection",
+"tag": "section",
+"class": "section",
+"settings": [
+{ "type": "header", "content": "Hero banner" },
+{ "type": "checkbox", "id": "show_hero", "default": true, "label": "Show hero banner" },
+{ "type": "text", "id": "hero_title", "label": "Hero title", "info": "Leave blank to use the collection title" },
+{ "type": "textarea", "id": "hero_subtitle", "label": "Hero subtitle" },
+{ "type": "header", "content": "Toolbar" },
+{ "type": "checkbox", "id": "enable_filtering", "default": true, "label": "Enable filters (Show Filters button)", "info": "Configure filters in Search & Discovery" },
+{ "type": "checkbox", "id": "enable_sorting", "default": true, "label": "Enable sorting" },
+{ "type": "checkbox", "id": "show_category_pills", "default": true, "label": "Show category pills" },
+{ "type": "link_list", "id": "category_menu", "label": "Category pills menu", "info": "Menu of collections shown as pills (an 'All Kits' pill is added automatically)" },
+{ "type": "header", "content": "Product grid" },
+{ "type": "range", "id": "products_per_page", "min": 8, "max": 24, "step": 4, "default": 16, "label": "Products per page" },
+{ "type": "range", "id": "columns_desktop", "min": 2, "max": 5, "step": 1, "default": 4, "label": "Columns on desktop" },
+{ "type": "checkbox", "id": "show_add_to_cart", "default": true, "label": "Show Add To Cart button" },
+{ "type": "checkbox", "id": "badge_by_rating", "default": true, "label": "Show TOP PICK badge for products rated 4.5+" },
+{ "type": "header", "content": "Promo banner" },
+{ "type": "checkbox", "id": "show_promo", "default": true, "label": "Show promo banner" },
+{ "type": "image_picker", "id": "promo_image", "label": "Promo icon" },
+{ "type": "text", "id": "promo_title", "default": "Birthday coming up?", "label": "Promo title" },
+{ "type": "text", "id": "promo_text", "default": "Return gifts from Rs. 375 · DIY Party Box Kits for the whole gang!", "label": "Promo text" },
+{ "type": "text", "id": "promo_button_label", "default": "Explore Now", "label": "Button label" },
+{ "type": "url", "id": "promo_button_link", "label": "Button link" },
+{ "type": "color", "id": "promo_bg", "default": "#7c4dff", "label": "Promo background" },
+{ "type": "color_scheme", "id": "color_scheme", "default": "scheme-1", "label": "Color scheme" }
+],
+"presets": [ { "name": "Creste Collection" } ]
+}
+{% endschema %}
