@@ -65,7 +65,8 @@
       "settings": {
         "bg": "#fcebb6",
         "top_border": "#ffd400",
-        "tagline": "Gifts, Giggle, Gang",
+        "logo": "shopify://shop_images/image_1.png",
+        "tagline": "",
         "about": "Made for messy hands and big, wild imaginations. Crafting future innovators one kit at a time.",
         "contact_heading": "Say Hello!",
         "contact_underline": "#f4793a",
