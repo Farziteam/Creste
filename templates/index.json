@@ -611,6 +611,8 @@
         "g5"
       ],
       "settings": {
+        "bg_desktop": "shopify://shop_images/abc2.png",
+        "bg_mobile": "shopify://shop_images/abc.png",
         "section_bg": "#ffffff",
         "heading_1": "From Happy Childhoods",
         "heading_2": "To Happy Adulthoods",
@@ -802,6 +804,7 @@
       "type": "creste-favourites",
       "settings": {
         "background": "shopify://shop_images/Section_-_Best_Sellers.png",
+        "bg_mobile": "shopify://shop_images/favorites-_m.png",
         "fallback_bg": "#f5c518",
         "overlay": 0,
         "heading": "Our Favourites",
@@ -879,7 +882,7 @@
         "f4"
       ],
       "settings": {
-        "section_bg": "#fff3f7",
+        "section_bg": "#DFD6F5",
         "heading": "From Our Families to Yours",
         "heading_italic": "Yours",
         "heading_italic_color": "#8b5cf6",
