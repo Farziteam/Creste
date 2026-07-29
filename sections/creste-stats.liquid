@@ -1,26 +1,26 @@
 {% render 'creste-tokens' %}
 {%- assign _bgid = 'creste-stats-' | append: section.id -%}
 <style>
-#creste-stats-{{ section.id }}{background:{{ section.settings.section_bg }};background-size:cover;background-position:center;padding:20px 16px;}
+#creste-stats-{{ section.id }}{background:{{ section.settings.section_bg }};background-size:cover;background-position:center;padding:40px 16px 20px;}
 #creste-stats-{{ section.id }} .cs-row{display:flex;flex-wrap:nowrap;gap:16px;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:4px;scroll-snap-type:x proximity;}
 #creste-stats-{{ section.id }} .cs-row::-webkit-scrollbar{display:none;height:0;}
 #creste-stats-{{ section.id }} .cs-item{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;min-width:100px;text-align:center;scroll-snap-align:start;}
 #creste-stats-{{ section.id }} .cs-ic{width:52px;height:52px;object-fit:contain;margin-bottom:6px;}
 #creste-stats-{{ section.id }} .cs-num{font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:20px;line-height:1.2;}
-#creste-stats-{{ section.id }} .cs-label{font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:10px;line-height:1.3;letter-spacing:.6px;text-transform:uppercase;color:var(--creste-brown);}
+#creste-stats-{{ section.id }} .cs-label{font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:10px;line-height:1.6;letter-spacing:.6px;text-transform:uppercase;color:var(--creste-brown);}
 #creste-stats-{{ section.id }} .cs-teal{color:var(--creste-teal);}
 #creste-stats-{{ section.id }} .cs-orange{color:var(--creste-orange);}
 #creste-stats-{{ section.id }} .cs-brown{color:var(--creste-brown);}
 #creste-stats-{{ section.id }} .cs-tag{display:flex;justify-content:center;margin-top:18px;}
 #creste-stats-{{ section.id }} .cs-tag span{display:inline-flex;align-items:center;gap:8px;border:1px solid #B796E1;border-radius:9999px;padding:7px 17px;font-family:'Poppins',sans-serif;font-weight:500;font-size:10px;color:var(--creste-purple);text-align:center;background:#fff;}
-@media(min-width:750px){#creste-stats-{{ section.id }} .cs-row{flex-wrap:wrap;justify-content:center;overflow:visible;gap:48px;}#creste-stats-{{ section.id }} .cs-item{min-width:90px;}#creste-stats-{{ section.id }} .cs-ic{width:56px;height:56px;}#creste-stats-{{ section.id }} .cs-num{font-size:28px;}#creste-stats-{{ section.id }} .cs-label{font-size:12px;letter-spacing:1px;}#creste-stats-{{ section.id }} .cs-tag span{font-size:13px;}}
+@media(min-width:750px){#creste-stats-{{ section.id }} .cs-row{flex-wrap:wrap;justify-content:center;overflow:visible;gap:48px;}#creste-stats-{{ section.id }} .cs-item{min-width:90px;}#creste-stats-{{ section.id }} .cs-ic{width:100px;height:100px;}#creste-stats-{{ section.id }} .cs-num{font-size:32px;}#creste-stats-{{ section.id }} .cs-label{font-size:20px;font-weight:700;letter-spacing:1px;}#creste-stats-{{ section.id }} .cs-tag span{font-size:16px;}
 </style>
 {% render 'creste-bg', id: _bgid, d: section.settings.bg_desktop, m: section.settings.bg_mobile %}
 <div id='creste-stats-{{ section.id }}' class='creste-section'>
 <div class='cs-row'>
 {% for block in section.blocks %}{% if block.type == 'stat' %}<div class='cs-item' {{ block.shopify_attributes }}>{% if block.settings.icon != blank %}<img class='cs-ic' src='{{ block.settings.icon | image_url: width: 112 }}' alt=''>{% endif %}<div class='cs-num cs-{{ block.settings.color }}'>{{ block.settings.number }}</div><div class='cs-label'>{{ block.settings.label }}</div></div>{% endif %}{% endfor %}
 </div>
-{% if section.settings.tagline != blank %}<div class='cs-tag'><span>{{ section.settings.tagline }}</span></div>{% endif %}
+{% if section.settings.tagline != blank %}<div class='cs-tag'><span>{{ 'heart.svg' | inline_asset_content }}{{ section.settings.tagline }}</span></div>{% endif %}
 </div>
 {% schema %}
 {
