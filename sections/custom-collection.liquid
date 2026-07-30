@@ -71,12 +71,13 @@ assign hero_title = section.settings.hero_title | default: collection.title
 </div>
 {%- if section.settings.show_category_pills and section.settings.category_menu != blank -%}
 {%- assign cr_cur_url = collection.url -%}
+{%- assign cr_all_url = section.settings.all_kits_link | default: '/collections/frontpage' -%}
 {%- assign cr_cat_matched = false -%}
 {%- for link in linklists[section.settings.category_menu].links -%}
 {%- if link.url == cr_cur_url -%}{%- assign cr_cat_matched = true -%}{%- endif -%}
 {%- endfor -%}
 <div class="cr-cats">
-<a class="cr-pill {% unless cr_cat_matched %}is-active{% endunless %}" href="{{ collection.url }}">All Kits</a>
+<a class="cr-pill {% unless cr_cat_matched %}is-active{% endunless %}" href="{{ cr_all_url }}">All Kits</a>
 {%- assign cr_cat_done = false -%}
 {%- for link in linklists[section.settings.category_menu].links -%}
 <a class="cr-pill {% if link.url == cr_cur_url and cr_cat_done == false %}is-active{%- assign cr_cat_done = true -%}{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
@@ -364,6 +365,7 @@ if (open) { sidebar.setAttribute('hidden', ''); } else { sidebar.removeAttribute
 { "type": "checkbox", "id": "enable_sorting", "default": true, "label": "Enable sorting" },
 { "type": "checkbox", "id": "show_category_pills", "default": true, "label": "Show category pills" },
 { "type": "link_list", "id": "category_menu", "label": "Category pills menu", "info": "Menu of collections shown as pills (an 'All Kits' pill is added automatically)" },
+{ "type": "url", "id": "all_kits_link", "label": "All Kits pill link", "info": "Where the All Kits pill goes. Defaults to /collections/frontpage (all products)." },
 { "type": "header", "content": "Product grid" },
 { "type": "range", "id": "products_per_page", "min": 8, "max": 24, "step": 4, "default": 16, "label": "Products per page" },
 { "type": "range", "id": "columns_desktop", "min": 2, "max": 5, "step": 1, "default": 4, "label": "Columns on desktop" },
