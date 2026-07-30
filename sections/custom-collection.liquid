@@ -70,10 +70,16 @@ assign hero_title = section.settings.hero_title | default: collection.title
 {%- endif -%}
 </div>
 {%- if section.settings.show_category_pills and section.settings.category_menu != blank -%}
-<div class="cr-cats">
-<a class="cr-pill {% if collection.current_tags == empty or collection.current_tags == blank %}is-active{% endif %}" href="{{ collection.url }}">All Kits</a>
+{%- assign cr_cur_url = collection.url -%}
+{%- assign cr_cat_matched = false -%}
 {%- for link in linklists[section.settings.category_menu].links -%}
-<a class="cr-pill {% if link.active %}is-active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+{%- if link.url == cr_cur_url -%}{%- assign cr_cat_matched = true -%}{%- endif -%}
+{%- endfor -%}
+<div class="cr-cats">
+<a class="cr-pill {% unless cr_cat_matched %}is-active{% endunless %}" href="{{ collection.url }}">All Kits</a>
+{%- assign cr_cat_done = false -%}
+{%- for link in linklists[section.settings.category_menu].links -%}
+<a class="cr-pill {% if link.url == cr_cur_url and cr_cat_done == false %}is-active{%- assign cr_cat_done = true -%}{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
 {%- endfor -%}
 </div>
 {%- endif -%}
