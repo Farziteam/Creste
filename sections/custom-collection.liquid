@@ -43,21 +43,29 @@ assign hero_title = section.settings.hero_title | default: collection.title
 <div class="cr-toolbar">
 <div class="cr-toolbar-left">
 {%- if section.settings.enable_filtering and collection.filters.size > 0 -%}
-<button type="button" class="cr-pill cr-pill--ghost js-cr-toggle-filters" aria-expanded="false">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-Show Filters
+<button type="button" class="cr-pill cr-pill--filter js-cr-toggle-filters" aria-expanded="false">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 5h16l-6.4 7.5v5.2l-3.2 1.6v-6.8L4 5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+<span class="js-cr-filter-label">Show Filters</span>
 </button>
 {%- endif -%}
 {%- if section.settings.enable_sorting -%}
 {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
-<div class="cr-sort-pill">
-<span>Sort:</span>
-<select class="js-cr-sort" aria-label="Sort by">
+{%- assign current_sort_name = collection.sort_options.first.name -%}
+{%- for opt in collection.sort_options -%}{%- if opt.value == current_sort -%}{%- assign current_sort_name = opt.name -%}{%- endif -%}{%- endfor -%}
+<div class="cr-sort js-cr-sort-wrap">
+<button type="button" class="cr-sort-btn js-cr-sort-btn" aria-haspopup="listbox" aria-expanded="false">
+<span class="cr-sort-lead">Sort:</span>
+<span class="cr-sort-current">{{ current_sort_name }}</span>
+<svg class="cr-sort-caret" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="cr-sort-panel js-cr-sort-panel" role="listbox" hidden>
 {%- for opt in collection.sort_options -%}
-<option value="{{ opt.value }}" {% if opt.value == current_sort %}selected{% endif %}>{{ opt.name }}</option>
+<button type="button" class="cr-sort-opt {% if opt.value == current_sort %}is-active{% endif %} js-cr-sort-opt" role="option" data-value="{{ opt.value }}" aria-selected="{% if opt.value == current_sort %}true{% else %}false{% endif %}">
+<span class="cr-radio" aria-hidden="true"></span>
+<span class="cr-sort-opt-label">{{ opt.name }}</span>
+</button>
 {%- endfor -%}
-</select>
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
 </div>
 {%- endif -%}
 </div>
@@ -284,23 +292,51 @@ Add To Cart
 (function () {
 var root = document.querySelector('.cr-collection[data-section-id="{{ section.id }}"]');
 if (!root) return;
-var sort = root.querySelector('.js-cr-sort');
-if (sort) {
-sort.addEventListener('change', function () {
+var sortWrap = root.querySelector('.js-cr-sort-wrap');
+if (sortWrap) {
+var sortBtn = sortWrap.querySelector('.js-cr-sort-btn');
+var sortPanel = sortWrap.querySelector('.js-cr-sort-panel');
+var closeSort = function () {
+sortWrap.classList.remove('is-open');
+sortBtn.setAttribute('aria-expanded', 'false');
+sortPanel.setAttribute('hidden', '');
+};
+sortBtn.addEventListener('click', function (e) {
+e.stopPropagation();
+var open = sortWrap.classList.contains('is-open');
+if (open) { closeSort(); }
+else {
+sortWrap.classList.add('is-open');
+sortBtn.setAttribute('aria-expanded', 'true');
+sortPanel.removeAttribute('hidden');
+}
+});
+sortPanel.querySelectorAll('.js-cr-sort-opt').forEach(function (opt) {
+opt.addEventListener('click', function () {
 var url = new URL(window.location.href);
-url.searchParams.set('sort_by', sort.value);
+url.searchParams.set('sort_by', opt.getAttribute('data-value'));
 url.searchParams.delete('page');
 window.location.href = url.toString();
+});
+});
+document.addEventListener('click', function (e) {
+if (!sortWrap.contains(e.target)) { closeSort(); }
+});
+document.addEventListener('keydown', function (e) {
+if (e.key === 'Escape') { closeSort(); }
 });
 }
 var toggle = root.querySelector('.js-cr-toggle-filters');
 var layout = root.querySelector('.cr-layout');
 var sidebar = root.querySelector('.cr-sidebar');
 if (toggle && layout && sidebar) {
+var label = toggle.querySelector('.js-cr-filter-label');
 toggle.addEventListener('click', function () {
 var open = layout.getAttribute('data-filters') === 'open';
 layout.setAttribute('data-filters', open ? 'closed' : 'open');
 toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+toggle.classList.toggle('is-active', !open);
+if (label) { label.textContent = open ? 'Show Filters' : 'Hide Filters'; }
 if (open) { sidebar.setAttribute('hidden', ''); } else { sidebar.removeAttribute('hidden'); }
 });
 }
