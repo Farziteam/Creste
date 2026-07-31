@@ -1,1 +1,226 @@
-{"type":"header","name":"Header","sections":{"creste_header":{"type":"creste-header","blocks":{"nv1":{"type":"nav","settings":{"label":"Our Tribe","link":"\/pages\/our-tribe"}},"nv2":{"type":"nav","settings":{"label":"Our Story","link":"\/pages\/our-story"}},"nv3":{"type":"nav","settings":{"label":"Contact us","link":"\/pages\/contact"}},"ag1":{"type":"age","settings":{"label":"0-3","suffix":"years","tint":"#fde7d6","link":""}},"ag2":{"type":"age","settings":{"label":"4-6","suffix":"years","tint":"#fce0ec","link":""}},"ag3":{"type":"age","settings":{"label":"7-10","suffix":"years","tint":"#dcebf5","link":""}},"ag4":{"type":"age","settings":{"label":"11-15","suffix":"years","tint":"#ece4f7","link":""}},"ag5":{"type":"age","settings":{"label":"16+","suffix":"years","tint":"#fbe9d6","link":""}},"ag6":{"type":"age","settings":{"label":"Adults","suffix":"","tint":"#fce0ec","link":""}},"c1":{"type":"category","settings":{"name":"Arts & Crafts","subtitle":"Paint, create & imagine","link":""}},"c2":{"type":"category","settings":{"name":"Reading & Literacy","subtitle":"Stories that stick","link":""}},"c3":{"type":"category","settings":{"name":"Nature Exploration","subtitle":"Explore the outdoors","link":""}},"c4":{"type":"category","settings":{"name":"DIY Projects","subtitle":"Snip, stick & build","link":""}},"c5":{"type":"category","settings":{"name":"STEM Kits","subtitle":"Experiment & discover","link":""}},"c6":{"type":"category","settings":{"name":"Brain Games","subtitle":"Puzzle it out","link":""}},"c7":{"type":"category","settings":{"name":"Pretend Play","subtitle":"Dress up & make-believe","link":""}},"c8":{"type":"category","settings":{"name":"Gift Boxes","subtitle":"Joy, ready to gift","link":""}},"c9":{"type":"category","settings":{"name":"Best seller","subtitle":"Top loved kits","link":""}},"c10":{"type":"category","settings":{"name":"New Arrival","subtitle":"Fresh & new","link":""}}},"block_order":["nv1","nv2","nv3","ag1","ag2","ag3","ag4","ag5","ag6","c1","c2","c3","c4","c5","c6","c7","c8","c9","c10"],"settings":{"shop_label":"Shop","shop_link":"","bg":"#f5f5f5","bar_bg":"#fbf1e3","accent":"#ffce00","sticky":false,"quiz_label":"TAKE THE QUIZ","quiz_link":"https:\/\/crestekids.com\/#quiz","rec_label":"Recommended","rec_bg":"#5bad6f","age_heading":"Shop by Age","cat_heading":"Shop by Category","na_heading":"New Arrivals","na_bg":"#62a66b","na_collection":""}}},"order":["creste_header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "creste_header": {
+      "type": "creste-header",
+      "blocks": {
+        "nv1": {
+          "type": "nav",
+          "settings": {
+            "label": "Our Tribe",
+            "link": "/pages/our-tribe"
+          }
+        },
+        "nv2": {
+          "type": "nav",
+          "settings": {
+            "label": "Our Story",
+            "link": "/pages/our-story"
+          }
+        },
+        "nv3": {
+          "type": "nav",
+          "settings": {
+            "label": "Contact us",
+            "link": "/pages/contact"
+          }
+        },
+        "ag1": {
+          "type": "age",
+          "settings": {
+            "label": "0-3",
+            "suffix": "years",
+            "tint": "#fde7d6",
+            "text-color": "#040404",
+            "link": ""
+          }
+        },
+        "ag2": {
+          "type": "age",
+          "settings": {
+            "label": "4-6",
+            "suffix": "years",
+            "tint": "#fce0ec",
+            "text-color": "#040404",
+            "link": ""
+          }
+        },
+        "ag3": {
+          "type": "age",
+          "settings": {
+            "label": "7-10",
+            "suffix": "years",
+            "tint": "#dcebf5",
+            "text-color": "#040404",
+            "link": ""
+          }
+        },
+        "ag4": {
+          "type": "age",
+          "settings": {
+            "label": "11-15",
+            "suffix": "years",
+            "tint": "#ece4f7",
+            "text-color": "#040404",
+            "link": ""
+          }
+        },
+        "ag5": {
+          "type": "age",
+          "settings": {
+            "label": "16+",
+            "suffix": "years",
+            "tint": "#fbe9d6",
+            "text-color": "#040404",
+            "link": ""
+          }
+        },
+        "ag6": {
+          "type": "age",
+          "settings": {
+            "label": "Adults",
+            "suffix": "",
+            "tint": "#fce0ec",
+            "text-color": "#040404",
+            "link": ""
+          }
+        },
+        "c1": {
+          "type": "category",
+          "settings": {
+            "name": "Arts & Crafts",
+            "subtitle": "Paint, create & imagine",
+            "link": ""
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "name": "Reading & Literacy",
+            "subtitle": "Stories that stick",
+            "link": ""
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "name": "Nature Exploration",
+            "subtitle": "Explore the outdoors",
+            "link": ""
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "name": "DIY Projects",
+            "subtitle": "Snip, stick & build",
+            "link": ""
+          }
+        },
+        "c5": {
+          "type": "category",
+          "settings": {
+            "name": "STEM Kits",
+            "subtitle": "Experiment & discover",
+            "link": ""
+          }
+        },
+        "c6": {
+          "type": "category",
+          "settings": {
+            "name": "Brain Games",
+            "subtitle": "Puzzle it out",
+            "link": ""
+          }
+        },
+        "c7": {
+          "type": "category",
+          "settings": {
+            "name": "Pretend Play",
+            "subtitle": "Dress up & make-believe",
+            "link": ""
+          }
+        },
+        "c8": {
+          "type": "category",
+          "settings": {
+            "name": "Gift Boxes",
+            "subtitle": "Joy, ready to gift",
+            "link": ""
+          }
+        },
+        "c9": {
+          "type": "category",
+          "settings": {
+            "name": "Best seller",
+            "subtitle": "Top loved kits",
+            "link": ""
+          }
+        },
+        "c10": {
+          "type": "category",
+          "settings": {
+            "name": "New Arrival",
+            "subtitle": "Fresh & new",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "nv1",
+        "nv2",
+        "nv3",
+        "ag1",
+        "ag2",
+        "ag3",
+        "ag4",
+        "ag5",
+        "ag6",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/logo_web_1.png",
+        "quiz_logo": "shopify://shop_images/b4e9d92dd7aff201d26a33aad5c55033d60eefe6_1.png",
+        "shop_label": "Shop",
+        "shop_link": "",
+        "bg": "rgba(0,0,0,0)",
+        "bar_bg": "#fbf1e3",
+        "accent": "#ffce00",
+        "sticky": false,
+        "quiz_label": "TAKE THE QUIZ",
+        "quiz_link": "https://crestekids.com/#quiz",
+        "rec_label": "Recommended",
+        "rec_bg": "#5bad6f",
+        "age_heading": "Shop by Age",
+        "cat_heading": "Shop by Category",
+        "na_heading": "New Arrivals",
+        "na_bg": "#FFFFFF",
+        "bg_image": "shopify://shop_images/green_1.png",
+        "bg_image_mob": "shopify://shop_images/Frame_2147228316.png",
+        "na_product": "bouquet-candle-kit"
+      }
+    }
+  },
+  "order": [
+    "creste_header"
+  ]
+}
