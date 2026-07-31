@@ -117,7 +117,7 @@
 .cr-slider{position:relative;height:26px;margin:10px 6px 2px;}
 .cr-slider-rail{position:absolute;top:50%;left:0;right:0;height:5px;transform:translateY(-50%);background:#e7ddc9;border-radius:999px;}
 .cr-slider-fill{position:absolute;top:50%;height:5px;transform:translateY(-50%);background:var(--cr-orange);border-radius:999px;}
-.cr-slider-h{position:absolute;top:0;left:0;width:100%;height:26px;margin:0;padding:0;background:transparent;-webkit-appearance:none;appearance:none;pointer-events:none;}
+.cr-slider-h{position:absolute;top:0;left:0;width:100%;height:26px;margin:0;padding:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer;}
 .cr-slider-h:focus{outline:none;}
 .cr-slider-h::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--cr-orange);box-shadow:0 2px 6px rgba(0,0,0,0.22);cursor:pointer;pointer-events:auto;}
 .cr-slider-h::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--cr-orange);box-shadow:0 2px 6px rgba(0,0,0,0.22);cursor:pointer;pointer-events:auto;}
@@ -131,10 +131,29 @@
 .cr-grid,.cr-layout[data-filters="open"] .cr-grid{--cr-cols:3!important;}
 }
 @media (max-width:749px){.cr-grid,.cr-layout[data-filters="open"] .cr-grid{--cr-cols:2!important;gap:12px;}
-.cr-card-body{padding:10px 12px 14px;}
+.cr-hero{padding:26px 20px 30px;}
+.cr-hero-title{font-size:34px;}
+.cr-hero-sub{font-size:14px;margin-top:10px;}
+.cr-breadcrumb{margin:16px 0 14px;}
+.cr-toolbar{flex-direction:column;align-items:stretch;gap:12px;margin-bottom:18px;}
+.cr-toolbar-left{gap:10px;}
+.cr-cats{flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.cr-cats::-webkit-scrollbar{display:none;}
+.cr-cats .cr-pill{flex:0 0 auto;}
+.cr-card{border-radius:16px;}
+.cr-card-media{border-radius:0;}
+.cr-card-img{padding:8px;}
+.cr-card-body{padding:10px 12px 14px;gap:6px;}
 .cr-card-title{font-size:16px;}
+.cr-card-meta{font-size:11px;letter-spacing:.05em;}
 .cr-price-now{font-size:18px;}
-.cr-toolbar{gap:12px;}
-.cr-promo{padding:22px clamp(16px,5vw,40px);}
+.cr-price-was{font-size:12px;}
+.cr-price-off{font-size:12px;}
+.cr-atc{padding:11px 14px;font-size:14px;border-radius:12px;}
+.cr-rating{font-size:12px;padding:3px 9px;}
+.cr-badge{font-size:9px;padding:5px 9px;}
+.cr-promo{flex-direction:column;align-items:flex-start;gap:16px;padding:22px 20px;margin-top:32px;}
+.cr-promo-btn{width:100%;text-align:center;}
+.cr-promo::after{width:150px;height:150px;right:-34px;border-radius:24px;}
 .cr-sort-panel{min-width:180px;}
 }

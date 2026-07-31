@@ -133,20 +133,13 @@ href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif
 </ul>
 {%- when 'price_range' -%}
 {%- assign pr_max = f.range_max | money_without_currency | replace: ',', '' | split: '.' | first -%}
-{%- assign pr_cur_min = '0' -%}
-{%- if f.min_value.value -%}{%- assign pr_cur_min = f.min_value.value | money_without_currency | replace: ',', '' | split: '.' | first -%}{%- endif -%}
 {%- assign pr_cur_max = pr_max -%}
 {%- if f.max_value.value -%}{%- assign pr_cur_max = f.max_value.value | money_without_currency | replace: ',', '' | split: '.' | first -%}{%- endif -%}
-<div class="cr-price js-cr-price" data-min-param="{{ f.min_value.param_name }}" data-max-param="{{ f.max_value.param_name }}" data-ceil="{{ pr_max }}" data-sym="{{ cart.currency.symbol }}">
+<div class="cr-price js-cr-price" data-max-param="{{ f.max_value.param_name }}" data-ceil="{{ pr_max }}">
 <div class="cr-slider">
 <div class="cr-slider-rail"></div>
 <div class="cr-slider-fill js-cr-fill"></div>
-<input type="range" class="cr-slider-h js-cr-min" min="0" max="{{ pr_max }}" step="1" value="{{ pr_cur_min }}" aria-label="Minimum price">
 <input type="range" class="cr-slider-h js-cr-max" min="0" max="{{ pr_max }}" step="1" value="{{ pr_cur_max }}" aria-label="Maximum price">
-</div>
-<div class="cr-price-vals">
-<span class="cr-price-val js-cr-min-out">{{ cart.currency.symbol }}{{ pr_cur_min }}</span>
-<span class="cr-price-val js-cr-max-out">{{ cart.currency.symbol }}{{ pr_cur_max }}</span>
 </div>
 </div>
 {%- endcase -%}
@@ -339,37 +332,23 @@ if (e.key === 'Escape') { closeSort(); }
 });
 }
 root.querySelectorAll('.js-cr-price').forEach(function (box) {
-var minI = box.querySelector('.js-cr-min');
 var maxI = box.querySelector('.js-cr-max');
 var fill = box.querySelector('.js-cr-fill');
-var minOut = box.querySelector('.js-cr-min-out');
-var maxOut = box.querySelector('.js-cr-max-out');
-if (!minI || !maxI) return;
+if (!maxI) return;
 var ceil = parseFloat(box.getAttribute('data-ceil')) || 100;
-var sym = box.getAttribute('data-sym') || '';
-var gap = Math.max(1, Math.round(ceil * 0.02));
 function paint() {
-var a = parseFloat(minI.value), b = parseFloat(maxI.value);
-if (a > b - gap) { if (this === maxI) { a = b - gap; minI.value = a; } else { b = a + gap; maxI.value = b; } }
-var lo = ceil ? (a / ceil) * 100 : 0;
+var b = parseFloat(maxI.value);
 var hi = ceil ? (b / ceil) * 100 : 100;
-fill.style.left = lo + '%';
-fill.style.width = (hi - lo) + '%';
-minOut.textContent = sym + Math.round(a);
-maxOut.textContent = sym + Math.round(b);
+fill.style.left = '0%';
+fill.style.width = hi + '%';
 }
 function apply() {
-var a = parseFloat(minI.value), b = parseFloat(maxI.value);
-if (a > b) { var t = a; a = b; b = t; }
 var url = new URL(window.location.href);
-url.searchParams.set(box.getAttribute('data-min-param'), a);
-url.searchParams.set(box.getAttribute('data-max-param'), b);
+url.searchParams.set(box.getAttribute('data-max-param'), parseFloat(maxI.value));
 url.searchParams.delete('page');
 window.location.href = url.toString();
 }
-minI.addEventListener('input', paint);
 maxI.addEventListener('input', paint);
-minI.addEventListener('change', apply);
 maxI.addEventListener('change', apply);
 paint();
 });
