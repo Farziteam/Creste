@@ -43,29 +43,44 @@ assign hero_title = section.settings.hero_title | default: collection.title
 <div class="cr-toolbar">
 <div class="cr-toolbar-left">
 {%- if section.settings.enable_filtering and collection.filters.size > 0 -%}
-<button type="button" class="cr-pill cr-pill--ghost js-cr-toggle-filters" aria-expanded="false">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-Show Filters
+<button type="button" class="cr-pill cr-pill--filter js-cr-toggle-filters" aria-expanded="false">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 5h16l-6.4 7.5v5.2l-3.2 1.6v-6.8L4 5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+<span class="js-cr-filter-label">Show Filters</span>
 </button>
 {%- endif -%}
 {%- if section.settings.enable_sorting -%}
 {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
-<div class="cr-sort-pill">
-<span>Sort:</span>
-<select class="js-cr-sort" aria-label="Sort by">
+{%- assign current_sort_name = collection.sort_options.first.name -%}
+{%- for opt in collection.sort_options -%}{%- if opt.value == current_sort -%}{%- assign current_sort_name = opt.name -%}{%- endif -%}{%- endfor -%}
+<div class="cr-sort js-cr-sort-wrap">
+<button type="button" class="cr-sort-btn js-cr-sort-btn" aria-haspopup="listbox" aria-expanded="false">
+<span class="cr-sort-lead">Sort:</span>
+<span class="cr-sort-current">{{ current_sort_name }}</span>
+<svg class="cr-sort-caret" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="cr-sort-panel js-cr-sort-panel" role="listbox" hidden>
 {%- for opt in collection.sort_options -%}
-<option value="{{ opt.value }}" {% if opt.value == current_sort %}selected{% endif %}>{{ opt.name }}</option>
+<button type="button" class="cr-sort-opt {% if opt.value == current_sort %}is-active{% endif %} js-cr-sort-opt" role="option" data-value="{{ opt.value }}" aria-selected="{% if opt.value == current_sort %}true{% else %}false{% endif %}">
+<span class="cr-radio" aria-hidden="true"></span>
+<span class="cr-sort-opt-label">{{ opt.name }}</span>
+</button>
 {%- endfor -%}
-</select>
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
 </div>
 {%- endif -%}
 </div>
 {%- if section.settings.show_category_pills and section.settings.category_menu != blank -%}
-<div class="cr-cats">
-<a class="cr-pill {% if collection.current_tags == empty or collection.current_tags == blank %}is-active{% endif %}" href="{{ collection.url }}">All Kits</a>
+{%- assign cr_cur_url = collection.url -%}
+{%- assign cr_all_url = section.settings.all_kits_link | default: '/collections/frontpage' -%}
+{%- assign cr_cat_matched = false -%}
 {%- for link in linklists[section.settings.category_menu].links -%}
-<a class="cr-pill {% if link.active %}is-active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+{%- if link.url == cr_cur_url -%}{%- assign cr_cat_matched = true -%}{%- endif -%}
+{%- endfor -%}
+<div class="cr-cats">
+<a class="cr-pill {% unless cr_cat_matched %}is-active{% endunless %}" href="{{ cr_all_url }}">All Kits</a>
+{%- assign cr_cat_done = false -%}
+{%- for link in linklists[section.settings.category_menu].links -%}
+<a class="cr-pill {% if link.url == cr_cur_url and cr_cat_done == false %}is-active{%- assign cr_cat_done = true -%}{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
 {%- endfor -%}
 </div>
 {%- endif -%}
@@ -108,7 +123,7 @@ Show Filters
 <a class="cr-opt {% if v.active %}is-active{% endif %} {% if v.count == 0 and v.active == false %}is-disabled{% endif %}"
 href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}">
 <span class="cr-box" aria-hidden="true">
-<svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-6.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg viewBox="0 0 16 16" fill="none"><circle cx="5.8" cy="6.4" r="0.95" fill="#fff"/><circle cx="10.2" cy="6.4" r="0.95" fill="#fff"/><path d="M4.9 9.5c.9 1.6 2.2 2.4 3.1 2.4s2.2-.8 3.1-2.4" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>
 </span>
 <span class="cr-opt-label">{{ v.label | escape }}</span>
 {%- if v.count and v.count > 0 -%}<span class="cr-opt-count">{{ v.count }}</span>{%- endif -%}
@@ -117,17 +132,22 @@ href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif
 {%- endfor -%}
 </ul>
 {%- when 'price_range' -%}
-<div class="cr-price">
-<div class="cr-price-fields">
-<label class="cr-price-field"><span>{{ cart.currency.symbol }}</span>
-<input type="number" name="{{ f.min_value.param_name }}" inputmode="decimal" placeholder="0" min="0" max="{{ f.range_max | money_without_currency | replace: ',', '' }}" {% if f.min_value.value %}value="{{ f.min_value.value | money_without_currency | replace: ',', '' }}"{% endif %}>
-</label>
-<span class="cr-price-dash">–</span>
-<label class="cr-price-field"><span>{{ cart.currency.symbol }}</span>
-<input type="number" name="{{ f.max_value.param_name }}" inputmode="decimal" placeholder="{{ f.range_max | money_without_currency | replace: ',', '' }}" min="0" max="{{ f.range_max | money_without_currency | replace: ',', '' }}" {% if f.max_value.value %}value="{{ f.max_value.value | money_without_currency | replace: ',', '' }}"{% endif %}>
-</label>
+{%- assign pr_max = f.range_max | money_without_currency | replace: ',', '' | split: '.' | first -%}
+{%- assign pr_cur_min = '0' -%}
+{%- if f.min_value.value -%}{%- assign pr_cur_min = f.min_value.value | money_without_currency | replace: ',', '' | split: '.' | first -%}{%- endif -%}
+{%- assign pr_cur_max = pr_max -%}
+{%- if f.max_value.value -%}{%- assign pr_cur_max = f.max_value.value | money_without_currency | replace: ',', '' | split: '.' | first -%}{%- endif -%}
+<div class="cr-price js-cr-price" data-min-param="{{ f.min_value.param_name }}" data-max-param="{{ f.max_value.param_name }}" data-ceil="{{ pr_max }}" data-sym="{{ cart.currency.symbol }}">
+<div class="cr-slider">
+<div class="cr-slider-rail"></div>
+<div class="cr-slider-fill js-cr-fill"></div>
+<input type="range" class="cr-slider-h js-cr-min" min="0" max="{{ pr_max }}" step="1" value="{{ pr_cur_min }}" aria-label="Minimum price">
+<input type="range" class="cr-slider-h js-cr-max" min="0" max="{{ pr_max }}" step="1" value="{{ pr_cur_max }}" aria-label="Maximum price">
 </div>
-<button type="submit" class="cr-price-apply">Apply</button>
+<div class="cr-price-vals">
+<span class="cr-price-val js-cr-min-out">{{ cart.currency.symbol }}{{ pr_cur_min }}</span>
+<span class="cr-price-val js-cr-max-out">{{ cart.currency.symbol }}{{ pr_cur_max }}</span>
+</div>
 </div>
 {%- endcase -%}
 </div>
@@ -284,23 +304,86 @@ Add To Cart
 (function () {
 var root = document.querySelector('.cr-collection[data-section-id="{{ section.id }}"]');
 if (!root) return;
-var sort = root.querySelector('.js-cr-sort');
-if (sort) {
-sort.addEventListener('change', function () {
+var sortWrap = root.querySelector('.js-cr-sort-wrap');
+if (sortWrap) {
+var sortBtn = sortWrap.querySelector('.js-cr-sort-btn');
+var sortPanel = sortWrap.querySelector('.js-cr-sort-panel');
+var closeSort = function () {
+sortWrap.classList.remove('is-open');
+sortBtn.setAttribute('aria-expanded', 'false');
+sortPanel.setAttribute('hidden', '');
+};
+sortBtn.addEventListener('click', function (e) {
+e.stopPropagation();
+var open = sortWrap.classList.contains('is-open');
+if (open) { closeSort(); }
+else {
+sortWrap.classList.add('is-open');
+sortBtn.setAttribute('aria-expanded', 'true');
+sortPanel.removeAttribute('hidden');
+}
+});
+sortPanel.querySelectorAll('.js-cr-sort-opt').forEach(function (opt) {
+opt.addEventListener('click', function () {
 var url = new URL(window.location.href);
-url.searchParams.set('sort_by', sort.value);
+url.searchParams.set('sort_by', opt.getAttribute('data-value'));
 url.searchParams.delete('page');
 window.location.href = url.toString();
 });
+});
+document.addEventListener('click', function (e) {
+if (!sortWrap.contains(e.target)) { closeSort(); }
+});
+document.addEventListener('keydown', function (e) {
+if (e.key === 'Escape') { closeSort(); }
+});
 }
+root.querySelectorAll('.js-cr-price').forEach(function (box) {
+var minI = box.querySelector('.js-cr-min');
+var maxI = box.querySelector('.js-cr-max');
+var fill = box.querySelector('.js-cr-fill');
+var minOut = box.querySelector('.js-cr-min-out');
+var maxOut = box.querySelector('.js-cr-max-out');
+if (!minI || !maxI) return;
+var ceil = parseFloat(box.getAttribute('data-ceil')) || 100;
+var sym = box.getAttribute('data-sym') || '';
+var gap = Math.max(1, Math.round(ceil * 0.02));
+function paint() {
+var a = parseFloat(minI.value), b = parseFloat(maxI.value);
+if (a > b - gap) { if (this === maxI) { a = b - gap; minI.value = a; } else { b = a + gap; maxI.value = b; } }
+var lo = ceil ? (a / ceil) * 100 : 0;
+var hi = ceil ? (b / ceil) * 100 : 100;
+fill.style.left = lo + '%';
+fill.style.width = (hi - lo) + '%';
+minOut.textContent = sym + Math.round(a);
+maxOut.textContent = sym + Math.round(b);
+}
+function apply() {
+var a = parseFloat(minI.value), b = parseFloat(maxI.value);
+if (a > b) { var t = a; a = b; b = t; }
+var url = new URL(window.location.href);
+url.searchParams.set(box.getAttribute('data-min-param'), a);
+url.searchParams.set(box.getAttribute('data-max-param'), b);
+url.searchParams.delete('page');
+window.location.href = url.toString();
+}
+minI.addEventListener('input', paint);
+maxI.addEventListener('input', paint);
+minI.addEventListener('change', apply);
+maxI.addEventListener('change', apply);
+paint();
+});
 var toggle = root.querySelector('.js-cr-toggle-filters');
 var layout = root.querySelector('.cr-layout');
 var sidebar = root.querySelector('.cr-sidebar');
 if (toggle && layout && sidebar) {
+var label = toggle.querySelector('.js-cr-filter-label');
 toggle.addEventListener('click', function () {
 var open = layout.getAttribute('data-filters') === 'open';
 layout.setAttribute('data-filters', open ? 'closed' : 'open');
 toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+toggle.classList.toggle('is-active', !open);
+if (label) { label.textContent = open ? 'Show Filters' : 'Hide Filters'; }
 if (open) { sidebar.setAttribute('hidden', ''); } else { sidebar.removeAttribute('hidden'); }
 });
 }
@@ -322,6 +405,7 @@ if (open) { sidebar.setAttribute('hidden', ''); } else { sidebar.removeAttribute
 { "type": "checkbox", "id": "enable_sorting", "default": true, "label": "Enable sorting" },
 { "type": "checkbox", "id": "show_category_pills", "default": true, "label": "Show category pills" },
 { "type": "link_list", "id": "category_menu", "label": "Category pills menu", "info": "Menu of collections shown as pills (an 'All Kits' pill is added automatically)" },
+{ "type": "url", "id": "all_kits_link", "label": "All Kits pill link", "info": "Where the All Kits pill goes. Defaults to /collections/frontpage (all products)." },
 { "type": "header", "content": "Product grid" },
 { "type": "range", "id": "products_per_page", "min": 8, "max": 24, "step": 4, "default": 16, "label": "Products per page" },
 { "type": "range", "id": "columns_desktop", "min": 2, "max": 5, "step": 1, "default": 4, "label": "Columns on desktop" },
