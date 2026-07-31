@@ -55,21 +55,35 @@
 .cr-price-apply:hover{background:var(--cr-teal);}
 .cr-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--cr-cols),1fr);gap:20px;}
 .cr-layout[data-filters="open"] .cr-grid{--cr-cols:3!important;}
-.cr-card{display:flex;flex-direction:column;background:#fff;border:1.5px solid var(--cr-card-border);border-radius:24px;overflow:hidden;height:100%;transition:transform .18s ease,box-shadow .18s ease;}
+.cr-card{display:flex;flex-direction:column;background:#fff;border:3px solid #0000004D;border-radius:24px;overflow:hidden;height:100%;transition:transform .18s ease,box-shadow .18s ease;}
 .cr-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,0.10);}
 .cr-card-media{display:block;position:relative;aspect-ratio:1 / 1;background:linear-gradient(0deg,var(--tint),var(--tint)),#fff;border-bottom:1px solid rgba(0,0,0,0.06);overflow:hidden;}
-.cr-card-img{width:100%;height:100%;object-fit:contain;padding:14px;}
-.cr-card-body{display:flex;flex-direction:column;gap:8px;padding:12px 16px 16px;}
+.cr-card-img{width:100%;height:100%;object-fit:cover;display: block;}
+.cr-card-body{display:flex;flex-direction:column;gap:8px;padding:12px 16px 16px;flex: 1;}
 .cr-card-top{display:flex;align-items:center;justify-content:space-between;min-height:24px;}
 .cr-rating{display:inline-flex;align-items:center;gap:4px;background:var(--cr-rating-bg);color:var(--cr-ink);font-family:'Nunito Sans',sans-serif;font-weight:800;font-size:13px;padding:4px 12px;border-radius:999px;}
-.cr-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(90deg,var(--cr-orange),#ff9a5a);color:#fff;font-family:'Quicksand',sans-serif;font-weight:700;font-size:10px;letter-spacing:.04em;padding:6px 11px;border-radius:999px;}
-.cr-card-title{font-family:'Nunito',sans-serif;font-weight:700;font-size:19px;line-height:1.2;color:var(--cr-ink);text-decoration:none;}
+.cr-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(90deg,#FF6577,#FF6F6F);color:#fff;font-family:'Quicksand',sans-serif;font-weight:700;font-size:10px;letter-spacing:.04em;padding:6px 11px;border-radius:999px;text-transform: uppercase;}
+.cr-card-title{
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 1.15;
+    color: var(--creste-brown2);
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 1.3em;
+    margin-top: 5px;
+}
 .cr-card-title:hover{color:var(--cr-orange-dark);}
 .cr-card-meta{margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cr-muted);}
 .cr-price-row{display:flex;align-items:center;gap:8px;padding-bottom:4px;flex-wrap:wrap;}
-.cr-price-now{font-family:'Nunito Sans',sans-serif;font-weight:800;font-size:20px;color:var(--cr-orange);}
-.cr-price-was{font-size:14px;color:var(--cr-ink);opacity:.4;text-decoration:line-through;}
-.cr-price-off{font-family:'Poppins',sans-serif;font-weight:700;font-size:14px;color:var(--cr-green);}
+.cr-price-now{font-family:'Nunito Sans',sans-serif;font-weight:800;font-size:20px;color:var(--cr-orange);letter-spacing: 0px;}
+.cr-price-was{font-size:14px;color:var(--cr-ink);opacity:.4;text-decoration:line-through;letter-spacing: 0px;}
+.cr-price-off{font-family:'Poppins',sans-serif;font-weight:700;font-size:14px;color:var(--cr-green); letter-spacing: 0px;}
 .cr-atc-wrap{margin-top:auto;}
 .cr-atc{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-align:center;background:var(--cr-orange);color:#fff;border:0;border-radius:999px;padding:12px 24px;font-family:'Nunito',sans-serif;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;transition:background .15s ease;}
 .cr-atc:hover{background:var(--cr-orange-dark);}
@@ -125,6 +139,8 @@
 .cr-slider-h::-moz-range-track{background:transparent;border:0;}
 .cr-price-vals{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
 .cr-price-val{font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;color:var(--cr-ink2);background:#fff;border:1.3px solid var(--cr-box-border);border-radius:8px;padding:5px 12px;}
+.cr-card-sub-headings{display: flex;gap: 7px;line-height: 120%; margin: 0px;}
+.cr-card-sub-headings p{ margin: 0px;font-size: 13px; font-weight: 500;text-transform: uppercase;}
 @media (max-width:1200px){.cr-grid{--cr-cols:3!important;}
 }
 @media (max-width:990px){.cr-layout[data-filters="open"]{grid-template-columns:1fr;}
@@ -132,9 +148,17 @@
 }
 @media (max-width:749px){.cr-grid,.cr-layout[data-filters="open"] .cr-grid{--cr-cols:2!important;gap:12px;}
 .cr-card-body{padding:10px 12px 14px;}
-.cr-card-title{font-size:16px;}
-.cr-price-now{font-size:18px;}
+.cr-card-title{font-size:13px;}
+.cr-price-now{font-size:14px;}
 .cr-toolbar{gap:12px;}
 .cr-promo{padding:22px clamp(16px,5vw,40px);}
 .cr-sort-panel{min-width:180px;}
+.cr-rating{font-size: 11px;}
+.cr-badge{padding: 4px 6px;}
+.cr-price-was{font-size: 13px;}
+.cr-price-off{font-size: 10px;}
+.cr-card-sub-headings p{font-size: 10px; letter-spacing: 0px;}
+.cr-rating{padding: 4px 6px;}
+.cr-atc {padding: 12px 8px;}
+.cr-card-body{padding: 10px 6px 8px !important;}
 }

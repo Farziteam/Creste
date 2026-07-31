@@ -171,11 +171,9 @@ href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif
 {%- liquid
 assign tint_index = forloop.index0 | modulo: tints.size
 assign tint = tints[tint_index]
-assign rating_num = product.metafields.reviews.rating.value.rating
-assign rating_out = ''
-if rating_num != blank and rating_num > 0
-assign rating_out = rating_num | round: 1
-endif
+assign rating_out = product.metafields.reviews.rating.value
+
+
 assign age_label = ''
 for t in product.tags
 assign tl = t | downcase
@@ -218,29 +216,30 @@ assign img_alt = product.featured_media.alt | default: product.title | escape
 <div class="cr-card-top">
 {%- if rating_out != blank -%}
 <span class="cr-rating">
-<svg width="12" height="12" viewBox="0 0 24 24" fill="#f5b301"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z"/></svg>
+<svg width="12" height="12" viewBox="0 0 24 24" fill="#000000"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z"/></svg>
 {{ rating_out }}
 </span>
 {%- else -%}<span></span>{%- endif -%}
-{%- if is_top -%}
+{%- if product.metafields.custom.product_tag != blank -%}
 <span class="cr-badge">
-<svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z"/></svg>
-TOP PICK
+<svg width="11" height="11" viewBox="0 0 24 24" fill="#FFD24C"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z"/></svg>
+{{ product.metafields.custom.product_tag }}
 </span>
 {%- endif -%}
 </div>
 <a class="cr-card-title" href="{{ product.url }}">{{ product.title | escape }}</a>
 {%- if age_label != blank or skill_label != blank -%}
-<p class="cr-card-meta">
-{%- if age_label != blank -%}AGES {{ age_label | remove: 'years' | remove: 'year' | remove: 'yrs' | strip }}{%- endif -%}
+{% comment %} <p class="cr-card-meta"> {% endcomment %}
+{% comment %} {%- if age_label != blank -%}AGES {{ age_label | remove: 'years' | remove: 'year' | remove: 'yrs' | strip }}{%- endif -%}
 {%- if age_label != blank and skill_label != blank -%} • {% endif -%}
-{%- if skill_label != blank -%}{{ skill_label }}{%- endif -%}
-</p>
+{%- if skill_label != blank -%}{{ skill_label }}{%- endif -%} {% endcomment %}
+<div class="cr-card-sub-headings"> {% if product.metafields.custom.age_group != blank %}<p>{{ product.metafields.custom.age_group }}</p>{% endif %}{% if product.metafields.custom.product_category != blank %}<p>•&nbsp;&nbsp;{{ product.metafields.custom.product_category }}</p>{% endif %}</div>
+{% comment %} </p> {% endcomment %}
 {%- endif -%}
 <div class="cr-price-row">
-<span class="cr-price-now">{{ product.price | money }}</span>
+<span class="cr-price-now">{{ product.price | money_without_trailing_zeros }}</span>
 {%- if on_sale -%}
-<span class="cr-price-was">{{ product.compare_at_price | money }}</span>
+<span class="cr-price-was">{{ product.compare_at_price | money_without_currency | remove: '.00' }}</span>
 <span class="cr-price-off">{{ pct }}% off</span>
 {%- endif -%}
 </div>
