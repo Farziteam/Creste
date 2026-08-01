@@ -300,6 +300,7 @@
         "r2": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/Overlay_Shadow_1.png",
             "title": "My 2yo cant get enough!",
             "quote": "It helps my guilt about screen time because I feel she is actually learning. It genuinely keeps her busy for hours and I never worry that it is wasted time anymore.",
             "name": "Priya Sharma",
@@ -888,7 +889,7 @@
         "f4"
       ],
       "settings": {
-        "section_bg": "#DFD6F5",
+        "section_bg": "#dfd6f5",
         "heading": "From Our Families to Yours",
         "heading_italic": "Yours",
         "heading_italic_color": "#8b5cf6",
