@@ -344,6 +344,7 @@
         "r6": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/Overlay_Shadow.png",
             "title": "Screen-free wins!",
             "quote": "Finally an activity that keeps them engaged and learning at the same time. The instructions are clear and the whole family ends up joining in every single weekend.",
             "name": "Kavya Nair",
