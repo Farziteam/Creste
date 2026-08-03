@@ -323,6 +323,7 @@
         "r4": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/Overlay_Shadow_1.png",
             "title": "My 2yo cant get enough!",
             "quote": "It helps my guilt about screen time because I feel she is actually learning.",
             "name": "Neha Verma",
