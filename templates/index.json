@@ -366,6 +366,7 @@
         "r8": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/Overlay_Shadow.png",
             "title": "Highly recommend",
             "quote": "Great quality materials and thoughtful, age-appropriate projects.",
             "name": "Meera Iyer",
