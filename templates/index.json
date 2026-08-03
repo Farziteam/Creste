@@ -356,6 +356,7 @@
         "r7": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/Overlay_Shadow.png",
             "title": "So much fun!",
             "quote": "Weekend afternoons are sorted.",
             "name": "Anjali Rao",
