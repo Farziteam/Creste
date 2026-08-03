@@ -334,6 +334,7 @@
         "r5": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/Overlay_Shadow_1.png",
             "title": "Best purchase this year!",
             "quote": "My kids ask for their Creste kit before the TV now.",
             "name": "Ritu Mehra",
