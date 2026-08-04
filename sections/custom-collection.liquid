@@ -6,6 +6,16 @@ category pills) + collapsible filter panel + product grid +
 promo CTA banner + pagination. Data-driven from products.
 ============================================================
 {%- endcomment -%}
+ <style>
+    @media (max-width: 749px){
+      .cr-hero{
+        background-image: url({{ section.settings.mobile_background_image | image_url: width: 800 }}) !important;
+    }
+    .cr-promo{
+        background-image: url({{ section.settings.bg_mobile | image_url: width: 800 }}) !important;
+    }
+    }
+ </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@700;900&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap">
@@ -18,14 +28,14 @@ assign hero_title =  collection.title
 <section class="cr-collection color-{{ section.settings.color_scheme }}" data-section-id="{{ section.id }}">
 {%- comment -%} ===== HERO BANNER ===== {%- endcomment -%}
 {%- if section.settings.show_hero -%}
-<div class="cr-hero">
+<div class="cr-hero" style="background-image: url({{ section.settings.background_image | image_url: width: 2000 }});">
 <div class="cr-hero-inner">
 <p class="cr-hero-count">{{ collection.all_products_count }} Products</p>
-<h1 class="cr-hero-title">{{ hero_title | escape }}</h1>
+<h1 class="cr-hero-title" style="color: {{ section.settings.text_color }};">{{ hero_title | escape }}</h1>
 {%- if section.settings.hero_subtitle != blank -%}
 <p class="cr-hero-sub">{{ section.settings.hero_subtitle | escape }}</p>
 {%- elsif collection.description != blank -%}
-<p class="cr-hero-sub">{{ collection.description | strip_html | truncatewords: 26 }}</p>
+<p class="cr-hero-sub">{{ collection.description | strip_html | truncatewords: 14 }}</p>
 {%- endif -%}
 </div>
 </div>
@@ -275,7 +285,7 @@ Add To Cart
 </div>
 {%- comment -%} ===== PROMO CTA BANNER ===== {%- endcomment -%}
 {%- if section.settings.show_promo -%}
-<div class="cr-promo" style="--promo-bg: {{ section.settings.promo_bg }};">
+<div class="cr-promo" style="--promo-bg: {{ section.settings.promo_bg }};background-image:url({{ section.settings.bg_desktop | image_url: width: 1200 }});">
 <div class="cr-promo-left">
 <div class="cr-promo-ic">
 {%- if section.settings.promo_image != blank -%}{{ section.settings.promo_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
@@ -594,6 +604,9 @@ window.location.href = url.toString();
 { "type": "header", "content": "Hero banner" },
 { "type": "checkbox", "id": "show_hero", "default": true, "label": "Show hero banner" },
 { "type": "text", "id": "hero_title", "label": "Hero title", "info": "Leave blank to use the collection title" },
+{ "type": "color", "id": "text_color", "default": "#574239", "label": "Main Heading Color" },
+{ "type": "image_picker", "id": "background_image", "label": "Background Image" },
+{ "type": "image_picker", "id": "mobile_background_image", "label": "Mobile Background Image" },
 { "type": "textarea", "id": "hero_subtitle", "label": "Hero subtitle" },
 { "type": "header", "content": "Toolbar" },
 { "type": "checkbox", "id": "enable_filtering", "default": true, "label": "Enable filters (Show Filters button)", "info": "Configure filters in Search & Discovery" },
@@ -609,6 +622,8 @@ window.location.href = url.toString();
 { "type": "header", "content": "Promo banner" },
 { "type": "checkbox", "id": "show_promo", "default": true, "label": "Show promo banner" },
 { "type": "image_picker", "id": "promo_image", "label": "Promo icon" },
+{"type":"image_picker","id":"bg_desktop","label":"Promo Banner"},
+{"type":"image_picker","id":"bg_mobile","label":"Promo Banner(mobile)"},
 { "type": "text", "id": "promo_title", "default": "Birthday coming up?", "label": "Promo title" },
 { "type": "text", "id": "promo_text", "default": "Return gifts from Rs. 375 · DIY Party Box Kits for the whole gang!", "label": "Promo text" },
 { "type": "text", "id": "promo_button_label", "default": "Explore Now", "label": "Button label" },
