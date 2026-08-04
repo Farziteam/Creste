@@ -23,8 +23,8 @@
         "slide_3jWpxH": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147228149_99479d0c-43f6-41c7-8888-989a22bd5b1a.png",
-            "image_mobile": "shopify://shop_images/HERO_3ff9b233-e559-450e-9886-71cec7077a5a.png",
+            "image": "shopify://shop_images/home_banner.png",
+            "image_mobile": "shopify://shop_images/HERO_mob.png",
             "link": "",
             "alt": "Creste banner"
           }
