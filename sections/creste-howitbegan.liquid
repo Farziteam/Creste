@@ -3,24 +3,27 @@
 {%- assign tiles = section.blocks | where: 'type', 'tile' -%}
 {%- assign dogm = section.settings.dog_w | times: 0.5 | round -%}
 <style>
-#creste-hib-{{ section.id }}{position:relative;padding:24px 16px 44px;background:{{ section.settings.section_bg }};background-size:cover;background-position:center;}
+#creste-hib-{{ section.id }}{position:relative;padding:24px 16px 44px;background:{{ section.settings.section_bg }};background-size:cover;background-position:center;overflow:hidden;}
 #creste-hib-{{ section.id }} .hib-dog{position:absolute;top:{{ section.settings.dog_top }}px;z-index:5;width:{{ dogm }}px;pointer-events:none;}
 #creste-hib-{{ section.id }} .hib-dog.l{left:{{ section.settings.dog_side }}px;z-index: 0;}
 #creste-hib-{{ section.id }} .hib-dog.r{right:{{ section.settings.dog_side }}px;z-index: 0;}
 #creste-hib-{{ section.id }} .hib-dog img{display:block;width:100%;height:auto;}
-#creste-hib-{{ section.id }} .hib-in{position:relative;max-width:1120px;margin:0 auto;}
+#creste-hib-{{ section.id }} .hib-in{position:relative;max-width:1280px;margin:0 auto;}
 #creste-hib-{{ section.id }} .hib-h{text-align:center;margin:0 0 20px;font-family:'Fredoka One',cursive;font-weight:400;font-size:34px;line-height:1.1;color:#2B1702;}
 #creste-hib-{{ section.id }} .hib-stack{display:flex;flex-direction:column;gap:{{ section.settings.gap }}px;}
 #creste-hib-{{ section.id }} .hib-card{position:sticky;background:var(--tile,#F4793A);border-radius:24px;padding:14px;box-shadow:0 14px 30px rgba(0,0,0,.15);}
 #creste-hib-{{ section.id }} .hib-inner{display:flex;flex-direction:column;gap:14px;}
 #creste-hib-{{ section.id }} .hib-photo img,#creste-hib-{{ section.id }} .hib-photo .ph svg{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:16px;background:#eadfce;}
 #creste-hib-{{ section.id }} .hib-content{padding:2px 6px 6px;}
-#creste-hib-{{ section.id }} .hib-ct{margin:0 0 8px;font-family:'Fredoka One',cursive;font-weight:400;font-size:21px;line-height:1.15;color:#fff;}
+#creste-hib-{{ section.id }} .hib-ct{margin:0 0 8px;font-family:'Fredoka One',cursive;font-weight:400;font-size:21px;line-height:1.2;color:#fff;}
 #creste-hib-{{ section.id }} .hib-cb{margin:0;font-family:'Poppins',sans-serif;font-weight:400;font-size:14px;line-height:1.55;color:rgba(255,255,255,.95);}
 #creste-hib-{{ section.id }} .hib-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
 #creste-hib-{{ section.id }} .hib-btn{background:#fff;color:#2B1702;border-radius:9999px;padding:10px 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;text-decoration:none;}
 #creste-hib-{{ section.id }} .hib-btn.alt{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.7);}
-@media(min-width:750px){#creste-hib-{{ section.id }}{padding:40px 24px 90px;}#creste-hib-{{ section.id }} .hib-dog{width:{{ section.settings.dog_w }}px;}#creste-hib-{{ section.id }} .hib-h{font-size:48px;margin-bottom:26px;}#creste-hib-{{ section.id }} .hib-card{padding:26px;border-radius:32px;}#creste-hib-{{ section.id }} .hib-inner{flex-direction:row;align-items:center;gap:34px;}#creste-hib-{{ section.id }} .hib-photo{flex:0 0 42%;}#creste-hib-{{ section.id }} .hib-photo img,#creste-hib-{{ section.id }} .hib-photo .ph svg{aspect-ratio:5/4;border-radius:20px;}#creste-hib-{{ section.id }} .hib-content{flex:1;padding:0;}#creste-hib-{{ section.id }} .hib-ct{font-size:40px;margin-bottom:16px;}#creste-hib-{{ section.id }} .hib-cb{font-size:17px;}}
+@media(min-width:750px){#creste-hib-{{ section.id }}{padding:40px 24px 90px;}#creste-hib-{{ section.id }} .hib-dog{width:{{ section.settings.dog_w }}px;}#creste-hib-{{ section.id }} .hib-h{font-size:48px;margin-bottom:26px;}#creste-hib-{{ section.id }} .hib-card{padding:24px 64px;border-radius:32px;}#creste-hib-{{ section.id }} .hib-inner{flex-direction:row;align-items:center;gap:60px;}#creste-hib-{{ section.id }} .hib-photo{flex:0 0 33  %;}#creste-hib-{{ section.id }} .hib-photo img,#creste-hib-{{ section.id }} .hib-photo .ph svg{aspect-ratio:1/1;border-radius:20px;}#creste-hib-{{ section.id }} .hib-content{flex:1;padding:0;}#creste-hib-{{ section.id }} .hib-ct{font-size:40px;margin-bottom:16px;}#creste-hib-{{ section.id }} .hib-cb{font-size:20px;}
+#creste-hib-{{ section.id }} .hib-dog.r{width: 220px;top: -4%; right: 9%;}
+#creste-hib-{{ section.id }} .hib-dog.l{width: 180px;top: -2%; left: 12%;z-index:1;}
+}
 </style>
 {% render 'creste-bg', id: _bgid, d: section.settings.bg_desktop, m: section.settings.bg_mobile %}
 <div id='creste-hib-{{ section.id }}' class='creste-section'>
