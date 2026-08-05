@@ -579,7 +579,7 @@
         "g1": {
           "type": "stage",
           "settings": {
-            "image": "shopify://shop_images/photo-wrap.png",
+            "image": "shopify://shop_images/Screenshot_2026-08-05_140300.png",
             "emoji": "💡",
             "title": "Spark Curiosity",
             "desc": "Every activity sparks curiosity and imagination."
@@ -588,6 +588,7 @@
         "g2": {
           "type": "stage",
           "settings": {
+            "image": "shopify://shop_images/photo-wrap_3.png",
             "emoji": "🛠",
             "title": "Build Skills",
             "desc": "They learn, explore and build real-life skills."
@@ -596,6 +597,7 @@
         "g3": {
           "type": "stage",
           "settings": {
+            "image": "shopify://shop_images/photo-wrap_4.png",
             "emoji": "🤝",
             "title": "Stronger Bonds",
             "desc": "Shared moments today build unbreakable bonds."
@@ -604,6 +606,7 @@
         "g4": {
           "type": "stage",
           "settings": {
+            "image": "shopify://shop_images/photo-wrap_5.png",
             "emoji": "⭐",
             "title": "Confidence Grows",
             "desc": "Every step builds real self-belief."
@@ -612,6 +615,7 @@
         "g5": {
           "type": "stage",
           "settings": {
+            "image": "shopify://shop_images/photo-wrap_6.png",
             "emoji": "🎓",
             "title": "Confident Tomorrow",
             "desc": "Growing into confident, creative and kind adults."
