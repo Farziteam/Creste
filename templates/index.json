@@ -387,7 +387,7 @@
         "r8"
       ],
       "settings": {
-        "bg_desktop": "shopify://shop_images/e-con-inner_2.png",
+        "bg_desktop": "shopify://shop_images/1_2.png",
         "bg_mobile": "shopify://shop_images/Testimonials_Section_-m.png",
         "overlap_top": 24,
         "overlap_bottom": 0,
