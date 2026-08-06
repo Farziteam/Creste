@@ -99,6 +99,7 @@
       ],
       "settings": {
         "bg_desktop": "shopify://shop_images/Section_-_Trust_Banner_1_5dbbaed9-dd1e-4208-96be-6245a78178aa.png",
+        "bg_mobile": "shopify://shop_images/ho1.png",
         "section_bg": "#ffffff",
         "tagline": "Creste Makes Learning through play easy , purposeful & Joyful!"
       }
