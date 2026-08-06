@@ -27,7 +27,7 @@
           "settings": {
             "heading": "Help Desk",
             "underline": "#00677e",
-            "links": "Contact Us|/pages/contact\nTrack Order|/pages/track-order\nShipping Policy|/pages/shipping-policy\nFAQ's|#faq"
+            "links": "Contact Us|/pages/contact\nTrack Your Order|/apps/17TRACK\nBulk Order and Return Gifts|https://api.whatsapp.com/send/?phone=%2B918081026320&text&type=phone_number&app_absent=0&wame_ctl=1\nDirect Chat Support|https://api.whatsapp.com/send/?phone=%2B918081026320&text&type=phone_number&app_absent=0&wame_ctl=1\nFAQ's|/pages/faqs"
           }
         },
         "so1": {
