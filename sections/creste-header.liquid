@@ -273,7 +273,7 @@
 <button type='button' class='hd-burger' aria-label='Menu' onclick="document.getElementById('hdm-{{ section.id }}').classList.add('open');document.body.style.overflow='hidden';"><svg viewBox='0 0 24 24' width='26' height='26' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><path d='M3 6h18M3 12h18M3 18h18'/></svg></button>
 <a href='{{ routes.root_url }}' class='hd-logo'>{% if section.settings.logo != blank %}<img src='{{ section.settings.logo | image_url: width: 280 }}' alt='{{ shop.name | escape }}'>{% else %}<span class='hd-name'>Creste</span>{% endif %}</a>
 <nav class='hd-nav'>
-<span class='hd-shop'><a class='hd-shoptrigger' href='{{ section.settings.shop_link | default: '/collections/all' }}'>{{ section.settings.shop_label }} &#9662;</a></span>
+<span class='hd-shop'><a class='hd-shoptrigger' href='{{ section.settings.shop_link | default: '/collections/all' }}'>{{ section.settings.shop_label }}&nbsp {{ 'icon-arrow-down.svg' | inline_asset_content }}</a></span>
 {% for block in navs %}<a href='{{ block.settings.link | default: '#' }}' {{ block.shopify_attributes }}>{{ block.settings.label }}</a>{% endfor %}
 {% if section.settings.quiz_label != blank %}<span class='hd-quizw'>{% if section.settings.rec_label != blank %}<span class='hd-rec'>{{ section.settings.rec_label }}</span>{% endif %}<a class='hd-quiz' href='{{ section.settings.quiz_link | default: '#' }}'>{{ section.settings.quiz_label }}</a></span>{% endif %}
 </nav>

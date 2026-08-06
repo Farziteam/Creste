@@ -158,7 +158,208 @@
 <div class='cp-wbot'></div>
 </div>
 <script>
-(function(){var r=document.getElementById('creste-play-{{ section.id }}');if(!r)return;var pills=r.querySelectorAll('.cp-cat'),panels=r.querySelectorAll('.cp-panel'),va=document.getElementById('cpall-{{ section.id }}'),dotsEl=document.getElementById('cpdots-{{ section.id }}');function at(){return r.querySelector('.cp-panel:not([hidden]) .cp-track');}function cw(t){var c=t.querySelector('.cp-card');if(!c)return 270;var g=parseInt(getComputedStyle(t).columnGap||getComputedStyle(t).gap)||16;return c.getBoundingClientRect().width+g;}function buildDots(){if(!dotsEl)return;var t=at();dotsEl.innerHTML='';if(!t)return;var cards=t.querySelectorAll('.cp-card');if(cards.length<2)return;cards.forEach(function(c,i){var d=document.createElement('button');d.type='button';if(i===0)d.className='on';d.addEventListener('click',function(){t.scrollTo({left:i*cw(t),behavior:'smooth'});});dotsEl.appendChild(d);});}function updateDots(){if(!dotsEl)return;var t=at();if(!t)return;var idx=Math.round(t.scrollLeft/cw(t));dotsEl.querySelectorAll('button').forEach(function(d,i){d.classList.toggle('on',i===idx);});}function act(k){pills.forEach(function(p,j){p.classList.toggle('on',j===k);});panels.forEach(function(pn,j){pn.hidden=(j!==k);});var u=pills[k].getAttribute('data-url');if(u&&va)va.setAttribute('href',u);buildDots();}pills.forEach(function(p,k){p.addEventListener('click',function(){act(k);});});panels.forEach(function(p){var t=p.querySelector('.cp-track');if(t)t.addEventListener('scroll',function(){if(!p.hidden)updateDots();});});function step(dir){var t=at();if(!t)return;t.scrollBy({left:dir*cw(t),behavior:'smooth'});}var pv=r.querySelector('.cp-arrow.prev'),nx=r.querySelector('.cp-arrow.next');if(pv)pv.addEventListener('click',function(){step(-1);});if(nx)nx.addEventListener('click',function(){step(1);});buildDots();})();
+{% comment %} (function(){var r=document.getElementById('creste-play-{{ section.id }}');if(!r)return;var pills=r.querySelectorAll('.cp-cat'),panels=r.querySelectorAll('.cp-panel'),va=document.getElementById('cpall-{{ section.id }}'),dotsEl=document.getElementById('cpdots-{{ section.id }}');function at(){return r.querySelector('.cp-panel:not([hidden]) .cp-track');}function cw(t){var c=t.querySelector('.cp-card');if(!c)return 270;var g=parseInt(getComputedStyle(t).columnGap||getComputedStyle(t).gap)||16;return c.getBoundingClientRect().width+g;}function buildDots(){if(!dotsEl)return;var t=at();dotsEl.innerHTML='';if(!t)return;var cards=t.querySelectorAll('.cp-card');if(cards.length<2)return;cards.forEach(function(c,i){var d=document.createElement('button');d.type='button';if(i===0)d.className='on';d.addEventListener('click',function(){t.scrollTo({left:i*cw(t),behavior:'smooth'});});dotsEl.appendChild(d);});}function updateDots(){if(!dotsEl)return;var t=at();if(!t)return;var idx=Math.round(t.scrollLeft/cw(t));dotsEl.querySelectorAll('button').forEach(function(d,i){d.classList.toggle('on',i===idx);});}function act(k){pills.forEach(function(p,j){p.classList.toggle('on',j===k);});panels.forEach(function(pn,j){pn.hidden=(j!==k);});var u=pills[k].getAttribute('data-url');if(u&&va)va.setAttribute('href',u);buildDots();}pills.forEach(function(p,k){p.addEventListener('click',function(){act(k);});});panels.forEach(function(p){var t=p.querySelector('.cp-track');if(t)t.addEventListener('scroll',function(){if(!p.hidden)updateDots();});});function step(dir){var t=at();if(!t)return;t.scrollBy({left:dir*cw(t),behavior:'smooth'});}var pv=r.querySelector('.cp-arrow.prev'),nx=r.querySelector('.cp-arrow.next');if(pv)pv.addEventListener('click',function(){step(-1);});if(nx)nx.addEventListener('click',function(){step(1);});buildDots();})(); {% endcomment %}
+(function () {
+    var r = document.getElementById('creste-play-{{ section.id }}');
+    if (!r) return;
+
+    var pills = r.querySelectorAll('.cp-cat'),
+        panels = r.querySelectorAll('.cp-panel'),
+        va = document.getElementById('cpall-{{ section.id }}'),
+        dotsEl = document.getElementById('cpdots-{{ section.id }}');
+
+    function at() {
+        return r.querySelector('.cp-panel:not([hidden]) .cp-track');
+    }
+
+    function buildDots() {
+        if (!dotsEl) return;
+
+        var t = at();
+        dotsEl.innerHTML = '';
+
+        if (!t) return;
+
+        var cards = Array.from(t.querySelectorAll('.cp-card'));
+
+        if (cards.length < 2) return;
+
+        cards.forEach(function (card, i) {
+
+            var d = document.createElement('button');
+            d.type = 'button';
+
+            if (i === 0) d.className = 'on';
+
+            d.addEventListener('click', function () {
+                t.scrollTo({
+                    left: card.offsetLeft,
+                    behavior: 'smooth'
+                });
+            });
+
+            dotsEl.appendChild(d);
+        });
+    }
+
+    {% comment %} function updateDots() {
+
+        if (!dotsEl) return;
+
+        var t = at();
+        if (!t) return;
+
+        var cards = Array.from(t.querySelectorAll('.cp-card'));
+
+        var closest = 0;
+        var min = Infinity;
+
+        cards.forEach(function (card, i) {
+
+            var diff = Math.abs(card.offsetLeft - t.scrollLeft);
+
+            if (diff < min) {
+                min = diff;
+                closest = i;
+            }
+
+        });
+
+        dotsEl.querySelectorAll('button').forEach(function (dot, i) {
+            dot.classList.toggle('on', i === closest);
+        });
+
+    } {% endcomment %}
+
+    function updateDots() {
+
+        if (!dotsEl) return;
+
+        var t = at();
+        if (!t) return;
+
+        var cards = Array.from(t.querySelectorAll('.cp-card'));
+
+        var viewportCenter = t.scrollLeft + t.clientWidth / 2;
+
+        var closest = 0;
+        var min = Infinity;
+
+        cards.forEach(function(card, i){
+
+            var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+
+            var diff = Math.abs(cardCenter - viewportCenter);
+
+            if(diff < min){
+                min = diff;
+                closest = i;
+            }
+
+        });
+
+        dotsEl.querySelectorAll('button').forEach(function(dot,i){
+            dot.classList.toggle('on', i === closest);
+        });
+
+    }
+
+    function act(k) {
+
+        pills.forEach(function (p, j) {
+            p.classList.toggle('on', j === k);
+        });
+
+        panels.forEach(function (pn, j) {
+            pn.hidden = (j !== k);
+        });
+
+        var u = pills[k].getAttribute('data-url');
+
+        if (u && va) {
+            va.setAttribute('href', u);
+        }
+
+        buildDots();
+        updateDots();
+    }
+
+    pills.forEach(function (p, k) {
+        p.addEventListener('click', function () {
+            act(k);
+        });
+    });
+
+    panels.forEach(function (panel) {
+
+        var t = panel.querySelector('.cp-track');
+
+        if (!t) return;
+
+        t.addEventListener('scroll', function () {
+
+            if (!panel.hidden) {
+                updateDots();
+            }
+
+        });
+
+    });
+
+    function step(dir) {
+
+        var t = at();
+        if (!t) return;
+
+        var cards = Array.from(t.querySelectorAll('.cp-card'));
+
+        if (!cards.length) return;
+
+        var closest = 0;
+        var min = Infinity;
+
+        cards.forEach(function (card, i) {
+
+            var diff = Math.abs(card.offsetLeft - t.scrollLeft);
+
+            if (diff < min) {
+                min = diff;
+                closest = i;
+            }
+
+        });
+
+        var next = Math.max(
+            0,
+            Math.min(cards.length - 1, closest + dir)
+        );
+
+        t.scrollTo({
+            left: cards[next].offsetLeft,
+            behavior: 'smooth'
+        });
+
+    }
+
+    var pv = r.querySelector('.cp-arrow.prev'),
+        nx = r.querySelector('.cp-arrow.next');
+
+    if (pv) {
+        pv.addEventListener('click', function () {
+            step(-1);
+        });
+    }
+
+    if (nx) {
+        nx.addEventListener('click', function () {
+            step(1);
+        });
+    }
+
+    buildDots();
+    updateDots();
+
+})();
 </script>
 {% schema %}
 {

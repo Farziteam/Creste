@@ -11,11 +11,18 @@
 #creste-fi-{{ section.id }} .fi-row.r2 .fi-track{animation:fi-right var(--sp,32s) linear infinite;}
 #creste-fi-{{ section.id }} .fi-track:hover{animation-play-state:paused;}
 #creste-fi-{{ section.id }} .fi-logo{flex:0 0 auto;height:96px;min-width:180px;display:flex;align-items:center;justify-content:center;background:#F4F4F4;border-radius:20px;padding:0 34px;}
-#creste-fi-{{ section.id }} .fi-logo img{max-height:60px;width:auto;display:block;}
+#creste-fi-{{ section.id }} .fi-logo img{max-height:50px;width:auto;display:block;}
 #creste-fi-{{ section.id }} .fi-logo .fi-ph{font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:#9aa;letter-spacing:1.5px;}
 @keyframes fi-left{to{transform:translateX(-50%);}}
 @keyframes fi-right{from{transform:translateX(-50%);}to{transform:translateX(0);}}
 @media(min-width:750px){#creste-fi-{{ section.id }}{padding:30px 0;}#creste-fi-{{ section.id }} .fi-h{font-size:40px;}#creste-fi-{{ section.id }} .fi-track{gap:28px;}#creste-fi-{{ section.id }} .fi-logo{height:130px;min-width:268px;padding:0 44px;border-radius:24px;}#creste-fi-{{ section.id }} .fi-logo img{max-height:84px;}#creste-fi-{{ section.id }} .fi-logo .fi-ph{font-size:30px;}}
+@media(max-width:749px){
+  #creste-fi-{{ section.id }} .fi-track{ gap: 12px; padding: 0.5rem; }
+  #creste-fi-{{ section.id }} .fi-logo img{height: 50px; width: 64px; object-fit: contain;}
+  #creste-fi-{{ section.id }} .fi-logo {height: 54px; width: 100px;min-width: unset;}
+  #creste-fi-{{ section.id }} .fi-row+.fi-row{margin-top: unset;}
+  #creste-fi-{{ section.id }} .fi-h { margin: 0 0 15px;}
+}
 </style>
 {% render 'creste-bg', id: _bgid, d: section.settings.bg_desktop, m: section.settings.bg_mobile %}
 <div id='creste-fi-{{ section.id }}' class='creste-section' style='--sp:{{ section.settings.speed }}s;'>
