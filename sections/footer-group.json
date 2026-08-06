@@ -63,7 +63,7 @@
         "so3"
       ],
       "settings": {
-        "bg_desktop": "shopify://shop_images/bg.png",
+        "bg_desktop": "shopify://shop_images/desk_1.png",
         "bg_mobile": "shopify://shop_images/bg2.png",
         "bg": "#fcebb6",
         "top_border": "#ffd400",
