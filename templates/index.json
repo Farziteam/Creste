@@ -16,6 +16,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/2_web.png",
+            "image_mobile": "shopify://shop_images/HERO2_mob.png",
             "link": "",
             "alt": "Creste banner"
           }
