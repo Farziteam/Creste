@@ -391,6 +391,7 @@
       "settings": {
         "bg_desktop": "shopify://shop_images/1_2.png",
         "bg_mobile": "shopify://shop_images/Testimonials_Section_long_2.png",
+        "mobile_logo": "shopify://shop_images/png_creste.png",
         "overlap_top": 24,
         "overlap_bottom": 0,
         "section_bg": "#dcc9f5",
