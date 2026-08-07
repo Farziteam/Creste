@@ -390,7 +390,7 @@
       ],
       "settings": {
         "bg_desktop": "shopify://shop_images/1_2.png",
-        "bg_mobile": "shopify://shop_images/Testimonials_Section_-m.png",
+        "bg_mobile": "shopify://shop_images/Testimonials_Section_mob.png",
         "overlap_top": 24,
         "overlap_bottom": 0,
         "section_bg": "#dcc9f5",
