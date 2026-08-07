@@ -3610,3 +3610,11 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+.shopify-policy__container{
+  width: 100%;
+  max-width: unset;
+  margin: 10rem 0 2rem 0;
+  text-align: justify;
+  padding: 0 15%;
+}
