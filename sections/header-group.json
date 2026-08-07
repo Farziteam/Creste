@@ -42,7 +42,7 @@
             "suffix": "years",
             "tint": "#fde7d6",
             "text-color": "#040404",
-            "link": ""
+            "link": "shopify://collections/age-group-up-to-3years"
           }
         },
         "ag2": {
@@ -52,7 +52,7 @@
             "suffix": "years",
             "tint": "#fce0ec",
             "text-color": "#040404",
-            "link": ""
+            "link": "shopify://collections/age-group-2-6years"
           }
         },
         "ag3": {
@@ -213,7 +213,7 @@
         "age_heading": "Shop by Age",
         "cat_heading": "Shop by Category",
         "na_heading": "New Arrivals",
-        "na_bg": "#FFFFFF",
+        "na_bg": "#ffffff",
         "bg_image": "shopify://shop_images/green_1.png",
         "bg_image_mob": "shopify://shop_images/Frame_2147228316.png",
         "na_product": "bouquet-candle-kit"
