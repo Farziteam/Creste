@@ -804,6 +804,7 @@
       ],
       "settings": {
         "bg_desktop": "shopify://shop_images/FAQ_Section.png",
+        "bg_mobile": "shopify://shop_images/mob_red.png",
         "section_bg": "#f9d8e8",
         "heading_a": "We create",
         "heading_accent": "meaningful",
