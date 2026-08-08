@@ -77,6 +77,8 @@
           <span class="cpdp__rating-sold">{{ section.settings.sold_text | default: '1,900+ bought this month' }}</span>
         </div>
         {%- if section.settings.short_desc != blank -%}<p class="cpdp__desc">{{ section.settings.short_desc }}</p>{%- elsif product.description != blank -%}<p class="cpdp__desc">{{ product.description | strip_html | truncatewords: 40 }}</p>{%- endif -%}
+
+        <div class="cpdp__buybox">
         {%- if product.variants.size > 1 -%}
         <div class="cpdp__themebox">
           <h3 class="cpdp__themebox-title">Pick a bag theme</h3>
@@ -104,6 +106,23 @@
           <span class="cpdp__price-now" data-price>{{ cur.price | money }}</span>
           {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
         </div>
+        <label class="cpdp__giftwrap"><span class="cpdp__gift-ico">🎁</span><span class="cpdp__gift-body"><b>Add gift wrapping — free</b><em>Kraft paper, ribbon and a handwritten note</em></span><input type="checkbox" name="properties[Gift wrapping]" value="Yes" class="cpdp__gift-check"></label>
+        <div class="cpdp__po">
+          <h3 class="cpdp__po-title">Choose Purchase Option</h3>
+          <div class="cpdp__po-grid">
+            {%- assign tiers = '1|2,2|5,4|15' | split: ',' -%}
+            {%- for tier in tiers -%}
+              {%- assign tp = tier | split: '|' -%}
+              {%- assign q = tp[0] | times: 1 -%}
+              {%- assign off = tp[1] | times: 1 -%}
+              {%- assign base = cur.price | times: q -%}
+              {%- assign discount = base | times: off | divided_by: 100 -%}
+              {%- assign final = base | minus: discount -%}
+              <button type="button" class="cpdp__po-card{% if forloop.first %} is-selected{% endif %}" data-qty="{{ q }}"><span class="cpdp__po-ico">✊</span><span class="cpdp__po-body"><span class="cpdp__po-top">Buy {{ q }} <em>{{ off }}% off</em></span><span class="cpdp__po-price">{{ final | money }} <s>{{ base | money }}</s></span>{% if forloop.last %}<span class="cpdp__po-badge">Smart Saver</span>{% endif %}</span></button>
+            {%- endfor -%}
+          </div>
+        </div>
+        <p class="cpdp__ship">{{ section.settings.ship_text | default: 'Order before 4 PM → ships today · COD available' }}</p>
         <input type="hidden" name="id" value="{{ cur.id }}" class="cpdp__var-id">
         <div class="cpdp__buy">
           <div class="cpdp__qty" aria-label="Quantity">
@@ -112,6 +131,8 @@
             <button type="button" class="cpdp__qty-btn" data-dir="1" aria-label="Increase">+</button>
           </div>
           <button type="submit" class="cpdp__atc" data-atc{% unless cur.available %} disabled{% endunless %}><span data-atc-label>{% if cur.available %}Add to Cart{% else %}Sold out{% endif %}</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
+        <button type="button" class="cpdp__buynow" data-buynow>Buy Now <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
         <div class="cpdp__trust">
           <div class="cpdp__trust-item"><span class="cpdp__trust-ico">🛡️</span><span class="cpdp__trust-t">100% Secure</span><span class="cpdp__trust-s">secure payment</span></div>
@@ -255,6 +276,8 @@
   #Cpdp-{{ uid }} .cpdp__rating-link{color:var(--cpdp-brown);font-weight:700;text-decoration:underline;}
   #Cpdp-{{ uid }} .cpdp__rating-sold{color:#16A34A;font-weight:700;}
   #Cpdp-{{ uid }} .cpdp__desc{font-size:18px;line-height:1.55;color:var(--cpdp-ink);margin:0 0 22px;}
+  #Cpdp-{{ uid }} .cpdp__buybox{background:var(--cpdp-cream);border-radius:22px;padding:22px;margin-bottom:18px;}
+  #Cpdp-{{ uid }} .cpdp__buybox .cpdp__themebox{background:transparent;padding:0;margin-bottom:18px;}
   #Cpdp-{{ uid }} .cpdp__themebox{background:var(--cpdp-cream);border-radius:20px;padding:20px;margin-bottom:22px;}
   #Cpdp-{{ uid }} .cpdp__themebox-title{font-family:var(--cpdp-head);font-size:20px;font-weight:800;margin:0 0 14px;}
   #Cpdp-{{ uid }} .cpdp__themegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
@@ -266,8 +289,29 @@
   #Cpdp-{{ uid }} .cpdp__price-now{font-family:var(--cpdp-head);font-size:44px;font-weight:800;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__price-was{font-size:20px;color:#9aa0a6;text-decoration:line-through;}
   #Cpdp-{{ uid }} .cpdp__price-off{background:var(--cpdp-yellow);color:#7a5b00;font-weight:700;font-size:14px;padding:5px 12px;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__giftwrap{display:flex;align-items:center;gap:12px;background:#EAF3FB;border-radius:14px;padding:14px 16px;margin-bottom:18px;cursor:pointer;}
+  #Cpdp-{{ uid }} .cpdp__gift-ico{font-size:22px;}
+  #Cpdp-{{ uid }} .cpdp__gift-body{flex:1;display:flex;flex-direction:column;gap:2px;}
+  #Cpdp-{{ uid }} .cpdp__gift-body b{font-size:15px;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__gift-body em{font-style:normal;font-size:13px;color:#6b7280;}
+  #Cpdp-{{ uid }} .cpdp__gift-check{width:22px;height:22px;flex:0 0 auto;accent-color:var(--cpdp-orange);cursor:pointer;}
+  #Cpdp-{{ uid }} .cpdp__po-title{font-family:var(--cpdp-head);font-size:18px;font-weight:800;margin:0 0 12px;}
+  #Cpdp-{{ uid }} .cpdp__po-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px;}
+  #Cpdp-{{ uid }} .cpdp__po-card{position:relative;display:flex;align-items:center;gap:10px;text-align:left;background:#fff;border:2px solid #ECE6DA;border-radius:14px;padding:12px;cursor:pointer;font-family:inherit;}
+  #Cpdp-{{ uid }} .cpdp__po-card.is-selected{border-color:#4CA36A;background:#F1F9F2;}
+  #Cpdp-{{ uid }} .cpdp__po-ico{font-size:22px;flex:0 0 auto;}
+  #Cpdp-{{ uid }} .cpdp__po-body{display:flex;flex-direction:column;gap:3px;min-width:0;}
+  #Cpdp-{{ uid }} .cpdp__po-top{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13px;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__po-top em{font-style:normal;background:#DCFCE7;color:#15803D;font-size:11px;padding:2px 6px;border-radius:6px;}
+  #Cpdp-{{ uid }} .cpdp__po-price{display:flex;flex-direction:column;font-weight:800;font-size:15px;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__po-price s{font-weight:500;font-size:12px;color:#9aa0a6;}
+  #Cpdp-{{ uid }} .cpdp__po-badge{margin-top:3px;background:#4CA36A;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:8px;align-self:flex-start;}
+  #Cpdp-{{ uid }} .cpdp__ship{text-align:center;font-size:14px;color:#6b7280;margin:0 0 16px;}
+  #Cpdp-{{ uid }} .cpdp__buybox .cpdp__buy{margin-bottom:0;}
+  #Cpdp-{{ uid }} .cpdp__buynow{width:100%;border:none;border-radius:14px;background:#4FB0E0;color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;padding:15px;margin-top:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;}
+  #Cpdp-{{ uid }} .cpdp__buynow:hover{background:#3fa0d3;}
   #Cpdp-{{ uid }} .cpdp__buy{display:flex;gap:14px;margin-bottom:24px;}
-  #Cpdp-{{ uid }} .cpdp__qty{display:flex;align-items:center;border:2px solid var(--cpdp-line);border-radius:14px;overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__qty{display:flex;align-items:center;border:2px solid var(--cpdp-line);border-radius:14px;overflow:hidden;background:#fff;}
   #Cpdp-{{ uid }} .cpdp__qty-btn{width:46px;height:52px;border:none;background:#fff;font-size:22px;cursor:pointer;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__qty-val{width:46px;height:52px;border:none;text-align:center;font-size:18px;font-weight:700;color:var(--cpdp-brown);background:#fff;}
   #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:14px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;transition:background .15s;}
@@ -355,6 +399,7 @@
   @media (max-width:560px){
     #Cpdp-{{ uid }} .cpdp__title{font-size:28px;}
     #Cpdp-{{ uid }} .cpdp__price-now{font-size:34px;}
+    #Cpdp-{{ uid }} .cpdp__po-grid{grid-template-columns:minmax(0,1fr);}
     #Cpdp-{{ uid }} .cpdp__sticky-meta{display:none;}
     #Cpdp-{{ uid }} .cpdp__atc--sticky{flex:1;min-width:0;}
     #Cpdp-{{ uid }} .cpdp__wa{bottom:88px;width:52px;height:52px;}
@@ -389,6 +434,7 @@
     var sOff = root.querySelector('[data-sticky-off]');
     var atcLabels = root.querySelectorAll('[data-atc-label]');
     var atcBtns = root.querySelectorAll('[data-atc]');
+    var qtyVal = root.querySelector('.cpdp__qty-val');
     function selectVariant(id){
       var v = data.variants[id];
       if(!v) return;
@@ -410,7 +456,6 @@
         selectVariant(btn.dataset.variantId);
       });
     });
-    var qtyVal = root.querySelector('.cpdp__qty-val');
     root.querySelectorAll('.cpdp__qty-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         var val = parseInt(qtyVal.value,10) || 1;
@@ -433,6 +478,22 @@
         if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(code).then(done).catch(done); } else { done(); }
       });
     });
+    root.querySelectorAll('.cpdp__po-card').forEach(function(c){
+      c.addEventListener('click', function(){
+        root.querySelectorAll('.cpdp__po-card').forEach(function(x){ x.classList.remove('is-selected'); });
+        c.classList.add('is-selected');
+        if(qtyVal){ qtyVal.value = c.dataset.qty || '1'; }
+      });
+    });
+    var buynow = root.querySelector('[data-buynow]');
+    if(buynow){
+      buynow.addEventListener('click', function(){
+        var form = document.getElementById('cpdp-form-{{ uid }}');
+        if(!form) return;
+        var fd = new FormData(form);
+        fetch('/cart/add.js', { method:'POST', body:fd, headers:{ 'Accept':'application/json' } }).then(function(r){ return r.json(); }).then(function(){ window.location.href = '/checkout'; }).catch(function(){ form.submit(); });
+      });
+    }
     var sticky = root.querySelector('.cpdp__sticky');
     var anchor = root.querySelector('.cpdp__buy');
     if(sticky && anchor && 'IntersectionObserver' in window){
@@ -454,6 +515,7 @@
     { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.9 · 2,148 reviews" },
     { "type": "text", "id": "sold_text", "label": "Sold text", "default": "1,900+ bought this month" },
     { "type": "textarea", "id": "short_desc", "label": "Short description (blank = product excerpt)" },
+    { "type": "text", "id": "ship_text", "label": "Shipping line", "default": "Order before 4 PM → ships today · COD available" },
     { "type": "header", "content": "Badges" },
     { "type": "text", "id": "badge_1", "label": "Badge 1 (orange)", "default": "#1 Bestseller" },
     { "type": "text", "id": "badge_2", "label": "Badge 2 (white)", "default": "Screen-free fun" },
