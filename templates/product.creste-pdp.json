@@ -15,7 +15,9 @@
     },
     "creste_artists": {
       "type": "creste-artists",
-      "settings": {}
+      "settings": {
+        "max_images": 12
+      }
     }
   },
   "order": ["creste_pdp", "creste_artists"]
