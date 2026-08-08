@@ -1,0 +1,74 @@
+{%- comment -%}
+  Creste — "Made by Little Artists" masonry gallery.
+{%- endcomment -%}
+
+{%- liquid
+  assign uid = section.id
+-%}
+
+<section id="CpdpArt-{{ uid }}" class="cpdpa">
+  <div class="cpdpa__wrap">
+    <h2 class="cpdpa__title">{{ section.settings.heading_prefix | default: 'Made by' }} <span class="cpdpa__hl">{{ section.settings.heading_highlight | default: 'Little Artists' }}</span></h2>
+    {%- if section.settings.subheading != blank -%}<p class="cpdpa__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    <div class="cpdpa__grid">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="cpdpa__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'cpdpa__img', alt: '' }}{%- else -%}<div class="cpdpa__img cpdpa__img--ph"></div>{%- endif -%}
+            {%- if block.settings.video_url != blank -%}<a class="cpdpa__play" href="{{ block.settings.video_url }}" target="_blank" rel="noopener" aria-label="Play video"><svg viewBox="0 0 24 24" width="22" height="22" fill="var(--cpdpa-orange)"><path d="M8 5v14l11-7z"/></svg></a>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- elsif product.media.size > 0 -%}
+        {%- assign max = section.settings.max_images | default: 8 -%}
+        {%- for media in product.media limit: max -%}
+          <div class="cpdpa__item">{{ media | image_url: width: 600 | image_tag: loading: 'lazy', class: 'cpdpa__img', alt: media.alt | default: product.title }}</div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..6) -%}<div class="cpdpa__item"><div class="cpdpa__img cpdpa__img--ph"></div></div>{%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #CpdpArt-{{ uid }}{
+    --cpdpa-orange:#F26E21; --cpdpa-brown:#3D2817; --cpdpa-teal:#35A9C9; --cpdpa-ink:#5b5750;
+    --cpdpa-head: var(--font-heading-family, 'Baloo 2','Poppins',system-ui,sans-serif);
+    --cpdpa-body: var(--font-body-family, 'Poppins','Nunito',system-ui,sans-serif);
+    font-family:var(--cpdpa-body);
+  }
+  #CpdpArt-{{ uid }} *{box-sizing:border-box;}
+  #CpdpArt-{{ uid }} .cpdpa__wrap{max-width:1240px;margin:0 auto;padding:{{ section.settings.padding_top | default: 56 }}px 20px {{ section.settings.padding_bottom | default: 56 }}px;}
+  #CpdpArt-{{ uid }} .cpdpa__title{font-family:var(--cpdpa-head);font-weight:800;text-align:center;font-size:clamp(30px,4vw,52px);line-height:1.1;margin:0 0 12px;color:var(--cpdpa-brown);}
+  #CpdpArt-{{ uid }} .cpdpa__hl{color:var(--cpdpa-teal);}
+  #CpdpArt-{{ uid }} .cpdpa__sub{text-align:center;font-size:clamp(16px,1.6vw,20px);color:var(--cpdpa-ink);max-width:760px;margin:0 auto 34px;line-height:1.5;}
+  #CpdpArt-{{ uid }} .cpdpa__grid{column-count:5;column-gap:16px;}
+  #CpdpArt-{{ uid }} .cpdpa__item{position:relative;break-inside:avoid;margin-bottom:16px;border-radius:18px;overflow:hidden;background:#EDE8F3;}
+  #CpdpArt-{{ uid }} .cpdpa__img{width:100%;display:block;object-fit:cover;}
+  #CpdpArt-{{ uid }} .cpdpa__img--ph{aspect-ratio:3/4;background:linear-gradient(135deg,#E7DDF3,#CFE3F5);}
+  #CpdpArt-{{ uid }} .cpdpa__play{position:absolute;inset:0;margin:auto;width:60px;height:60px;border-radius:999px;background:rgba(255,255,255,.92);display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.2);}
+  @media (max-width:1100px){ #CpdpArt-{{ uid }} .cpdpa__grid{column-count:3;} }
+  @media (max-width:700px){ #CpdpArt-{{ uid }} .cpdpa__grid{column-count:2;} }
+  @media (max-width:420px){ #CpdpArt-{{ uid }} .cpdpa__grid{column-count:1;} }
+</style>
+
+{% schema %}
+{
+  "name": "Creste Little Artists",
+  "tag": "section",
+  "class": "creste-artists-section",
+  "settings": [
+    { "type": "text", "id": "heading_prefix", "label": "Heading (dark part)", "default": "Made by" },
+    { "type": "text", "id": "heading_highlight", "label": "Heading (teal part)", "default": "Little Artists" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Real creations from happy kids around the world—every bag is wonderfully unique." },
+    { "type": "range", "id": "max_images", "label": "Fallback images (when no blocks added)", "min": 4, "max": 12, "step": 1, "default": 8 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "default": 56 }
+  ],
+  "blocks": [
+    { "type": "item", "name": "Photo / video", "settings": [ { "type": "image_picker", "id": "image", "label": "Image" }, { "type": "url", "id": "video_url", "label": "Video link (optional — shows play button)" } ] }
+  ],
+  "max_blocks": 16,
+  "presets": [ { "name": "Creste Little Artists" } ]
+}
+{% endschema %}
