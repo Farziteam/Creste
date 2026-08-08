@@ -12,7 +12,11 @@
     "creste_pdp": {
       "type": "creste-pdp",
       "settings": {}
+    },
+    "creste_artists": {
+      "type": "creste-artists",
+      "settings": {}
     }
   },
-  "order": ["creste_pdp"]
+  "order": ["creste_pdp", "creste_artists"]
 }
