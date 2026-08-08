@@ -1,0 +1,445 @@
+{%- comment -%}
+  Creste — Custom Product Detail Page (PDP)
+  Self-contained: markup + scoped styles + vanilla JS.
+{%- endcomment -%}
+
+{%- liquid
+  assign uid = section.id
+  assign wa = section.settings.whatsapp_number | default: '919999999999'
+-%}
+
+<section id="Cpdp-{{ uid }}" class="cpdp" data-section-id="{{ uid }}">
+  <div class="cpdp__wrap">
+
+    <nav class="cpdp__crumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="cpdp__crumb-sep">›</span>
+      <span class="cpdp__crumb-current">{{ section.settings.title | default: 'DIY Color Your Bag Kit' }}</span>
+    </nav>
+
+    <div class="cpdp__hero">
+      <div class="cpdp__col-left">
+        <div class="cpdp__gallery">
+          <div class="cpdp__badges">
+            <span class="cpdp__badge cpdp__badge--best">#1 Bestseller</span>
+            <span class="cpdp__badge cpdp__badge--soft">Screen-free fun</span>
+          </div>
+          <button type="button" class="cpdp__expand" aria-label="Expand image">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          </button>
+          <div class="cpdp__stage">
+            {%- for i in (1..5) -%}
+              {%- assign key = 'image_' | append: i -%}
+              {%- assign img = section.settings[key] -%}
+              <div class="cpdp__slide{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}">
+                {%- if img != blank -%}
+                  {{ img | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__img', alt: section.settings.title }}
+                {%- else -%}
+                  <div class="cpdp__img cpdp__img--ph">{{ 'product-apparel-' | append: i | placeholder_svg_tag: 'cpdp__ph-svg' }}</div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+          <button type="button" class="cpdp__nav cpdp__nav--prev" aria-label="Previous image">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="cpdp__nav cpdp__nav--next" aria-label="Next image">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="cpdp__thumbs">
+          {%- for i in (1..5) -%}
+            {%- assign key = 'image_' | append: i -%}
+            {%- assign img = section.settings[key] -%}
+            <button type="button" class="cpdp__thumb{% if forloop.first %} is-active{% endif %}" data-target="{{ forloop.index0 }}" aria-label="View image {{ forloop.index }}">
+              {%- if img != blank -%}
+                {{ img | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+              {%- else -%}
+                {{ 'product-apparel-' | append: i | placeholder_svg_tag: 'cpdp__ph-svg' }}
+              {%- endif -%}
+            </button>
+          {%- endfor -%}
+        </div>
+        <div class="cpdp__tutorial">
+          <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
+          <div class="cpdp__video">
+            {%- if section.settings.tutorial_thumb != blank -%}
+              {{ section.settings.tutorial_thumb | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__video-thumb', alt: 'Tutorial' }}
+            {%- else -%}
+              <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+            {%- endif -%}
+            <button type="button" class="cpdp__play" aria-label="Play tutorial">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cpdp__col-right">
+        <div class="cpdp__pills">
+          <span class="cpdp__pill cpdp__pill--y">Ages 3-8</span>
+          <span class="cpdp__pill cpdp__pill--b">45-60 min play</span>
+          <span class="cpdp__pill cpdp__pill--g">Screen-free</span>
+          <span class="cpdp__pill cpdp__pill--p">Mess-free</span>
+        </div>
+        <h1 class="cpdp__title">{{ section.settings.title | default: 'DIY Color Your Bag Kit' }}</h1>
+        <div class="cpdp__rating">
+          <span class="cpdp__stars" aria-hidden="true">★★★★★</span>
+          <a href="#cpdp-reviews" class="cpdp__rating-link">4.9 · 2,148 reviews</a>
+          <span class="cpdp__rating-sold">1,900+ bought this month</span>
+        </div>
+        <p class="cpdp__desc">A ready-to-paint canvas tote, six non-toxic fabric paints and reusable stencils — everything a 3–8 year old needs to make a bag they will actually carry to school.</p>
+        <div class="cpdp__themebox">
+          <h3 class="cpdp__themebox-title">Pick a bag theme</h3>
+          <div class="cpdp__themegrid" role="radiogroup" aria-label="Pick a bag theme">
+            {%- assign themes = 'Dinosaur Theme|🦕, Dog Theme|🐶, Princess Theme|👸, Back 2 school Theme|🎒, Candy Theme|🍬, Animal Theme|🐰' | split: ', ' -%}
+            {%- for t in themes -%}
+              {%- assign parts = t | split: '|' -%}
+              <button type="button" class="cpdp__theme{% if forloop.first %} is-selected{% endif %}" role="radio" aria-checked="{% if forloop.first %}true{% else %}false{% endif %}">
+                <span class="cpdp__theme-ico">{{ parts[1] }}</span>
+                <span class="cpdp__theme-name">{{ parts[0] }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+        <div class="cpdp__price">
+          <span class="cpdp__price-now">₹1,299</span>
+          <span class="cpdp__price-was">₹2999</span>
+          <span class="cpdp__price-off">25% off</span>
+        </div>
+        <div class="cpdp__buy">
+          <div class="cpdp__qty" aria-label="Quantity">
+            <button type="button" class="cpdp__qty-btn" data-dir="-1" aria-label="Decrease">−</button>
+            <input class="cpdp__qty-val" type="text" inputmode="numeric" value="1" aria-label="Quantity" readonly>
+            <button type="button" class="cpdp__qty-btn" data-dir="1" aria-label="Increase">+</button>
+          </div>
+          <button type="button" class="cpdp__atc">Add to Cart
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="cpdp__trust">
+          <div class="cpdp__trust-item"><span class="cpdp__trust-ico">🛡️</span><span class="cpdp__trust-t">100% Secure</span><span class="cpdp__trust-s">secure payment</span></div>
+          <div class="cpdp__trust-item"><span class="cpdp__trust-ico">🔄</span><span class="cpdp__trust-t">7-day returns</span><span class="cpdp__trust-s">No questions asked</span></div>
+          <div class="cpdp__trust-item"><span class="cpdp__trust-ico">🇮🇳</span><span class="cpdp__trust-t">Made in India</span><span class="cpdp__trust-s">By a small team</span></div>
+          <div class="cpdp__trust-item"><span class="cpdp__trust-ico">🎁</span><span class="cpdp__trust-t">Gift wrap free</span><span class="cpdp__trust-s">Add a note at checkout</span></div>
+        </div>
+        <div class="cpdp__safety">
+          <span class="cpdp__safety-ico">⚠️</span>
+          <span class="cpdp__safety-t">Small parts — choking hazard. Not for under 3s.</span>
+          <a href="#" class="cpdp__safety-link">Safety details</a>
+        </div>
+        <div class="cpdp__offers">
+          <h3 class="cpdp__offers-title"><span class="cpdp__offers-ico">🏷️</span> Available Offers</h3>
+          <div class="cpdp__offers-track">
+            {%- assign offers = 'Get EXTRA 5% Off on First Order|WELCOME5, Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10, Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20' | split: ', ' -%}
+            {%- for o in offers -%}
+              {%- assign op = o | split: '|' -%}
+              <div class="cpdp__offer">
+                <p class="cpdp__offer-text">{{ op[0] }}</p>
+                <button type="button" class="cpdp__offer-code" data-code="{{ op[1] }}">
+                  <span>Code: {{ op[1] }}</span>
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpdp__green">
+      <div class="cpdp__green-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 40" width="24" height="40" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v32M5 27l7 7 7-7"/></svg>
+      </div>
+      <div class="cpdp__tabs" role="tablist">
+        <button type="button" class="cpdp__tab is-active" data-tab="overview" role="tab" aria-selected="true">✦ Overview</button>
+        <button type="button" class="cpdp__tab" data-tab="faqs" role="tab" aria-selected="false">❔ FAQs</button>
+      </div>
+      <div class="cpdp__panel is-active" data-panel="overview">
+        <div class="cpdp__panel-grid">
+          <div class="cpdp__panel-copy">
+            <h2 class="cpdp__panel-title">A blank canvas bag, waiting for their imagination</h2>
+            <p class="cpdp__panel-text">Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>
+            <div class="cpdp__feat-grid">
+              <div class="cpdp__feat"><span class="cpdp__feat-ico">🎨</span><span class="cpdp__feat-body"><strong>Made for creating</strong><em>Blank cotton canvas + 8 markers</em></span></div>
+              <div class="cpdp__feat"><span class="cpdp__feat-ico">🧼</span><span class="cpdp__feat-body"><strong>Non-toxic &amp; washable</strong><em>Gentle on hands and clothes</em></span></div>
+              <div class="cpdp__feat"><span class="cpdp__feat-ico">💪</span><span class="cpdp__feat-body"><strong>Built to be used</strong><em>Durable everyday tote</em></span></div>
+              <div class="cpdp__feat"><span class="cpdp__feat-ico">🎉</span><span class="cpdp__feat-body"><strong>Great for groups</strong><em>Perfect for parties &amp; playdates</em></span></div>
+            </div>
+          </div>
+          <div class="cpdp__panel-media">
+            {%- if section.settings.overview_image != blank -%}
+              {{ section.settings.overview_image | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: 'Child coloring a bag' }}
+            {%- else -%}
+              <div class="cpdp__panel-photo cpdp__panel-photo--ph"></div>
+            {%- endif -%}
+            <span class="cpdp__mascot" aria-hidden="true">🐱</span>
+          </div>
+        </div>
+      </div>
+      <div class="cpdp__panel" data-panel="faqs">
+        <div class="cpdp__faq-card">
+          {%- assign faqs = 'What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters., Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes., How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play., Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash.' | split: ', ' -%}
+          {%- for f in faqs -%}
+            {%- assign fp = f | split: '|' -%}
+            <details class="cpdp__faq"{% if forloop.first %} open{% endif %}>
+              <summary class="cpdp__faq-q">{{ fp[0] }}<span class="cpdp__faq-chev">+</span></summary>
+              <p class="cpdp__faq-a">{{ fp[1] }}</p>
+            </details>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpdp__sticky" data-sticky>
+    <div class="cpdp__sticky-info">
+      <div class="cpdp__sticky-thumb">
+        {%- if section.settings.image_1 != blank -%}
+          {{ section.settings.image_1 | image_url: width: 96 | image_tag: loading: 'lazy', alt: '' }}
+        {%- else -%}
+          {{ 'product-apparel-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+      <div class="cpdp__sticky-meta">
+        <span class="cpdp__sticky-name">{{ section.settings.title | default: 'DIY Color Your Bag Kit' }}</span>
+        <span class="cpdp__sticky-price"><s>₹2999</s> <b>₹1,299</b> <em>25% off</em></span>
+      </div>
+    </div>
+    <button type="button" class="cpdp__atc cpdp__atc--sticky">Add to Cart
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <a class="cpdp__wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="#fff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.35c0-4.54 3.7-8.23 8.24-8.23 4.54 0 8.23 3.69 8.23 8.23s-3.69 8.42-8.31 8.42zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43l-.48-.01c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+  </a>
+</section>
+
+<style>
+  #Cpdp-{{ uid }}{
+    --cpdp-orange:#F26E21; --cpdp-orange-d:#d95d15;
+    --cpdp-yellow:#F7C948; --cpdp-cream:#FBF3D9;
+    --cpdp-green:#6EA847; --cpdp-green-d:#5c9139;
+    --cpdp-purple:#5A2D8C; --cpdp-brown:#3D2817;
+    --cpdp-ink:#4B5563; --cpdp-line:#E7E3DA;
+    --cpdp-radius:22px;
+    --cpdp-head: var(--font-heading-family, 'Baloo 2','Poppins',system-ui,sans-serif);
+    --cpdp-body: var(--font-body-family, 'Poppins','Nunito',system-ui,sans-serif);
+    font-family:var(--cpdp-body); color:var(--cpdp-brown); position:relative;
+  }
+  #Cpdp-{{ uid }} *{box-sizing:border-box;}
+  #Cpdp-{{ uid }} .cpdp__wrap{max-width:1240px;margin:0 auto;padding:14px 20px 0;}
+  #Cpdp-{{ uid }} .cpdp__crumbs{display:flex;align-items:center;gap:8px;font-size:14px;color:#6b7280;padding:8px 4px 18px;}
+  #Cpdp-{{ uid }} .cpdp__crumbs a{color:#6b7280;text-decoration:none;}
+  #Cpdp-{{ uid }} .cpdp__crumb-current{color:var(--cpdp-brown);font-weight:700;}
+  #Cpdp-{{ uid }} .cpdp__hero{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start;}
+  #Cpdp-{{ uid }} .cpdp__gallery{position:relative;background:#EFE7F7;border-radius:var(--cpdp-radius);overflow:hidden;aspect-ratio:1/1;}
+  #Cpdp-{{ uid }} .cpdp__stage,#Cpdp-{{ uid }} .cpdp__slide{position:absolute;inset:0;}
+  #Cpdp-{{ uid }} .cpdp__slide{opacity:0;transition:opacity .3s ease;}
+  #Cpdp-{{ uid }} .cpdp__slide.is-active{opacity:1;}
+  #Cpdp-{{ uid }} .cpdp__img{width:100%;height:100%;object-fit:cover;display:block;}
+  #Cpdp-{{ uid }} .cpdp__img--ph,#Cpdp-{{ uid }} .cpdp__ph-svg{width:100%;height:100%;background:#E7D9F5;}
+  #Cpdp-{{ uid }} .cpdp__badges{position:absolute;top:16px;left:16px;z-index:3;display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
+  #Cpdp-{{ uid }} .cpdp__badge{font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px;box-shadow:0 4px 10px rgba(0,0,0,.08);}
+  #Cpdp-{{ uid }} .cpdp__badge--best{background:var(--cpdp-orange);color:#fff;}
+  #Cpdp-{{ uid }} .cpdp__badge--soft{background:#fff;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__expand{position:absolute;top:16px;right:16px;z-index:3;width:40px;height:40px;border:none;border-radius:12px;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.1);}
+  #Cpdp-{{ uid }} .cpdp__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border:none;border-radius:999px;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.14);}
+  #Cpdp-{{ uid }} .cpdp__nav--prev{left:14px;color:#c9c4bd;}
+  #Cpdp-{{ uid }} .cpdp__nav--next{right:14px;color:var(--cpdp-orange);}
+  #Cpdp-{{ uid }} .cpdp__thumbs{display:flex;gap:12px;margin-top:14px;overflow-x:auto;padding-bottom:4px;}
+  #Cpdp-{{ uid }} .cpdp__thumb{flex:0 0 84px;height:84px;border-radius:14px;border:2px solid var(--cpdp-line);background:#f4f1ec;overflow:hidden;cursor:pointer;padding:0;}
+  #Cpdp-{{ uid }} .cpdp__thumb.is-active{border-color:var(--cpdp-orange);}
+  #Cpdp-{{ uid }} .cpdp__thumb img,#Cpdp-{{ uid }} .cpdp__thumb svg{width:100%;height:100%;object-fit:cover;display:block;}
+  #Cpdp-{{ uid }} .cpdp__tutorial{margin-top:26px;}
+  #Cpdp-{{ uid }} .cpdp__tutorial-title{font-family:var(--cpdp-head);font-size:22px;font-weight:800;margin:0 0 12px;}
+  #Cpdp-{{ uid }} .cpdp__video{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/10;background:#FBE9E4;}
+  #Cpdp-{{ uid }} .cpdp__video-thumb{width:100%;height:100%;object-fit:cover;}
+  #Cpdp-{{ uid }} .cpdp__video-thumb--ph{background:linear-gradient(135deg,#FBE0D8,#F6C9Bb);}
+  #Cpdp-{{ uid }} .cpdp__play{position:absolute;inset:0;margin:auto;width:74px;height:74px;border:none;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;cursor:pointer;}
+  #Cpdp-{{ uid }} .cpdp__pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+  #Cpdp-{{ uid }} .cpdp__pill{font-size:14px;font-weight:600;padding:8px 16px;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__pill--y{background:#FEF3C7;color:#B45309;}
+  #Cpdp-{{ uid }} .cpdp__pill--b{background:#DBEAFE;color:#1D4ED8;}
+  #Cpdp-{{ uid }} .cpdp__pill--g{background:#DCFCE7;color:#15803D;}
+  #Cpdp-{{ uid }} .cpdp__pill--p{background:#FCE7F3;color:#BE185D;}
+  #Cpdp-{{ uid }} .cpdp__title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(34px,4vw,54px);line-height:1.05;margin:6px 0 14px;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__rating{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:16px;}
+  #Cpdp-{{ uid }} .cpdp__stars{color:#F5B301;font-size:20px;letter-spacing:2px;}
+  #Cpdp-{{ uid }} .cpdp__rating-link{color:var(--cpdp-brown);font-weight:700;text-decoration:underline;}
+  #Cpdp-{{ uid }} .cpdp__rating-sold{color:#16A34A;font-weight:700;}
+  #Cpdp-{{ uid }} .cpdp__desc{font-size:18px;line-height:1.55;color:var(--cpdp-ink);margin:0 0 22px;}
+  #Cpdp-{{ uid }} .cpdp__themebox{background:var(--cpdp-cream);border-radius:20px;padding:20px;margin-bottom:22px;}
+  #Cpdp-{{ uid }} .cpdp__themebox-title{font-family:var(--cpdp-head);font-size:20px;font-weight:800;margin:0 0 14px;}
+  #Cpdp-{{ uid }} .cpdp__themegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:10px;text-align:left;background:#fff;border:2px solid #ECE6DA;border-radius:14px;padding:12px 14px;cursor:pointer;font-family:inherit;transition:border-color .15s,box-shadow .15s;}
+  #Cpdp-{{ uid }} .cpdp__theme.is-selected{border-color:#7CB342;background:#F3F9EC;box-shadow:0 0 0 1px #7CB342 inset;}
+  #Cpdp-{{ uid }} .cpdp__theme-ico{font-size:24px;line-height:1;}
+  #Cpdp-{{ uid }} .cpdp__theme-name{font-size:14px;font-weight:700;color:var(--cpdp-brown);line-height:1.15;}
+  #Cpdp-{{ uid }} .cpdp__price{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;}
+  #Cpdp-{{ uid }} .cpdp__price-now{font-family:var(--cpdp-head);font-size:44px;font-weight:800;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__price-was{font-size:20px;color:#9aa0a6;text-decoration:line-through;}
+  #Cpdp-{{ uid }} .cpdp__price-off{background:var(--cpdp-yellow);color:#7a5b00;font-weight:700;font-size:14px;padding:5px 12px;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__buy{display:flex;gap:14px;margin-bottom:24px;}
+  #Cpdp-{{ uid }} .cpdp__qty{display:flex;align-items:center;border:2px solid var(--cpdp-line);border-radius:14px;overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__qty-btn{width:46px;height:52px;border:none;background:#fff;font-size:22px;cursor:pointer;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__qty-val{width:46px;height:52px;border:none;text-align:center;font-size:18px;font-weight:700;color:var(--cpdp-brown);background:#fff;}
+  #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:14px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;}
+  #Cpdp-{{ uid }} .cpdp__atc:hover{background:var(--cpdp-orange-d);}
+  #Cpdp-{{ uid }} .cpdp__trust{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+  #Cpdp-{{ uid }} .cpdp__trust-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:6px 4px;}
+  #Cpdp-{{ uid }} .cpdp__trust-ico{font-size:26px;}
+  #Cpdp-{{ uid }} .cpdp__trust-t{font-weight:700;font-size:14px;color:var(--cpdp-purple);}
+  #Cpdp-{{ uid }} .cpdp__trust-s{font-size:12px;color:#8a8f98;}
+  #Cpdp-{{ uid }} .cpdp__safety{display:flex;align-items:center;gap:10px;background:#FEF6E0;border:1px solid #F4E3B0;border-radius:14px;padding:14px 16px;margin-bottom:18px;}
+  #Cpdp-{{ uid }} .cpdp__safety-ico{font-size:18px;}
+  #Cpdp-{{ uid }} .cpdp__safety-t{flex:1;font-size:15px;color:#8a6d1f;font-weight:600;}
+  #Cpdp-{{ uid }} .cpdp__safety-link{color:var(--cpdp-brown);font-weight:700;text-decoration:underline;white-space:nowrap;}
+  #Cpdp-{{ uid }} .cpdp__offers{background:#E9F3FB;border-radius:18px;padding:18px;}
+  #Cpdp-{{ uid }} .cpdp__offers-title{display:flex;align-items:center;gap:8px;font-family:var(--cpdp-head);font-size:19px;font-weight:800;margin:0 0 14px;}
+  #Cpdp-{{ uid }} .cpdp__offers-track{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;}
+  #Cpdp-{{ uid }} .cpdp__offer{flex:0 0 240px;background:#fff;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;}
+  #Cpdp-{{ uid }} .cpdp__offer-text{margin:0;font-size:14px;color:#334155;line-height:1.4;}
+  #Cpdp-{{ uid }} .cpdp__offer-code{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px dashed #b9c4cf;border-radius:9px;background:#f8fafc;padding:8px 12px;font-weight:700;font-size:13px;color:#334155;cursor:pointer;}
+  #Cpdp-{{ uid }} .cpdp__offer-code.is-copied{border-color:#16A34A;color:#16A34A;}
+  #Cpdp-{{ uid }} .cpdp__green{position:relative;margin-top:40px;background:var(--cpdp-green);padding:60px 20px 70px;}
+  #Cpdp-{{ uid }} .cpdp__green::before{content:"";position:absolute;top:-14px;left:0;right:0;height:16px;background:radial-gradient(circle at 12px -4px, var(--cpdp-green) 12px, transparent 13px) 0 0/26px 16px repeat-x;}
+  #Cpdp-{{ uid }} .cpdp__green-arrow{display:flex;justify-content:center;margin-bottom:8px;}
+  #Cpdp-{{ uid }} .cpdp__tabs{display:flex;gap:16px;max-width:1000px;margin:0 auto;}
+  #Cpdp-{{ uid }} .cpdp__tab{flex:1;border:none;cursor:pointer;font-family:var(--cpdp-head);font-weight:800;font-size:20px;padding:18px;border-radius:18px 18px 0 0;background:#fff;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__tab.is-active{background:var(--cpdp-orange);color:#fff;}
+  #Cpdp-{{ uid }} .cpdp__panel{display:none;max-width:1000px;margin:0 auto;background:#fff;border-radius:0 0 22px 22px;border-top:4px solid var(--cpdp-orange);padding:38px;}
+  #Cpdp-{{ uid }} .cpdp__panel.is-active{display:block;}
+  #Cpdp-{{ uid }} .cpdp__panel-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center;}
+  #Cpdp-{{ uid }} .cpdp__panel-title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(24px,2.4vw,32px);color:var(--cpdp-purple);margin:0 0 16px;line-height:1.15;}
+  #Cpdp-{{ uid }} .cpdp__panel-text{font-size:17px;line-height:1.6;color:var(--cpdp-ink);margin:0 0 22px;}
+  #Cpdp-{{ uid }} .cpdp__feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  #Cpdp-{{ uid }} .cpdp__feat{display:flex;gap:12px;align-items:flex-start;background:#F7F5FA;border-radius:14px;padding:14px;}
+  #Cpdp-{{ uid }} .cpdp__feat-ico{font-size:22px;}
+  #Cpdp-{{ uid }} .cpdp__feat-body{display:flex;flex-direction:column;gap:2px;}
+  #Cpdp-{{ uid }} .cpdp__feat-body strong{color:var(--cpdp-purple);font-size:15px;}
+  #Cpdp-{{ uid }} .cpdp__feat-body em{font-style:normal;color:#7c828c;font-size:13px;}
+  #Cpdp-{{ uid }} .cpdp__panel-media{position:relative;}
+  #Cpdp-{{ uid }} .cpdp__panel-photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__panel-photo--ph{background:linear-gradient(135deg,#CFE8B8,#A7D48A);}
+  #Cpdp-{{ uid }} .cpdp__mascot{position:absolute;right:6%;bottom:2%;font-size:52px;}
+  #Cpdp-{{ uid }} .cpdp__faq-card{display:flex;flex-direction:column;gap:12px;}
+  #Cpdp-{{ uid }} .cpdp__faq{border:1px solid var(--cpdp-line);border-radius:14px;padding:6px 18px;}
+  #Cpdp-{{ uid }} .cpdp__faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:700;font-size:17px;color:var(--cpdp-purple);padding:12px 0;list-style:none;}
+  #Cpdp-{{ uid }} .cpdp__faq-q::-webkit-details-marker{display:none;}
+  #Cpdp-{{ uid }} .cpdp__faq-chev{font-size:22px;color:var(--cpdp-orange);transition:transform .2s;}
+  #Cpdp-{{ uid }} .cpdp__faq[open] .cpdp__faq-chev{transform:rotate(45deg);}
+  #Cpdp-{{ uid }} .cpdp__faq-a{margin:0 0 14px;color:var(--cpdp-ink);line-height:1.55;}
+  #Cpdp-{{ uid }} .cpdp__sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#FBF7EE;border-top:1px solid #eadfca;padding:12px 22px;box-shadow:0 -6px 18px rgba(0,0,0,.06);transform:translateY(100%);transition:transform .25s ease;}
+  #Cpdp-{{ uid }} .cpdp__sticky.is-visible{transform:translateY(0);}
+  #Cpdp-{{ uid }} .cpdp__sticky-info{display:flex;align-items:center;gap:14px;}
+  #Cpdp-{{ uid }} .cpdp__sticky-thumb{width:52px;height:52px;border-radius:12px;overflow:hidden;background:#eee;flex:0 0 auto;}
+  #Cpdp-{{ uid }} .cpdp__sticky-thumb img,#Cpdp-{{ uid }} .cpdp__sticky-thumb svg{width:100%;height:100%;object-fit:cover;}
+  #Cpdp-{{ uid }} .cpdp__sticky-meta{display:flex;flex-direction:column;gap:2px;}
+  #Cpdp-{{ uid }} .cpdp__sticky-name{font-weight:700;font-size:16px;}
+  #Cpdp-{{ uid }} .cpdp__sticky-price{font-size:15px;color:#6b7280;}
+  #Cpdp-{{ uid }} .cpdp__sticky-price b{color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__sticky-price em{font-style:normal;background:var(--cpdp-yellow);color:#7a5b00;font-weight:700;font-size:12px;padding:2px 8px;border-radius:999px;margin-left:4px;}
+  #Cpdp-{{ uid }} .cpdp__atc--sticky{flex:0 0 auto;min-width:220px;height:52px;padding:0 26px;}
+  #Cpdp-{{ uid }} .cpdp__wa{position:fixed;right:22px;bottom:92px;z-index:55;width:58px;height:58px;border-radius:999px;background:#25D366;display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.2);}
+  @media (max-width:900px){
+    #Cpdp-{{ uid }} .cpdp__hero{grid-template-columns:1fr;gap:28px;}
+    #Cpdp-{{ uid }} .cpdp__themegrid{grid-template-columns:1fr 1fr;}
+    #Cpdp-{{ uid }} .cpdp__trust{grid-template-columns:1fr 1fr;gap:14px;}
+    #Cpdp-{{ uid }} .cpdp__panel-grid{grid-template-columns:1fr;}
+    #Cpdp-{{ uid }} .cpdp__panel-media{order:-1;max-width:340px;margin:0 auto;}
+    #Cpdp-{{ uid }} .cpdp__feat-grid{grid-template-columns:1fr;}
+    #Cpdp-{{ uid }} .cpdp__tabs{gap:8px;}
+    #Cpdp-{{ uid }} .cpdp__tab{font-size:17px;padding:14px;}
+    #Cpdp-{{ uid }} .cpdp__panel{padding:22px;}
+  }
+  @media (max-width:560px){
+    #Cpdp-{{ uid }} .cpdp__title{font-size:32px;}
+    #Cpdp-{{ uid }} .cpdp__price-now{font-size:36px;}
+    #Cpdp-{{ uid }} .cpdp__sticky-meta{display:none;}
+    #Cpdp-{{ uid }} .cpdp__sticky-info{gap:0;}
+    #Cpdp-{{ uid }} .cpdp__atc--sticky{flex:1;min-width:0;}
+    #Cpdp-{{ uid }} .cpdp__wa{bottom:88px;width:52px;height:52px;}
+  }
+</style>
+
+<script>
+  (function(){
+    var root = document.getElementById('Cpdp-{{ uid }}');
+    if(!root) return;
+    var slides = root.querySelectorAll('.cpdp__slide');
+    var thumbs = root.querySelectorAll('.cpdp__thumb');
+    var cur = 0;
+    function show(i){
+      if(!slides.length) return;
+      cur = (i + slides.length) % slides.length;
+      slides.forEach(function(s,idx){ s.classList.toggle('is-active', idx===cur); });
+      thumbs.forEach(function(t,idx){ t.classList.toggle('is-active', idx===cur); });
+    }
+    thumbs.forEach(function(t){ t.addEventListener('click', function(){ show(parseInt(t.dataset.target,10)); }); });
+    var prev = root.querySelector('.cpdp__nav--prev');
+    var next = root.querySelector('.cpdp__nav--next');
+    if(prev) prev.addEventListener('click', function(){ show(cur-1); });
+    if(next) next.addEventListener('click', function(){ show(cur+1); });
+    root.querySelectorAll('.cpdp__theme').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        root.querySelectorAll('.cpdp__theme').forEach(function(b){ b.classList.remove('is-selected'); b.setAttribute('aria-checked','false'); });
+        btn.classList.add('is-selected'); btn.setAttribute('aria-checked','true');
+      });
+    });
+    var qtyVal = root.querySelector('.cpdp__qty-val');
+    root.querySelectorAll('.cpdp__qty-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var v = parseInt(qtyVal.value,10) || 1;
+        v += parseInt(btn.dataset.dir,10);
+        if(v < 1) v = 1;
+        qtyVal.value = v;
+      });
+    });
+    root.querySelectorAll('.cpdp__tab').forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var name = tab.dataset.tab;
+        root.querySelectorAll('.cpdp__tab').forEach(function(t){ var on = t===tab; t.classList.toggle('is-active',on); t.setAttribute('aria-selected', on?'true':'false'); });
+        root.querySelectorAll('.cpdp__panel').forEach(function(p){ p.classList.toggle('is-active', p.dataset.panel===name); });
+      });
+    });
+    root.querySelectorAll('.cpdp__offer-code').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var code = btn.dataset.code || '';
+        var done = function(){ var lbl = btn.querySelector('span'); var old = lbl.textContent; btn.classList.add('is-copied'); lbl.textContent = 'Copied!'; setTimeout(function(){ lbl.textContent = old; btn.classList.remove('is-copied'); },1400); };
+        if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(code).then(done).catch(done); } else { done(); }
+      });
+    });
+    var sticky = root.querySelector('.cpdp__sticky');
+    var anchor = root.querySelector('.cpdp__buy');
+    if(sticky && anchor && 'IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ sticky.classList.toggle('is-visible', !e.isIntersecting && e.boundingClientRect.top < 0); });
+      }, {threshold:0}).observe(anchor);
+    } else if(sticky){ sticky.classList.add('is-visible'); }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Creste PDP",
+  "tag": "section",
+  "class": "creste-pdp-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Product title", "default": "DIY Color Your Bag Kit" },
+    { "type": "header", "content": "Gallery images" },
+    { "type": "image_picker", "id": "image_1", "label": "Image 1" },
+    { "type": "image_picker", "id": "image_2", "label": "Image 2" },
+    { "type": "image_picker", "id": "image_3", "label": "Image 3" },
+    { "type": "image_picker", "id": "image_4", "label": "Image 4" },
+    { "type": "image_picker", "id": "image_5", "label": "Image 5" },
+    { "type": "header", "content": "Other media" },
+    { "type": "image_picker", "id": "tutorial_thumb", "label": "Tutorial thumbnail" },
+    { "type": "image_picker", "id": "overview_image", "label": "Overview lifestyle photo" },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (with country code, no +)", "default": "919999999999" }
+  ],
+  "presets": [ { "name": "Creste PDP" } ]
+}
+{% endschema %}
