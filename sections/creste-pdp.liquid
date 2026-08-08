@@ -1,11 +1,15 @@
 {%- comment -%}
-  Creste — Custom Product Detail Page (PDP)
-  Self-contained: markup + scoped styles + vanilla JS.
+  Creste — Custom Product Detail Page (PDP) — product-driven
 {%- endcomment -%}
 
 {%- liquid
   assign uid = section.id
   assign wa = section.settings.whatsapp_number | default: '919999999999'
+  assign cur = product.selected_or_first_available_variant
+  assign heading_title = section.settings.title_override
+  if heading_title == blank
+    assign heading_title = product.title
+  endif
 -%}
 
 <section id="Cpdp-{{ uid }}" class="cpdp" data-section-id="{{ uid }}">
@@ -14,108 +18,100 @@
     <nav class="cpdp__crumbs" aria-label="Breadcrumb">
       <a href="{{ routes.root_url }}">Home</a>
       <span class="cpdp__crumb-sep">›</span>
-      <span class="cpdp__crumb-current">{{ section.settings.title | default: 'DIY Color Your Bag Kit' }}</span>
+      <span class="cpdp__crumb-current">{{ heading_title }}</span>
     </nav>
 
+    <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" id="cpdp-form-{{ uid }}" class="cpdp__form">
     <div class="cpdp__hero">
+
       <div class="cpdp__col-left">
         <div class="cpdp__gallery">
           <div class="cpdp__badges">
-            <span class="cpdp__badge cpdp__badge--best">#1 Bestseller</span>
-            <span class="cpdp__badge cpdp__badge--soft">Screen-free fun</span>
+            {%- if section.settings.badge_1 != blank -%}<span class="cpdp__badge cpdp__badge--best">{{ section.settings.badge_1 }}</span>{%- endif -%}
+            {%- if section.settings.badge_2 != blank -%}<span class="cpdp__badge cpdp__badge--soft">{{ section.settings.badge_2 }}</span>{%- endif -%}
           </div>
-          <button type="button" class="cpdp__expand" aria-label="Expand image">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-          </button>
+          <button type="button" class="cpdp__expand" aria-label="Expand image"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
           <div class="cpdp__stage">
-            {%- for i in (1..5) -%}
-              {%- assign key = 'image_' | append: i -%}
-              {%- assign img = section.settings[key] -%}
-              <div class="cpdp__slide{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}">
-                {%- if img != blank -%}
-                  {{ img | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__img', alt: section.settings.title }}
-                {%- else -%}
-                  <div class="cpdp__img cpdp__img--ph">{{ 'product-apparel-' | append: i | placeholder_svg_tag: 'cpdp__ph-svg' }}</div>
-                {%- endif -%}
-              </div>
-            {%- endfor -%}
+            {%- if product.media.size > 0 -%}
+              {%- for media in product.media -%}
+                <div class="cpdp__slide{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}" data-media-id="{{ media.id }}">{{ media | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__img', alt: media.alt | default: product.title }}</div>
+              {%- endfor -%}
+            {%- else -%}
+              <div class="cpdp__slide is-active" data-index="0"><div class="cpdp__img cpdp__img--ph">{{ 'product-apparel-1' | placeholder_svg_tag: 'cpdp__ph-svg' }}</div></div>
+            {%- endif -%}
           </div>
-          <button type="button" class="cpdp__nav cpdp__nav--prev" aria-label="Previous image">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button type="button" class="cpdp__nav cpdp__nav--next" aria-label="Next image">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
+          <button type="button" class="cpdp__nav cpdp__nav--prev" aria-label="Previous image"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button type="button" class="cpdp__nav cpdp__nav--next" aria-label="Next image"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
         <div class="cpdp__thumbs">
-          {%- for i in (1..5) -%}
-            {%- assign key = 'image_' | append: i -%}
-            {%- assign img = section.settings[key] -%}
-            <button type="button" class="cpdp__thumb{% if forloop.first %} is-active{% endif %}" data-target="{{ forloop.index0 }}" aria-label="View image {{ forloop.index }}">
-              {%- if img != blank -%}
-                {{ img | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
-              {%- else -%}
-                {{ 'product-apparel-' | append: i | placeholder_svg_tag: 'cpdp__ph-svg' }}
-              {%- endif -%}
-            </button>
-          {%- endfor -%}
+          {%- if product.media.size > 0 -%}
+            {%- for media in product.media -%}
+              <button type="button" class="cpdp__thumb{% if forloop.first %} is-active{% endif %}" data-target="{{ forloop.index0 }}" aria-label="View image {{ forloop.index }}">{{ media | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</button>
+            {%- endfor -%}
+          {%- endif -%}
         </div>
         <div class="cpdp__tutorial">
           <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
+          {%- if section.settings.tutorial_url != blank -%}<a href="{{ section.settings.tutorial_url }}" target="_blank" rel="noopener" class="cpdp__video-link">{%- endif -%}
           <div class="cpdp__video">
-            {%- if section.settings.tutorial_thumb != blank -%}
-              {{ section.settings.tutorial_thumb | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__video-thumb', alt: 'Tutorial' }}
-            {%- else -%}
-              <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
-            {%- endif -%}
-            <button type="button" class="cpdp__play" aria-label="Play tutorial">
-              <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
-            </button>
+            {%- if section.settings.tutorial_thumb != blank -%}{{ section.settings.tutorial_thumb | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__video-thumb', alt: 'Tutorial' }}{%- else -%}<div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>{%- endif -%}
+            <span class="cpdp__play" aria-label="Play tutorial"><svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
+          {%- if section.settings.tutorial_url != blank -%}</a>{%- endif -%}
         </div>
       </div>
 
       <div class="cpdp__col-right">
         <div class="cpdp__pills">
-          <span class="cpdp__pill cpdp__pill--y">Ages 3-8</span>
-          <span class="cpdp__pill cpdp__pill--b">45-60 min play</span>
-          <span class="cpdp__pill cpdp__pill--g">Screen-free</span>
-          <span class="cpdp__pill cpdp__pill--p">Mess-free</span>
+          {%- assign pills = section.settings.feature_pills | default: 'Ages 3-8, 45-60 min play, Screen-free, Mess-free' | split: ',' -%}
+          {%- assign pcolors = 'y,b,g,p' | split: ',' -%}
+          {%- for p in pills -%}
+            {%- assign pc = forloop.index0 | modulo: 4 -%}
+            <span class="cpdp__pill cpdp__pill--{{ pcolors[pc] }}">{{ p | strip }}</span>
+          {%- endfor -%}
         </div>
-        <h1 class="cpdp__title">{{ section.settings.title | default: 'DIY Color Your Bag Kit' }}</h1>
+        <h1 class="cpdp__title">{{ heading_title }}</h1>
         <div class="cpdp__rating">
           <span class="cpdp__stars" aria-hidden="true">★★★★★</span>
-          <a href="#cpdp-reviews" class="cpdp__rating-link">4.9 · 2,148 reviews</a>
-          <span class="cpdp__rating-sold">1,900+ bought this month</span>
+          <a href="#cpdp-reviews" class="cpdp__rating-link">{{ section.settings.rating_text | default: '4.9 · 2,148 reviews' }}</a>
+          <span class="cpdp__rating-sold">{{ section.settings.sold_text | default: '1,900+ bought this month' }}</span>
         </div>
-        <p class="cpdp__desc">A ready-to-paint canvas tote, six non-toxic fabric paints and reusable stencils — everything a 3–8 year old needs to make a bag they will actually carry to school.</p>
+        {%- if section.settings.short_desc != blank -%}<p class="cpdp__desc">{{ section.settings.short_desc }}</p>{%- elsif product.description != blank -%}<p class="cpdp__desc">{{ product.description | strip_html | truncatewords: 40 }}</p>{%- endif -%}
+        {%- if product.variants.size > 1 -%}
         <div class="cpdp__themebox">
           <h3 class="cpdp__themebox-title">Pick a bag theme</h3>
           <div class="cpdp__themegrid" role="radiogroup" aria-label="Pick a bag theme">
-            {%- assign themes = 'Dinosaur Theme|🦕, Dog Theme|🐶, Princess Theme|👸, Back 2 school Theme|🎒, Candy Theme|🍬, Animal Theme|🐰' | split: ', ' -%}
-            {%- for t in themes -%}
-              {%- assign parts = t | split: '|' -%}
-              <button type="button" class="cpdp__theme{% if forloop.first %} is-selected{% endif %}" role="radio" aria-checked="{% if forloop.first %}true{% else %}false{% endif %}">
-                <span class="cpdp__theme-ico">{{ parts[1] }}</span>
-                <span class="cpdp__theme-name">{{ parts[0] }}</span>
-              </button>
+            {%- assign theme_map = 'Dinosaur Theme|🦕,Dog Theme|🐶,Princess Theme|👸,Back to School Theme|🎒,Candy Theme|🍬,Animal Theme|🐰' | split: ',' -%}
+            {%- assign rendered = '' -%}
+            {%- for tm in theme_map -%}
+              {%- assign tparts = tm | split: '|' -%}
+              {%- assign tname = tparts[0] -%}
+              {%- assign tv = product.variants | where: 'title', tname | first -%}
+              {%- if tv -%}
+                <button type="button" class="cpdp__theme{% if tv.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if tv.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ tv.id }}"><span class="cpdp__theme-ico">{{ tparts[1] }}</span><span class="cpdp__theme-name">{{ tname }}</span></button>
+                {%- assign rendered = rendered | append: tname | append: ',' -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- for variant in product.variants -%}
+              {%- unless rendered contains variant.title -%}
+                <button type="button" class="cpdp__theme{% if variant.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if variant.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ variant.id }}"><span class="cpdp__theme-ico">🎨</span><span class="cpdp__theme-name">{{ variant.title }}</span></button>
+              {%- endunless -%}
             {%- endfor -%}
           </div>
         </div>
+        {%- endif -%}
         <div class="cpdp__price">
-          <span class="cpdp__price-now">₹1,299</span>
-          <span class="cpdp__price-was">₹2999</span>
-          <span class="cpdp__price-off">25% off</span>
+          <span class="cpdp__price-now" data-price>{{ cur.price | money }}</span>
+          {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
         </div>
+        <input type="hidden" name="id" value="{{ cur.id }}" class="cpdp__var-id">
         <div class="cpdp__buy">
           <div class="cpdp__qty" aria-label="Quantity">
             <button type="button" class="cpdp__qty-btn" data-dir="-1" aria-label="Decrease">−</button>
-            <input class="cpdp__qty-val" type="text" inputmode="numeric" value="1" aria-label="Quantity" readonly>
+            <input class="cpdp__qty-val" type="text" name="quantity" inputmode="numeric" value="1" aria-label="Quantity" readonly>
             <button type="button" class="cpdp__qty-btn" data-dir="1" aria-label="Increase">+</button>
           </div>
-          <button type="button" class="cpdp__atc">Add to Cart
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
+          <button type="submit" class="cpdp__atc" data-atc{% unless cur.available %} disabled{% endunless %}><span data-atc-label>{% if cur.available %}Add to Cart{% else %}Sold out{% endif %}</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
         <div class="cpdp__trust">
           <div class="cpdp__trust-item"><span class="cpdp__trust-ico">🛡️</span><span class="cpdp__trust-t">100% Secure</span><span class="cpdp__trust-s">secure payment</span></div>
@@ -123,34 +119,23 @@
           <div class="cpdp__trust-item"><span class="cpdp__trust-ico">🇮🇳</span><span class="cpdp__trust-t">Made in India</span><span class="cpdp__trust-s">By a small team</span></div>
           <div class="cpdp__trust-item"><span class="cpdp__trust-ico">🎁</span><span class="cpdp__trust-t">Gift wrap free</span><span class="cpdp__trust-s">Add a note at checkout</span></div>
         </div>
-        <div class="cpdp__safety">
-          <span class="cpdp__safety-ico">⚠️</span>
-          <span class="cpdp__safety-t">Small parts — choking hazard. Not for under 3s.</span>
-          <a href="#" class="cpdp__safety-link">Safety details</a>
-        </div>
+        {%- if section.settings.safety_text != blank -%}<div class="cpdp__safety"><span class="cpdp__safety-ico">⚠️</span><span class="cpdp__safety-t">{{ section.settings.safety_text }}</span>{%- if section.settings.safety_link != blank -%}<a href="{{ section.settings.safety_link }}" class="cpdp__safety-link">Safety details</a>{%- endif -%}</div>{%- endif -%}
         <div class="cpdp__offers">
           <h3 class="cpdp__offers-title"><span class="cpdp__offers-ico">🏷️</span> Available Offers</h3>
           <div class="cpdp__offers-track">
-            {%- assign offers = 'Get EXTRA 5% Off on First Order|WELCOME5, Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10, Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20' | split: ', ' -%}
+            {%- assign offers = section.settings.offers | default: 'Get EXTRA 5% Off on First Order|WELCOME5;Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10;Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20' | split: ';' -%}
             {%- for o in offers -%}
               {%- assign op = o | split: '|' -%}
-              <div class="cpdp__offer">
-                <p class="cpdp__offer-text">{{ op[0] }}</p>
-                <button type="button" class="cpdp__offer-code" data-code="{{ op[1] }}">
-                  <span>Code: {{ op[1] }}</span>
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
+              <div class="cpdp__offer"><p class="cpdp__offer-text">{{ op[0] | strip }}</p><button type="button" class="cpdp__offer-code" data-code="{{ op[1] | strip }}"><span>Code: {{ op[1] | strip }}</span><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
             {%- endfor -%}
           </div>
         </div>
       </div>
     </div>
+    </form>
 
     <div class="cpdp__green">
-      <div class="cpdp__green-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 40" width="24" height="40" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v32M5 27l7 7 7-7"/></svg>
-      </div>
+      <div class="cpdp__green-arrow" aria-hidden="true"><svg viewBox="0 0 24 40" width="24" height="40" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v32M5 27l7 7 7-7"/></svg></div>
       <div class="cpdp__tabs" role="tablist">
         <button type="button" class="cpdp__tab is-active" data-tab="overview" role="tab" aria-selected="true">✦ Overview</button>
         <button type="button" class="cpdp__tab" data-tab="faqs" role="tab" aria-selected="false">❔ FAQs</button>
@@ -158,34 +143,27 @@
       <div class="cpdp__panel is-active" data-panel="overview">
         <div class="cpdp__panel-grid">
           <div class="cpdp__panel-copy">
-            <h2 class="cpdp__panel-title">A blank canvas bag, waiting for their imagination</h2>
-            <p class="cpdp__panel-text">Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>
+            <h2 class="cpdp__panel-title">{{ section.settings.overview_heading | default: 'A blank canvas bag, waiting for their imagination' }}</h2>
+            <div class="cpdp__panel-text">{{ product.description | default: 'Add a product description to populate this section.' }}</div>
             <div class="cpdp__feat-grid">
-              <div class="cpdp__feat"><span class="cpdp__feat-ico">🎨</span><span class="cpdp__feat-body"><strong>Made for creating</strong><em>Blank cotton canvas + 8 markers</em></span></div>
+              <div class="cpdp__feat"><span class="cpdp__feat-ico">🎨</span><span class="cpdp__feat-body"><strong>Made for creating</strong><em>Blank cotton canvas + markers</em></span></div>
               <div class="cpdp__feat"><span class="cpdp__feat-ico">🧼</span><span class="cpdp__feat-body"><strong>Non-toxic &amp; washable</strong><em>Gentle on hands and clothes</em></span></div>
               <div class="cpdp__feat"><span class="cpdp__feat-ico">💪</span><span class="cpdp__feat-body"><strong>Built to be used</strong><em>Durable everyday tote</em></span></div>
               <div class="cpdp__feat"><span class="cpdp__feat-ico">🎉</span><span class="cpdp__feat-body"><strong>Great for groups</strong><em>Perfect for parties &amp; playdates</em></span></div>
             </div>
           </div>
           <div class="cpdp__panel-media">
-            {%- if section.settings.overview_image != blank -%}
-              {{ section.settings.overview_image | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: 'Child coloring a bag' }}
-            {%- else -%}
-              <div class="cpdp__panel-photo cpdp__panel-photo--ph"></div>
-            {%- endif -%}
+            {%- if section.settings.overview_image != blank -%}{{ section.settings.overview_image | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: 'Child coloring a bag' }}{%- elsif product.media[1] -%}{{ product.media[1] | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: product.title }}{%- else -%}<div class="cpdp__panel-photo cpdp__panel-photo--ph"></div>{%- endif -%}
             <span class="cpdp__mascot" aria-hidden="true">🐱</span>
           </div>
         </div>
       </div>
       <div class="cpdp__panel" data-panel="faqs">
         <div class="cpdp__faq-card">
-          {%- assign faqs = 'What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters., Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes., How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play., Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash.' | split: ', ' -%}
+          {%- assign faqs = section.settings.faqs | default: 'What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash.' | split: ';' -%}
           {%- for f in faqs -%}
             {%- assign fp = f | split: '|' -%}
-            <details class="cpdp__faq"{% if forloop.first %} open{% endif %}>
-              <summary class="cpdp__faq-q"><span>{{ fp[0] }}</span><span class="cpdp__faq-chev" aria-hidden="true"></span></summary>
-              <p class="cpdp__faq-a">{{ fp[1] }}</p>
-            </details>
+            <details class="cpdp__faq"{% if forloop.first %} open{% endif %}><summary class="cpdp__faq-q"><span>{{ fp[0] | strip }}</span><span class="cpdp__faq-chev" aria-hidden="true"></span></summary><p class="cpdp__faq-a">{{ fp[1] | strip }}</p></details>
           {%- endfor -%}
         </div>
       </div>
@@ -194,41 +172,47 @@
 
   <div class="cpdp__sticky" data-sticky>
     <div class="cpdp__sticky-info">
-      <div class="cpdp__sticky-thumb">
-        {%- if section.settings.image_1 != blank -%}
-          {{ section.settings.image_1 | image_url: width: 96 | image_tag: loading: 'lazy', alt: '' }}
-        {%- else -%}
-          {{ 'product-apparel-1' | placeholder_svg_tag }}
-        {%- endif -%}
-      </div>
+      <div class="cpdp__sticky-thumb">{%- if product.featured_image -%}{{ product.featured_image | image_url: width: 96 | image_tag: loading: 'lazy', alt: '' }}{%- else -%}{{ 'product-apparel-1' | placeholder_svg_tag }}{%- endif -%}</div>
       <div class="cpdp__sticky-meta">
-        <span class="cpdp__sticky-name">{{ section.settings.title | default: 'DIY Color Your Bag Kit' }}</span>
-        <span class="cpdp__sticky-price"><s>₹2999</s> <b>₹1,299</b> <em>25% off</em></span>
+        <span class="cpdp__sticky-name">{{ heading_title }}</span>
+        <span class="cpdp__sticky-price">{%- if cur.compare_at_price > cur.price -%}<s data-sticky-compare>{{ cur.compare_at_price | money }}</s> {%- endif -%}<b data-sticky-price>{{ cur.price | money }}</b>{%- if cur.compare_at_price > cur.price -%} <em data-sticky-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</em>{%- endif -%}</span>
       </div>
     </div>
-    <button type="button" class="cpdp__atc cpdp__atc--sticky">Add to Cart
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
+    <button type="submit" form="cpdp-form-{{ uid }}" class="cpdp__atc cpdp__atc--sticky"><span data-atc-label>{% if cur.available %}Add to Cart{% else %}Sold out{% endif %}</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
   </div>
 
-  <a class="cpdp__wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24" width="30" height="30" fill="#fff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2z"/></svg>
-  </a>
+  <a class="cpdp__wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" width="30" height="30" fill="#fff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2z"/></svg></a>
 </section>
+
+<script>
+  window.CPDP = window.CPDP || {};
+  window.CPDP["{{ uid }}"] = {
+    variants: {
+      {%- for variant in product.variants -%}
+      "{{ variant.id }}": {
+        "available": {{ variant.available }},
+        "price": {{ variant.price | money | json }},
+        "compare": {% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},
+        "off": {% if variant.compare_at_price > variant.price %}"{{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round }}% off"{% else %}null{% endif %},
+        "mediaId": {% if variant.featured_media %}"{{ variant.featured_media.id }}"{% else %}null{% endif %}
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    }
+  };
+</script>
 
 <style>
   #Cpdp-{{ uid }}{
     --cpdp-orange:#F26E21; --cpdp-orange-d:#d95d15;
     --cpdp-yellow:#F7C948; --cpdp-cream:#FBF3D9;
-    --cpdp-green:#6EA847; --cpdp-green-d:#5c9139;
-    --cpdp-purple:#5A2D8C; --cpdp-brown:#3D2817;
-    --cpdp-ink:#4B5563; --cpdp-line:#E7E3DA;
-    --cpdp-radius:22px;
+    --cpdp-green:#6EA847; --cpdp-purple:#5A2D8C; --cpdp-brown:#3D2817;
+    --cpdp-ink:#4B5563; --cpdp-line:#E7E3DA; --cpdp-radius:22px;
     --cpdp-head: var(--font-heading-family, 'Baloo 2','Poppins',system-ui,sans-serif);
     --cpdp-body: var(--font-body-family, 'Poppins','Nunito',system-ui,sans-serif);
     font-family:var(--cpdp-body); color:var(--cpdp-brown); position:relative;
   }
   #Cpdp-{{ uid }} *{box-sizing:border-box;}
+  #Cpdp-{{ uid }} .cpdp__form{margin:0;}
   #Cpdp-{{ uid }} .cpdp__wrap{max-width:1240px;margin:0 auto;padding:14px 20px 0;}
   #Cpdp-{{ uid }} .cpdp__crumbs{display:flex;align-items:center;gap:8px;font-size:14px;color:#6b7280;padding:8px 4px 18px;}
   #Cpdp-{{ uid }} .cpdp__crumbs a{color:#6b7280;text-decoration:none;}
@@ -251,20 +235,21 @@
   #Cpdp-{{ uid }} .cpdp__thumbs{display:flex;gap:12px;margin-top:14px;overflow-x:auto;padding-bottom:4px;}
   #Cpdp-{{ uid }} .cpdp__thumb{flex:0 0 84px;height:84px;border-radius:14px;border:2px solid var(--cpdp-line);background:#f4f1ec;overflow:hidden;cursor:pointer;padding:0;}
   #Cpdp-{{ uid }} .cpdp__thumb.is-active{border-color:var(--cpdp-orange);}
-  #Cpdp-{{ uid }} .cpdp__thumb img,#Cpdp-{{ uid }} .cpdp__thumb svg{width:100%;height:100%;object-fit:cover;display:block;}
+  #Cpdp-{{ uid }} .cpdp__thumb img{width:100%;height:100%;object-fit:cover;display:block;}
   #Cpdp-{{ uid }} .cpdp__tutorial{margin-top:26px;}
+  #Cpdp-{{ uid }} .cpdp__video-link{display:block;text-decoration:none;}
   #Cpdp-{{ uid }} .cpdp__tutorial-title{font-family:var(--cpdp-head);font-size:22px;font-weight:800;margin:0 0 12px;}
   #Cpdp-{{ uid }} .cpdp__video{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/10;background:#FBE9E4;}
   #Cpdp-{{ uid }} .cpdp__video-thumb{width:100%;height:100%;object-fit:cover;}
   #Cpdp-{{ uid }} .cpdp__video-thumb--ph{background:linear-gradient(135deg,#FBE0D8,#F6C9Bb);}
-  #Cpdp-{{ uid }} .cpdp__play{position:absolute;inset:0;margin:auto;width:74px;height:74px;border:none;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;cursor:pointer;}
+  #Cpdp-{{ uid }} .cpdp__play{position:absolute;inset:0;margin:auto;width:74px;height:74px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;}
   #Cpdp-{{ uid }} .cpdp__pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
   #Cpdp-{{ uid }} .cpdp__pill{font-size:14px;font-weight:600;padding:8px 16px;border-radius:999px;}
   #Cpdp-{{ uid }} .cpdp__pill--y{background:#FEF3C7;color:#B45309;}
   #Cpdp-{{ uid }} .cpdp__pill--b{background:#DBEAFE;color:#1D4ED8;}
   #Cpdp-{{ uid }} .cpdp__pill--g{background:#DCFCE7;color:#15803D;}
   #Cpdp-{{ uid }} .cpdp__pill--p{background:#FCE7F3;color:#BE185D;}
-  #Cpdp-{{ uid }} .cpdp__title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(34px,4vw,54px);line-height:1.05;margin:6px 0 14px;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(30px,3.4vw,48px);line-height:1.08;margin:6px 0 14px;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__rating{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:16px;}
   #Cpdp-{{ uid }} .cpdp__stars{color:#F5B301;font-size:20px;letter-spacing:2px;}
   #Cpdp-{{ uid }} .cpdp__rating-link{color:var(--cpdp-brown);font-weight:700;text-decoration:underline;}
@@ -285,8 +270,9 @@
   #Cpdp-{{ uid }} .cpdp__qty{display:flex;align-items:center;border:2px solid var(--cpdp-line);border-radius:14px;overflow:hidden;}
   #Cpdp-{{ uid }} .cpdp__qty-btn{width:46px;height:52px;border:none;background:#fff;font-size:22px;cursor:pointer;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__qty-val{width:46px;height:52px;border:none;text-align:center;font-size:18px;font-weight:700;color:var(--cpdp-brown);background:#fff;}
-  #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:14px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;}
+  #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:14px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;transition:background .15s;}
   #Cpdp-{{ uid }} .cpdp__atc:hover{background:var(--cpdp-orange-d);}
+  #Cpdp-{{ uid }} .cpdp__atc[disabled]{background:#c7c2ba;cursor:not-allowed;}
   #Cpdp-{{ uid }} .cpdp__trust{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
   #Cpdp-{{ uid }} .cpdp__trust-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:6px 4px;}
   #Cpdp-{{ uid }} .cpdp__trust-ico{font-size:26px;}
@@ -311,16 +297,19 @@
   #Cpdp-{{ uid }} .cpdp__tab.is-active{background:var(--cpdp-orange);color:#fff;}
   #Cpdp-{{ uid }} .cpdp__panel{display:none;max-width:1000px;margin:0 auto;background:#fff;border-radius:0 0 22px 22px;border-top:4px solid var(--cpdp-orange);padding:38px;}
   #Cpdp-{{ uid }} .cpdp__panel.is-active{display:block;}
-  #Cpdp-{{ uid }} .cpdp__panel-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center;}
+  #Cpdp-{{ uid }} .cpdp__panel-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:start;}
   #Cpdp-{{ uid }} .cpdp__panel-title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(24px,2.4vw,32px);color:var(--cpdp-purple);margin:0 0 16px;line-height:1.15;}
-  #Cpdp-{{ uid }} .cpdp__panel-text{font-size:17px;line-height:1.6;color:var(--cpdp-ink);margin:0 0 22px;}
+  #Cpdp-{{ uid }} .cpdp__panel-text{font-size:16px;line-height:1.65;color:var(--cpdp-ink);margin:0 0 22px;}
+  #Cpdp-{{ uid }} .cpdp__panel-text h3{font-family:var(--cpdp-head);color:var(--cpdp-brown);font-size:18px;margin:16px 0 8px;}
+  #Cpdp-{{ uid }} .cpdp__panel-text ul{margin:0 0 12px;padding-left:20px;}
+  #Cpdp-{{ uid }} .cpdp__panel-text li{margin-bottom:6px;}
   #Cpdp-{{ uid }} .cpdp__feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   #Cpdp-{{ uid }} .cpdp__feat{display:flex;gap:12px;align-items:flex-start;background:#F7F5FA;border-radius:14px;padding:14px;}
   #Cpdp-{{ uid }} .cpdp__feat-ico{font-size:22px;}
   #Cpdp-{{ uid }} .cpdp__feat-body{display:flex;flex-direction:column;gap:2px;}
   #Cpdp-{{ uid }} .cpdp__feat-body strong{color:var(--cpdp-purple);font-size:15px;}
   #Cpdp-{{ uid }} .cpdp__feat-body em{font-style:normal;color:#7c828c;font-size:13px;}
-  #Cpdp-{{ uid }} .cpdp__panel-media{position:relative;}
+  #Cpdp-{{ uid }} .cpdp__panel-media{position:relative;position:sticky;top:20px;}
   #Cpdp-{{ uid }} .cpdp__panel-photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:999px;}
   #Cpdp-{{ uid }} .cpdp__panel-photo--ph{background:linear-gradient(135deg,#CFE8B8,#A7D48A);}
   #Cpdp-{{ uid }} .cpdp__mascot{position:absolute;right:6%;bottom:2%;font-size:52px;}
@@ -341,7 +330,7 @@
   #Cpdp-{{ uid }} .cpdp__sticky.is-visible{transform:translateY(0);}
   #Cpdp-{{ uid }} .cpdp__sticky-info{display:flex;align-items:center;gap:14px;}
   #Cpdp-{{ uid }} .cpdp__sticky-thumb{width:52px;height:52px;border-radius:12px;overflow:hidden;background:#eee;flex:0 0 auto;}
-  #Cpdp-{{ uid }} .cpdp__sticky-thumb img,#Cpdp-{{ uid }} .cpdp__sticky-thumb svg{width:100%;height:100%;object-fit:cover;}
+  #Cpdp-{{ uid }} .cpdp__sticky-thumb img{width:100%;height:100%;object-fit:cover;}
   #Cpdp-{{ uid }} .cpdp__sticky-meta{display:flex;flex-direction:column;gap:2px;}
   #Cpdp-{{ uid }} .cpdp__sticky-name{font-weight:700;font-size:16px;}
   #Cpdp-{{ uid }} .cpdp__sticky-price{font-size:15px;color:#6b7280;}
@@ -354,17 +343,16 @@
     #Cpdp-{{ uid }} .cpdp__themegrid{grid-template-columns:1fr 1fr;}
     #Cpdp-{{ uid }} .cpdp__trust{grid-template-columns:1fr 1fr;gap:14px;}
     #Cpdp-{{ uid }} .cpdp__panel-grid{grid-template-columns:1fr;}
-    #Cpdp-{{ uid }} .cpdp__panel-media{order:-1;max-width:340px;margin:0 auto;}
+    #Cpdp-{{ uid }} .cpdp__panel-media{order:-1;max-width:340px;margin:0 auto;position:static;}
     #Cpdp-{{ uid }} .cpdp__feat-grid{grid-template-columns:1fr;}
     #Cpdp-{{ uid }} .cpdp__tabs{gap:8px;}
     #Cpdp-{{ uid }} .cpdp__tab{font-size:17px;padding:14px;}
     #Cpdp-{{ uid }} .cpdp__panel{padding:22px;}
   }
   @media (max-width:560px){
-    #Cpdp-{{ uid }} .cpdp__title{font-size:32px;}
-    #Cpdp-{{ uid }} .cpdp__price-now{font-size:36px;}
+    #Cpdp-{{ uid }} .cpdp__title{font-size:28px;}
+    #Cpdp-{{ uid }} .cpdp__price-now{font-size:34px;}
     #Cpdp-{{ uid }} .cpdp__sticky-meta{display:none;}
-    #Cpdp-{{ uid }} .cpdp__sticky-info{gap:0;}
     #Cpdp-{{ uid }} .cpdp__atc--sticky{flex:1;min-width:0;}
     #Cpdp-{{ uid }} .cpdp__wa{bottom:88px;width:52px;height:52px;}
   }
@@ -374,6 +362,7 @@
   (function(){
     var root = document.getElementById('Cpdp-{{ uid }}');
     if(!root) return;
+    var data = (window.CPDP && window.CPDP["{{ uid }}"]) || { variants:{} };
     var slides = root.querySelectorAll('.cpdp__slide');
     var thumbs = root.querySelectorAll('.cpdp__thumb');
     var cur = 0;
@@ -388,32 +377,56 @@
     var next = root.querySelector('.cpdp__nav--next');
     if(prev) prev.addEventListener('click', function(){ show(cur-1); });
     if(next) next.addEventListener('click', function(){ show(cur+1); });
+    var idInput = root.querySelector('.cpdp__var-id');
+    var priceEl = root.querySelector('[data-price]');
+    var compareEl = root.querySelector('[data-compare]');
+    var offEl = root.querySelector('[data-off]');
+    var sPrice = root.querySelector('[data-sticky-price]');
+    var sCompare = root.querySelector('[data-sticky-compare]');
+    var sOff = root.querySelector('[data-sticky-off]');
+    var atcLabels = root.querySelectorAll('[data-atc-label]');
+    var atcBtns = root.querySelectorAll('[data-atc]');
+    function selectVariant(id){
+      var v = data.variants[id];
+      if(!v) return;
+      if(idInput) idInput.value = id;
+      if(priceEl) priceEl.textContent = v.price;
+      if(sPrice) sPrice.textContent = v.price;
+      if(compareEl){ if(v.compare){ compareEl.textContent = v.compare; compareEl.style.display=''; } else { compareEl.style.display='none'; } }
+      if(sCompare){ if(v.compare){ sCompare.textContent = v.compare; sCompare.style.display=''; } else { sCompare.style.display='none'; } }
+      if(offEl){ if(v.off){ offEl.textContent = v.off; offEl.style.display=''; } else { offEl.style.display='none'; } }
+      if(sOff){ if(v.off){ sOff.textContent = v.off; sOff.style.display=''; } else { sOff.style.display='none'; } }
+      atcLabels.forEach(function(l){ l.textContent = v.available ? 'Add to Cart' : 'Sold out'; });
+      atcBtns.forEach(function(b){ b.disabled = !v.available; });
+      if(v.mediaId){ var idx=-1; slides.forEach(function(s,i){ if(s.dataset.mediaId === String(v.mediaId)) idx=i; }); if(idx>=0) show(idx); }
+    }
     root.querySelectorAll('.cpdp__theme').forEach(function(btn){
       btn.addEventListener('click', function(){
         root.querySelectorAll('.cpdp__theme').forEach(function(b){ b.classList.remove('is-selected'); b.setAttribute('aria-checked','false'); });
         btn.classList.add('is-selected'); btn.setAttribute('aria-checked','true');
+        selectVariant(btn.dataset.variantId);
       });
     });
     var qtyVal = root.querySelector('.cpdp__qty-val');
     root.querySelectorAll('.cpdp__qty-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
-        var v = parseInt(qtyVal.value,10) || 1;
-        v += parseInt(btn.dataset.dir,10);
-        if(v < 1) v = 1;
-        qtyVal.value = v;
+        var val = parseInt(qtyVal.value,10) || 1;
+        val += parseInt(btn.dataset.dir,10);
+        if(val < 1) val = 1;
+        qtyVal.value = val;
       });
     });
     root.querySelectorAll('.cpdp__tab').forEach(function(tab){
       tab.addEventListener('click', function(){
         var name = tab.dataset.tab;
-        root.querySelectorAll('.cpdp__tab').forEach(function(t){ var on = t===tab; t.classList.toggle('is-active',on); t.setAttribute('aria-selected', on?'true':'false'); });
+        root.querySelectorAll('.cpdp__tab').forEach(function(t){ var on=t===tab; t.classList.toggle('is-active',on); t.setAttribute('aria-selected', on?'true':'false'); });
         root.querySelectorAll('.cpdp__panel').forEach(function(p){ p.classList.toggle('is-active', p.dataset.panel===name); });
       });
     });
     root.querySelectorAll('.cpdp__offer-code').forEach(function(btn){
       btn.addEventListener('click', function(){
         var code = btn.dataset.code || '';
-        var done = function(){ var lbl = btn.querySelector('span'); var old = lbl.textContent; btn.classList.add('is-copied'); lbl.textContent = 'Copied!'; setTimeout(function(){ lbl.textContent = old; btn.classList.remove('is-copied'); },1400); };
+        var done = function(){ var lbl = btn.querySelector('span'); var old = lbl.textContent; btn.classList.add('is-copied'); lbl.textContent='Copied!'; setTimeout(function(){ lbl.textContent=old; btn.classList.remove('is-copied'); },1400); };
         if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(code).then(done).catch(done); } else { done(); }
       });
     });
@@ -433,18 +446,29 @@
   "tag": "section",
   "class": "creste-pdp-section",
   "settings": [
-    { "type": "text", "id": "title", "label": "Product title", "default": "DIY Color Your Bag Kit" },
-    { "type": "header", "content": "Gallery images" },
-    { "type": "image_picker", "id": "image_1", "label": "Image 1" },
-    { "type": "image_picker", "id": "image_2", "label": "Image 2" },
-    { "type": "image_picker", "id": "image_3", "label": "Image 3" },
-    { "type": "image_picker", "id": "image_4", "label": "Image 4" },
-    { "type": "image_picker", "id": "image_5", "label": "Image 5" },
-    { "type": "header", "content": "Other media" },
+    { "type": "text", "id": "title_override", "label": "Title override (blank = product title)", "default": "DIY Color Your Bag Kit" },
+    { "type": "text", "id": "feature_pills", "label": "Feature pills (comma separated)", "default": "Ages 3-8, 45-60 min play, Screen-free, Mess-free" },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.9 · 2,148 reviews" },
+    { "type": "text", "id": "sold_text", "label": "Sold text", "default": "1,900+ bought this month" },
+    { "type": "textarea", "id": "short_desc", "label": "Short description (blank = product excerpt)" },
+    { "type": "header", "content": "Badges" },
+    { "type": "text", "id": "badge_1", "label": "Badge 1 (orange)", "default": "#1 Bestseller" },
+    { "type": "text", "id": "badge_2", "label": "Badge 2 (white)", "default": "Screen-free fun" },
+    { "type": "header", "content": "Safety" },
+    { "type": "text", "id": "safety_text", "label": "Safety notice", "default": "Small parts — choking hazard. Not for under 3s." },
+    { "type": "url", "id": "safety_link", "label": "Safety details link" },
+    { "type": "header", "content": "Offers (text|CODE ; separated)" },
+    { "type": "textarea", "id": "offers", "label": "Offers", "default": "Get EXTRA 5% Off on First Order|WELCOME5;Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10;Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20" },
+    { "type": "header", "content": "Tutorial" },
     { "type": "image_picker", "id": "tutorial_thumb", "label": "Tutorial thumbnail" },
-    { "type": "image_picker", "id": "overview_image", "label": "Overview lifestyle photo" },
+    { "type": "url", "id": "tutorial_url", "label": "Tutorial video link" },
+    { "type": "header", "content": "Overview" },
+    { "type": "text", "id": "overview_heading", "label": "Overview heading", "default": "A blank canvas bag, waiting for their imagination" },
+    { "type": "image_picker", "id": "overview_image", "label": "Overview photo (blank = 2nd product image)" },
+    { "type": "header", "content": "FAQs (question|answer ; separated)" },
+    { "type": "textarea", "id": "faqs", "label": "FAQs", "default": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash." },
     { "type": "header", "content": "Contact" },
-    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (with country code, no +)", "default": "919999999999" }
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (country code, no +)", "default": "919999999999" }
   ],
   "presets": [ { "name": "Creste PDP" } ]
 }
