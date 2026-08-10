@@ -83,14 +83,14 @@
         <div class="cpdp__themebox">
           <h3 class="cpdp__themebox-title">Pick a bag theme</h3>
           <div class="cpdp__themegrid" role="radiogroup" aria-label="Pick a bag theme">
-            {%- assign theme_map = 'Dinosaur Theme|🦕,Dog Theme|🐶,Princess Theme|👸,Back to School Theme|🎒,Candy Theme|🍬,Animal Theme|🐰' | split: ',' -%}
+            {%- assign theme_map = 'Dinosaur Theme|🦕|Dinosaur,Dog Theme|🐶|Dog,Princess Theme|👸|Princess,Back to School Theme|🎒|Back 2 school,Candy Theme|🍬|Candy,Animal Theme|🐰|Animal' | split: ',' -%}
             {%- assign rendered = '' -%}
             {%- for tm in theme_map -%}
               {%- assign tparts = tm | split: '|' -%}
               {%- assign tname = tparts[0] -%}
               {%- assign tv = product.variants | where: 'title', tname | first -%}
               {%- if tv -%}
-                <button type="button" class="cpdp__theme{% if tv.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if tv.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ tv.id }}"><span class="cpdp__theme-ico">{{ tparts[1] }}</span><span class="cpdp__theme-name">{{ tname }}</span></button>
+                <button type="button" class="cpdp__theme{% if tv.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if tv.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ tv.id }}"><span class="cpdp__theme-ico">{{ tparts[1] }}</span><span class="cpdp__theme-name">{{ tparts[2] }}<br>Theme</span></button>
                 {%- assign rendered = rendered | append: tname | append: ',' -%}
               {%- endif -%}
             {%- endfor -%}
@@ -284,10 +284,10 @@
   #Cpdp-{{ uid }} .cpdp__buybox .cpdp__themebox{background:transparent;padding:0;margin-bottom:0;}
   #Cpdp-{{ uid }} .cpdp__themebox-title{font-family:var(--cpdp-body);font-size:17px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px;}
   #Cpdp-{{ uid }} .cpdp__themegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
-  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:2px solid #EBE4D6;border-radius:14px;padding:14px;cursor:pointer;font-family:inherit;transition:border-color .15s,box-shadow .15s;}
+  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:10px;text-align:left;background:#fff;border:2px solid #EBE4D6;border-radius:14px;padding:12px;cursor:pointer;font-family:inherit;transition:border-color .15s,box-shadow .15s;}
   #Cpdp-{{ uid }} .cpdp__theme.is-selected{border-color:#4CA36A;background:#fff;box-shadow:0 0 0 1px #4CA36A inset;}
-  #Cpdp-{{ uid }} .cpdp__theme-ico{width:46px;height:46px;flex:0 0 auto;border-radius:12px;background:#FDF3F4;display:grid;place-items:center;font-size:22px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
-  #Cpdp-{{ uid }} .cpdp__theme-name{font-size:15px;font-weight:700;color:var(--cpdp-brown);line-height:1.25;}
+  #Cpdp-{{ uid }} .cpdp__theme-ico{width:42px;height:42px;flex:0 0 auto;border-radius:12px;background:#FDF3F4;display:grid;place-items:center;font-size:22px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  #Cpdp-{{ uid }} .cpdp__theme-name{font-size:14px;font-weight:700;color:var(--cpdp-brown);line-height:1.25;}
   #Cpdp-{{ uid }} .cpdp__hr{border:none;border-top:1px solid #E8E0CC;margin:18px 0;}
   #Cpdp-{{ uid }} .cpdp__price{display:flex;align-items:baseline;gap:14px;margin:0;}
   #Cpdp-{{ uid }} .cpdp__price-now{font-family:var(--cpdp-head);font-size:44px;font-weight:800;color:var(--cpdp-brown);}
