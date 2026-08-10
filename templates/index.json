@@ -42,6 +42,42 @@
         "speed": 5
       }
     },
+    "creste_custom_strip_3qRzUG": {
+      "type": "creste-custom-strip",
+      "blocks": {
+        "infomation_jmfNkF": {
+          "type": "infomation",
+          "settings": {
+            "info-text": "4-Day No-Questions-Asked Returns",
+            "info-icon": "shopify://shop_images/image_920.png"
+          }
+        },
+        "infomation_GX7yUr": {
+          "type": "infomation",
+          "settings": {
+            "info-text": "4-Day No-Questions-Asked Returns",
+            "info-icon": "shopify://shop_images/image_920.png"
+          }
+        },
+        "infomation_Hcwn9i": {
+          "type": "infomation",
+          "settings": {
+            "info-text": "4-Day No-Questions-Asked Returns",
+            "info-icon": "shopify://shop_images/image_920.png"
+          }
+        }
+      },
+      "block_order": [
+        "infomation_jmfNkF",
+        "infomation_GX7yUr",
+        "infomation_Hcwn9i"
+      ],
+      "name": "Creste Strip",
+      "settings": {
+        "bg-color": "#FFF2BE",
+        "speed": 30
+      }
+    },
     "creste_stats": {
       "type": "creste-stats",
       "blocks": {
@@ -968,6 +1004,7 @@
   },
   "order": [
     "creste_hero",
+    "creste_custom_strip_3qRzUG",
     "creste_stats",
     "creste_age",
     "creste_play",
