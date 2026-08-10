@@ -108,7 +108,7 @@
           {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
         </div>
         <label class="cpdp__giftwrap"><span class="cpdp__gift-ico">🎁</span><span class="cpdp__gift-body"><b>Add gift wrapping — free</b><em>Kraft paper, ribbon and a handwritten note</em></span><input type="checkbox" name="properties[Gift wrapping]" value="Yes" class="cpdp__gift-check"></label>
-        <div class="cpdp__hr"></div>
+        <div class="cpdp__hr cpdp__hr--blank"></div>
         <div class="cpdp__po">
           <h3 class="cpdp__po-title">Choose Purchase Option</h3>
           <div class="cpdp__po-grid">
@@ -124,7 +124,7 @@
             {%- endfor -%}
           </div>
         </div>
-        <div class="cpdp__hr"></div>
+        <div class="cpdp__hr cpdp__hr--blank"></div>
         <p class="cpdp__ship">{{ section.settings.ship_text | default: 'Order before 4 PM → ships today · COD available' }}</p>
         <input type="hidden" name="id" value="{{ cur.id }}" class="cpdp__var-id">
         <div class="cpdp__buy">
@@ -289,12 +289,13 @@
   #Cpdp-{{ uid }} .cpdp__theme-ico{width:34px;height:34px;flex:0 0 auto;border-radius:0;background:transparent;display:grid;place-items:center;font-size:28px;box-shadow:none;}
   #Cpdp-{{ uid }} .cpdp__theme-name{font-size:13px;font-weight:700;color:var(--cpdp-brown);line-height:1.25;}
   #Cpdp-{{ uid }} .cpdp__hr{border:none;border-top:1px solid #E3D9C2;margin:18px 0;}
+  #Cpdp-{{ uid }} .cpdp__hr--blank{border-top-color:transparent;margin:12px 0;}
   #Cpdp-{{ uid }} .cpdp__price{display:flex;align-items:baseline;gap:14px;margin:0;}
   #Cpdp-{{ uid }} .cpdp__price-now{font-family:var(--cpdp-head);font-size:44px;font-weight:800;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__price-was{font-size:20px;color:#9aa0a6;text-decoration:line-through;}
   #Cpdp-{{ uid }} .cpdp__price-off{background:var(--cpdp-yellow);color:#7a5b00;font-weight:700;font-size:14px;padding:5px 12px;border-radius:999px;}
-  #Cpdp-{{ uid }} .cpdp__giftwrap{display:flex;align-items:center;gap:14px;background:#DCEDF8;border-radius:18px;padding:16px 18px;cursor:pointer;}
-  #Cpdp-{{ uid }} .cpdp__gift-ico{width:56px;height:56px;flex:0 0 auto;border-radius:999px;background:#fff;display:grid;place-items:center;font-size:26px;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+  #Cpdp-{{ uid }} .cpdp__giftwrap{display:flex;align-items:center;gap:14px;background:#DCEDF8;border-radius:18px;padding:16px 18px;cursor:pointer;margin-top:16px;}
+  #Cpdp-{{ uid }} .cpdp__gift-ico{width:56px;height:56px;flex:0 0 auto;border-radius:999px;background:#FDE7EE;display:grid;place-items:center;font-size:26px;box-shadow:0 2px 6px rgba(0,0,0,.05);}
   #Cpdp-{{ uid }} .cpdp__gift-body{flex:1;display:flex;flex-direction:column;gap:2px;}
   #Cpdp-{{ uid }} .cpdp__gift-body b{font-size:17px;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__gift-body em{font-style:normal;font-size:14px;color:#6b7280;}
