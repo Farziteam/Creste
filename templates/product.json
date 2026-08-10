@@ -1,1 +1,55 @@
-{"sections":{"main":{"type":"main-product","blocks":{"vendor":{"type":"text","settings":{"text":"{{ product.vendor }}","text_style":"uppercase"}},"title":{"type":"title","settings":{}},"price":{"type":"price","settings":{}},"variant_picker":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"quantity_selector":{"type":"quantity_selector","settings":{}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"description":{"type":"description","settings":{}},"share":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["vendor","title","price","variant_picker","quantity_selector","buy_buttons","description","share"],"settings":{"enable_sticky_info":true,"color_scheme":"scheme-1","media_size":"large","constrain_to_viewport":true,"media_fit":"contain","gallery_layout":"stacked","mobile_thumbnails":"hide","media_position":"left","image_zoom":"lightbox","hide_variants":true,"enable_video_looping":false,"padding_top":36,"padding_bottom":12}},"disclosures":{"type":"disclosures","settings":{"padding_top":36,"padding_bottom":0}},"related-products":{"type":"related-products","settings":{"heading":"You may also like","heading_size":"h2","products_to_show":4,"columns_desktop":4,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":28}}},"order":["main","disclosures","related-products"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "creste_pdp": { "type": "creste-pdp", "settings": {} },
+    "creste_artists": { "type": "creste-artists", "settings": {} },
+    "creste_skills": {
+      "type": "creste-skills",
+      "blocks": {
+        "s1": { "type": "skill", "settings": { "icon": "🖌️", "title": "Fine motor control", "text": "Holding a brush, tracing an edge and pressing a stencil build the exact grip strength that handwriting needs.", "color": "green" } },
+        "s2": { "type": "skill", "settings": { "icon": "🎨", "title": "Colour reasoning", "text": "Six paints, dozens of mixes. Kids discover that yellow and blue make their own green — nobody has to tell them.", "color": "blue" } },
+        "s3": { "type": "skill", "settings": { "icon": "⏳", "title": "Focus stamina", "text": "A 45-minute project with a visible finish line teaches sitting-with-it — the skill screens quietly erase.", "color": "cream" } },
+        "s4": { "type": "skill", "settings": { "icon": "👜", "title": "Pride of ownership", "text": "It is not a fridge drawing. It is a real bag they use, which turns one afternoon into months of quiet pride.", "color": "peach" } },
+        "s5": { "type": "skill", "settings": { "icon": "💡", "title": "Creative confidence", "text": "There is no wrong bag. Free-paint mode means the result is theirs, and they know it every time they carry it.", "color": "pink" } },
+        "s6": { "type": "skill", "settings": { "icon": "📋", "title": "Planning & sequencing", "text": "Outline first, fill second, details last. The instruction cards teach order of operations without a worksheet.", "color": "lavender" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6"],
+      "settings": {}
+    },
+    "creste_recommend": { "type": "creste-recommend", "settings": {} },
+    "creste_love": {
+      "type": "creste-love",
+      "blocks": {
+        "p1": { "type": "point", "settings": { "text": "One hour of genuine quiet — no screens, no negotiating, no reward chart." } },
+        "p2": { "type": "point", "settings": { "text": "Everything is in the box and pre-portioned. Nothing to buy, nothing to prep." } },
+        "p3": { "type": "point", "settings": { "text": "Spill-resistant paint pots and a wipe-clean mat. Cleanup is two minutes." } },
+        "p4": { "type": "point", "settings": { "text": "The outcome is useful. A bag for library day, not another thing to store." } },
+        "t1": { "type": "stat", "settings": { "number": "6", "label": "squeezy paint pots to mix", "color": "white" } },
+        "t2": { "type": "stat", "settings": { "number": "12", "label": "stencils to stamp again and again", "color": "teal" } },
+        "t3": { "type": "stat", "settings": { "number": "∞", "label": "designs, because it is their bag", "color": "white" } },
+        "t4": { "type": "stat", "settings": { "number": "1", "label": "sticker badge when it is done", "color": "teal" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "t1", "t2", "t3", "t4"],
+      "settings": {}
+    },
+    "creste_reviews": {
+      "type": "creste-reviews",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "rating": 4, "name": "Priya Mehta", "date": "12/19/2024", "title": "Keeps Kids Engaged", "body": "My kids were fully engaged while working on these magnets. They loved the tiny aquatic decorations and can't wait to show them off to their friends!" } },
+        "r2": { "type": "review", "settings": { "rating": 4, "name": "Tanvi Gupta", "date": "11/29/2024", "title": "Excellent Value for Money", "body": "This kit is worth every penny. It comes with plenty of decorations and materials to make beautiful, high-quality fridge magnets." } }
+      },
+      "block_order": ["r1", "r2"],
+      "settings": {}
+    },
+    "creste_birthday": { "type": "creste-birthday", "settings": {} }
+  },
+  "order": ["creste_pdp", "creste_artists", "creste_skills", "creste_recommend", "creste_love", "creste_reviews", "creste_birthday"]
+}
