@@ -23,7 +23,33 @@
       },
       "block_order": ["s1", "s2", "s3", "s4", "s5", "s6"],
       "settings": {}
-    }
+    },
+    "creste_recommend": { "type": "creste-recommend", "settings": {} },
+    "creste_love": {
+      "type": "creste-love",
+      "blocks": {
+        "p1": { "type": "point", "settings": { "text": "One hour of genuine quiet — no screens, no negotiating, no reward chart." } },
+        "p2": { "type": "point", "settings": { "text": "Everything is in the box and pre-portioned. Nothing to buy, nothing to prep." } },
+        "p3": { "type": "point", "settings": { "text": "Spill-resistant paint pots and a wipe-clean mat. Cleanup is two minutes." } },
+        "p4": { "type": "point", "settings": { "text": "The outcome is useful. A bag for library day, not another thing to store." } },
+        "t1": { "type": "stat", "settings": { "number": "6", "label": "squeezy paint pots to mix", "color": "white" } },
+        "t2": { "type": "stat", "settings": { "number": "12", "label": "stencils to stamp again and again", "color": "teal" } },
+        "t3": { "type": "stat", "settings": { "number": "∞", "label": "designs, because it is their bag", "color": "white" } },
+        "t4": { "type": "stat", "settings": { "number": "1", "label": "sticker badge when it is done", "color": "teal" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "t1", "t2", "t3", "t4"],
+      "settings": {}
+    },
+    "creste_reviews": {
+      "type": "creste-reviews",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "rating": 4, "name": "Priya Mehta", "date": "12/19/2024", "title": "Keeps Kids Engaged", "body": "My kids were fully engaged while working on these magnets. They loved the tiny aquatic decorations and can't wait to show them off to their friends!" } },
+        "r2": { "type": "review", "settings": { "rating": 4, "name": "Tanvi Gupta", "date": "11/29/2024", "title": "Excellent Value for Money", "body": "This kit is worth every penny. It comes with plenty of decorations and materials to make beautiful, high-quality fridge magnets." } }
+      },
+      "block_order": ["r1", "r2"],
+      "settings": {}
+    },
+    "creste_birthday": { "type": "creste-birthday", "settings": {} }
   },
-  "order": ["creste_pdp", "creste_artists", "creste_skills"]
+  "order": ["creste_pdp", "creste_artists", "creste_skills", "creste_recommend", "creste_love", "creste_reviews", "creste_birthday"]
 }
