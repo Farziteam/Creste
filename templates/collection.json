@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "creste-collection": {
@@ -5,19 +14,25 @@
       "settings": {
         "show_hero": true,
         "hero_title": "Ages 7–10 years",
+        "text_color": "#574239",
         "hero_subtitle": "Science experiments, candle studios, art kits and slime labs — built for big kid energy.",
         "enable_filtering": true,
         "enable_sorting": true,
         "show_category_pills": true,
         "category_menu": "collection-categories",
+        "all_kits_link": "",
         "products_per_page": 16,
         "columns_desktop": 4,
         "show_add_to_cart": true,
         "badge_by_rating": true,
         "show_promo": true,
+        "promo_image": "shopify://shop_images/ic_0a9b886f-f006-43be-913a-711b92df0b0f.png",
+        "bg_desktop": "shopify://shop_images/111.png",
+        "bg_mobile": "shopify://shop_images/22.png",
         "promo_title": "Birthday coming up?",
         "promo_text": "Return gifts from Rs. 375 · DIY Party Box Kits for the whole gang!",
         "promo_button_label": "Explore Now",
+        "promo_button_link": "",
         "promo_bg": "#7d4ac7",
         "color_scheme": "scheme-1"
       }
