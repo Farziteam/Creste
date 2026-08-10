@@ -283,11 +283,11 @@
   #Cpdp-{{ uid }} .cpdp__buybox{background:#FBF5E3;border-radius:22px;padding:24px;margin-bottom:18px;}
   #Cpdp-{{ uid }} .cpdp__buybox .cpdp__themebox{background:transparent;padding:0;margin-bottom:0;}
   #Cpdp-{{ uid }} .cpdp__themebox-title{font-family:var(--cpdp-body);font-size:18px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px;}
-  #Cpdp-{{ uid }} .cpdp__themegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
-  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:8px;text-align:left;background:#fff;border:1.5px solid #DBD5C6;border-radius:16px;padding:12px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s;}
+  #Cpdp-{{ uid }} .cpdp__themegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;}
+  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:6px;text-align:left;background:#fff;border:1.5px solid #DBD5C6;border-radius:14px;padding:11px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s;}
   #Cpdp-{{ uid }} .cpdp__theme.is-selected{border:2px solid #5FB85A;background:#F4FBF1;}
-  #Cpdp-{{ uid }} .cpdp__theme-ico{width:40px;height:40px;flex:0 0 auto;border-radius:12px;background:#FDF6F7;display:grid;place-items:center;font-size:21px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
-  #Cpdp-{{ uid }} .cpdp__theme-name{font-size:14px;font-weight:700;color:var(--cpdp-brown);line-height:1.25;}
+  #Cpdp-{{ uid }} .cpdp__theme-ico{width:34px;height:34px;flex:0 0 auto;border-radius:0;background:transparent;display:grid;place-items:center;font-size:28px;box-shadow:none;}
+  #Cpdp-{{ uid }} .cpdp__theme-name{font-size:13px;font-weight:700;color:var(--cpdp-brown);line-height:1.25;}
   #Cpdp-{{ uid }} .cpdp__hr{border:none;border-top:1px solid #E3D9C2;margin:18px 0;}
   #Cpdp-{{ uid }} .cpdp__price{display:flex;align-items:baseline;gap:14px;margin:0;}
   #Cpdp-{{ uid }} .cpdp__price-now{font-family:var(--cpdp-head);font-size:44px;font-weight:800;color:var(--cpdp-brown);}
@@ -414,6 +414,7 @@
   @media (max-width:640px){
     #Cpdp-{{ uid }} .cpdp__title{font-size:28px;}
     #Cpdp-{{ uid }} .cpdp__price-now{font-size:34px;}
+    #Cpdp-{{ uid }} .cpdp__themegrid{grid-template-columns:repeat(2,minmax(0,1fr));}
     #Cpdp-{{ uid }} .cpdp__po-grid{grid-template-columns:minmax(0,1fr);}
     #Cpdp-{{ uid }} .cpdp__sticky-meta{display:none;}
     #Cpdp-{{ uid }} .cpdp__atc--sticky{flex:1;min-width:0;}
@@ -538,7 +539,7 @@
     { "type": "text", "id": "feature_pills", "label": "Feature pills (comma separated)", "default": "Ages 3-8, 45-60 min play, Screen-free, Mess-free" },
     { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.9 · 2,148 reviews" },
     { "type": "text", "id": "sold_text", "label": "Sold text", "default": "1,900+ bought this month" },
-    { "type": "textarea", "id": "short_desc", "label": "Short description (blank = product excerpt)" },
+    { "type": "textarea", "id": "short_desc", "label": "Short description (blank = product excerpt)", "default": "A ready-to-paint canvas tote, six non-toxic fabric paints and reusable stencils — everything a 3-8 year old needs to make a bag they'll actually carry to school." },
     { "type": "text", "id": "ship_text", "label": "Shipping line", "default": "Order before 4 PM → ships today · COD available" },
     { "type": "header", "content": "Badges" },
     { "type": "text", "id": "badge_1", "label": "Badge 1 (orange)", "default": "#1 Bestseller" },
