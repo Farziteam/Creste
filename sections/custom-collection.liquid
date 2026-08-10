@@ -58,7 +58,7 @@ assign hero_title =  collection.title
 <span class="js-cr-filter-label">Show Filters</span>
 </button>
 {%- endif -%}
-{%- if section.settings.enable_sorting -%}
+{% comment %} {%- if section.settings.enable_sorting -%}
 {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
 {%- assign current_sort_name = collection.sort_options.first.name -%}
 {%- for opt in collection.sort_options -%}{%- if opt.value == current_sort -%}{%- assign current_sort_name = opt.name -%}{%- endif -%}{%- endfor -%}
@@ -77,6 +77,95 @@ assign hero_title =  collection.title
 {%- endfor -%}
 </div>
 </div>
+{%- endif -%} {% endcomment %}
+{%- if section.settings.enable_sorting -%}
+
+  {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+
+  {%- case current_sort -%}
+    {%- when 'created-descending' -%}
+      {%- assign current_sort_name = 'New Arrival' -%}
+    {%- when 'best-selling' -%}
+      {%- assign current_sort_name = 'Best Selling' -%}
+    {%- when 'price-ascending' -%}
+      {%- assign current_sort_name = 'Low to High' -%}
+    {%- when 'price-descending' -%}
+      {%- assign current_sort_name = 'High to Low' -%}
+    {%- else -%}
+      {%- assign current_sort_name = 'New Arrival' -%}
+  {%- endcase -%}
+
+  <div class="cr-sort js-cr-sort-wrap">
+
+    <button
+      type="button"
+      class="cr-sort-btn js-cr-sort-btn"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+    >
+      <span class="cr-sort-lead">Sort:</span>
+      <span class="cr-sort-current">{{ current_sort_name }}</span>
+
+      <svg
+        class="cr-sort-caret"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <path
+          d="M6 9l6 6 6-6"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <div
+      class="cr-sort-panel js-cr-sort-panel"
+      role="listbox"
+      hidden
+    >
+
+      {%- for opt in collection.sort_options -%}
+
+        {%- if opt.value == 'created-descending'
+          or opt.value == 'best-selling'
+          or opt.value == 'price-ascending'
+          or opt.value == 'price-descending'
+        -%}
+
+          {%- case opt.value -%}
+            {%- when 'created-descending' -%}
+              {%- assign sort_label = 'New Arrival' -%}
+            {%- when 'best-selling' -%}
+              {%- assign sort_label = 'Best Selling' -%}
+            {%- when 'price-ascending' -%}
+              {%- assign sort_label = 'Low to High' -%}
+            {%- when 'price-descending' -%}
+              {%- assign sort_label = 'High to Low' -%}
+          {%- endcase -%}
+
+          <button
+            type="button"
+            class="cr-sort-opt {% if opt.value == current_sort %}is-active{% endif %} js-cr-sort-opt"
+            role="option"
+            data-value="{{ opt.value }}"
+            aria-selected="{% if opt.value == current_sort %}true{% else %}false{% endif %}"
+          >
+            <span class="cr-radio" aria-hidden="true"></span>
+            <span class="cr-sort-opt-label">{{ sort_label }}</span>
+          </button>
+
+        {%- endif -%}
+
+      {%- endfor -%}
+
+    </div>
+  </div>
+
 {%- endif -%}
 </div>
 {%- if section.settings.show_category_pills and section.settings.category_menu != blank -%}
@@ -133,7 +222,17 @@ assign hero_title =  collection.title
 <a class="cr-opt {% if v.active %}is-active{% endif %} {% if v.count == 0 and v.active == false %}is-disabled{% endif %}"
 href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}">
 <span class="cr-box" aria-hidden="true">
-<svg viewBox="0 0 16 16" fill="none"><circle cx="5.8" cy="6.4" r="0.95" fill="#fff"/><circle cx="10.2" cy="6.4" r="0.95" fill="#fff"/><path d="M4.9 9.5c.9 1.6 2.2 2.4 3.1 2.4s2.2-.8 3.1-2.4" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="16" height="16" fill="url(#pattern0_891_2231)"/>
+<defs>
+<pattern id="pattern0_891_2231" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_891_2231" transform="translate(0 -0.0035461) scale(0.00236407)"/>
+</pattern>
+<image id="image0_891_2231" width="423" height="426" preserveAspectRatio="none" xlink:href="data:image/png;base64,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"/>
+</defs>
+</svg>
+
+{% comment %} <svg viewBox="0 0 16 16" fill="none"><circle cx="5.8" cy="6.4" r="0.95" fill="#fff"/><circle cx="10.2" cy="6.4" r="0.95" fill="#fff"/><path d="M4.9 9.5c.9 1.6 2.2 2.4 3.1 2.4s2.2-.8 3.1-2.4" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg> {% endcomment %}
 </span>
 <span class="cr-opt-label">{{ v.label | escape }}</span>
 {%- if v.count and v.count > 0 -%}<span class="cr-opt-count">{{ v.count }}</span>{%- endif -%}
@@ -316,7 +415,7 @@ Show Filters
 <button type="button" class="cr-mbar-btn cr-mbar-sort js-cr-open-sort">Sort: {{ current_sort_name | default: 'Best Selling' }}</button>
 {%- endif -%}
 </div>
-{%- if section.settings.enable_sorting -%}
+{% comment %} {%- if section.settings.enable_sorting -%}
 <div class="cr-sheet-wrap js-cr-sort-sheet">
 <div class="cr-sheet-overlay js-cr-sheet-close"></div>
 <div class="cr-sheet" role="dialog" aria-modal="true" aria-label="Sort by">
@@ -336,6 +435,95 @@ Show Filters
 <button type="button" class="cr-sheet-apply cr-apply-green js-cr-msort-apply">Apply</button>
 </div>
 </div>
+</div>
+{%- endif -%} {% endcomment %}
+{%- if section.settings.enable_sorting -%}
+<div class="cr-sheet-wrap js-cr-sort-sheet">
+  <div class="cr-sheet-overlay js-cr-sheet-close"></div>
+
+  <div class="cr-sheet cr-sheet-sort" role="dialog" aria-modal="true" aria-label="Sort by">
+
+    <div class="cr-sheet-head">
+      <button
+        type="button"
+        class="cr-sheet-x js-cr-sheet-close"
+        aria-label="Close"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+
+      <span class="cr-sheet-title">Sort By</span>
+    </div>
+
+    <div class="cr-sheet-body">
+      <ul class="cr-msort">
+
+        {%- for opt in collection.sort_options -%}
+
+          {%- if opt.value == 'created-descending'
+            or opt.value == 'best-selling'
+            or opt.value == 'price-ascending'
+            or opt.value == 'price-descending'
+          -%}
+
+            {%- case opt.value -%}
+              
+
+              {%- when 'best-selling' -%}
+                {%- assign sort_label = 'Best Selling' -%}
+
+              {%- when 'price-ascending' -%}
+                {%- assign sort_label = 'Low to High' -%}
+
+              {%- when 'price-descending' -%}
+                {%- assign sort_label = 'High to Low' -%}
+                
+              {%- when 'created-descending' -%}
+                {%- assign sort_label = 'New Arrival' -%}
+            {%- endcase -%}
+
+            <li>
+              <button
+                type="button"
+                class="cr-msort-opt {% if opt.value == cr_sort_val %}is-active{% endif %} js-cr-msort-opt"
+                data-value="{{ opt.value }}"
+              >
+                <span>{{ sort_label }}</span>
+                <span class="cr-mradio" aria-hidden="true"></span>
+              </button>
+            </li>
+
+          {%- endif -%}
+
+        {%- endfor -%}
+
+      </ul>
+    </div>
+
+    <div class="cr-sheet-foot cr-sheet-foot-sort">
+      <a
+        class="cr-sheet-clear cr-clr-green"
+        href="{{ cr_base }}"
+      >
+        Clear All
+      </a>
+
+      <button
+        type="button"
+        class="cr-sheet-apply cr-apply-green js-cr-msort-apply"
+      >
+        Apply
+      </button>
+    </div>
+
+  </div>
 </div>
 {%- endif -%}
 {%- if section.settings.enable_filtering and collection.filters.size > 0 -%}
@@ -359,7 +547,34 @@ Show Filters
 {%- when 'list', 'boolean' -%}
 <ul class="cr-mopts">
 {%- for v in f.values -%}
-<li><label class="cr-mopt {% if v.count == 0 and v.active == false %}is-disabled{% endif %}"><span class="cr-mopt-label">{{ v.label | escape }}</span><input type="checkbox" class="cr-mcheck js-cr-mcheck" data-name="{{ v.param_name }}" value="{{ v.value }}" {% if v.active %}checked{% endif %}><span class="cr-mbox"><svg viewBox="0 0 16 16" fill="none"><circle cx="5.8" cy="6.4" r="0.95" fill="#fff"/><circle cx="10.2" cy="6.4" r="0.95" fill="#fff"/><path d="M4.9 9.5c.9 1.6 2.2 2.4 3.1 2.4s2.2-.8 3.1-2.4" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg></span></label></li>
+<li><label class="cr-mopt {% if v.count == 0 and v.active == false %}is-disabled{% endif %}"><span class="cr-mopt-label">{{ v.label | escape }}</span><input type="checkbox" class="cr-mcheck js-cr-mcheck" data-name="{{ v.param_name }}" value="{{ v.value }}" 
+    {% if v.active %}checked{% endif %}>
+       <span class="cr-mbox">
+        <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+        >
+            <path
+            d="M1.78 12.43V12.55L1.89 12.58V12.85L2.08 12.85L2.12 12.96L2.23 13V13.3L2.53 13.33V13.6H3.4L3.48 13.78H3.75L3.78 13.9L3.93 13.93L4.01 14.09L4.2 14.05L4.24 14.24H4.39L4.43 14.35L4.54 14.39V14.54H4.84V14.65H4.96L4.99 14.42L5.11 14.39L5.14 14.54H5.26L5.49 14.84L5.64 14.87V14.99L6.01 14.95L6.09 15.02V15.29H6.24L6.28 15.44H6.36L6.39 15.29H6.51L6.54 15.14H6.85V15.02L6.92 14.95L7.15 15.02L7.19 15.44H7.45L7.49 15.29H7.75L7.79 14.99H8.09L8.13 14.84L8.25 14.87V14.99H8.36L8.4 14.84L8.7 14.84L8.74 14.95H9.12L9.15 14.84H9.31L9.34 14.69H9.57L9.65 14.95L9.72 14.99L9.8 14.84L9.99 14.8L10.21 14.84L10.25 14.99H10.86V14.72L11.16 14.69V14.57L11.31 14.54V14.24L11.46 14.2V13.97L11.31 13.93L11.35 13.75L11.61 13.82L11.65 14.09L12.07 14.05L12.1 13.48L12.37 13.45V13.33L12.52 13.3L12.56 13.15H12.71V13.03L12.86 13V12.7H13.31L13.28 12.43L13.16 12.39L13.13 11.64L12.97 11.61L13.01 11.34H12.56L12.52 11.49H12.1L12.14 11.91L11.8 11.98V12.06L11.65 12.09V12.21L11.5 12.24L11.42 12.39H10.89L10.86 12.24H10.7V12.36L10.55 12.39V12.7H10.25L10.21 12.85L10.1 12.81V12.58L9.95 12.55L9.91 12.96L9.76 13.03H9.49L9.46 13.33H9.19L9.15 13.18H9.04L9 13.03L8.89 13L8.81 12.85H8.55L8.51 13.33H7.94V13.45L7.79 13.48L7.75 12.73H7.49V12.85L7.34 12.88L7.3 13H7.19L7.11 13.15H6.88L6.85 13H6.39L6.36 12.88L6.09 12.81L6.05 12.58H5.79L5.71 12.85H5.49L5.45 12.7H5.33L5.3 12.55H5.18L5.14 12.39L4.99 12.36V12.24H4.73L4.65 12.39H4.12L4.09 12.09H3.82L3.75 11.83L2.99 11.79L2.95 11.64L2.84 11.61V11.34L2.69 11.31L2.65 11.04L2.57 11.04L2.5 11.19H2.38V11.46L2.23 11.49V11.76L2.08 11.79V12.06L1.93 12.09L1.89 12.36Z"
+            fill="#fff"
+            />
+
+            <path
+            d="M12.26 1.39L12.22 1.54H11.8L11.76 1.69H11.5L11.46 1.84H11.35L11.31 1.95L11.16 2.03V2.14L11.05 2.18L11.01 2.4L10.86 2.44V2.59L10.7 2.63V2.89L10.55 2.93V3.34L10.4 3.38V3.94L10.25 3.98L10.21 4.28V5.78L10.29 6.09L10.4 6.12V6.57L10.55 6.61V7.02L10.7 7.06V7.32L10.86 7.36L10.89 7.62L10.97 7.62L11.01 7.78L11.16 7.85V7.96L11.31 8V8.11H11.46L11.5 8.26H11.61L11.65 8.38L12.07 8.41L12.1 8.56H13.16L13.2 8.41H13.47V8.3L13.62 8.26L13.66 8.11L13.92 8.08V7.96L14.07 7.93L14.11 7.7L14.26 7.62L14.3 7.47H14.37L14.41 7.21L14.56 7.17V6.91L14.68 6.87L14.71 6.31L14.87 6.27V5.22L15.02 5.18L14.98 4.77L14.87 4.73V3.68L14.71 3.64V3.23L14.56 3.19L14.53 2.78L14.45 2.78L14.41 2.63L14.26 2.55V2.33L14.11 2.25V2.14H13.96V1.99H13.81L13.77 1.84H13.62L13.62 1.69H13.35L13.31 1.54H13.01L12.97 1.39H12.26Z"
+            fill="#fff"
+            />
+
+            <path
+            d="M2.38 1.39L2.35 1.54H1.93L1.89 1.69H1.63V1.8L1.48 1.84V1.95L1.32 1.99V2.1L1.17 2.14V2.25L1.02 2.33L0.98 2.55L0.83 2.63V2.89L0.68 2.93V3.34L0.53 3.38V3.79L0.38 3.87V6.12L0.53 6.16V6.69L0.68 6.76V7.02L0.83 7.06V7.32L0.98 7.36V7.62L1.14 7.66L1.17 7.81H1.25L1.48 8.11L1.63 8.15V8.26H1.78L1.82 8.38L2.08 8.41L2.12 8.53H3.29L3.33 8.41H3.59V8.3L3.78 8.26L3.82 8.11H4.01L4.09 7.85L4.39 7.62L4.43 7.47H4.5L4.54 7.21L4.69 7.17V6.76L4.84 6.72V6.31L4.99 6.27V3.79L4.84 3.64V3.23L4.69 3.19V2.89L4.54 2.85V2.59L4.39 2.55L4.35 2.33L4.24 2.29V2.14L4.12 2.14L4.09 1.99L3.93 1.95V1.84L3.82 1.84L3.75 1.69H3.48L3.44 1.54H3.18L3.1 1.39H2.38Z"
+            fill="#fff"
+            />
+        </svg>
+      </span>
+    </label></li>
 {%- endfor -%}
 </ul>
 {%- when 'price_range' -%}
@@ -594,7 +809,6 @@ window.location.href = url.toString();
 }
 })();
 </script>
-{{ 'custom-collection.css' | asset_url | stylesheet_tag }}
 {% schema %}
 {
 "name": "Creste Collection",
