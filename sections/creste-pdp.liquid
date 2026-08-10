@@ -135,10 +135,10 @@
         <button type="button" class="cpdp__buynow" data-buynow>Buy Now <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
         <div class="cpdp__trust">
-          <div class="cpdp__trust-item cpdp__trust-item--g"><span class="cpdp__trust-ico">🛡️</span><span class="cpdp__trust-t">100% Secure</span><span class="cpdp__trust-s">secure payment</span></div>
-          <div class="cpdp__trust-item cpdp__trust-item--b"><span class="cpdp__trust-ico">🔄</span><span class="cpdp__trust-t">7-day returns</span><span class="cpdp__trust-s">No questions asked</span></div>
-          <div class="cpdp__trust-item cpdp__trust-item--a"><span class="cpdp__trust-ico">🇮🇳</span><span class="cpdp__trust-t">Made in India</span><span class="cpdp__trust-s">By a small team</span></div>
-          <div class="cpdp__trust-item cpdp__trust-item--p"><span class="cpdp__trust-ico">🎁</span><span class="cpdp__trust-t">Gift wrap free</span><span class="cpdp__trust-s">Add a note at checkout</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--g"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="cpdp__trust-t">100% Secure</span><span class="cpdp__trust-s">secure payment</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--b"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#3B82C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M15.5 15.2a3 3 0 1 1-.9-3.1"/><path d="M15.6 12.2v2h-2"/></svg></span><span class="cpdp__trust-t">7-day returns</span><span class="cpdp__trust-s">No questions asked</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--a"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#E0902A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.4L7 22l5-3 5 3-2-8.6"/><circle cx="12" cy="9" r="1.6" fill="#138808" stroke="none"/></svg></span><span class="cpdp__trust-t">Made in India</span><span class="cpdp__trust-s">By a small team</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--p"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13"/><path d="M12 8S9.6 8 8.6 6.7 8.7 3.6 10.1 4.4 12 8 12 8zM12 8s2.4 0 3.4-1.3-.1-3.1-1.5-2.3S12 8 12 8z"/></svg></span><span class="cpdp__trust-t">Gift wrap free</span><span class="cpdp__trust-s">Add a note at checkout</span></div>
         </div>
         {%- if section.settings.safety_text != blank -%}<div class="cpdp__safety"><span class="cpdp__safety-ico">⚠️</span><span class="cpdp__safety-t">{{ section.settings.safety_text }}</span>{%- if section.settings.safety_link != blank -%}<a href="{{ section.settings.safety_link }}" class="cpdp__safety-link">Safety details</a>{%- endif -%}</div>{%- endif -%}
         <div class="cpdp__offers">
@@ -309,18 +309,18 @@
   #Cpdp-{{ uid }} .cpdp__po-badge{margin-top:3px;background:#4CA36A;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:8px;align-self:flex-start;}
   #Cpdp-{{ uid }} .cpdp__ship{text-align:center;font-size:14px;color:#6b7280;margin:0 0 16px;}
   #Cpdp-{{ uid }} .cpdp__buybox .cpdp__buy{margin-bottom:0;}
-  #Cpdp-{{ uid }} .cpdp__buynow{width:100%;border:none;border-radius:14px;background:#4FB0E0;color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;padding:15px;margin-top:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;}
+  #Cpdp-{{ uid }} .cpdp__buynow{width:100%;border:none;border-radius:999px;background:#4FB0E0;color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;padding:15px;margin-top:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;}
   #Cpdp-{{ uid }} .cpdp__buynow:hover{background:#3fa0d3;}
   #Cpdp-{{ uid }} .cpdp__buy{display:flex;gap:14px;margin-bottom:24px;align-items:center;}
   #Cpdp-{{ uid }} .cpdp__qty{display:flex;align-items:center;gap:8px;}
   #Cpdp-{{ uid }} .cpdp__qty-btn{width:48px;height:48px;border:1px solid var(--cpdp-line);border-radius:999px;background:#fff;font-size:22px;cursor:pointer;color:var(--cpdp-brown);display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.06);}
   #Cpdp-{{ uid }} .cpdp__qty-val{width:26px;border:none;text-align:center;font-size:18px;font-weight:700;color:var(--cpdp-brown);background:transparent;}
-  #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:14px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;transition:background .15s;}
+  #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:999px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;transition:background .15s;}
   #Cpdp-{{ uid }} .cpdp__atc:hover{background:var(--cpdp-orange-d);}
   #Cpdp-{{ uid }} .cpdp__atc[disabled]{background:#c7c2ba;cursor:not-allowed;}
   #Cpdp-{{ uid }} .cpdp__trust{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px;}
-  #Cpdp-{{ uid }} .cpdp__trust-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:6px 4px;}
-  #Cpdp-{{ uid }} .cpdp__trust-ico{font-size:26px;}
+  #Cpdp-{{ uid }} .cpdp__trust-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:6px 4px;}
+  #Cpdp-{{ uid }} .cpdp__trust-ico{display:grid;place-items:center;height:32px;}
   #Cpdp-{{ uid }} .cpdp__trust-t{font-weight:700;font-size:14px;color:var(--cpdp-purple);}
   #Cpdp-{{ uid }} .cpdp__trust-s{font-size:12px;color:#8a8f98;}
   #Cpdp-{{ uid }} .cpdp__trust-t,#Cpdp-{{ uid }} .cpdp__trust-s{overflow-wrap:break-word;}
@@ -335,7 +335,10 @@
   #Cpdp-{{ uid }} .cpdp__offers{background:#E9F3FB;border-radius:18px;padding:18px;}
   #Cpdp-{{ uid }} .cpdp__offers-title{display:flex;align-items:center;gap:8px;font-family:var(--cpdp-head);font-size:19px;font-weight:800;margin:0 0 14px;}
   #Cpdp-{{ uid }} .cpdp__offers-ico{display:inline-grid;place-items:center;width:26px;height:26px;background:#2F82C7;color:#fff;border-radius:8px;font-size:14px;font-weight:800;}
-  #Cpdp-{{ uid }} .cpdp__offers-track{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;}
+  #Cpdp-{{ uid }} .cpdp__offers-track{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#2F7FBF #CFE3F5;}
+  #Cpdp-{{ uid }} .cpdp__offers-track::-webkit-scrollbar{height:7px;}
+  #Cpdp-{{ uid }} .cpdp__offers-track::-webkit-scrollbar-track{background:#CFE3F5;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__offers-track::-webkit-scrollbar-thumb{background:#2F7FBF;border-radius:999px;}
   #Cpdp-{{ uid }} .cpdp__offer{flex:0 0 240px;background:#fff;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;}
   #Cpdp-{{ uid }} .cpdp__offer-text{margin:0;font-size:14px;color:#334155;line-height:1.4;}
   #Cpdp-{{ uid }} .cpdp__offer-code{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px dashed #b9c4cf;border-radius:9px;background:#f8fafc;padding:8px 12px;font-weight:700;font-size:13px;color:#334155;cursor:pointer;}
