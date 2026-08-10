@@ -1,0 +1,47 @@
+{%- comment -%} Creste — Birthday promo banner {%- endcomment -%}
+{%- liquid assign uid = section.id -%}
+<section id="CpdpBd-{{ uid }}" class="cpdpbd" style="--cpdpbd-bg: {{ section.settings.bg_color | default: '#7C5CE0' }};">
+  <div class="cpdpbd__wrap">
+    <div class="cpdpbd__left">
+      <span class="cpdpbd__ico">🎂</span>
+      <div class="cpdpbd__copy">
+        <h2 class="cpdpbd__title">{{ section.settings.heading | default: 'Birthday coming up?' }}</h2>
+        <p class="cpdpbd__text">{{ section.settings.text | default: 'Return gifts from Rs. 375 · DIY Party Box Kits for the whole gang!' }}</p>
+      </div>
+    </div>
+    {%- if section.settings.button_url != blank -%}
+      <a href="{{ section.settings.button_url }}" class="cpdpbd__btn">{{ section.settings.button_label | default: 'EXPLORE NOW' }}</a>
+    {%- else -%}
+      <span class="cpdpbd__btn">{{ section.settings.button_label | default: 'EXPLORE NOW' }}</span>
+    {%- endif -%}
+  </div>
+</section>
+<style>
+  #CpdpBd-{{ uid }}{--cpdpbd-purple:#7C5CE0;
+    --cpdpbd-head: var(--font-heading-family, 'Baloo 2','Poppins',system-ui,sans-serif);
+    --cpdpbd-body: var(--font-body-family, 'Poppins',system-ui,sans-serif);
+    background:var(--cpdpbd-bg);font-family:var(--cpdpbd-body);}
+  #CpdpBd-{{ uid }} *{box-sizing:border-box;}
+  #CpdpBd-{{ uid }} .cpdpbd__wrap{max-width:1240px;margin:0 auto;padding:26px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  #CpdpBd-{{ uid }} .cpdpbd__left{display:flex;align-items:center;gap:18px;}
+  #CpdpBd-{{ uid }} .cpdpbd__ico{width:60px;height:60px;border-radius:999px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:30px;flex:0 0 auto;}
+  #CpdpBd-{{ uid }} .cpdpbd__title{font-family:var(--cpdpbd-head);font-weight:800;color:#fff;font-size:clamp(24px,2.6vw,34px);margin:0 0 4px;}
+  #CpdpBd-{{ uid }} .cpdpbd__text{color:rgba(255,255,255,.92);margin:0;font-size:16px;}
+  #CpdpBd-{{ uid }} .cpdpbd__btn{background:#fff;color:var(--cpdpbd-purple);font-weight:800;letter-spacing:.06em;padding:16px 34px;border-radius:12px;text-decoration:none;white-space:nowrap;}
+  @media (max-width:640px){ #CpdpBd-{{ uid }} .cpdpbd__wrap{flex-direction:column;align-items:flex-start;} #CpdpBd-{{ uid }} .cpdpbd__btn{width:100%;text-align:center;} }
+</style>
+{% schema %}
+{
+  "name": "Creste Birthday Banner",
+  "tag": "section",
+  "class": "creste-birthday-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Birthday coming up?" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Return gifts from Rs. 375 · DIY Party Box Kits for the whole gang!" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "EXPLORE NOW" },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#7C5CE0" }
+  ],
+  "presets": [ { "name": "Creste Birthday Banner" } ]
+}
+{% endschema %}
