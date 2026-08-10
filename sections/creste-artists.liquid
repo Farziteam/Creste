@@ -1,35 +1,31 @@
 {%- comment -%}
-  Creste — "Made by Little Artists" masonry gallery.
+  Creste — Made by Little Artists masonry gallery.
+  Renders ONLY when image blocks are added (no product-photo fallback).
 {%- endcomment -%}
 
-{%- liquid
-  assign uid = section.id
--%}
+{%- liquid assign uid = section.id -%}
 
+{%- if section.blocks.size > 0 -%}
 <section id="CpdpArt-{{ uid }}" class="cpdpa">
   <div class="cpdpa__wrap">
     <h2 class="cpdpa__title">{{ section.settings.heading_prefix | default: 'Made by' }} <span class="cpdpa__hl">{{ section.settings.heading_highlight | default: 'Little Artists' }}</span></h2>
     {%- if section.settings.subheading != blank -%}<p class="cpdpa__sub">{{ section.settings.subheading }}</p>{%- endif -%}
     <div class="cpdpa__grid">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          <div class="cpdpa__item" {{ block.shopify_attributes }}>
-            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'cpdpa__img', alt: '' }}{%- else -%}<div class="cpdpa__img cpdpa__img--ph"></div>{%- endif -%}
-            {%- if block.settings.video_url != blank -%}<a class="cpdpa__play" href="{{ block.settings.video_url }}" target="_blank" rel="noopener" aria-label="Play video"><svg viewBox="0 0 24 24" width="22" height="22" fill="var(--cpdpa-orange)"><path d="M8 5v14l11-7z"/></svg></a>{%- endif -%}
-          </div>
-        {%- endfor -%}
-      {%- elsif product.media.size > 0 -%}
-        {%- assign max = section.settings.max_images | default: 8 -%}
-        {%- for media in product.media limit: max -%}
-          <div class="cpdpa__item">{{ media | image_url: width: 600 | image_tag: loading: 'lazy', class: 'cpdpa__img', alt: media.alt | default: product.title }}</div>
-        {%- endfor -%}
-      {%- else -%}
-        {%- for i in (1..6) -%}<div class="cpdpa__item"><div class="cpdpa__img cpdpa__img--ph"></div></div>{%- endfor -%}
-      {%- endif -%}
+      {%- for block in section.blocks -%}
+        <div class="cpdpa__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'cpdpa__img', alt: '' }}
+          {%- else -%}
+            <div class="cpdpa__img cpdpa__img--ph"></div>
+          {%- endif -%}
+          {%- if block.settings.video_url != blank -%}
+            <a class="cpdpa__play" href="{{ block.settings.video_url }}" target="_blank" rel="noopener" aria-label="Play video"><svg viewBox="0 0 24 24" width="22" height="22" fill="var(--cpdpa-orange)"><path d="M8 5v14l11-7z"/></svg></a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>
-
 <style>
   #CpdpArt-{{ uid }}{
     --cpdpa-orange:#F26E21; --cpdpa-brown:#3D2817; --cpdpa-teal:#35A9C9; --cpdpa-ink:#5b5750;
@@ -51,6 +47,7 @@
   @media (max-width:700px){ #CpdpArt-{{ uid }} .cpdpa__grid{column-count:2;} }
   @media (max-width:420px){ #CpdpArt-{{ uid }} .cpdpa__grid{column-count:1;} }
 </style>
+{%- endif -%}
 
 {% schema %}
 {
@@ -58,15 +55,22 @@
   "tag": "section",
   "class": "creste-artists-section",
   "settings": [
+    { "type": "paragraph", "content": "Add Photo/video blocks below to show this gallery. With no blocks it stays hidden (no filler images)." },
     { "type": "text", "id": "heading_prefix", "label": "Heading (dark part)", "default": "Made by" },
     { "type": "text", "id": "heading_highlight", "label": "Heading (teal part)", "default": "Little Artists" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Real creations from happy kids around the world—every bag is wonderfully unique." },
-    { "type": "range", "id": "max_images", "label": "Fallback images (when no blocks added)", "min": 4, "max": 12, "step": 1, "default": 8 },
     { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "default": 56 },
     { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "default": 56 }
   ],
   "blocks": [
-    { "type": "item", "name": "Photo / video", "settings": [ { "type": "image_picker", "id": "image", "label": "Image" }, { "type": "url", "id": "video_url", "label": "Video link (optional — shows play button)" } ] }
+    {
+      "type": "item",
+      "name": "Photo / video",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "url", "id": "video_url", "label": "Video link (optional — shows play button)" }
+      ]
+    }
   ],
   "max_blocks": 16,
   "presets": [ { "name": "Creste Little Artists" } ]
