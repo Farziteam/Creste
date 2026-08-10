@@ -118,7 +118,7 @@
               {%- assign base = cur.price | times: q -%}
               {%- assign discount = base | times: off | divided_by: 100 -%}
               {%- assign final = base | minus: discount -%}
-              <button type="button" class="cpdp__po-card{% if forloop.first %} is-selected{% endif %}" data-qty="{{ q }}"><span class="cpdp__po-ico">✊</span><span class="cpdp__po-body"><span class="cpdp__po-top">Buy {{ q }} <em>{{ off }}% off</em></span><span class="cpdp__po-price">{{ final | money }} <s>{{ base | money }}</s></span>{% if forloop.last %}<span class="cpdp__po-badge">Smart Saver</span>{% endif %}</span></button>
+              <button type="button" class="cpdp__po-card{% if forloop.last %} is-selected{% endif %}" data-qty="{{ q }}"><span class="cpdp__po-ico">✊</span><span class="cpdp__po-body"><span class="cpdp__po-top">Buy {{ q }} <em>{{ off }}% off</em></span><span class="cpdp__po-price">{{ final | money }} <s>{{ base | money }}</s></span>{% if forloop.last %}<span class="cpdp__po-badge">Smart Saver</span>{% endif %}</span></button>
             {%- endfor -%}
           </div>
         </div>
@@ -311,10 +311,10 @@
   #Cpdp-{{ uid }} .cpdp__buybox .cpdp__buy{margin-bottom:0;}
   #Cpdp-{{ uid }} .cpdp__buynow{width:100%;border:none;border-radius:14px;background:#4FB0E0;color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;padding:15px;margin-top:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;}
   #Cpdp-{{ uid }} .cpdp__buynow:hover{background:#3fa0d3;}
-  #Cpdp-{{ uid }} .cpdp__buy{display:flex;gap:14px;margin-bottom:24px;}
-  #Cpdp-{{ uid }} .cpdp__qty{display:flex;align-items:center;border:2px solid var(--cpdp-line);border-radius:14px;overflow:hidden;background:#fff;}
-  #Cpdp-{{ uid }} .cpdp__qty-btn{width:46px;height:52px;border:none;background:#fff;font-size:22px;cursor:pointer;color:var(--cpdp-brown);}
-  #Cpdp-{{ uid }} .cpdp__qty-val{width:46px;height:52px;border:none;text-align:center;font-size:18px;font-weight:700;color:var(--cpdp-brown);background:#fff;}
+  #Cpdp-{{ uid }} .cpdp__buy{display:flex;gap:14px;margin-bottom:24px;align-items:center;}
+  #Cpdp-{{ uid }} .cpdp__qty{display:flex;align-items:center;gap:8px;}
+  #Cpdp-{{ uid }} .cpdp__qty-btn{width:48px;height:48px;border:1px solid var(--cpdp-line);border-radius:999px;background:#fff;font-size:22px;cursor:pointer;color:var(--cpdp-brown);display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.06);}
+  #Cpdp-{{ uid }} .cpdp__qty-val{width:26px;border:none;text-align:center;font-size:18px;font-weight:700;color:var(--cpdp-brown);background:transparent;}
   #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:14px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;transition:background .15s;}
   #Cpdp-{{ uid }} .cpdp__atc:hover{background:var(--cpdp-orange-d);}
   #Cpdp-{{ uid }} .cpdp__atc[disabled]{background:#c7c2ba;cursor:not-allowed;}
