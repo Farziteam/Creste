@@ -3618,3 +3618,6 @@ details-disclosure > details {
   text-align: justify;
   padding: 0 15%;
 }
+* {
+  -webkit-tap-highlight-color: transparent;
+}
