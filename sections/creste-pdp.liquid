@@ -30,7 +30,7 @@
             {%- if section.settings.badge_1 != blank -%}<span class="cpdp__badge cpdp__badge--best">{{ section.settings.badge_1 }}</span>{%- endif -%}
             {%- if section.settings.badge_2 != blank -%}<span class="cpdp__badge cpdp__badge--soft">{{ section.settings.badge_2 }}</span>{%- endif -%}
           </div>
-          <button type="button" class="cpdp__expand" aria-label="Expand image"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
+          <button type="button" class="cpdp__expand" data-share data-share-url="{{ shop.secure_url }}{{ product.url }}" data-share-title="{{ product.title | escape }}" aria-label="Share"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></button>
           <div class="cpdp__stage">
             {%- if product.media.size > 0 -%}
               {%- for media in product.media -%}
@@ -500,6 +500,15 @@
         if(!form) return;
         var fd = new FormData(form);
         fetch('/cart/add.js', { method:'POST', body:fd, headers:{ 'Accept':'application/json' } }).then(function(r){ return r.json(); }).then(function(){ window.location.href = '/checkout'; }).catch(function(){ form.submit(); });
+      });
+    }
+    var shareBtn = root.querySelector('[data-share]');
+    if(shareBtn){
+      shareBtn.addEventListener('click', function(){
+        var url = shareBtn.getAttribute('data-share-url') || location.href;
+        var title = shareBtn.getAttribute('data-share-title') || document.title;
+        if(navigator.share){ navigator.share({ title:title, url:url }).catch(function(){}); }
+        else if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(url); var t=shareBtn.getAttribute('aria-label'); shareBtn.setAttribute('aria-label','Link copied'); setTimeout(function(){ shareBtn.setAttribute('aria-label', t); },1400); }
       });
     }
     var sticky = root.querySelector('.cpdp__sticky');
