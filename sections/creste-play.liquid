@@ -79,6 +79,8 @@
   }
   #creste-play-{{ section.id }} .cp-title{
     font-size: 13px;
+    letter-spacing: 0px;
+    line-height: 1.2;
   }
   #creste-play-{{ section.id }} .cp-price{
     gap: 3px;
@@ -99,11 +101,15 @@
     gap: 4px !important;
     {% comment %} font-size: 10px; {% endcomment %}
     letter-spacing: 0px !important;
+    margin-top: -10px;
   }
   #creste-play-{{ section.id }} .product-sub-heading p{
     font-weight: 500 !important;
     letter-spacing: 0px !important;
     font-size: 10px !important;
+  }
+  #creste-play-{{ section.id }} .cp-cats{
+    gap: 6px;
   }
 }
 @media(min-width:750px){#creste-play-{{ section.id }}{padding:90px 24px 68px;}{% if section.settings.bg_desktop != blank %}#creste-play-{{ section.id }}{background-image:url({{ section.settings.bg_desktop | image_url: width: 2600 }}) !important;background-size: cover !important;}{% endif %}#creste-play-{{ section.id }} .cp-h{font-size:48px;}#creste-play-{{ section.id }} .cp-cats{flex-wrap:wrap;overflow:visible;justify-content:center;gap:12px;}#creste-play-{{ section.id }} .cp-stage{padding:0 62px;}#creste-play-{{ section.id }} .cp-track{padding:6px 0;gap:20px;}#creste-play-{{ section.id }} .cp-card{flex:0 0 calc((100% - 60px)/4);}#creste-play-{{ section.id }} .cp-arrow.prev{left:6px;}#creste-play-{{ section.id }} .cp-arrow.next{right:6px;}
@@ -124,6 +130,7 @@
 #creste-play-{{ section.id }} .product-sub-heading{
   display: flex;
   gap: 7px;
+  margin-top: -5px;
 }
 #creste-play-{{ section.id }} .product-sub-heading p{
   font-size: 13px;
@@ -132,6 +139,7 @@
   font-family: 'Poppins', sans-sarif;
   font-weight: 500;
   letter-spacing: 1.4px;
+  text-transform: uppercase;
 }
 </style>
 <div id='creste-play-{{ section.id }}' class='creste-section' style='{% if section.settings.bg_mobile != blank %}background-image:url({{ section.settings.bg_mobile | image_url: width: 1200 }});{% elsif section.settings.bg_desktop != blank %}background-image:url({{ section.settings.bg_desktop | image_url: width: 2600 }});{% endif %}'>
