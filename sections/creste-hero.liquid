@@ -12,6 +12,9 @@
 #creste-hb-{{ section.id }} .hb-arrow{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.9);border:none;color:var(--creste-orange,#F4793A);font-size:24px;line-height:1;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15);}
 #creste-hb-{{ section.id }} .hb-arrow.prev{left:12px;}
 #creste-hb-{{ section.id }} .hb-arrow.next{right:12px;}
+@media(max-width: 749px){
+  #creste-hb-{{ section.id }} .hb-arrow{display:none;}
+}
 </style>
 <div id='creste-hb-{{ section.id }}' class='creste-section'>
 <div class='hb-slides'>
@@ -21,8 +24,199 @@
 {% if section.settings.show_arrows and cnt > 1 %}<button type='button' class='hb-arrow prev' aria-label='Previous'>&#8249;</button><button type='button' class='hb-arrow next' aria-label='Next'>&#8250;</button>{% endif %}
 {% if section.settings.show_dots and cnt > 1 %}<div class='hb-dots'>{% for i in (1..cnt) %}<button type='button' class='hb-dot{% if forloop.first %} on{% endif %}'></button>{% endfor %}</div>{% endif %}
 </div>
-<script>
+{% comment %} <script>
 (function(){var r=document.getElementById('creste-hb-{{ section.id }}');if(!r)return;var s=r.querySelectorAll('.hb-slide'),d=r.querySelectorAll('.hb-dot');if(s.length<2)return;var i=0,t;function go(n){s[i].classList.remove('active');if(d[i])d[i].classList.remove('on');i=(n+s.length)%s.length;s[i].classList.add('active');if(d[i])d[i].classList.add('on');}function rs(){clearInterval(t);t=setInterval(function(){go(i+1);},{{ section.settings.speed | times: 1000 }});}d.forEach(function(x,k){x.addEventListener('click',function(){go(k);rs();});});var p=r.querySelector('.hb-arrow.prev'),n=r.querySelector('.hb-arrow.next');if(p)p.addEventListener('click',function(){go(i-1);rs();});if(n)n.addEventListener('click',function(){go(i+1);rs();});rs();})();
+</script> {% endcomment %}
+<script>
+(function(){
+
+    var r = document.getElementById('creste-hb-{{ section.id }}');
+
+    if (!r) return;
+
+    var s = r.querySelectorAll('.hb-slide');
+    var d = r.querySelectorAll('.hb-dot');
+
+    if (s.length < 2) return;
+
+    var i = 0;
+    var t;
+
+    /* -------------------------
+       CHANGE SLIDE
+    ------------------------- */
+
+    function go(n){
+
+        s[i].classList.remove('active');
+
+        if(d[i]){
+            d[i].classList.remove('on');
+        }
+
+        i = (n + s.length) % s.length;
+
+        s[i].classList.add('active');
+
+        if(d[i]){
+            d[i].classList.add('on');
+        }
+    }
+
+
+    /* -------------------------
+       AUTO SLIDE
+    ------------------------- */
+
+    function rs(){
+
+        clearInterval(t);
+
+        t = setInterval(function(){
+
+            go(i + 1);
+
+        }, {{ section.settings.speed | times: 1000 }});
+
+    }
+
+
+    /* -------------------------
+       DOTS
+    ------------------------- */
+
+    d.forEach(function(x,k){
+
+        x.addEventListener('click',function(){
+
+            go(k);
+
+            rs();
+
+        });
+
+    });
+
+
+    /* -------------------------
+       ARROWS
+    ------------------------- */
+
+    var p = r.querySelector('.hb-arrow.prev');
+    var n = r.querySelector('.hb-arrow.next');
+
+
+    if(p){
+
+        p.addEventListener('click',function(){
+
+            go(i - 1);
+
+            rs();
+
+        });
+
+    }
+
+
+    if(n){
+
+        n.addEventListener('click',function(){
+
+            go(i + 1);
+
+            rs();
+
+        });
+
+    }
+
+
+    /* -------------------------
+       MOBILE SWIPE
+    ------------------------- */
+
+    var startX = 0;
+    var startY = 0;
+    var endX = 0;
+    var endY = 0;
+
+
+    r.addEventListener('touchstart', function(e){
+
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+
+    }, { passive: true });
+
+
+    r.addEventListener('touchend', function(e){
+
+        endX = e.changedTouches[0].clientX;
+        endY = e.changedTouches[0].clientY;
+
+
+        var diffX = endX - startX;
+        var diffY = endY - startY;
+
+
+        /*
+         * Ignore vertical scrolling.
+         *
+         * Only treat the gesture as a swipe
+         * when horizontal movement is greater.
+         */
+        if(Math.abs(diffX) <= Math.abs(diffY)){
+            return;
+        }
+
+
+        /*
+         * Minimum swipe distance
+         */
+        if(Math.abs(diffX) < 50){
+            return;
+        }
+
+
+        /*
+         * Swipe LEFT
+         * → Next slide
+         */
+        if(diffX < 0){
+
+            go(i + 1);
+
+        }
+
+
+        /*
+         * Swipe RIGHT
+         * → Previous slide
+         */
+        else{
+
+            go(i - 1);
+
+        }
+
+
+        /*
+         * Restart auto rotation
+         */
+        rs();
+
+    }, { passive: true });
+
+
+    /* -------------------------
+       START AUTO ROTATION
+    ------------------------- */
+
+    rs();
+
+
+})();
 </script>
 {% schema %}
 {
