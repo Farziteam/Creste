@@ -1,29 +1,41 @@
 {%- comment -%}
-  Creste — Made by Little Artists gallery. Uniform grid, no ragged white space.
+  Creste — "Made by Little Artists" gallery (Figma masonry).
+  5 columns: cols 1,3,5 are single tall images (video, play button);
+  cols 2,4 are two stacked photos. Uses blocks if added, else product media.
 {%- endcomment -%}
 
 {%- liquid
   assign uid = section.id
-  assign count = section.settings.image_count | default: 5
 -%}
 
 <section id="CpdpArt-{{ uid }}" class="cpdpa">
   <div class="cpdpa__wrap">
     <h2 class="cpdpa__title">{{ section.settings.heading_prefix | default: 'Made by' }} <span class="cpdpa__hl">{{ section.settings.heading_highlight | default: 'Little Artists' }}</span></h2>
     {%- if section.settings.subheading != blank -%}<p class="cpdpa__sub">{{ section.settings.subheading }}</p>{%- endif -%}
-    <div class="cpdpa__grid" style="--cpdpa-cols: {{ count }};">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          <div class="cpdpa__item" {{ block.shopify_attributes }}>
-            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', class: 'cpdpa__img', alt: '' }}{%- else -%}<div class="cpdpa__img cpdpa__img--ph"></div>{%- endif -%}
-            {%- if block.settings.video_url != blank -%}<a class="cpdpa__play" href="{{ block.settings.video_url }}" target="_blank" rel="noopener" aria-label="Play video"><svg viewBox="0 0 24 24" width="22" height="22" fill="var(--cpdpa-orange)"><path d="M8 5v14l11-7z"/></svg></a>{%- endif -%}
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        {%- for media in product.media limit: count -%}
-          <div class="cpdpa__item">{{ media | image_url: width: 500 | image_tag: loading: 'lazy', class: 'cpdpa__img', alt: media.alt | default: product.title }}</div>
-        {%- endfor -%}
-      {%- endif -%}
+    {%- assign layout = 'tall,pair,tall,pair,tall' | split: ',' -%}
+    {%- assign idx = 0 -%}
+    <div class="cpdpa__grid">
+      {%- for coltype in layout -%}
+        <div class="cpdpa__col">
+          {%- if coltype == 'tall' -%}
+            {%- assign vurl = section.blocks[idx].settings.video_url -%}
+            <div class="cpdpa__item cpdpa__item--tall">
+              {%- if section.blocks[idx].settings.image != blank -%}{{ section.blocks[idx].settings.image | image_url: width: 700 | image_tag: loading: 'lazy', alt: '' }}{%- elsif product.media[idx] -%}{{ product.media[idx] | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}{%- else -%}<span class="cpdpa__img--ph"></span>{%- endif -%}
+              {%- if vurl != blank -%}<a class="cpdpa__play" href="{{ vurl }}" target="_blank" rel="noopener" aria-label="Play video"><svg viewBox="0 0 24 24" width="22" height="22" fill="#F26E21"><path d="M8 5v14l11-7z"/></svg></a>{%- else -%}<span class="cpdpa__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="#F26E21"><path d="M8 5v14l11-7z"/></svg></span>{%- endif -%}
+            </div>
+            {%- assign idx = idx | plus: 1 -%}
+          {%- else -%}
+            <div class="cpdpa__item cpdpa__item--half">
+              {%- if section.blocks[idx].settings.image != blank -%}{{ section.blocks[idx].settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: '' }}{%- elsif product.media[idx] -%}{{ product.media[idx] | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}{%- else -%}<span class="cpdpa__img--ph"></span>{%- endif -%}
+            </div>
+            {%- assign idx = idx | plus: 1 -%}
+            <div class="cpdpa__item cpdpa__item--half">
+              {%- if section.blocks[idx].settings.image != blank -%}{{ section.blocks[idx].settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: '' }}{%- elsif product.media[idx] -%}{{ product.media[idx] | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}{%- else -%}<span class="cpdpa__img--ph"></span>{%- endif -%}
+            </div>
+            {%- assign idx = idx | plus: 1 -%}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>
@@ -35,17 +47,20 @@
     font-family:var(--cpdpa-body);
   }
   #CpdpArt-{{ uid }} *{box-sizing:border-box;}
-  #CpdpArt-{{ uid }} .cpdpa__wrap{max-width:1240px;margin:0 auto;padding:{{ section.settings.padding_top | default: 52 }}px 20px {{ section.settings.padding_bottom | default: 52 }}px;}
+  #CpdpArt-{{ uid }} .cpdpa__wrap{max-width:1240px;margin:0 auto;padding:{{ section.settings.padding_top | default: 52 }}px 20px {{ section.settings.padding_bottom | default: 56 }}px;}
   #CpdpArt-{{ uid }} .cpdpa__title{font-family:var(--cpdpa-head);font-weight:800;text-align:center;font-size:clamp(30px,4vw,52px);line-height:1.1;margin:0 0 12px;color:var(--cpdpa-brown);}
   #CpdpArt-{{ uid }} .cpdpa__hl{color:var(--cpdpa-teal);}
-  #CpdpArt-{{ uid }} .cpdpa__sub{text-align:center;font-size:clamp(16px,1.6vw,20px);color:var(--cpdpa-ink);max-width:760px;margin:0 auto 30px;line-height:1.5;}
-  #CpdpArt-{{ uid }} .cpdpa__grid{display:grid;grid-template-columns:repeat(var(--cpdpa-cols,5),minmax(0,1fr));gap:14px;}
-  #CpdpArt-{{ uid }} .cpdpa__item{position:relative;border-radius:18px;overflow:hidden;background:#EDE8F3;aspect-ratio:3/4;}
-  #CpdpArt-{{ uid }} .cpdpa__img{width:100%;height:100%;object-fit:cover;display:block;}
+  #CpdpArt-{{ uid }} .cpdpa__sub{text-align:center;font-size:clamp(16px,1.6vw,20px);color:var(--cpdpa-ink);max-width:760px;margin:0 auto 34px;line-height:1.5;}
+  #CpdpArt-{{ uid }} .cpdpa__grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;align-items:start;}
+  #CpdpArt-{{ uid }} .cpdpa__col{display:flex;flex-direction:column;gap:16px;}
+  #CpdpArt-{{ uid }} .cpdpa__item{position:relative;border-radius:20px;overflow:hidden;background:#EDE8F3;}
+  #CpdpArt-{{ uid }} .cpdpa__item--tall{aspect-ratio:100/196;}
+  #CpdpArt-{{ uid }} .cpdpa__item--half{aspect-ratio:100/91;}
+  #CpdpArt-{{ uid }} .cpdpa__item img,#CpdpArt-{{ uid }} .cpdpa__img--ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
   #CpdpArt-{{ uid }} .cpdpa__img--ph{background:linear-gradient(135deg,#E7DDF3,#CFE3F5);}
-  #CpdpArt-{{ uid }} .cpdpa__play{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:999px;background:rgba(255,255,255,.92);display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.2);}
-  @media (max-width:900px){ #CpdpArt-{{ uid }} .cpdpa__grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
-  @media (max-width:520px){ #CpdpArt-{{ uid }} .cpdpa__grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  #CpdpArt-{{ uid }} .cpdpa__play{position:absolute;inset:0;margin:auto;width:60px;height:60px;border-radius:999px;background:rgba(255,255,255,.94);display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.2);padding-left:3px;}
+  @media (max-width:920px){ #CpdpArt-{{ uid }} .cpdpa__grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+  @media (max-width:560px){ #CpdpArt-{{ uid }} .cpdpa__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;} #CpdpArt-{{ uid }} .cpdpa__col{gap:12px;} }
 </style>
 
 {% schema %}
@@ -57,9 +72,9 @@
     { "type": "text", "id": "heading_prefix", "label": "Heading (dark part)", "default": "Made by" },
     { "type": "text", "id": "heading_highlight", "label": "Heading (teal part)", "default": "Little Artists" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Real creations from happy kids around the world—every bag is wonderfully unique." },
-    { "type": "range", "id": "image_count", "label": "Images in a row (when no blocks)", "min": 3, "max": 6, "step": 1, "default": 5 },
+    { "type": "paragraph", "content": "Add up to 7 photo/video blocks in masonry order: tall, pair-top, pair-bottom, tall, pair-top, pair-bottom, tall. Leave empty to auto-use the product's own photos." },
     { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "default": 52 },
-    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "default": 52 }
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "default": 56 }
   ],
   "blocks": [
     {
@@ -71,7 +86,7 @@
       ]
     }
   ],
-  "max_blocks": 12,
+  "max_blocks": 7,
   "presets": [ { "name": "Creste Little Artists" } ]
 }
 {% endschema %}
