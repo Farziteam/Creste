@@ -10,7 +10,9 @@
 }
 @media(max-width:749px){#creste-tst-{{ section.id }}{background-image:url({{ section.settings.bg_mobile | default: section.settings.bg_desktop | image_url: width: 1200 }});}
 #creste-tst-{{ section.id }}{
-    {% comment %} background-size: contain !important; {% endcomment %}
+    background-size: cover !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
 }
 #creste-tst-{{ section.id }} .ct-list{
     display:flex;
