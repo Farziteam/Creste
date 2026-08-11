@@ -177,7 +177,7 @@
             </div>
           </div>
           <div class="cpdp__panel-media">
-            {%- if section.settings.overview_image != blank -%}{{ section.settings.overview_image | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: 'Child coloring a bag' }}{%- elsif product.media[1] -%}{{ product.media[1] | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: product.title }}{%- else -%}<div class="cpdp__panel-photo cpdp__panel-photo--ph"></div>{%- endif -%}
+            {%- if section.settings.overview_image != blank -%}{{ section.settings.overview_image | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: 'Child coloring a bag' }}{%- elsif product.media[2] -%}{{ product.media[2] | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: product.title }}{%- elsif product.media[1] -%}{{ product.media[1] | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: product.title }}{%- else -%}<div class="cpdp__panel-photo cpdp__panel-photo--ph"></div>{%- endif -%}
             <span class="cpdp__mascot" aria-hidden="true">🐱</span>
           </div>
         </div>
@@ -358,7 +358,7 @@
   #Cpdp-{{ uid }} .cpdp__tab.is-active{background:var(--cpdp-orange);color:#fff;}
   #Cpdp-{{ uid }} .cpdp__panel{display:none;max-width:1000px;margin:0 auto;background:#fff;border-radius:0 0 22px 22px;border-top:4px solid var(--cpdp-orange);padding:38px;}
   #Cpdp-{{ uid }} .cpdp__panel.is-active{display:block;}
-  #Cpdp-{{ uid }} .cpdp__panel-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:34px;align-items:start;}
+  #Cpdp-{{ uid }} .cpdp__panel-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:34px;align-items:center;}
   #Cpdp-{{ uid }} .cpdp__panel-title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(24px,2.4vw,32px);color:var(--cpdp-purple);margin:0 0 16px;line-height:1.15;}
   #Cpdp-{{ uid }} .cpdp__panel-text{font-size:16px;line-height:1.65;color:var(--cpdp-ink);margin:0 0 22px;}
   #Cpdp-{{ uid }} .cpdp__panel-text h3{font-family:var(--cpdp-head);color:var(--cpdp-brown);font-size:18px;margin:16px 0 8px;}
@@ -367,12 +367,12 @@
   #Cpdp-{{ uid }} .cpdp__panel-text img{max-width:100%;height:auto;}
   #Cpdp-{{ uid }} .cpdp__panel-text{overflow-wrap:break-word;word-break:break-word;}
   #Cpdp-{{ uid }} .cpdp__feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  #Cpdp-{{ uid }} .cpdp__feat{display:flex;gap:12px;align-items:flex-start;background:#F7F5FA;border-radius:14px;padding:14px;}
+  #Cpdp-{{ uid }} .cpdp__feat{display:flex;gap:12px;align-items:flex-start;background:#FBF6EA;border-radius:14px;padding:14px;}
   #Cpdp-{{ uid }} .cpdp__feat-ico{font-size:22px;}
   #Cpdp-{{ uid }} .cpdp__feat-body{display:flex;flex-direction:column;gap:2px;}
   #Cpdp-{{ uid }} .cpdp__feat-body strong{color:var(--cpdp-purple);font-size:15px;}
   #Cpdp-{{ uid }} .cpdp__feat-body em{font-style:normal;color:#7c828c;font-size:13px;}
-  #Cpdp-{{ uid }} .cpdp__panel-media{position:relative;position:sticky;top:20px;}
+  #Cpdp-{{ uid }} .cpdp__panel-media{position:relative;}
   #Cpdp-{{ uid }} .cpdp__panel-photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:999px;}
   #Cpdp-{{ uid }} .cpdp__panel-photo--ph{background:linear-gradient(135deg,#CFE8B8,#A7D48A);}
   #Cpdp-{{ uid }} .cpdp__mascot{position:absolute;right:6%;bottom:2%;font-size:52px;}
@@ -406,7 +406,7 @@
     #Cpdp-{{ uid }} .cpdp__col-left{position:static;}
     #Cpdp-{{ uid }} .cpdp__trust{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
     #Cpdp-{{ uid }} .cpdp__panel-grid{grid-template-columns:minmax(0,1fr);}
-    #Cpdp-{{ uid }} .cpdp__panel-media{order:-1;max-width:340px;margin:0 auto;position:static;}
+    #Cpdp-{{ uid }} .cpdp__panel-media{order:-1;max-width:340px;margin:0 auto;}
     #Cpdp-{{ uid }} .cpdp__feat-grid{grid-template-columns:1fr;}
     #Cpdp-{{ uid }} .cpdp__tabs{gap:8px;}
     #Cpdp-{{ uid }} .cpdp__tab{font-size:17px;padding:14px;}
@@ -555,8 +555,8 @@
     { "type": "url", "id": "tutorial_url", "label": "Tutorial video link" },
     { "type": "header", "content": "Overview" },
     { "type": "text", "id": "overview_heading", "label": "Overview heading", "default": "A blank canvas bag, waiting for their imagination" },
-    { "type": "richtext", "id": "overview_text", "label": "Overview text (blank = short product excerpt)", "default": "<p>Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>" },
-    { "type": "image_picker", "id": "overview_image", "label": "Overview photo (blank = 2nd product image)" },
+    { "type": "richtext", "id": "overview_text", "label": "Overview text (blank = short product excerpt)", "default": "<p>Let your little ones express their creativity with the DIY Color Your Bag Kit — a fun, screen-free activity that keeps kids happily crafting while they make a bag that's truly their own.</p>" },
+    { "type": "image_picker", "id": "overview_image", "label": "Overview photo (blank = product lifestyle image)" },
     { "type": "header", "content": "FAQs (question|answer ; separated)" },
     { "type": "textarea", "id": "faqs", "label": "FAQs", "default": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash." },
     { "type": "header", "content": "Contact" },
