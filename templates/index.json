@@ -74,7 +74,7 @@
       ],
       "name": "Creste Strip",
       "settings": {
-        "bg-color": "#FFF2BE",
+        "bg-color": "#fff2be",
         "speed": 30
       }
     },
@@ -524,8 +524,8 @@
         "dog_w": 130,
         "dog_top": 0,
         "dog_side": 12,
-        "offset": 252,
-        "gap": 24
+        "offset_desktop": 252,
+        "offset_mobile": 196
       }
     },
     "creste_featured": {
