@@ -58,13 +58,31 @@
 #creste-ev-{{ section.id }} .form-note{font-size:18px;font-weight:500;}
 }
 #creste-ev-{{ section.id }} .ev-hint svg path{stroke: #E87BAC;}
+#creste-ev-{{ section.id }} .flip-icon{display:none;}
+@media(max-width: 749px){
+  #creste-ev-{{ section.id }} .flip{width:160px;height:220px;}
+  #creste-ev-{{ section.id }} .ev-do-track{gap: 12px;}
+  #creste-ev-{{ section.id }} .flip-f{ justify-content: normal;}
+  #creste-ev-{{ section.id }} .flip-d{ 
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  #creste-ev-{{ section.id }} .flip-icon{
+    position: absolute;
+    display: block;
+    top: 10px;
+    right: 10px;
+  }
+}
 </style>
 {% render 'creste-bg', id: _bgid, d: section.settings.bg_desktop, m: section.settings.bg_mobile %}
 <div id='creste-ev-{{ section.id }}' class='creste-section' style='--aspd:{{ section.settings.act_speed }}s;'>
 <div class='ev-wrap'>
 <h2 class='ev-h'>{{ section.settings.heading_a }}<em> {{ section.settings.heading_accent }}</em><br>{{ section.settings.heading_b }}</h2>
 <p class='ev-sub'>{{ section.settings.subtitle }}</p>
-<div class='ev-do'><div class='ev-do-track'>{% for block in section.blocks %}{% if block.type == 'service' %}<div class='flip' tabindex='0' {{ block.shopify_attributes }}><div class='flip-in'><div class='flip-f'><div class='flip-ic' style='background:{{ block.settings.icon_bg }};'>{% if block.settings.icon != blank %}<img src='{{ block.settings.icon | image_url: width: 80 }}' alt=''>{% endif %}</div><p class='flip-t'>{{ block.settings.title }}</p><p class='flip-d'>{{ block.settings.desc }}</p></div><div class='flip-b'>{% if block.settings.back_image != blank %}<img src='{{ block.settings.back_image | image_url: width: 360 }}' alt='{{ block.settings.title | escape }}'>{% endif %}<div class='cap'>{{ block.settings.title }}</div></div></div></div>{% endif %}{% endfor %}</div></div>
+<div class='ev-do'><div class='ev-do-track'>{% for block in section.blocks %}{% if block.type == 'service' %}<div class='flip' tabindex='0' {{ block.shopify_attributes }}><div class='flip-in'><div class='flip-f'><div class='flip-icon'>{{ 'icon-flip.svg' | inline_asset_content }}</div><div class='flip-ic' style='background:{{ block.settings.icon_bg }};'>{% if block.settings.icon != blank %}<img src='{{ block.settings.icon | image_url: width: 80 }}' alt=''>{% endif %}</div><p class='flip-t'>{{ block.settings.title }}</p><p class='flip-d'>{{ block.settings.desc }}</p></div><div class='flip-b'>{% if block.settings.back_image != blank %}<img src='{{ block.settings.back_image | image_url: width: 360 }}' alt='{{ block.settings.title | escape }}'>{% endif %}<div class='cap'>{{ block.settings.title }}</div></div></div></div>{% endif %}{% endfor %}</div></div>
 {% if section.settings.hint != blank %}<p class='ev-hint'>{{ section.settings.hint }} {{ 'icon-arrow-right-long.svg' | inline_asset_content }}</p>{% endif %}
 <div class='act-box'>
 <div class='act-label'><span class='big'>{{ section.settings.act_count }}</span><span class='sm'>{{ section.settings.act_suffix }}</span></div>

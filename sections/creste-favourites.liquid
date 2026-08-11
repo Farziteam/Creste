@@ -3,7 +3,7 @@
 #creste-fav-{{ section.id }}{position:relative;padding:32px 8px;background-color:{{ section.settings.fallback_bg }};background-size: cover;background-position:center;background-repeat:no-repeat;}
 #creste-fav-{{ section.id }}::before{content:'';position:absolute;inset:0;background:#000;opacity:{{ section.settings.overlay | divided_by: 100.0 }};pointer-events:none;}
 #creste-fav-{{ section.id }} .fav-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;}
-#creste-fav-{{ section.id }} .fav-h{margin:0 0 6px;font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;line-height:1.1;color:{{ section.settings.heading_color }};}
+#creste-fav-{{ section.id }} .fav-h{margin:0 0 6px;font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;line-height:1.1;color:{{ section.settings.heading_color }};padding-left:0.5rem;}
 #creste-fav-{{ section.id }} .fav-h span{font-style: italic; color: #fff;}
 #creste-fav-{{ section.id }} .fav-sub{margin:0 0 20px;font-family:'Poppins',sans-serif;font-size:15px;color:{{ section.settings.heading_color }};opacity:.9;}
 #creste-fav-{{ section.id }} .fav-carousel{position:relative;}
@@ -71,6 +71,8 @@
   }
   #creste-fav-{{ section.id }} .fav-price b{
     font-size: 14px;
+    letter-spacing: 0px;
+    margin-right: 2px;
   }
   #creste-fav-{{ section.id }} .fav-price s{
     font-size: 13px;
