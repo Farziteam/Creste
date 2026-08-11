@@ -48,7 +48,7 @@
         "s1": {
           "type": "skill",
           "settings": {
-            "icon": "🖌️",
+            "icon": "",
             "title": "Fine motor control",
             "text": "Holding a brush, tracing an edge and pressing a stencil build the exact grip strength that handwriting needs.",
             "color": "green"
