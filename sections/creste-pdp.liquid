@@ -159,7 +159,6 @@
     </form>
 
     <div class="cpdp__green">
-      <div class="cpdp__green-arrow" aria-hidden="true"><svg viewBox="0 0 24 40" width="24" height="40" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v32M5 27l7 7 7-7"/></svg></div>
       <div class="cpdp__tabs" role="tablist">
         <button type="button" class="cpdp__tab is-active" data-tab="overview" role="tab" aria-selected="true">✦ Overview</button>
         <button type="button" class="cpdp__tab" data-tab="faqs" role="tab" aria-selected="false">❔ FAQs</button>
@@ -352,8 +351,6 @@
   #Cpdp-{{ uid }} .cpdp__green{position:relative;margin-top:40px;background:var(--cpdp-green);padding:44px 20px 54px;}
   #Cpdp-{{ uid }} .cpdp__green::before{content:"";position:absolute;top:-12px;left:0;right:0;height:14px;background:radial-gradient(circle at 9px -3px, var(--cpdp-green) 9px, transparent 10px) 0 0/18px 14px repeat-x;}
   #Cpdp-{{ uid }} .cpdp__green::after{content:"";position:absolute;bottom:-12px;left:0;right:0;height:14px;background:radial-gradient(circle at 9px 17px, var(--cpdp-green) 9px, transparent 10px) 0 0/18px 14px repeat-x;}
-  #Cpdp-{{ uid }} .cpdp__green-arrow{display:flex;justify-content:center;margin-bottom:6px;}
-  #Cpdp-{{ uid }} .cpdp__green-arrow svg{height:30px;}
   #Cpdp-{{ uid }} .cpdp__tabs{display:flex;gap:8px;max-width:1080px;margin:0 auto;}
   #Cpdp-{{ uid }} .cpdp__tab{flex:1;border:none;cursor:pointer;font-family:var(--cpdp-head);font-weight:800;font-size:20px;padding:18px;border-radius:18px 18px 0 0;background:#fff;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__tab.is-active{background:var(--cpdp-orange);color:#fff;}
