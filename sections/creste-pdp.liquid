@@ -237,12 +237,12 @@
   }
   #Cpdp-{{ uid }} *{box-sizing:border-box;}
   #Cpdp-{{ uid }} .cpdp__form{margin:0;}
-  #Cpdp-{{ uid }} .cpdp__wrap{max-width:1300px;margin:0 auto;padding:14px 20px 0;overflow-x:clip;}
+  #Cpdp-{{ uid }} .cpdp__wrap{max-width:1320px;margin:0 auto;padding:14px 20px 0;overflow-x:clip;}
   #Cpdp-{{ uid }} .cpdp__col-left{position:sticky;top:20px;align-self:start;}
   #Cpdp-{{ uid }} .cpdp__crumbs{display:flex;align-items:center;gap:8px;font-size:14px;color:#6b7280;padding:8px 4px 18px;}
   #Cpdp-{{ uid }} .cpdp__crumbs a{color:#6b7280;text-decoration:none;}
   #Cpdp-{{ uid }} .cpdp__crumb-current{color:var(--cpdp-brown);font-weight:700;}
-  #Cpdp-{{ uid }} .cpdp__hero{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:40px;align-items:start;}
+  #Cpdp-{{ uid }} .cpdp__hero{display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1fr);gap:36px;align-items:start;}
   #Cpdp-{{ uid }} .cpdp__gallery{position:relative;background:#EFE7F7;border-radius:var(--cpdp-radius);overflow:hidden;aspect-ratio:1/1;}
   #Cpdp-{{ uid }} .cpdp__stage,#Cpdp-{{ uid }} .cpdp__slide{position:absolute;inset:0;}
   #Cpdp-{{ uid }} .cpdp__slide{opacity:0;transition:opacity .3s ease;}
@@ -274,7 +274,7 @@
   #Cpdp-{{ uid }} .cpdp__pill--b{background:#DBEAFE;color:#1D4ED8;}
   #Cpdp-{{ uid }} .cpdp__pill--g{background:#DCFCE7;color:#15803D;}
   #Cpdp-{{ uid }} .cpdp__pill--p{background:#FCE7F3;color:#BE185D;}
-  #Cpdp-{{ uid }} .cpdp__title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(30px,3.4vw,48px);line-height:1.08;margin:6px 0 14px;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(32px,3.8vw,54px);line-height:1.08;margin:6px 0 14px;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__rating{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:16px;}
   #Cpdp-{{ uid }} .cpdp__stars{color:#F5B301;font-size:20px;letter-spacing:2px;}
   #Cpdp-{{ uid }} .cpdp__rating-link{color:var(--cpdp-brown);font-weight:700;text-decoration:underline;}
@@ -349,14 +349,15 @@
   #Cpdp-{{ uid }} .cpdp__offer-text{margin:0;font-size:14px;color:#334155;line-height:1.4;}
   #Cpdp-{{ uid }} .cpdp__offer-code{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px dashed #b9c4cf;border-radius:9px;background:#f8fafc;padding:8px 12px;font-weight:700;font-size:13px;color:#334155;cursor:pointer;}
   #Cpdp-{{ uid }} .cpdp__offer-code.is-copied{border-color:#16A34A;color:#16A34A;}
-  #Cpdp-{{ uid }} .cpdp__green{position:relative;margin-top:40px;background:var(--cpdp-green);padding:60px 20px 70px;}
-  #Cpdp-{{ uid }} .cpdp__green::before{content:"";position:absolute;top:-14px;left:0;right:0;height:16px;background:radial-gradient(circle at 12px -4px, var(--cpdp-green) 12px, transparent 13px) 0 0/26px 16px repeat-x;}
-  #Cpdp-{{ uid }} .cpdp__green::after{content:"";position:absolute;bottom:-14px;left:0;right:0;height:16px;background:radial-gradient(circle at 12px 20px, var(--cpdp-green) 12px, transparent 13px) 0 0/26px 16px repeat-x;}
-  #Cpdp-{{ uid }} .cpdp__green-arrow{display:flex;justify-content:center;margin-bottom:8px;}
-  #Cpdp-{{ uid }} .cpdp__tabs{display:flex;gap:16px;max-width:1000px;margin:0 auto;}
+  #Cpdp-{{ uid }} .cpdp__green{position:relative;margin-top:40px;background:var(--cpdp-green);padding:44px 20px 54px;}
+  #Cpdp-{{ uid }} .cpdp__green::before{content:"";position:absolute;top:-12px;left:0;right:0;height:14px;background:radial-gradient(circle at 9px -3px, var(--cpdp-green) 9px, transparent 10px) 0 0/18px 14px repeat-x;}
+  #Cpdp-{{ uid }} .cpdp__green::after{content:"";position:absolute;bottom:-12px;left:0;right:0;height:14px;background:radial-gradient(circle at 9px 17px, var(--cpdp-green) 9px, transparent 10px) 0 0/18px 14px repeat-x;}
+  #Cpdp-{{ uid }} .cpdp__green-arrow{display:flex;justify-content:center;margin-bottom:6px;}
+  #Cpdp-{{ uid }} .cpdp__green-arrow svg{height:30px;}
+  #Cpdp-{{ uid }} .cpdp__tabs{display:flex;gap:8px;max-width:1080px;margin:0 auto;}
   #Cpdp-{{ uid }} .cpdp__tab{flex:1;border:none;cursor:pointer;font-family:var(--cpdp-head);font-weight:800;font-size:20px;padding:18px;border-radius:18px 18px 0 0;background:#fff;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__tab.is-active{background:var(--cpdp-orange);color:#fff;}
-  #Cpdp-{{ uid }} .cpdp__panel{display:none;max-width:1000px;margin:0 auto;background:#fff;border-radius:0 0 22px 22px;border-top:4px solid var(--cpdp-orange);padding:38px;}
+  #Cpdp-{{ uid }} .cpdp__panel{display:none;max-width:1080px;margin:0 auto;background:#fff;border-radius:0 0 22px 22px;border-top:4px solid var(--cpdp-orange);padding:38px;}
   #Cpdp-{{ uid }} .cpdp__panel.is-active{display:block;}
   #Cpdp-{{ uid }} .cpdp__panel-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:34px;align-items:center;}
   #Cpdp-{{ uid }} .cpdp__panel-title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(24px,2.4vw,32px);color:var(--cpdp-purple);margin:0 0 16px;line-height:1.15;}
@@ -408,12 +409,12 @@
     #Cpdp-{{ uid }} .cpdp__panel-grid{grid-template-columns:minmax(0,1fr);}
     #Cpdp-{{ uid }} .cpdp__panel-media{order:-1;max-width:320px;}
     #Cpdp-{{ uid }} .cpdp__feat-grid{grid-template-columns:1fr;}
-    #Cpdp-{{ uid }} .cpdp__tabs{gap:8px;}
+    #Cpdp-{{ uid }} .cpdp__tabs{gap:6px;}
     #Cpdp-{{ uid }} .cpdp__tab{font-size:17px;padding:14px;}
     #Cpdp-{{ uid }} .cpdp__panel{padding:22px;}
   }
   @media (max-width:640px){
-    #Cpdp-{{ uid }} .cpdp__title{font-size:28px;}
+    #Cpdp-{{ uid }} .cpdp__title{font-size:30px;}
     #Cpdp-{{ uid }} .cpdp__price-now{font-size:34px;}
     #Cpdp-{{ uid }} .cpdp__themegrid{grid-template-columns:repeat(2,minmax(0,1fr));}
     #Cpdp-{{ uid }} .cpdp__po-grid{grid-template-columns:minmax(0,1fr);}
@@ -555,7 +556,7 @@
     { "type": "url", "id": "tutorial_url", "label": "Tutorial video link" },
     { "type": "header", "content": "Overview" },
     { "type": "text", "id": "overview_heading", "label": "Overview heading", "default": "A blank canvas bag, waiting for their imagination" },
-    { "type": "richtext", "id": "overview_text", "label": "Overview text (blank = short product excerpt)", "default": "<p>Let your little ones express their creativity with the DIY Color Your Bag Kit — a fun, screen-free activity that keeps kids happily crafting while they make a bag that's truly their own.</p>" },
+    { "type": "richtext", "id": "overview_text", "label": "Overview text (blank = short product excerpt)", "default": "<p>Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>" },
     { "type": "image_picker", "id": "overview_image", "label": "Overview photo (blank = product lifestyle image)" },
     { "type": "header", "content": "FAQs (question|answer ; separated)" },
     { "type": "textarea", "id": "faqs", "label": "FAQs", "default": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash." },
