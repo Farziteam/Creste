@@ -130,6 +130,7 @@
         "padding_top": 56,
         "padding_bottom": 60,
         "promo_banner_desktop": "shopify://shop_images/Section_-_Best_Sellers_e4f84787-d839-4b9c-857d-1a976371defc.png",
+        "promo_banner_mobile": "shopify://shop_images/Play_with_Purpose_Section.png",
         "promo_banner_alt": ""
       }
     },
