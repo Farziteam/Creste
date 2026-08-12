@@ -181,6 +181,22 @@
         <button type="button" class="cpdp__tab" data-tab="faqs" role="tab" aria-selected="false">❔ FAQs</button>
       </div>
       <div class="cpdp__panel is-active" data-panel="overview">
+        {%- if section.settings.overview_banner_desktop != blank or section.settings.overview_banner_mobile != blank or request.design_mode -%}
+          <div class="cpdp__ov-banner">
+            {%- if section.settings.overview_banner_link != blank -%}<a href="{{ section.settings.overview_banner_link }}" class="cpdp__ov-banner-link">{%- endif -%}
+              {%- if section.settings.overview_banner_desktop != blank -%}
+                {{ section.settings.overview_banner_desktop | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'cpdp__ov-banner-img cpdp__ov-banner-img--desktop', alt: section.settings.overview_banner_alt }}
+              {%- elsif request.design_mode -%}
+                <div class="cpdp__ov-banner-img cpdp__ov-banner-img--desktop cpdp__ov-banner-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__ov-banner-ph-svg' }}<span class="cpdp__ov-banner-ph-label">Overview banner (Desktop) — upload in section settings</span></div>
+              {%- endif -%}
+              {%- if section.settings.overview_banner_mobile != blank -%}
+                {{ section.settings.overview_banner_mobile | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'cpdp__ov-banner-img cpdp__ov-banner-img--mobile', alt: section.settings.overview_banner_alt }}
+              {%- elsif request.design_mode -%}
+                <div class="cpdp__ov-banner-img cpdp__ov-banner-img--mobile cpdp__ov-banner-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__ov-banner-ph-svg' }}<span class="cpdp__ov-banner-ph-label">Overview banner (Mobile) — upload in section settings</span></div>
+              {%- endif -%}
+            {%- if section.settings.overview_banner_link != blank -%}</a>{%- endif -%}
+          </div>
+        {%- endif -%}
         <div class="cpdp__panel-grid">
           <div class="cpdp__panel-copy">
             <h2 class="cpdp__panel-title">{{ section.settings.overview_heading | default: 'A blank canvas bag, waiting for their imagination' }}</h2>
@@ -385,6 +401,18 @@
   #Cpdp-{{ uid }} .cpdp__tab.is-active{background:var(--cpdp-orange);color:#fff;}
   #Cpdp-{{ uid }} .cpdp__panel{display:none;max-width:1080px;margin:0 auto;background:#fff;border-radius:0 0 22px 22px;border-top:4px solid var(--cpdp-orange);padding:38px;}
   #Cpdp-{{ uid }} .cpdp__panel.is-active{display:block;}
+  #Cpdp-{{ uid }} .cpdp__ov-banner{width:100%;margin:0 0 26px;border-radius:16px;overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__ov-banner-link{display:block;}
+  #Cpdp-{{ uid }} .cpdp__ov-banner-img{display:block;width:100%;height:auto;}
+  #Cpdp-{{ uid }} .cpdp__ov-banner-img--mobile{display:none;}
+  #Cpdp-{{ uid }} .cpdp__ov-banner-ph{position:relative;aspect-ratio:4/1;background:#FBF1DA;display:flex;align-items:center;justify-content:center;}
+  #Cpdp-{{ uid }} .cpdp__ov-banner-img--mobile.cpdp__ov-banner-ph{aspect-ratio:3/4;}
+  #Cpdp-{{ uid }} .cpdp__ov-banner-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.45;}
+  #Cpdp-{{ uid }} .cpdp__ov-banner-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:var(--cpdp-purple);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
+  @media (max-width:749px){
+    #Cpdp-{{ uid }} .cpdp__ov-banner-img--desktop{display:none;}
+    #Cpdp-{{ uid }} .cpdp__ov-banner-img--mobile{display:block;}
+  }
   #Cpdp-{{ uid }} .cpdp__panel-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:34px;align-items:center;}
   #Cpdp-{{ uid }} .cpdp__panel-title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(24px,2.4vw,32px);color:var(--cpdp-purple);margin:0 0 16px;line-height:1.15;}
   #Cpdp-{{ uid }} .cpdp__panel-text{font-size:16px;line-height:1.65;color:var(--cpdp-ink);margin:0 0 22px;}
@@ -584,6 +612,10 @@
     { "type": "text", "id": "overview_heading", "label": "Overview heading", "default": "A blank canvas bag, waiting for their imagination" },
     { "type": "richtext", "id": "overview_text", "label": "Overview text (blank = short product excerpt)", "default": "<p>Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>" },
     { "type": "image_picker", "id": "overview_image", "label": "Overview photo (blank = product lifestyle image)" },
+    { "type": "image_picker", "id": "overview_banner_desktop", "label": "Overview tab banner — Desktop", "info": "Recommended 2000×500px" },
+    { "type": "image_picker", "id": "overview_banner_mobile", "label": "Overview tab banner — Mobile", "info": "Recommended 1000×1300px" },
+    { "type": "url", "id": "overview_banner_link", "label": "Overview tab banner link (optional)" },
+    { "type": "text", "id": "overview_banner_alt", "label": "Overview tab banner alt text" },
     { "type": "header", "content": "FAQs (question|answer ; separated)" },
     { "type": "textarea", "id": "faqs", "label": "FAQs", "default": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash." },
     { "type": "header", "content": "Contact" },
