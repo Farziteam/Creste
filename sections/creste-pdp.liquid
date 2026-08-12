@@ -154,11 +154,28 @@
         </div>
         <button type="button" class="cpdp__buynow" data-buynow>Buy Now <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
-        <div class="cpdp__trust">
-          <div class="cpdp__trust-item cpdp__trust-item--g"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="cpdp__trust-t">100% Secure</span><span class="cpdp__trust-s">secure payment</span></div>
-          <div class="cpdp__trust-item cpdp__trust-item--b"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#3B82C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M15.5 15.2a3 3 0 1 1-.9-3.1"/><path d="M15.6 12.2v2h-2"/></svg></span><span class="cpdp__trust-t">7-day returns</span><span class="cpdp__trust-s">No questions asked</span></div>
-          <div class="cpdp__trust-item cpdp__trust-item--a"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#E0902A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.4L7 22l5-3 5 3-2-8.6"/><circle cx="12" cy="9" r="1.6" fill="#138808" stroke="none"/></svg></span><span class="cpdp__trust-t">Made in India</span><span class="cpdp__trust-s">By a small team</span></div>
-          <div class="cpdp__trust-item cpdp__trust-item--p"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13"/><path d="M12 8S9.6 8 8.6 6.7 8.7 3.6 10.1 4.4 12 8 12 8zM12 8s2.4 0 3.4-1.3-.1-3.1-1.5-2.3S12 8 12 8z"/></svg></span><span class="cpdp__trust-t">Gift wrap free</span><span class="cpdp__trust-s">Add a note at checkout</span></div>
+        <div class="cpdp__trust-wrap">
+          {%- if section.settings.trust_banner_desktop != blank or section.settings.trust_banner_mobile != blank or request.design_mode -%}
+            <div class="cpdp__trust-bg">
+              {%- if section.settings.trust_banner_desktop != blank -%}
+                {{ section.settings.trust_banner_desktop | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'cpdp__trust-bg-img cpdp__trust-bg-img--desktop', alt: section.settings.trust_banner_alt }}
+              {%- elsif request.design_mode -%}
+                <div class="cpdp__trust-bg-img cpdp__trust-bg-img--desktop cpdp__trust-bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__trust-bg-ph-svg' }}<span class="cpdp__trust-bg-ph-label">Desktop background</span></div>
+              {%- endif -%}
+              {%- if section.settings.trust_banner_mobile != blank -%}
+                {{ section.settings.trust_banner_mobile | image_url: width: 800 | image_tag: loading: 'lazy', class: 'cpdp__trust-bg-img cpdp__trust-bg-img--mobile', alt: section.settings.trust_banner_alt }}
+              {%- elsif request.design_mode -%}
+                <div class="cpdp__trust-bg-img cpdp__trust-bg-img--mobile cpdp__trust-bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__trust-bg-ph-svg' }}<span class="cpdp__trust-bg-ph-label">Mobile background</span></div>
+              {%- endif -%}
+              <div class="cpdp__trust-bg-overlay"></div>
+            </div>
+          {%- endif -%}
+          <div class="cpdp__trust">
+            <div class="cpdp__trust-item cpdp__trust-item--g"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="cpdp__trust-t">100% Secure</span><span class="cpdp__trust-s">secure payment</span></div>
+            <div class="cpdp__trust-item cpdp__trust-item--b"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#3B82C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M15.5 15.2a3 3 0 1 1-.9-3.1"/><path d="M15.6 12.2v2h-2"/></svg></span><span class="cpdp__trust-t">7-day returns</span><span class="cpdp__trust-s">No questions asked</span></div>
+            <div class="cpdp__trust-item cpdp__trust-item--a"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#E0902A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.4L7 22l5-3 5 3-2-8.6"/><circle cx="12" cy="9" r="1.6" fill="#138808" stroke="none"/></svg></span><span class="cpdp__trust-t">Made in India</span><span class="cpdp__trust-s">By a small team</span></div>
+            <div class="cpdp__trust-item cpdp__trust-item--p"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13"/><path d="M12 8S9.6 8 8.6 6.7 8.7 3.6 10.1 4.4 12 8 12 8zM12 8s2.4 0 3.4-1.3-.1-3.1-1.5-2.3S12 8 12 8z"/></svg></span><span class="cpdp__trust-t">Gift wrap free</span><span class="cpdp__trust-s">Add a note at checkout</span></div>
+          </div>
         </div>
         {%- if section.settings.safety_text != blank -%}<div class="cpdp__safety"><span class="cpdp__safety-ico">⚠️</span><span class="cpdp__safety-t">{{ section.settings.safety_text }}</span>{%- if section.settings.safety_link != blank -%}<a href="{{ section.settings.safety_link }}" class="cpdp__safety-link">Safety details</a>{%- endif -%}</div>{%- endif -%}
         <div class="cpdp__offers">
@@ -176,27 +193,26 @@
     </form>
 
     <div class="cpdp__green">
+      {%- if section.settings.green_banner_desktop != blank or section.settings.green_banner_mobile != blank or request.design_mode -%}
+        <div class="cpdp__green-bg">
+          {%- if section.settings.green_banner_desktop != blank -%}
+            {{ section.settings.green_banner_desktop | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'cpdp__green-bg-img cpdp__green-bg-img--desktop', alt: section.settings.green_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdp__green-bg-img cpdp__green-bg-img--desktop cpdp__green-bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__green-bg-ph-svg' }}<span class="cpdp__green-bg-ph-label">Desktop background — upload in section settings</span></div>
+          {%- endif -%}
+          {%- if section.settings.green_banner_mobile != blank -%}
+            {{ section.settings.green_banner_mobile | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'cpdp__green-bg-img cpdp__green-bg-img--mobile', alt: section.settings.green_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdp__green-bg-img cpdp__green-bg-img--mobile cpdp__green-bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__green-bg-ph-svg' }}<span class="cpdp__green-bg-ph-label">Mobile background — upload in section settings</span></div>
+          {%- endif -%}
+          <div class="cpdp__green-bg-overlay"></div>
+        </div>
+      {%- endif -%}
       <div class="cpdp__tabs" role="tablist">
         <button type="button" class="cpdp__tab is-active" data-tab="overview" role="tab" aria-selected="true">✦ Overview</button>
         <button type="button" class="cpdp__tab" data-tab="faqs" role="tab" aria-selected="false">❔ FAQs</button>
       </div>
       <div class="cpdp__panel is-active" data-panel="overview">
-        {%- if section.settings.overview_banner_desktop != blank or section.settings.overview_banner_mobile != blank or request.design_mode -%}
-          <div class="cpdp__ov-banner">
-            {%- if section.settings.overview_banner_link != blank -%}<a href="{{ section.settings.overview_banner_link }}" class="cpdp__ov-banner-link">{%- endif -%}
-              {%- if section.settings.overview_banner_desktop != blank -%}
-                {{ section.settings.overview_banner_desktop | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'cpdp__ov-banner-img cpdp__ov-banner-img--desktop', alt: section.settings.overview_banner_alt }}
-              {%- elsif request.design_mode -%}
-                <div class="cpdp__ov-banner-img cpdp__ov-banner-img--desktop cpdp__ov-banner-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__ov-banner-ph-svg' }}<span class="cpdp__ov-banner-ph-label">Overview banner (Desktop) — upload in section settings</span></div>
-              {%- endif -%}
-              {%- if section.settings.overview_banner_mobile != blank -%}
-                {{ section.settings.overview_banner_mobile | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'cpdp__ov-banner-img cpdp__ov-banner-img--mobile', alt: section.settings.overview_banner_alt }}
-              {%- elsif request.design_mode -%}
-                <div class="cpdp__ov-banner-img cpdp__ov-banner-img--mobile cpdp__ov-banner-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__ov-banner-ph-svg' }}<span class="cpdp__ov-banner-ph-label">Overview banner (Mobile) — upload in section settings</span></div>
-              {%- endif -%}
-            {%- if section.settings.overview_banner_link != blank -%}</a>{%- endif -%}
-          </div>
-        {%- endif -%}
         <div class="cpdp__panel-grid">
           <div class="cpdp__panel-copy">
             <h2 class="cpdp__panel-title">{{ section.settings.overview_heading | default: 'A blank canvas bag, waiting for their imagination' }}</h2>
@@ -368,7 +384,19 @@
   #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:999px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;transition:background .15s;}
   #Cpdp-{{ uid }} .cpdp__atc:hover{background:var(--cpdp-orange-d);}
   #Cpdp-{{ uid }} .cpdp__atc[disabled]{background:#c7c2ba;cursor:not-allowed;}
-  #Cpdp-{{ uid }} .cpdp__trust{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px;}
+  #Cpdp-{{ uid }} .cpdp__trust-wrap{position:relative;overflow:hidden;border-radius:16px;margin-bottom:18px;}
+  #Cpdp-{{ uid }} .cpdp__trust-bg{position:absolute;inset:0;overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__trust-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  #Cpdp-{{ uid }} .cpdp__trust-bg-img--mobile{display:none;}
+  #Cpdp-{{ uid }} .cpdp__trust-bg-ph{background:#F3EEE6;display:flex;align-items:center;justify-content:center;}
+  #Cpdp-{{ uid }} .cpdp__trust-bg-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.4;}
+  #Cpdp-{{ uid }} .cpdp__trust-bg-ph-label{position:relative;z-index:1;font-weight:700;font-size:12px;color:var(--cpdp-brown);background:rgba(255,255,255,.9);padding:5px 12px;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__trust-bg-overlay{position:absolute;inset:0;background:rgba(255,255,255,.72);}
+  @media (max-width:749px){
+    #Cpdp-{{ uid }} .cpdp__trust-bg-img--desktop{display:none;}
+    #Cpdp-{{ uid }} .cpdp__trust-bg-img--mobile{display:block;}
+  }
+  #Cpdp-{{ uid }} .cpdp__trust{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:0;padding:10px 4px;}
   #Cpdp-{{ uid }} .cpdp__trust-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:6px 4px;}
   #Cpdp-{{ uid }} .cpdp__trust-ico{display:grid;place-items:center;height:32px;}
   #Cpdp-{{ uid }} .cpdp__trust-t{font-weight:700;font-size:14px;color:var(--cpdp-purple);}
@@ -396,23 +424,22 @@
   #Cpdp-{{ uid }} .cpdp__green{position:relative;margin-top:40px;background:var(--cpdp-green);padding:44px 20px 54px;}
   #Cpdp-{{ uid }} .cpdp__green::before{content:"";position:absolute;top:-12px;left:0;right:0;height:14px;background:radial-gradient(circle at 9px -3px, var(--cpdp-green) 9px, transparent 10px) 0 0/18px 14px repeat-x;}
   #Cpdp-{{ uid }} .cpdp__green::after{content:"";position:absolute;bottom:-12px;left:0;right:0;height:14px;background:radial-gradient(circle at 9px 17px, var(--cpdp-green) 9px, transparent 10px) 0 0/18px 14px repeat-x;}
-  #Cpdp-{{ uid }} .cpdp__tabs{display:flex;gap:8px;max-width:1080px;margin:0 auto;}
+  #Cpdp-{{ uid }} .cpdp__green-bg{position:absolute;inset:0;overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-img--mobile{display:none;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-ph{background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.35;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:var(--cpdp-purple);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-overlay{position:absolute;inset:0;background:rgba(30,60,20,.35);}
+  @media (max-width:749px){
+    #Cpdp-{{ uid }} .cpdp__green-bg-img--desktop{display:none;}
+    #Cpdp-{{ uid }} .cpdp__green-bg-img--mobile{display:block;}
+  }
+  #Cpdp-{{ uid }} .cpdp__tabs{position:relative;z-index:1;display:flex;gap:8px;max-width:1080px;margin:0 auto;}
   #Cpdp-{{ uid }} .cpdp__tab{flex:1;border:none;cursor:pointer;font-family:var(--cpdp-head);font-weight:800;font-size:20px;padding:18px;border-radius:18px 18px 0 0;background:#fff;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__tab.is-active{background:var(--cpdp-orange);color:#fff;}
-  #Cpdp-{{ uid }} .cpdp__panel{display:none;max-width:1080px;margin:0 auto;background:#fff;border-radius:0 0 22px 22px;border-top:4px solid var(--cpdp-orange);padding:38px;}
+  #Cpdp-{{ uid }} .cpdp__panel{position:relative;z-index:1;display:none;max-width:1080px;margin:0 auto;background:#fff;border-radius:0 0 22px 22px;border-top:4px solid var(--cpdp-orange);padding:38px;}
   #Cpdp-{{ uid }} .cpdp__panel.is-active{display:block;}
-  #Cpdp-{{ uid }} .cpdp__ov-banner{width:100%;margin:0 0 26px;border-radius:16px;overflow:hidden;}
-  #Cpdp-{{ uid }} .cpdp__ov-banner-link{display:block;}
-  #Cpdp-{{ uid }} .cpdp__ov-banner-img{display:block;width:100%;height:auto;}
-  #Cpdp-{{ uid }} .cpdp__ov-banner-img--mobile{display:none;}
-  #Cpdp-{{ uid }} .cpdp__ov-banner-ph{position:relative;aspect-ratio:4/1;background:#FBF1DA;display:flex;align-items:center;justify-content:center;}
-  #Cpdp-{{ uid }} .cpdp__ov-banner-img--mobile.cpdp__ov-banner-ph{aspect-ratio:3/4;}
-  #Cpdp-{{ uid }} .cpdp__ov-banner-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.45;}
-  #Cpdp-{{ uid }} .cpdp__ov-banner-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:var(--cpdp-purple);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
-  @media (max-width:749px){
-    #Cpdp-{{ uid }} .cpdp__ov-banner-img--desktop{display:none;}
-    #Cpdp-{{ uid }} .cpdp__ov-banner-img--mobile{display:block;}
-  }
   #Cpdp-{{ uid }} .cpdp__panel-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:34px;align-items:center;}
   #Cpdp-{{ uid }} .cpdp__panel-title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(24px,2.4vw,32px);color:var(--cpdp-purple);margin:0 0 16px;line-height:1.15;}
   #Cpdp-{{ uid }} .cpdp__panel-text{font-size:16px;line-height:1.65;color:var(--cpdp-ink);margin:0 0 22px;}
@@ -612,10 +639,6 @@
     { "type": "text", "id": "overview_heading", "label": "Overview heading", "default": "A blank canvas bag, waiting for their imagination" },
     { "type": "richtext", "id": "overview_text", "label": "Overview text (blank = short product excerpt)", "default": "<p>Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>" },
     { "type": "image_picker", "id": "overview_image", "label": "Overview photo (blank = product lifestyle image)" },
-    { "type": "image_picker", "id": "overview_banner_desktop", "label": "Overview tab banner — Desktop", "info": "Recommended 2000×500px" },
-    { "type": "image_picker", "id": "overview_banner_mobile", "label": "Overview tab banner — Mobile", "info": "Recommended 1000×1300px" },
-    { "type": "url", "id": "overview_banner_link", "label": "Overview tab banner link (optional)" },
-    { "type": "text", "id": "overview_banner_alt", "label": "Overview tab banner alt text" },
     { "type": "header", "content": "FAQs (question|answer ; separated)" },
     { "type": "textarea", "id": "faqs", "label": "FAQs", "default": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash." },
     { "type": "header", "content": "Contact" },
@@ -624,7 +647,17 @@
     { "type": "image_picker", "id": "promo_banner_desktop", "label": "Banner image — Desktop", "info": "Recommended 2000×500px" },
     { "type": "image_picker", "id": "promo_banner_mobile", "label": "Banner image — Mobile", "info": "Recommended 1000×1300px" },
     { "type": "url", "id": "promo_banner_link", "label": "Banner link (optional)" },
-    { "type": "text", "id": "promo_banner_alt", "label": "Banner alt text" }
+    { "type": "text", "id": "promo_banner_alt", "label": "Banner alt text" },
+    { "type": "header", "content": "Green section background (optional)" },
+    { "type": "paragraph", "content": "Upload an image to use as the background of the Overview/FAQs tabbed area, behind the tabs and panel." },
+    { "type": "image_picker", "id": "green_banner_desktop", "label": "Green section background — Desktop", "info": "Recommended 2000×700px" },
+    { "type": "image_picker", "id": "green_banner_mobile", "label": "Green section background — Mobile", "info": "Recommended 1000×1400px" },
+    { "type": "text", "id": "green_banner_alt", "label": "Green section background alt text" },
+    { "type": "header", "content": "Trust icons background (optional)" },
+    { "type": "paragraph", "content": "Upload an image to use as the background behind the 4 trust icons (Secure / Returns / Made in India / Gift wrap)." },
+    { "type": "image_picker", "id": "trust_banner_desktop", "label": "Trust icons background — Desktop", "info": "Recommended 1200×300px" },
+    { "type": "image_picker", "id": "trust_banner_mobile", "label": "Trust icons background — Mobile", "info": "Recommended 800×800px" },
+    { "type": "text", "id": "trust_banner_alt", "label": "Trust icons background alt text" }
   ],
   "presets": [ { "name": "Creste PDP" } ]
 }
