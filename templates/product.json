@@ -116,6 +116,7 @@
         "padding_top": 64,
         "padding_bottom": 72,
         "promo_banner_desktop": "shopify://shop_images/Container_1_57fbfdb3-a519-49d1-bc04-d3a3495ffaf7.png",
+        "promo_banner_mobile": "shopify://shop_images/happy.png",
         "promo_banner_alt": ""
       }
     },
