@@ -3,23 +3,22 @@
   assign uid = section.id
 -%}
 <section id="CpdpSk-{{ uid }}" class="cpdpsk" style="--cpdpsk-bg: {{ section.settings.bg_color | default: '#7C5CE0' }};">
+  {%- if section.settings.promo_banner_desktop != blank or section.settings.promo_banner_mobile != blank or request.design_mode -%}
+    <div class="cpdpsk__bg">
+      {%- if section.settings.promo_banner_desktop != blank -%}
+        {{ section.settings.promo_banner_desktop | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'cpdpsk__bg-img cpdpsk__bg-img--desktop', alt: section.settings.promo_banner_alt }}
+      {%- elsif request.design_mode -%}
+        <div class="cpdpsk__bg-img cpdpsk__bg-img--desktop cpdpsk__bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdpsk__bg-ph-svg' }}<span class="cpdpsk__bg-ph-label">Desktop background — upload in section settings</span></div>
+      {%- endif -%}
+      {%- if section.settings.promo_banner_mobile != blank -%}
+        {{ section.settings.promo_banner_mobile | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'cpdpsk__bg-img cpdpsk__bg-img--mobile', alt: section.settings.promo_banner_alt }}
+      {%- elsif request.design_mode -%}
+        <div class="cpdpsk__bg-img cpdpsk__bg-img--mobile cpdpsk__bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdpsk__bg-ph-svg' }}<span class="cpdpsk__bg-ph-label">Mobile background — upload in section settings</span></div>
+      {%- endif -%}
+      <div class="cpdpsk__bg-overlay"></div>
+    </div>
+  {%- endif -%}
   <div class="cpdpsk__wrap">
-    {%- if section.settings.promo_banner_desktop != blank or section.settings.promo_banner_mobile != blank or request.design_mode -%}
-      <div class="cpdpsk__promo-banner">
-        {%- if section.settings.promo_banner_link != blank -%}<a href="{{ section.settings.promo_banner_link }}" class="cpdpsk__promo-link">{%- endif -%}
-          {%- if section.settings.promo_banner_desktop != blank -%}
-            {{ section.settings.promo_banner_desktop | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'cpdpsk__promo-img cpdpsk__promo-img--desktop', alt: section.settings.promo_banner_alt }}
-          {%- elsif request.design_mode -%}
-            <div class="cpdpsk__promo-img cpdpsk__promo-img--desktop cpdpsk__promo-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdpsk__promo-ph-svg' }}<span class="cpdpsk__promo-ph-label">Desktop banner — upload in section settings</span></div>
-          {%- endif -%}
-          {%- if section.settings.promo_banner_mobile != blank -%}
-            {{ section.settings.promo_banner_mobile | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'cpdpsk__promo-img cpdpsk__promo-img--mobile', alt: section.settings.promo_banner_alt }}
-          {%- elsif request.design_mode -%}
-            <div class="cpdpsk__promo-img cpdpsk__promo-img--mobile cpdpsk__promo-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdpsk__promo-ph-svg' }}<span class="cpdpsk__promo-ph-label">Mobile banner — upload in section settings</span></div>
-          {%- endif -%}
-        {%- if section.settings.promo_banner_link != blank -%}</a>{%- endif -%}
-      </div>
-    {%- endif -%}
     <h2 class="cpdpsk__title">{{ section.settings.heading | default: 'Six skills hiding inside one bag' }}</h2>
     {%- if section.settings.subheading != blank -%}<p class="cpdpsk__sub">{{ section.settings.subheading }}</p>{%- endif -%}
     <div class="cpdpsk__grid">
@@ -40,19 +39,18 @@
     background:var(--cpdpsk-bg); font-family:var(--cpdpsk-body); position:relative; overflow:hidden;
   }
   #CpdpSk-{{ uid }} *{box-sizing:border-box;}
-  #CpdpSk-{{ uid }} .cpdpsk__wrap{max-width:1240px;margin:0 auto;padding:{{ section.settings.padding_top | default: 64 }}px 20px {{ section.settings.padding_bottom | default: 72 }}px;position:relative;z-index:1;}
-  #CpdpSk-{{ uid }} .cpdpsk__promo-banner{width:100%;margin:0 0 32px;border-radius:22px;overflow:hidden;}
-  #CpdpSk-{{ uid }} .cpdpsk__promo-link{display:block;}
-  #CpdpSk-{{ uid }} .cpdpsk__promo-img{display:block;width:100%;height:auto;}
-  #CpdpSk-{{ uid }} .cpdpsk__promo-img--mobile{display:none;}
-  #CpdpSk-{{ uid }} .cpdpsk__promo-ph{position:relative;aspect-ratio:4/1;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;}
-  #CpdpSk-{{ uid }} .cpdpsk__promo-img--mobile.cpdpsk__promo-ph{aspect-ratio:3/4;}
-  #CpdpSk-{{ uid }} .cpdpsk__promo-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.5;}
-  #CpdpSk-{{ uid }} .cpdpsk__promo-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:#2b2b2b;background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
+  #CpdpSk-{{ uid }} .cpdpsk__bg{position:absolute;inset:0;z-index:0;overflow:hidden;}
+  #CpdpSk-{{ uid }} .cpdpsk__bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  #CpdpSk-{{ uid }} .cpdpsk__bg-img--mobile{display:none;}
+  #CpdpSk-{{ uid }} .cpdpsk__bg-ph{background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;}
+  #CpdpSk-{{ uid }} .cpdpsk__bg-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.35;}
+  #CpdpSk-{{ uid }} .cpdpsk__bg-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:#2b2b2b;background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
+  #CpdpSk-{{ uid }} .cpdpsk__bg-overlay{position:absolute;inset:0;background:rgba(38,20,74,.45);}
   @media (max-width:749px){
-    #CpdpSk-{{ uid }} .cpdpsk__promo-img--desktop{display:none;}
-    #CpdpSk-{{ uid }} .cpdpsk__promo-img--mobile{display:block;}
+    #CpdpSk-{{ uid }} .cpdpsk__bg-img--desktop{display:none;}
+    #CpdpSk-{{ uid }} .cpdpsk__bg-img--mobile{display:block;}
   }
+  #CpdpSk-{{ uid }} .cpdpsk__wrap{max-width:1240px;margin:0 auto;padding:{{ section.settings.padding_top | default: 64 }}px 20px {{ section.settings.padding_bottom | default: 72 }}px;position:relative;z-index:1;}
   #CpdpSk-{{ uid }} .cpdpsk__title{font-family:var(--cpdpsk-head);font-weight:800;text-align:center;color:#fff;font-size:clamp(30px,4vw,52px);line-height:1.1;margin:0 0 12px;}
   #CpdpSk-{{ uid }} .cpdpsk__sub{text-align:center;color:rgba(255,255,255,.92);font-size:clamp(16px,1.6vw,20px);max-width:820px;margin:0 auto 40px;line-height:1.5;}
   #CpdpSk-{{ uid }} .cpdpsk__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;}
@@ -77,14 +75,14 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Six skills hiding inside one bag" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Every bag they colour quietly builds a real skill — here are six hiding in the fun." },
-    { "type": "color", "id": "bg_color", "label": "Background", "default": "#7C5CE0" },
+    { "type": "color", "id": "bg_color", "label": "Background (fallback colour)", "default": "#7C5CE0" },
     { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 140, "step": 4, "default": 64 },
     { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 140, "step": 4, "default": 72 },
-    { "type": "header", "content": "Promo Banner (optional)" },
-    { "type": "image_picker", "id": "promo_banner_desktop", "label": "Banner image — Desktop", "info": "Recommended 2000×500px" },
-    { "type": "image_picker", "id": "promo_banner_mobile", "label": "Banner image — Mobile", "info": "Recommended 1000×1300px" },
-    { "type": "url", "id": "promo_banner_link", "label": "Banner link (optional)" },
-    { "type": "text", "id": "promo_banner_alt", "label": "Banner alt text" }
+    { "type": "header", "content": "Background banner (optional)" },
+    { "type": "paragraph", "content": "Upload an image to use as the section background, with the heading and skill cards displayed on top of it." },
+    { "type": "image_picker", "id": "promo_banner_desktop", "label": "Background image — Desktop", "info": "Recommended 2000×700px" },
+    { "type": "image_picker", "id": "promo_banner_mobile", "label": "Background image — Mobile", "info": "Recommended 1000×1400px" },
+    { "type": "text", "id": "promo_banner_alt", "label": "Background image alt text" }
   ],
   "blocks": [
     { "type": "skill", "name": "Skill card", "settings": [
