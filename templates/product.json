@@ -125,6 +125,7 @@
     },
     "creste_recommend": {
       "type": "creste-recommend",
+      "disabled": true,
       "settings": {
         "heading_prefix": "You may Also",
         "heading_highlight": "Like",
@@ -136,6 +137,24 @@
         "promo_banner_desktop": "shopify://shop_images/Section_-_Best_Sellers_e4f84787-d839-4b9c-857d-1a976371defc.png",
         "promo_banner_mobile": "shopify://shop_images/Play_with_Purpose_Section.png",
         "promo_banner_alt": ""
+      }
+    },
+    "creste_favourites_DJKLRz": {
+      "type": "creste-favourites",
+      "name": "Creste Favourites",
+      "settings": {
+        "fallback_bg": "#F5C518",
+        "overlay": 0,
+        "heading": "Our Favourites",
+        "subtitle": "",
+        "heading_color": "#2B1702",
+        "collection": "",
+        "count": 10,
+        "card_width": 250,
+        "default_rating": "4.9",
+        "badge_tag": "top pick",
+        "badge_text": "TOP PICK",
+        "button_label": "Add To Cart"
       }
     },
     "creste_love": {
@@ -270,6 +289,7 @@
     "creste_artists",
     "creste_skills",
     "creste_recommend",
+    "creste_favourites_DJKLRz",
     "creste_love",
     "creste_reviews",
     "creste_birthday"
