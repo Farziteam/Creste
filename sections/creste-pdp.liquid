@@ -154,28 +154,11 @@
         </div>
         <button type="button" class="cpdp__buynow" data-buynow>Buy Now <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
-        <div class="cpdp__trust-wrap">
-          {%- if section.settings.trust_banner_desktop != blank or section.settings.trust_banner_mobile != blank or request.design_mode -%}
-            <div class="cpdp__trust-bg">
-              {%- if section.settings.trust_banner_desktop != blank -%}
-                {{ section.settings.trust_banner_desktop | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'cpdp__trust-bg-img cpdp__trust-bg-img--desktop', alt: section.settings.trust_banner_alt }}
-              {%- elsif request.design_mode -%}
-                <div class="cpdp__trust-bg-img cpdp__trust-bg-img--desktop cpdp__trust-bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__trust-bg-ph-svg' }}<span class="cpdp__trust-bg-ph-label">Desktop background</span></div>
-              {%- endif -%}
-              {%- if section.settings.trust_banner_mobile != blank -%}
-                {{ section.settings.trust_banner_mobile | image_url: width: 800 | image_tag: loading: 'lazy', class: 'cpdp__trust-bg-img cpdp__trust-bg-img--mobile', alt: section.settings.trust_banner_alt }}
-              {%- elsif request.design_mode -%}
-                <div class="cpdp__trust-bg-img cpdp__trust-bg-img--mobile cpdp__trust-bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__trust-bg-ph-svg' }}<span class="cpdp__trust-bg-ph-label">Mobile background</span></div>
-              {%- endif -%}
-              <div class="cpdp__trust-bg-overlay"></div>
-            </div>
-          {%- endif -%}
-          <div class="cpdp__trust">
-            <div class="cpdp__trust-item cpdp__trust-item--g"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="cpdp__trust-t">100% Secure</span><span class="cpdp__trust-s">secure payment</span></div>
-            <div class="cpdp__trust-item cpdp__trust-item--b"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#3B82C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M15.5 15.2a3 3 0 1 1-.9-3.1"/><path d="M15.6 12.2v2h-2"/></svg></span><span class="cpdp__trust-t">7-day returns</span><span class="cpdp__trust-s">No questions asked</span></div>
-            <div class="cpdp__trust-item cpdp__trust-item--a"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#E0902A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.4L7 22l5-3 5 3-2-8.6"/><circle cx="12" cy="9" r="1.6" fill="#138808" stroke="none"/></svg></span><span class="cpdp__trust-t">Made in India</span><span class="cpdp__trust-s">By a small team</span></div>
-            <div class="cpdp__trust-item cpdp__trust-item--p"><span class="cpdp__trust-ico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13"/><path d="M12 8S9.6 8 8.6 6.7 8.7 3.6 10.1 4.4 12 8 12 8zM12 8s2.4 0 3.4-1.3-.1-3.1-1.5-2.3S12 8 12 8z"/></svg></span><span class="cpdp__trust-t">Gift wrap free</span><span class="cpdp__trust-s">Add a note at checkout</span></div>
-          </div>
+        <div class="cpdp__trust">
+          <div class="cpdp__trust-item cpdp__trust-item--g"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_1 != blank -%}{{ section.settings.trust_icon_1 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">100% Secure</span><span class="cpdp__trust-s">secure payment</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--b"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_2 != blank -%}{{ section.settings.trust_icon_2 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#3B82C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M15.5 15.2a3 3 0 1 1-.9-3.1"/><path d="M15.6 12.2v2h-2"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">7-day returns</span><span class="cpdp__trust-s">No questions asked</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--a"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_3 != blank -%}{{ section.settings.trust_icon_3 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#E0902A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.4L7 22l5-3 5 3-2-8.6"/><circle cx="12" cy="9" r="1.6" fill="#138808" stroke="none"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">Made in India</span><span class="cpdp__trust-s">By a small team</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--p"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_4 != blank -%}{{ section.settings.trust_icon_4 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13"/><path d="M12 8S9.6 8 8.6 6.7 8.7 3.6 10.1 4.4 12 8 12 8zM12 8s2.4 0 3.4-1.3-.1-3.1-1.5-2.3S12 8 12 8z"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">Gift wrap free</span><span class="cpdp__trust-s">Add a note at checkout</span></div>
         </div>
         {%- if section.settings.safety_text != blank -%}<div class="cpdp__safety"><span class="cpdp__safety-ico">⚠️</span><span class="cpdp__safety-t">{{ section.settings.safety_text }}</span>{%- if section.settings.safety_link != blank -%}<a href="{{ section.settings.safety_link }}" class="cpdp__safety-link">Safety details</a>{%- endif -%}</div>{%- endif -%}
         <div class="cpdp__offers">
@@ -384,21 +367,11 @@
   #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:999px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;transition:background .15s;}
   #Cpdp-{{ uid }} .cpdp__atc:hover{background:var(--cpdp-orange-d);}
   #Cpdp-{{ uid }} .cpdp__atc[disabled]{background:#c7c2ba;cursor:not-allowed;}
-  #Cpdp-{{ uid }} .cpdp__trust-wrap{position:relative;overflow:hidden;border-radius:16px;margin-bottom:18px;}
-  #Cpdp-{{ uid }} .cpdp__trust-bg{position:absolute;inset:0;overflow:hidden;}
-  #Cpdp-{{ uid }} .cpdp__trust-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
-  #Cpdp-{{ uid }} .cpdp__trust-bg-img--mobile{display:none;}
-  #Cpdp-{{ uid }} .cpdp__trust-bg-ph{background:#F3EEE6;display:flex;align-items:center;justify-content:center;}
-  #Cpdp-{{ uid }} .cpdp__trust-bg-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.4;}
-  #Cpdp-{{ uid }} .cpdp__trust-bg-ph-label{position:relative;z-index:1;font-weight:700;font-size:12px;color:var(--cpdp-brown);background:rgba(255,255,255,.9);padding:5px 12px;border-radius:999px;}
-  #Cpdp-{{ uid }} .cpdp__trust-bg-overlay{position:absolute;inset:0;background:rgba(255,255,255,.72);}
-  @media (max-width:749px){
-    #Cpdp-{{ uid }} .cpdp__trust-bg-img--desktop{display:none;}
-    #Cpdp-{{ uid }} .cpdp__trust-bg-img--mobile{display:block;}
-  }
-  #Cpdp-{{ uid }} .cpdp__trust{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:0;padding:10px 4px;}
+  #Cpdp-{{ uid }} .cpdp__trust{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px;}
   #Cpdp-{{ uid }} .cpdp__trust-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:6px 4px;}
-  #Cpdp-{{ uid }} .cpdp__trust-ico{display:grid;place-items:center;height:32px;}
+  #Cpdp-{{ uid }} .cpdp__trust-ico{position:relative;display:grid;place-items:center;height:32px;}
+  #Cpdp-{{ uid }} .cpdp__trust-ico-img{width:30px;height:30px;object-fit:contain;display:block;}
+  #Cpdp-{{ uid }} .cpdp__trust-ico-ph{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;border:1.5px dashed #c9c4bd;color:#9a958c;background:#F8F6F1;}
   #Cpdp-{{ uid }} .cpdp__trust-t{font-weight:700;font-size:14px;color:var(--cpdp-purple);}
   #Cpdp-{{ uid }} .cpdp__trust-s{font-size:12px;color:#8a8f98;}
   #Cpdp-{{ uid }} .cpdp__trust-t,#Cpdp-{{ uid }} .cpdp__trust-s{overflow-wrap:break-word;}
@@ -653,11 +626,12 @@
     { "type": "image_picker", "id": "green_banner_desktop", "label": "Green section background — Desktop", "info": "Recommended 2000×700px" },
     { "type": "image_picker", "id": "green_banner_mobile", "label": "Green section background — Mobile", "info": "Recommended 1000×1400px" },
     { "type": "text", "id": "green_banner_alt", "label": "Green section background alt text" },
-    { "type": "header", "content": "Trust icons background (optional)" },
-    { "type": "paragraph", "content": "Upload an image to use as the background behind the 4 trust icons (Secure / Returns / Made in India / Gift wrap)." },
-    { "type": "image_picker", "id": "trust_banner_desktop", "label": "Trust icons background — Desktop", "info": "Recommended 1200×300px" },
-    { "type": "image_picker", "id": "trust_banner_mobile", "label": "Trust icons background — Mobile", "info": "Recommended 800×800px" },
-    { "type": "text", "id": "trust_banner_alt", "label": "Trust icons background alt text" }
+    { "type": "header", "content": "Trust icons (optional)" },
+    { "type": "paragraph", "content": "Upload a custom icon image for each trust badge. Leave blank to keep the default icon." },
+    { "type": "image_picker", "id": "trust_icon_1", "label": "Icon 1 — 100% Secure", "info": "Recommended 60×60px" },
+    { "type": "image_picker", "id": "trust_icon_2", "label": "Icon 2 — 7-day returns", "info": "Recommended 60×60px" },
+    { "type": "image_picker", "id": "trust_icon_3", "label": "Icon 3 — Made in India", "info": "Recommended 60×60px" },
+    { "type": "image_picker", "id": "trust_icon_4", "label": "Icon 4 — Gift wrap free", "info": "Recommended 60×60px" }
   ],
   "presets": [ { "name": "Creste PDP" } ]
 }
