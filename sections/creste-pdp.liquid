@@ -15,6 +15,23 @@
 <section id="Cpdp-{{ uid }}" class="cpdp" data-section-id="{{ uid }}">
   <div class="cpdp__wrap">
 
+    {%- if section.settings.promo_banner_desktop != blank or section.settings.promo_banner_mobile != blank or request.design_mode -%}
+      <div class="cpdp__promo-banner">
+        {%- if section.settings.promo_banner_link != blank -%}<a href="{{ section.settings.promo_banner_link }}" class="cpdp__promo-link">{%- endif -%}
+          {%- if section.settings.promo_banner_desktop != blank -%}
+            {{ section.settings.promo_banner_desktop | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'cpdp__promo-img cpdp__promo-img--desktop', alt: section.settings.promo_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdp__promo-img cpdp__promo-img--desktop cpdp__promo-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__promo-ph-svg' }}<span class="cpdp__promo-ph-label">Desktop banner — upload in section settings</span></div>
+          {%- endif -%}
+          {%- if section.settings.promo_banner_mobile != blank -%}
+            {{ section.settings.promo_banner_mobile | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'cpdp__promo-img cpdp__promo-img--mobile', alt: section.settings.promo_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdp__promo-img cpdp__promo-img--mobile cpdp__promo-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__promo-ph-svg' }}<span class="cpdp__promo-ph-label">Mobile banner — upload in section settings</span></div>
+          {%- endif -%}
+        {%- if section.settings.promo_banner_link != blank -%}</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+
     <nav class="cpdp__crumbs" aria-label="Breadcrumb">
       <a href="{{ routes.root_url }}">Home</a>
       <span class="cpdp__crumb-sep">›</span>
@@ -237,6 +254,18 @@
   #Cpdp-{{ uid }} *{box-sizing:border-box;}
   #Cpdp-{{ uid }} .cpdp__form{margin:0;}
   #Cpdp-{{ uid }} .cpdp__wrap{max-width:1320px;margin:0 auto;padding:14px 20px 0;overflow-x:clip;}
+  #Cpdp-{{ uid }} .cpdp__promo-banner{width:100%;margin:0 0 22px;border-radius:var(--cpdp-radius);overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__promo-link{display:block;}
+  #Cpdp-{{ uid }} .cpdp__promo-img{display:block;width:100%;height:auto;}
+  #Cpdp-{{ uid }} .cpdp__promo-img--mobile{display:none;}
+  #Cpdp-{{ uid }} .cpdp__promo-ph{position:relative;aspect-ratio:4/1;background:#E7D9F5;display:flex;align-items:center;justify-content:center;}
+  #Cpdp-{{ uid }} .cpdp__promo-img--mobile.cpdp__promo-ph{aspect-ratio:3/4;}
+  #Cpdp-{{ uid }} .cpdp__promo-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.45;}
+  #Cpdp-{{ uid }} .cpdp__promo-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:var(--cpdp-brown);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
+  @media (max-width:749px){
+    #Cpdp-{{ uid }} .cpdp__promo-img--desktop{display:none;}
+    #Cpdp-{{ uid }} .cpdp__promo-img--mobile{display:block;}
+  }
   #Cpdp-{{ uid }} .cpdp__col-left{position:sticky;top:20px;align-self:start;}
   #Cpdp-{{ uid }} .cpdp__crumbs{display:flex;align-items:center;gap:8px;font-size:14px;color:#6b7280;padding:8px 4px 18px;}
   #Cpdp-{{ uid }} .cpdp__crumbs a{color:#6b7280;text-decoration:none;}
@@ -558,7 +587,12 @@
     { "type": "header", "content": "FAQs (question|answer ; separated)" },
     { "type": "textarea", "id": "faqs", "label": "FAQs", "default": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash." },
     { "type": "header", "content": "Contact" },
-    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (country code, no +)", "default": "919999999999" }
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (country code, no +)", "default": "919999999999" },
+    { "type": "header", "content": "Promo Banner (optional)" },
+    { "type": "image_picker", "id": "promo_banner_desktop", "label": "Banner image — Desktop", "info": "Recommended 2000×500px" },
+    { "type": "image_picker", "id": "promo_banner_mobile", "label": "Banner image — Mobile", "info": "Recommended 1000×1300px" },
+    { "type": "url", "id": "promo_banner_link", "label": "Banner link (optional)" },
+    { "type": "text", "id": "promo_banner_alt", "label": "Banner alt text" }
   ],
   "presets": [ { "name": "Creste PDP" } ]
 }
