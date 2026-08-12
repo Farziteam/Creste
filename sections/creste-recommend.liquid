@@ -8,6 +8,22 @@
 -%}
 <section id="CpdpRec-{{ uid }}" class="cpdprec" style="--cpdprec-bg: {{ section.settings.bg_color | default: '#F6B41D' }};">
   <div class="cpdprec__wrap">
+    {%- if section.settings.promo_banner_desktop != blank or section.settings.promo_banner_mobile != blank or request.design_mode -%}
+      <div class="cpdprec__promo-banner">
+        {%- if section.settings.promo_banner_link != blank -%}<a href="{{ section.settings.promo_banner_link }}" class="cpdprec__promo-link">{%- endif -%}
+          {%- if section.settings.promo_banner_desktop != blank -%}
+            {{ section.settings.promo_banner_desktop | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'cpdprec__promo-img cpdprec__promo-img--desktop', alt: section.settings.promo_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdprec__promo-img cpdprec__promo-img--desktop cpdprec__promo-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdprec__promo-ph-svg' }}<span class="cpdprec__promo-ph-label">Desktop banner — upload in section settings</span></div>
+          {%- endif -%}
+          {%- if section.settings.promo_banner_mobile != blank -%}
+            {{ section.settings.promo_banner_mobile | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'cpdprec__promo-img cpdprec__promo-img--mobile', alt: section.settings.promo_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdprec__promo-img cpdprec__promo-img--mobile cpdprec__promo-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdprec__promo-ph-svg' }}<span class="cpdprec__promo-ph-label">Mobile banner — upload in section settings</span></div>
+          {%- endif -%}
+        {%- if section.settings.promo_banner_link != blank -%}</a>{%- endif -%}
+      </div>
+    {%- endif -%}
     <div class="cpdprec__head">
       <h2 class="cpdprec__title">{{ section.settings.heading_prefix | default: 'You may Also' }} <span class="cpdprec__hl">{{ section.settings.heading_highlight | default: 'Like' }}</span></h2>
       {%- if section.settings.subheading != blank -%}<p class="cpdprec__sub">{{ section.settings.subheading }}</p>{%- endif -%}
@@ -53,6 +69,18 @@
     background:var(--cpdprec-bg);font-family:var(--cpdprec-body);}
   #CpdpRec-{{ uid }} *{box-sizing:border-box;}
   #CpdpRec-{{ uid }} .cpdprec__wrap{max-width:1240px;margin:0 auto;padding:{{ section.settings.padding_top | default: 56 }}px 20px {{ section.settings.padding_bottom | default: 60 }}px;}
+  #CpdpRec-{{ uid }} .cpdprec__promo-banner{width:100%;margin:0 0 28px;border-radius:20px;overflow:hidden;}
+  #CpdpRec-{{ uid }} .cpdprec__promo-link{display:block;}
+  #CpdpRec-{{ uid }} .cpdprec__promo-img{display:block;width:100%;height:auto;}
+  #CpdpRec-{{ uid }} .cpdprec__promo-img--mobile{display:none;}
+  #CpdpRec-{{ uid }} .cpdprec__promo-ph{position:relative;aspect-ratio:4/1;background:rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;}
+  #CpdpRec-{{ uid }} .cpdprec__promo-img--mobile.cpdprec__promo-ph{aspect-ratio:3/4;}
+  #CpdpRec-{{ uid }} .cpdprec__promo-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.5;}
+  #CpdpRec-{{ uid }} .cpdprec__promo-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:var(--cpdprec-brown);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
+  @media (max-width:749px){
+    #CpdpRec-{{ uid }} .cpdprec__promo-img--desktop{display:none;}
+    #CpdpRec-{{ uid }} .cpdprec__promo-img--mobile{display:block;}
+  }
   #CpdpRec-{{ uid }} .cpdprec__title{font-family:var(--cpdprec-head);font-weight:800;font-size:clamp(30px,4vw,50px);color:var(--cpdprec-brown);margin:0 0 8px;}
   #CpdpRec-{{ uid }} .cpdprec__hl{color:#fff;}
   #CpdpRec-{{ uid }} .cpdprec__sub{font-size:clamp(16px,1.6vw,20px);color:var(--cpdprec-brown);margin:0 0 26px;}
@@ -101,7 +129,12 @@
     { "type": "collection", "id": "collection", "label": "Products from collection (blank = product's collection)" },
     { "type": "color", "id": "bg_color", "label": "Background", "default": "#F6B41D" },
     { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "default": 56 },
-    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "default": 60 }
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "default": 60 },
+    { "type": "header", "content": "Promo Banner (optional)" },
+    { "type": "image_picker", "id": "promo_banner_desktop", "label": "Banner image — Desktop", "info": "Recommended 2000×500px" },
+    { "type": "image_picker", "id": "promo_banner_mobile", "label": "Banner image — Mobile", "info": "Recommended 1000×1300px" },
+    { "type": "url", "id": "promo_banner_link", "label": "Banner link (optional)" },
+    { "type": "text", "id": "promo_banner_alt", "label": "Banner alt text" }
   ],
   "presets": [ { "name": "Creste You May Also Like" } ]
 }
