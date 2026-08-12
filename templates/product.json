@@ -115,7 +115,6 @@
         "padding_top": 64,
         "padding_bottom": 72,
         "promo_banner_desktop": "shopify://shop_images/Container_1_57fbfdb3-a519-49d1-bc04-d3a3495ffaf7.png",
-        "promo_banner_link": "",
         "promo_banner_alt": ""
       }
     },
@@ -129,7 +128,7 @@
         "bg_color": "#f6b41d",
         "padding_top": 56,
         "padding_bottom": 60,
-        "promo_banner_link": "",
+        "promo_banner_desktop": "shopify://shop_images/Section_-_Best_Sellers_e4f84787-d839-4b9c-857d-1a976371defc.png",
         "promo_banner_alt": ""
       }
     },
