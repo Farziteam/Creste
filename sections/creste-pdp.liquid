@@ -34,7 +34,7 @@
 
     <nav class="cpdp__crumbs" aria-label="Breadcrumb">
       <a href="{{ routes.root_url }}">Home</a>
-      <span class="cpdp__crumb-sep">›</span>
+      <span class="cpdp__crumb-sep">{{'icon-arrow-right.svg' | inline_asset_content }}</span>
       <span class="cpdp__crumb-current">{{ heading_title }}</span>
     </nav>
 
@@ -44,10 +44,10 @@
       <div class="cpdp__col-left">
         <div class="cpdp__gallery">
           <div class="cpdp__badges">
-            {%- if section.settings.badge_1 != blank -%}<span class="cpdp__badge cpdp__badge--best">{{ section.settings.badge_1 }}</span>{%- endif -%}
+            {%- if product.metafields.custom.product_tag != blank -%}<span class="cpdp__badge cpdp__badge--best">{{ product.metafields.custom.product_tag }}</span>{%- endif -%}
             {%- if section.settings.badge_2 != blank -%}<span class="cpdp__badge cpdp__badge--soft">{{ section.settings.badge_2 }}</span>{%- endif -%}
           </div>
-          <button type="button" class="cpdp__expand" data-share data-share-url="{{ shop.secure_url }}{{ product.url }}" data-share-title="{{ product.title | escape }}" aria-label="Share"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg></button>
+          <button type="button" class="cpdp__expand" data-share data-share-url="{{ shop.secure_url }}{{ product.url }}" data-share-title="{{ product.title | escape }}" aria-label="Share">{{ 'icon-share-pdp.svg' | inline_asset_content }}</button>
           <div class="cpdp__stage">
             {%- if product.media.size > 0 -%}
               {%- for media in product.media -%}
@@ -93,7 +93,8 @@
           <a href="#cpdp-reviews" class="cpdp__rating-link">{{ section.settings.rating_text | default: '4.9 · 2,148 reviews' }}</a>
           <span class="cpdp__rating-sold">{{ section.settings.sold_text | default: '1,900+ bought this month' }}</span>
         </div>
-        {%- if section.settings.short_desc != blank -%}<p class="cpdp__desc">{{ section.settings.short_desc }}</p>{%- elsif product.description != blank -%}<p class="cpdp__desc">{{ product.description | strip_html | truncatewords: 40 }}</p>{%- endif -%}
+        {%- if product.description != blank -%}<p class="cpdp__desc">{{ product.description | strip_html | truncatewords: 40 }}</p>{%- endif -%}
+        {% comment %} {%- if section.settings.short_desc != blank -%}<p class="cpdp__desc">{{ section.settings.short_desc }}</p> {% endcomment %}
 
         <div class="cpdp__buybox">
         {%- if product.variants.size > 1 -%}
@@ -124,7 +125,21 @@
           <span class="cpdp__price-now" data-price>{{ cur.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
           {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
         </div>
-        <label class="cpdp__giftwrap"><span class="cpdp__gift-ico"><svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><circle cx="11" cy="13" r="2.4" fill="#EC407A"/><circle cx="21" cy="10" r="2" fill="#FF7043"/><circle cx="30" cy="14" r="2.4" fill="#EF5350"/><circle cx="15" cy="22" r="2" fill="#F06292"/><circle cx="25" cy="21" r="2.4" fill="#FF8A65"/><circle cx="31" cy="27" r="2" fill="#EC407A"/><circle cx="11" cy="29" r="2.4" fill="#FF7043"/><circle cx="21" cy="31" r="2" fill="#EF5350"/></svg></span><span class="cpdp__gift-body"><b>Add gift wrapping — free</b><em>Kraft paper, ribbon and a handwritten note</em></span><input type="checkbox" name="properties[Gift wrapping]" value="Yes" class="cpdp__gift-check"></label>
+        <label class="cpdp__giftwrap">
+          
+          <span class="cpdp__gift-ico">
+            {% if section.settings.gift_icon != blank %}
+              <img
+                src="{{ section.settings.gift_icon | image_url: width: 100 }}"
+                alt="Gift Icon"
+                loading="lazy"
+                width="100"
+                height="100"
+              >
+            {% endif %}
+          </span>
+          
+         <span class="cpdp__gift-body"><b>{{ section.settings.gift_heading }}</b><em>{{ section.settings.gift_sub_heading }}</em></span><input type="checkbox" name="properties[Gift wrapping]" value="Yes" class="cpdp__gift-check"></label>
         <div class="cpdp__hr cpdp__hr--blank"></div>
         <div class="cpdp__po">
           <h3 class="cpdp__po-title">Choose Purchase Option</h3>
@@ -174,8 +189,8 @@
       </div>
     </div>
     </form>
-
-    <div class="cpdp__green">
+    {% comment %} Green Banner Section {% endcomment %}
+    {% comment %} <div class="cpdp__green">
       {%- if section.settings.green_banner_desktop != blank or section.settings.green_banner_mobile != blank or request.design_mode -%}
         <div class="cpdp__green-bg">
           {%- if section.settings.green_banner_desktop != blank -%}
@@ -222,7 +237,8 @@
           {%- endfor -%}
         </div>
       </div>
-    </div>
+    </div> {% endcomment %}
+     {% comment %} <div id="cfbws-1238"></div> {% endcomment %}
   </div>
 
   <div class="cpdp__sticky" data-sticky>
@@ -268,7 +284,7 @@
   }
   #Cpdp-{{ uid }} *{box-sizing:border-box;}
   #Cpdp-{{ uid }} .cpdp__form{margin:0;}
-  #Cpdp-{{ uid }} .cpdp__wrap{max-width:1320px;margin:0 auto;padding:14px 20px 0;overflow-x:clip;}
+  #Cpdp-{{ uid }} .cpdp__wrap{max-width:1320px;margin:0 auto;padding:90px 15px 0;overflow-x:clip;}
   #Cpdp-{{ uid }} .cpdp__promo-banner{width:100%;margin:0 0 22px;border-radius:var(--cpdp-radius);overflow:hidden;}
   #Cpdp-{{ uid }} .cpdp__promo-link{display:block;}
   #Cpdp-{{ uid }} .cpdp__promo-img{display:block;width:100%;height:auto;}
@@ -282,9 +298,9 @@
     #Cpdp-{{ uid }} .cpdp__promo-img--mobile{display:block;}
   }
   #Cpdp-{{ uid }} .cpdp__col-left{position:sticky;top:20px;align-self:start;}
-  #Cpdp-{{ uid }} .cpdp__crumbs{display:flex;align-items:center;gap:8px;font-size:14px;color:#6b7280;padding:8px 4px 18px;}
-  #Cpdp-{{ uid }} .cpdp__crumbs a{color:#6b7280;text-decoration:none;}
-  #Cpdp-{{ uid }} .cpdp__crumb-current{color:var(--cpdp-brown);font-weight:700;}
+  #Cpdp-{{ uid }} .cpdp__crumbs{display:flex;align-items:center;gap:8px;font-size:14px;color:#6b7280;padding:18px 4px 18px;}
+  #Cpdp-{{ uid }} .cpdp__crumbs a{color:#6b7280;text-decoration:none;font-family: 'Poppins',sans-serif;font-size: 14px;}
+  #Cpdp-{{ uid }} .cpdp__crumb-current{color:var(--cpdp-brown);font-weight:700; font-family: 'Poppins',sans-serif;font-size: 14px;}
   #Cpdp-{{ uid }} .cpdp__hero{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1fr);gap:36px;align-items:start;}
   #Cpdp-{{ uid }} .cpdp__gallery{position:relative;background:#EFE7F7;border-radius:var(--cpdp-radius);overflow:hidden;aspect-ratio:1/1;}
   #Cpdp-{{ uid }} .cpdp__stage,#Cpdp-{{ uid }} .cpdp__slide{position:absolute;inset:0;}
@@ -294,9 +310,23 @@
   #Cpdp-{{ uid }} .cpdp__img--ph,#Cpdp-{{ uid }} .cpdp__ph-svg{width:100%;height:100%;background:#E7D9F5;}
   #Cpdp-{{ uid }} .cpdp__badges{position:absolute;top:16px;left:16px;z-index:3;display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
   #Cpdp-{{ uid }} .cpdp__badge{font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px;box-shadow:0 4px 10px rgba(0,0,0,.08);}
-  #Cpdp-{{ uid }} .cpdp__badge--best{background:var(--cpdp-orange);color:#fff;}
-  #Cpdp-{{ uid }} .cpdp__badge--soft{background:#fff;color:var(--cpdp-brown);}
-  #Cpdp-{{ uid }} .cpdp__expand{position:absolute;top:16px;right:16px;z-index:3;width:40px;height:40px;border:none;border-radius:12px;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.1);}
+  #Cpdp-{{ uid }} .cpdp__badge--best{
+    background:var(--cpdp-orange);
+    color:#fff;
+    font-size: 12px;
+    font-family: 'Quicksand', sans-serif;
+    letter-spacing: 0%;
+    line-height: 128%;
+  }
+  #Cpdp-{{ uid }} .cpdp__badge--soft{
+    background:#fff;
+    color: #58AD6F;
+    font-size: 12px;
+    font-family: 'Quicksand', sans-serif;
+    letter-spacing: 0%;
+    line-height: 128%;
+  }
+  #Cpdp-{{ uid }} .cpdp__expand{position:absolute;top:16px;right:16px;z-index:3;width:40px;height:40px;border:none;border-radius:50%;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.1);}
   #Cpdp-{{ uid }} .cpdp__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border:none;border-radius:999px;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.14);}
   #Cpdp-{{ uid }} .cpdp__nav--prev{left:14px;color:#c9c4bd;}
   #Cpdp-{{ uid }} .cpdp__nav--next{right:14px;color:var(--cpdp-orange);}
@@ -312,39 +342,47 @@
   #Cpdp-{{ uid }} .cpdp__video-thumb--ph{background:linear-gradient(135deg,#FBE0D8,#F6C9Bb);}
   #Cpdp-{{ uid }} .cpdp__play{position:absolute;inset:0;margin:auto;width:74px;height:74px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;}
   #Cpdp-{{ uid }} .cpdp__pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
-  #Cpdp-{{ uid }} .cpdp__pill{font-size:14px;font-weight:600;padding:8px 16px;border-radius:999px;}
-  #Cpdp-{{ uid }} .cpdp__pill--y{background:#FEF3C7;color:#B45309;}
-  #Cpdp-{{ uid }} .cpdp__pill--b{background:#DBEAFE;color:#1D4ED8;}
-  #Cpdp-{{ uid }} .cpdp__pill--g{background:#DCFCE7;color:#15803D;}
-  #Cpdp-{{ uid }} .cpdp__pill--p{background:#FCE7F3;color:#BE185D;}
-  #Cpdp-{{ uid }} .cpdp__title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(32px,3.8vw,54px);line-height:1.08;margin:6px 0 14px;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__pill{
+    letter-spacing: 0%;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 12.5px;
+    padding:8px 16px;border-radius:999px;
+    font-weight: 700;
+  }
+  #Cpdp-{{ uid }} .cpdp__pill--y{background:#FEF6E2;color:#8A6A1E;}
+  #Cpdp-{{ uid }} .cpdp__pill--b{background:#E4F4F9;color:#2A7E97;}
+  #Cpdp-{{ uid }} .cpdp__pill--g{background:#E9F5EC;color:#3F8955;}
+  #Cpdp-{{ uid }} .cpdp__pill--p{background:#FCEDF3;color:#B85481;}
+  #Cpdp-{{ uid }} .cpdp__title{font-family:'Nunito', sans-serif;font-weight:900;font-size:clamp(32px,3.8vw,52px);line-height:1.08;margin:6px 0 6px;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__rating{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:16px;}
   #Cpdp-{{ uid }} .cpdp__stars{color:#F5B301;font-size:20px;letter-spacing:2px;}
   #Cpdp-{{ uid }} .cpdp__rating-link{color:var(--cpdp-brown);font-weight:700;text-decoration:underline;}
   #Cpdp-{{ uid }} .cpdp__rating-sold{color:#16A34A;font-weight:700;}
-  #Cpdp-{{ uid }} .cpdp__desc{font-size:18px;line-height:1.55;color:var(--cpdp-ink);margin:0 0 22px;}
+  #Cpdp-{{ uid }} .cpdp__desc{font-size:15px;font-family: 'Poppins', sans-serif;line-height:1.55;/*color:var(--cpdp-ink);*/color: #6E5A4A;margin:0 0 22px;-webkit-line-clamp: 2;-webkit-box-orient: vertical; overflow: hidden; display: -webkit-box;}
   #Cpdp-{{ uid }} .cpdp__buybox{background:#FBF5E3;border-radius:22px;padding:24px;margin-bottom:18px;}
   #Cpdp-{{ uid }} .cpdp__buybox .cpdp__themebox{background:transparent;padding:0;margin-bottom:0;}
   #Cpdp-{{ uid }} .cpdp__themebox-title{font-family:var(--cpdp-body);font-size:18px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px;}
-  #Cpdp-{{ uid }} .cpdp__themegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;}
-  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:6px;text-align:left;background:#fff;border:1.5px solid #DBD5C6;border-radius:14px;padding:11px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s;}
-  #Cpdp-{{ uid }} .cpdp__theme.is-selected{border:2px solid #5FB85A;background:#F4FBF1;}
+  #Cpdp-{{ uid }} .cpdp__themegrid{display:flex;flex-wrap:wrap;gap:10px;padding-bottom: 1.5rem; border-bottom: 1px solid #EFE7DE;}
+  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:6px;text-align:left;background: transparent;border:3px solid #E1DDCF;border-radius:14px;padding:10px 16px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s; height: 68px;}
+  #Cpdp-{{ uid }} .cpdp__theme.is-selected{border:3px solid #5FB85A;background: #5BAD6F1A;}
   #Cpdp-{{ uid }} .cpdp__theme-ico{width:34px;height:34px;flex:0 0 auto;border-radius:0;background:transparent;display:grid;place-items:center;font-size:28px;box-shadow:none;}
-  #Cpdp-{{ uid }} .cpdp__theme-name{font-size:13px;font-weight:700;color:var(--cpdp-brown);line-height:1.25;}
+  #Cpdp-{{ uid }} .cpdp__theme-name{font-size:12.5px;font-weight:500;color:var(--cpdp-brown);line-height:1.2;font-family: 'Poppins',sans-serif;letter-spacing: 0px;}
   #Cpdp-{{ uid }} .cpdp__hr{border:none;border-top:1px solid #E3D9C2;margin:18px 0;}
   #Cpdp-{{ uid }} .cpdp__hr--blank{border-top-color:transparent;margin:12px 0;}
-  #Cpdp-{{ uid }} .cpdp__price{display:flex;align-items:baseline;gap:14px;margin:0;}
-  #Cpdp-{{ uid }} .cpdp__price-now{font-family:var(--cpdp-head);font-size:44px;font-weight:800;color:var(--cpdp-brown);}
-  #Cpdp-{{ uid }} .cpdp__price-was{font-size:20px;color:#9aa0a6;text-decoration:line-through;}
-  #Cpdp-{{ uid }} .cpdp__price-off{background:var(--cpdp-yellow);color:#7a5b00;font-weight:700;font-size:14px;padding:5px 12px;border-radius:999px;}
-  #Cpdp-{{ uid }} .cpdp__giftwrap{display:flex;align-items:center;gap:14px;background:#DCEDF8;border-radius:18px;padding:16px 18px;cursor:pointer;margin-top:16px;}
-  #Cpdp-{{ uid }} .cpdp__gift-ico{width:56px;height:56px;flex:0 0 auto;border-radius:999px;background:#FDE7EE;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+  #Cpdp-{{ uid }} .cpdp__price{display:flex;align-items:center;gap:14px;margin:0;font-family: 'Nunito',sans-serif;letter-spacing: 0px;margin-top: 1.2rem;}
+  #Cpdp-{{ uid }} .cpdp__price-now{font-size:38px;font-weight:800;color:var(--cpdp-brown); line-height: 1;}
+  #Cpdp-{{ uid }} .cpdp__price-was{font-size:18px;color:#9aa0a6;text-decoration:line-through;font-family: 'Poppins',sans-serif;}
+  #Cpdp-{{ uid }} .cpdp__price-off{background:var(--cpdp-yellow);color:#7a5b00;font-weight:700;font-size:12.5px;padding:5px 12px;border-radius:999px; font-family: 'Quicksand',sans-serif;line-height: 128%;}
+  #Cpdp-{{ uid }} .cpdp__giftwrap{display:flex;align-items:center;gap:14px;background:#DCEDF8;border-radius:22px;padding:10px 18px;cursor:pointer;margin-top:16px;}
+  #Cpdp-{{ uid }} .cpdp__gift-ico{width:56px;height:56px;flex:0 0 auto;border-radius:16px;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.05);overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__gift-ico img{ width: 100%; height: 100%;}
   #Cpdp-{{ uid }} .cpdp__gift-body{flex:1;display:flex;flex-direction:column;gap:2px;}
-  #Cpdp-{{ uid }} .cpdp__gift-body b{font-size:17px;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__gift-body b{font-size:14.5px;color:var(--cpdp-brown);line-height: 138%; font-family: 'Nunito',sans-sarif;}
   #Cpdp-{{ uid }} .cpdp__gift-body em{font-style:normal;font-size:14px;color:#6b7280;}
   #Cpdp-{{ uid }} .cpdp__gift-check{-webkit-appearance:none;appearance:none;width:28px;height:28px;flex:0 0 auto;border:2px solid #C4D2DC;border-radius:8px;background:#fff;cursor:pointer;position:relative;}
   #Cpdp-{{ uid }} .cpdp__gift-check:checked{background:var(--cpdp-orange);border-color:var(--cpdp-orange);}
   #Cpdp-{{ uid }} .cpdp__gift-check:checked::after{content:"";position:absolute;left:9px;top:4px;width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}
+  #Cpdp-{{ uid }} .cpdp__po{padding: 1rem 0 1.5rem 0; border-bottom: 1px solid #EFE7DE;}
   #Cpdp-{{ uid }} .cpdp__po-title{font-family:var(--cpdp-body);font-size:17px;font-weight:700;color:var(--cpdp-brown);margin:0 0 12px;}
   #Cpdp-{{ uid }} .cpdp__po-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:0;align-items:start;}
   #Cpdp-{{ uid }} .cpdp__po-card{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:10px;text-align:left;background:#fff;border:1.5px solid #DBD5C6;border-radius:14px;padding:12px;cursor:pointer;font-family:inherit;}
@@ -356,7 +394,13 @@
   #Cpdp-{{ uid }} .cpdp__po-price{display:flex;flex-direction:column;font-weight:800;font-size:16px;color:var(--cpdp-brown);}
   #Cpdp-{{ uid }} .cpdp__po-price s{font-weight:500;font-size:12px;color:#9aa0a6;}
   #Cpdp-{{ uid }} .cpdp__po-badge{flex-basis:100%;margin:8px 0 0;background:#4CA36A;color:#fff;text-align:center;font-size:11px;font-weight:700;padding:6px 10px;border-radius:8px;}
-  #Cpdp-{{ uid }} .cpdp__ship{text-align:center;font-size:14px;color:#6b7280;margin:0 0 16px;}
+  #Cpdp-{{ uid }} .cpdp__ship{
+    text-align:center;color:#574239;margin:10px 0 16px;
+    font-size: 12.5px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0px;
+  }
   #Cpdp-{{ uid }} .cpdp__buybox .cpdp__buy{margin-bottom:0;}
   #Cpdp-{{ uid }} .cpdp__buynow{width:100%;border:none;border-radius:999px;background:#4FB0E0;color:#fff;font-family:var(--cpdp-head);font-weight:800;font-size:19px;padding:15px;margin-top:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;}
   #Cpdp-{{ uid }} .cpdp__buynow:hover{background:#3fa0d3;}
@@ -376,6 +420,7 @@
   #Cpdp-{{ uid }} .cpdp__trust-s{font-size:12px;color:#8a8f98;}
   #Cpdp-{{ uid }} .cpdp__trust-t,#Cpdp-{{ uid }} .cpdp__trust-s{overflow-wrap:break-word;}
   #Cpdp-{{ uid }} .cpdp__trust-item--g .cpdp__trust-t{color:#16A34A;}
+  .cpdp__crumb-sep svg path{fill: #000000;}
   #Cpdp-{{ uid }} .cpdp__trust-item--b .cpdp__trust-t{color:#2F82C7;}
   #Cpdp-{{ uid }} .cpdp__trust-item--a .cpdp__trust-t{color:#E08A1E;}
   #Cpdp-{{ uid }} .cpdp__trust-item--p .cpdp__trust-t{color:#7C3AED;}
@@ -598,6 +643,23 @@
     { "type": "textarea", "id": "short_desc", "label": "Short description (blank = product excerpt)", "default": "A ready-to-paint canvas tote, six non-toxic fabric paints and reusable stencils — everything a 3-8 year old needs to make a bag they'll actually carry to school." },
     { "type": "text", "id": "ship_text", "label": "Shipping line", "default": "Order before 4 PM → ships today · COD available" },
     { "type": "header", "content": "Badges" },
+    {
+      "type": "image_picker",
+      "id": "gift_icon",
+      "label": "Gift Icon"
+    },
+    {
+      "type": "text",
+      "id": "gift_heading",
+      "label": "Gift Wrapper Heading",
+      "default": "Add gift wrapping — free"
+    },
+    {
+      "type": "text",
+      "id": "gift_sub_heading",
+      "label": "Gift Wrapper Sub Heading",
+      "default": "Kraft paper, ribbon and a handwritten note"
+    },
     { "type": "text", "id": "badge_1", "label": "Badge 1 (orange)", "default": "#1 Bestseller" },
     { "type": "text", "id": "badge_2", "label": "Badge 2 (white)", "default": "Screen-free fun" },
     { "type": "header", "content": "Safety" },
@@ -621,11 +683,6 @@
     { "type": "image_picker", "id": "promo_banner_mobile", "label": "Banner image — Mobile", "info": "Recommended 1000×1300px" },
     { "type": "url", "id": "promo_banner_link", "label": "Banner link (optional)" },
     { "type": "text", "id": "promo_banner_alt", "label": "Banner alt text" },
-    { "type": "header", "content": "Green section background (optional)" },
-    { "type": "paragraph", "content": "Upload an image to use as the background of the Overview/FAQs tabbed area, behind the tabs and panel." },
-    { "type": "image_picker", "id": "green_banner_desktop", "label": "Green section background — Desktop", "info": "Recommended 2000×700px" },
-    { "type": "image_picker", "id": "green_banner_mobile", "label": "Green section background — Mobile", "info": "Recommended 1000×1400px" },
-    { "type": "text", "id": "green_banner_alt", "label": "Green section background alt text" },
     { "type": "header", "content": "Trust icons (optional)" },
     { "type": "paragraph", "content": "Upload a custom icon image for each trust badge. Leave blank to keep the default icon." },
     { "type": "image_picker", "id": "trust_icon_1", "label": "Icon 1 — 100% Secure", "info": "Recommended 60×60px" },
@@ -636,3 +693,9 @@
   "presets": [ { "name": "Creste PDP" } ]
 }
 {% endschema %}
+
+{% comment %} { "type": "header", "content": "Green section background (optional)" },
+    { "type": "paragraph", "content": "Upload an image to use as the background of the Overview/FAQs tabbed area, behind the tabs and panel." },
+    { "type": "image_picker", "id": "green_banner_desktop", "label": "Green section background — Desktop", "info": "Recommended 2000×700px" },
+    { "type": "image_picker", "id": "green_banner_mobile", "label": "Green section background — Mobile", "info": "Recommended 1000×1400px" },
+    { "type": "text", "id": "green_banner_alt", "label": "Green section background alt text" }, {% endcomment %}
