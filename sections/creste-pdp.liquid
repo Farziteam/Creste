@@ -566,6 +566,32 @@
         fetch('/cart/add.js', { method:'POST', body:fd, headers:{ 'Accept':'application/json' } }).then(function(r){ return r.json(); }).then(function(){ window.location.href = '/checkout'; }).catch(function(){ form.submit(); });
       });
     }
+    var cpdpMainForm = document.getElementById('cpdp-form-{{ uid }}');
+    if(cpdpMainForm){
+    cpdpMainForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var submitBtn = cpdpMainForm.querySelector('[type="submit"]');
+    if(submitBtn){ submitBtn.disabled = true; }
+    var fd = new FormData(cpdpMainForm);
+    fd.append('sections', 'cart-drawer,cart-icon-bubble');
+    fetch('/cart/add.js', { method:'POST', body:fd, headers:{ 'Accept':'application/json' } })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+    if(data.status){
+    alert(data.description || 'Could not add this item to your cart.');
+    return;
+    }
+    var cartDrawerEl = document.querySelector('cart-drawer');
+    if(cartDrawerEl && typeof cartDrawerEl.renderContents === 'function'){
+    cartDrawerEl.renderContents(data);
+    } else {
+    window.location.href = '/cart';
+    }
+    })
+    .catch(function(){ cpdpMainForm.submit(); })
+    .finally(function(){ if(submitBtn){ submitBtn.disabled = false; } });
+    });
+    }
     var shareBtn = root.querySelector('[data-share]');
     if(shareBtn){
       shareBtn.addEventListener('click', function(){
