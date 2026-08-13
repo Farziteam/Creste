@@ -106,7 +106,7 @@
 </nav>
 <div class='hd-right'>
 <a class='hd-ic' style='background:rgba(255,206,0,.2);color:#B8860B;' href='{{ routes.search_url }}' aria-label='Search'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M21 21l-4.3-4.3'/></svg></a>
-<a class='hd-ic' style='background:rgba(244,121,58,.2);color:#F4793A;' href='{{ routes.cart_url }}' aria-label='Cart'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='20' r='1.4'/><circle cx='18' cy='20' r='1.4'/><path d='M2 3h3l2.4 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6'/></svg>{% if cart.item_count > 0 %}<span class='hd-badge'>{{ cart.item_count }}</span>{% endif %}</a>
+<a class='hd-ic' id="cart-icon-bubble" style='background:rgba(244,121,58,.2);color:#F4793A;' href='{{ routes.cart_url }}' aria-label='Cart'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='20' r='1.4'/><circle cx='18' cy='20' r='1.4'/><path d='M2 3h3l2.4 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6'/></svg>{% if cart.item_count > 0 %}<span class='hd-badge'>{{ cart.item_count }}</span>{% endif %}</a>
 <a class='hd-ic' style='background:rgba(0,103,126,.2);color:#00677E;' href='{% if shop.customer_accounts_enabled %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}' aria-label='Account'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='8' r='4'/><path d='M4 21c0-4 4-6.5 8-6.5s8 2.5 8 6.5'/></svg></a>
 </div>
 </div>
