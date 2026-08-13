@@ -15,7 +15,42 @@
   .drawer {
     visibility: hidden;
   }
-</style>
+
+  /* Creste Cart Drawer Redesign */
+    cart-drawer, .cart-drawer, .cart-drawer * { box-sizing: border-box; }
+    .cart-drawer .drawer__inner { background: #FFFFFF; border-radius: 24px 0 0 24px; font-family: 'Nunito Sans', sans-serif; color: var(--creste-ink, #1E1108); }
+      .cart-drawer .drawer__header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 20px 24px 16px; border-bottom: 2px solid var(--creste-yellow, #FFCE00); }
+        .cart-drawer .drawer__heading { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--creste-ink, #1E1108); display: flex; align-items: center; gap: 10px; margin: 0; flex: 1 1 auto; }
+          .cart-drawer .creste-cart-badge { font-family: 'Nunito Sans', sans-serif; font-size: 12px; font-weight: 700; background: #FFF3C4; color: var(--creste-brown, #574239); padding: 4px 10px; border-radius: 999px; }
+            .cart-drawer .drawer__close { background: #FFF3C4; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+              .cart-drawer .creste-cart-tagline { width: 100%; margin: 0; font-family: 'Nunito Sans', sans-serif; font-weight: 700; font-size: 13px; color: var(--creste-teal, #00677E); }
+  .creste-cart-progress { margin: 16px 24px; padding: 16px; border-radius: 16px; background: #EAF6EC; }
+  .creste-cart-progress__badges { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+    .creste-cart-progress__badge { font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: #FFF3C4; color: var(--creste-brown, #574239); }
+      .creste-cart-progress__badge.is-unlocked { background: var(--creste-green, #62A66B); color: #FFFFFF; }
+        .creste-cart-progress__bar { position: relative; height: 8px; border-radius: 999px; background: #D8ECDA; margin: 18px 4px 12px; }
+          .creste-cart-progress__fill { height: 100%; border-radius: 999px; background: var(--creste-green, #62A66B); transition: width .3s ease; }
+            .creste-cart-progress__icon { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 26px; height: 26px; border-radius: 50%; background: #FFF3C4; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid #FFFFFF; }
+              .creste-cart-progress__icon--start { left: 0; }
+                .creste-cart-progress__icon--end { left: 100%; }
+                  .creste-cart-progress__icon.is-unlocked { background: var(--creste-green, #62A66B); }
+                    .creste-cart-progress__message { margin: 0; font-size: 13px; text-align: center; color: var(--creste-brown, #574239); }
+                      .creste-cart-progress__message strong { color: var(--creste-teal, #00677E); }
+.cart-drawer-items thead th { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+cart-drawer-items tbody { display: block; padding: 4px 24px; }
+cart-drawer-items tr.cart-item { display: flex; align-items: flex-start; gap: 12px; position: relative; padding: 16px 0; border-bottom: 1px dashed #E7DCC5; }
+cart-drawer-items tr.cart-item:last-child { border-bottom: 0; }
+cart-drawer-items .cart-item td { display: block; padding: 0; border: 0; }
+cart-drawer-items .cart-item__media { flex: 0 0 68px; }
+cart-drawer-items .cart-item__image { width: 68px; height: 68px; border-radius: 14px; object-fit: cover; }
+cart-drawer-items .cart-item__details { flex: 1 1 auto; min-width: 0; padding-right: 28px !important; }
+cart-drawer-items .cart-item__name { font-family: 'Nunito Sans', sans-serif; font-weight: 800; font-size: 14px; color: var(--creste-ink, #1E1108); }
+cart-drawer-items .cart-item__quantity { flex: 0 0 auto; margin-top: 8px; }
+cart-drawer-items .cart-remove-button { position: absolute; top: 16px; right: 0; color: #E0483E; }
+.quantity-popover-wrapper { background: #FFF3C4; border-radius: 999px; padding: 2px 4px; }
+.cart-drawer__footer { background: #FFF9EA; padding: 16px 24px 20px; border-top: 2px solid var(--creste-yellow, #FFCE00); }
+.cart__checkout-button { background: var(--creste-orange, #F4793A) !important; border-radius: 999px !important; font-family: 'Nunito Sans', sans-serif; font-weight: 800; font-size: 16px; padding: 14px !important; }
+                                    </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
@@ -62,7 +97,7 @@
         </div>
       {%- endif -%}
       <div class="drawer__header">
-        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
+        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}{% if cart != empty %} <span class="creste-cart-badge">{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}</span>{% endif %}</h2>
         <button
           class="drawer__close"
           type="button"
@@ -73,8 +108,44 @@
             {{- 'icon-close.svg' | inline_asset_content -}}
           </span>
         </button>
+        {% if cart != empty %}<p class="creste-cart-tagline">Packed with giggles!</p>{% endif %}
       </div>
-      <cart-drawer-items
+{%- if cart != empty %}
+  {% liquid
+    assign creste_shipping_threshold = 99900
+      assign creste_gift_threshold = 300000
+        assign creste_gift_name = 'Make Your Own Bracelet Kit'
+          assign creste_shipping_unlocked = false
+            assign creste_gift_unlocked = false
+              if cart.total_price >= creste_shipping_threshold
+                  assign creste_shipping_unlocked = true
+                    endif
+                      if cart.total_price >= creste_gift_threshold
+                          assign creste_gift_unlocked = true
+                            endif
+                              assign creste_remaining = creste_gift_threshold | minus: cart.total_price
+                                if creste_remaining < 0
+                                    assign creste_remaining = 0
+                                      endif
+                                        assign creste_progress_percent = cart.total_price | times: 100 | divided_by: creste_gift_threshold
+                                          if creste_progress_percent > 100
+                                              assign creste_progress_percent = 100
+                                                endif
+                                                %}
+                                                <div class="creste-cart-progress">
+                                                  <div class="creste-cart-progress__badges">
+                                                      <span class="creste-cart-progress__badge{% if creste_shipping_unlocked %} is-unlocked{% endif %}">{% if creste_shipping_unlocked %}FREE shipping unlocked!{% else %}FREE shipping at {{ creste_shipping_threshold | money }}{% endif %}</span>
+                                                          <span class="creste-cart-progress__badge{% if creste_gift_unlocked %} is-unlocked{% endif %}">FREE {{ creste_gift_name }} worth {{ creste_gift_threshold | money }}</span>
+                                                            </div>
+                                                              <div class="creste-cart-progress__bar">
+                                                                  <div class="creste-cart-progress__fill" style="width: {{ creste_progress_percent }}%;"></div>
+                                                                      <span class="creste-cart-progress__icon creste-cart-progress__icon--start{% if creste_shipping_unlocked %} is-unlocked{% endif %}">&#128666;</span>
+                                                                          <span class="creste-cart-progress__icon creste-cart-progress__icon--end{% if creste_gift_unlocked %} is-unlocked{% endif %}">&#127873;</span>
+                                                                            </div>
+                                                                              <p class="creste-cart-progress__message">{% if creste_gift_unlocked %}You've unlocked a free <strong>{{ creste_gift_name }}</strong>!{% else %}Add <strong>{{ creste_remaining | money }}</strong> more to unlock a <strong>{{ creste_gift_name }}</strong>{% endif %}</p>
+                                                                              </div>
+                                                                              {%- endif %}
+                                                                                    <cart-drawer-items
         view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
         view-event-trigger="manual"
         {% if cart == empty %}
