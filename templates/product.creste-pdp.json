@@ -24,16 +24,12 @@
         "safety_link": "",
         "offers": "Get EXTRA 5% Off on First Order|WELCOME5;Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10;Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20",
         "tutorial_thumb": "shopify://shop_images/Button.png",
-        "tutorial_url": "https://youtu.be/4SPY8y2QgOw?si=M6x4sRuHgpBb05CJ",
+        "tutorial_url": "",
         "overview_heading": "A blank canvas bag, waiting for their imagination",
         "overview_text": "<p>Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>",
         "overview_image": "shopify://shop_images/Group_1321314709.png",
         "faqs": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash.",
-        "whatsapp_number": "919999999999",
-        "promo_banner_link": "",
-        "promo_banner_alt": "",
-        "green_banner_desktop": "shopify://shop_images/Container_2_143c297c-1b13-4dab-a640-b3586c5b6d16.png",
-        "green_banner_alt": ""
+        "whatsapp_number": "919999999999"
       }
     },
     "creste_artists": {
@@ -52,7 +48,7 @@
         "s1": {
           "type": "skill",
           "settings": {
-            "icon": "🖌️",
+            "icon": "",
             "title": "Fine motor control",
             "text": "Holding a brush, tracing an edge and pressing a stencil build the exact grip strength that handwriting needs.",
             "color": "green"
@@ -117,15 +113,11 @@
         "subheading": "Every bag they colour quietly builds a real skill — here are six hiding in the fun.",
         "bg_color": "#7c5ce0",
         "padding_top": 64,
-        "padding_bottom": 72,
-        "promo_banner_desktop": "shopify://shop_images/Container_1_57fbfdb3-a519-49d1-bc04-d3a3495ffaf7.png",
-        "promo_banner_mobile": "shopify://shop_images/happy.png",
-        "promo_banner_alt": ""
+        "padding_bottom": 72
       }
     },
     "creste_recommend": {
       "type": "creste-recommend",
-      "disabled": true,
       "settings": {
         "heading_prefix": "You may Also",
         "heading_highlight": "Like",
@@ -133,28 +125,7 @@
         "collection": "",
         "bg_color": "#f6b41d",
         "padding_top": 56,
-        "padding_bottom": 60,
-        "promo_banner_desktop": "shopify://shop_images/Section_-_Best_Sellers_e4f84787-d839-4b9c-857d-1a976371defc.png",
-        "promo_banner_mobile": "shopify://shop_images/Play_with_Purpose_Section.png",
-        "promo_banner_alt": ""
-      }
-    },
-    "creste_favourites_DJKLRz": {
-      "type": "creste-favourites",
-      "name": "Creste Favourites",
-      "settings": {
-        "fallback_bg": "#F5C518",
-        "overlay": 0,
-        "heading": "Our Favourites",
-        "subtitle": "",
-        "heading_color": "#2B1702",
-        "collection": "",
-        "count": 10,
-        "card_width": 250,
-        "default_rating": "4.9",
-        "badge_tag": "top pick",
-        "badge_text": "TOP PICK",
-        "button_label": "Add To Cart"
+        "padding_bottom": 60
       }
     },
     "creste_love": {
@@ -231,6 +202,7 @@
         "heading_prefix": "Why Parents",
         "heading_highlight": "Love it",
         "subheading": "See why thousands of families choose this creative activity again and again.",
+        "image": "shopify://shop_images/div.png",
         "bg_color": "#dcebf3",
         "padding_top": 60,
         "padding_bottom": 64
@@ -289,7 +261,6 @@
     "creste_artists",
     "creste_skills",
     "creste_recommend",
-    "creste_favourites_DJKLRz",
     "creste_love",
     "creste_reviews",
     "creste_birthday"

@@ -4,10 +4,10 @@
 {%- assign navs = section.blocks | where: 'type', 'nav' -%}
 <style>
 #creste-hd-{{ section.id }}{background:{{ section.settings.bg }};padding:18px 12px 0px 12px;{% if section.settings.sticky %}position:sticky;top:0;{% else %}position:fixed;{% endif %}z-index:9999; width: 100%;}
-#creste-hd-{{ section.id }} .hd-bar{background:{{ section.settings.bar_bg }};border-radius:24px;border-bottom:4px solid {{ section.settings.accent }};display:flex;flex-wrap:nowrap;align-items:center;gap:12px;padding:8px 14px;max-width:1440px;margin:0 auto;box-shadow:0 6px 16px rgba(0,0,0,.12);height:100px; opacity: 0.99;}
+#creste-hd-{{ section.id }} .hd-bar{background:{{ section.settings.bar_bg }};border-radius:24px;border-bottom:4px solid {{ section.settings.accent }};display:flex;flex-wrap:nowrap;align-items:center;gap:12px;padding:8px 14px;max-width:1440px;margin:0 auto;box-shadow:0 6px 16px rgba(0,0,0,.12);height:70px; opacity: 0.99;}
 #creste-hd-{{ section.id }} .hd-burger{display:none;background:none;border:none;cursor:pointer;color:#2B1702;padding:6px;flex:0 0 auto;align-items:center;}
 #creste-hd-{{ section.id }} .hd-logo{display:flex;align-items:center;text-decoration:none;flex:0 0 auto;}
-#creste-hd-{{ section.id }} .hd-logo img{height:auto;width:162px;display:block;}
+#creste-hd-{{ section.id }} .hd-logo img{height:auto;width:130px;display:block;}
 #creste-hd-{{ section.id }} .hd-name{font-family:'Fredoka One',cursive;font-size:24px;color:#2B1702;white-space:nowrap;}
 #creste-hd-{{ section.id }} .hd-nav{display:flex;flex-wrap:nowrap;align-items:center;gap:22px;flex:1 1 auto;justify-content:center;}
 #creste-hd-{{ section.id }} .hd-nav a{color:#00000099;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:18px;white-space:nowrap;}
