@@ -18,6 +18,9 @@
         "sold_text": "1,900+ bought this month",
         "short_desc": "A ready-to-paint canvas tote, six non-toxic fabric paints and reusable stencils — everything a 3-8 year old needs to make a bag they'll actually carry to school.",
         "ship_text": "Order before 4 PM → ships today · COD available",
+        "gift_icon": "shopify://shop_images/0800a1d771b62006a968ad7770bf4e8f67e6a2d1.png",
+        "gift_heading": "Add gift wrapping — free",
+        "gift_sub_heading": "Kraft paper, ribbon and a handwritten note",
         "badge_1": "#1 Bestseller",
         "badge_2": "Screen-free fun",
         "safety_text": "Small parts — choking hazard. Not for under 3s.",
@@ -29,7 +32,9 @@
         "overview_text": "<p>Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>",
         "overview_image": "shopify://shop_images/Group_1321314709.png",
         "faqs": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash.",
-        "whatsapp_number": "919999999999"
+        "whatsapp_number": "919999999999",
+        "promo_banner_link": "",
+        "promo_banner_alt": ""
       }
     },
     "creste_artists": {
@@ -113,7 +118,8 @@
         "subheading": "Every bag they colour quietly builds a real skill — here are six hiding in the fun.",
         "bg_color": "#7c5ce0",
         "padding_top": 64,
-        "padding_bottom": 72
+        "padding_bottom": 72,
+        "promo_banner_alt": ""
       }
     },
     "creste_recommend": {
@@ -125,7 +131,8 @@
         "collection": "",
         "bg_color": "#f6b41d",
         "padding_top": 56,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "promo_banner_alt": ""
       }
     },
     "creste_love": {
