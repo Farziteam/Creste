@@ -18,6 +18,9 @@
         "sold_text": "1,900+ bought this month",
         "short_desc": "A ready-to-paint canvas tote, six non-toxic fabric paints and reusable stencils — everything a 3-8 year old needs to make a bag they'll actually carry to school.",
         "ship_text": "Order before 4 PM → ships today · COD available",
+        "gift_icon": "shopify://shop_images/0800a1d771b62006a968ad7770bf4e8f67e6a2d1.png",
+        "gift_heading": "Add gift wrapping — free",
+        "gift_sub_heading": "Kraft paper, ribbon and a handwritten note",
         "badge_1": "#1 Bestseller",
         "badge_2": "Screen-free fun",
         "safety_text": "Small parts — choking hazard. Not for under 3s.",
@@ -31,9 +34,7 @@
         "faqs": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash.",
         "whatsapp_number": "919999999999",
         "promo_banner_link": "",
-        "promo_banner_alt": "",
-        "green_banner_desktop": "shopify://shop_images/Container_2_143c297c-1b13-4dab-a640-b3586c5b6d16.png",
-        "green_banner_alt": ""
+        "promo_banner_alt": ""
       }
     },
     "creste_artists": {
@@ -143,11 +144,12 @@
       "type": "creste-favourites",
       "name": "Creste Favourites",
       "settings": {
-        "fallback_bg": "#F5C518",
+        "fallback_bg": "#f5c518",
         "overlay": 0,
         "heading": "Our Favourites",
+        "heading_italic": "Favorites",
         "subtitle": "",
-        "heading_color": "#2B1702",
+        "heading_color": "#2b1702",
         "collection": "",
         "count": 10,
         "card_width": 250,
