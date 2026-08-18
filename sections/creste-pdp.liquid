@@ -1,31 +1,38 @@
-{%- comment -%} Require purchase-option selection before Add to Cart / Buy Now: no default selection, buttons disabled until a pack is chosen, option grid shakes if clicked early. {%- endcomment -%}
+{%- comment -%} Purchase-option upsell nudge: no pack pre-selected; Add to Cart / Buy Now stay visually enabled but, when no pack is chosen, they nudge (shake the higher packs, strongest on the top tier) instead of adding. Also a gentle shake on load. {%- endcomment -%}
 <style>
-@keyframes cpdpShake{0%,100%{transform:translateX(0)}12%{transform:translateX(-9px)}24%{transform:translateX(9px)}36%{transform:translateX(-7px)}48%{transform:translateX(7px)}60%{transform:translateX(-4px)}72%{transform:translateX(4px)}84%{transform:translateX(-2px)}}
-.cpdp__po-grid.cpdp-shake{animation:cpdpShake .55s ease both}
-.cpdp__atc.cpdp-disabled,.cpdp__buynow.cpdp-disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.35)}
+@keyframes cpdpShake{0%,100%{transform:translateX(0)}10%{transform:translateX(calc(var(--cpdp-amp,6px) * -1))}22%{transform:translateX(var(--cpdp-amp,6px))}34%{transform:translateX(calc(var(--cpdp-amp,6px) * -0.8))}46%{transform:translateX(calc(var(--cpdp-amp,6px) * 0.8))}58%{transform:translateX(calc(var(--cpdp-amp,6px) * -0.5))}70%{transform:translateX(calc(var(--cpdp-amp,6px) * 0.5))}82%{transform:translateX(calc(var(--cpdp-amp,6px) * -0.25))}}
+.cpdp__po-card.cpdp-shake{animation:cpdpShake .6s ease both;will-change:transform;z-index:1;}
+@media (prefers-reduced-motion: reduce){.cpdp__po-card.cpdp-shake{animation:none}}
 </style>
 <script>
 (function(){
   function init(){
     document.querySelectorAll('.cpdp__buybox').forEach(function(box){
-      if(box.__cpdpGateInit){return;} box.__cpdpGateInit=true;
-      var grid=box.querySelector('.cpdp__po-grid');
-      var cards=box.querySelectorAll('.cpdp__po-card');
+      if(box.__cpdpUpsellInit){return;} box.__cpdpUpsellInit=true;
+      var cards=[].slice.call(box.querySelectorAll('.cpdp__po-card'));
       var atc=box.querySelector('.cpdp__atc');
       var buynow=box.querySelector('.cpdp__buynow');
       var form=(atc&&atc.closest('form'))||box.closest('form');
       if(!cards.length){return;}
       function anySelected(){return !!box.querySelector('.cpdp__po-card.is-selected');}
-      function syncGate(){var ok=anySelected();[atc,buynow].forEach(function(b){if(!b){return;}if(ok){b.classList.remove('cpdp-disabled');b.removeAttribute('aria-disabled');}else{b.classList.add('cpdp-disabled');b.setAttribute('aria-disabled','true');}});}
-      function shake(){if(!grid){return;}grid.classList.remove('cpdp-shake');void grid.offsetWidth;grid.classList.add('cpdp-shake');setTimeout(function(){grid.classList.remove('cpdp-shake');},600);}
-      cards.forEach(function(c){c.classList.remove('is-selected');});
-      var obs=new MutationObserver(syncGate);
-      cards.forEach(function(c){obs.observe(c,{attributes:true,attributeFilter:['class']});});
-      function guard(e){if(!anySelected()){e.preventDefault();e.stopImmediatePropagation();shake();return false;}}
+      var ranked=cards.map(function(c){return {el:c,q:parseInt(c.getAttribute('data-qty')||'0',10)};}).sort(function(a,b){return a.q-b.q;});
+      function shakeUpsell(){
+        var n=ranked.length;
+        ranked.forEach(function(o,i){
+          if(i===0){return;}
+          var amp=4+i*3;
+          o.el.style.setProperty('--cpdp-amp',amp+'px');
+          o.el.style.animationDelay=((n-1-i)*70)+'ms';
+          o.el.classList.remove('cpdp-shake'); void o.el.offsetWidth; o.el.classList.add('cpdp-shake');
+          setTimeout(function(){o.el.classList.remove('cpdp-shake');o.el.style.animationDelay='';},900+i*90);
+        });
+      }
+      box.__cpdpShakeUpsell=shakeUpsell;
+      function guard(e){ if(!anySelected()){ e.preventDefault(); e.stopImmediatePropagation(); shakeUpsell(); return false; } }
       if(atc){atc.addEventListener('click',guard,true);}
       if(buynow){buynow.addEventListener('click',guard,true);}
-      if(form){form.addEventListener('submit',function(e){if(!anySelected()){e.preventDefault();e.stopImmediatePropagation();shake();}},true);}
-      syncGate();
+      if(form){form.addEventListener('submit',function(e){ if(!anySelected()){ e.preventDefault(); e.stopImmediatePropagation(); shakeUpsell(); } },true);}
+      setTimeout(shakeUpsell,1200);
     });
   }
   if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
@@ -160,9 +167,9 @@
         <label class="cpdp__giftwrap"><span class="cpdp__gift-ico"><svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><circle cx="11" cy="13" r="2.4" fill="#EC407A"/><circle cx="21" cy="10" r="2" fill="#FF7043"/><circle cx="30" cy="14" r="2.4" fill="#EF5350"/><circle cx="15" cy="22" r="2" fill="#F06292"/><circle cx="25" cy="21" r="2.4" fill="#FF8A65"/><circle cx="31" cy="27" r="2" fill="#EC407A"/><circle cx="11" cy="29" r="2.4" fill="#FF7043"/><circle cx="21" cy="31" r="2" fill="#EF5350"/></svg></span><span class="cpdp__gift-body"><b>Add gift wrapping — free</b><em>Kraft paper, ribbon and a handwritten note</em></span><input type="checkbox" name="properties[Gift wrapping]" value="Yes" class="cpdp__gift-check"></label>
         <div class="cpdp__hr cpdp__hr--blank"></div>
         <div class="cpdp__po">
-          <h3 class="cpdp__po-title">Choose Purchase Option</h3>
+          <h3 class="cpdp__po-title">{{ section.settings.po_title | default: 'Choose Purchase Option' }}</h3>
           <div class="cpdp__po-grid">
-            {%- assign tiers = '1|2,2|5,4|15' | split: ',' -%}
+            {%- assign tiers = section.settings.po_tiers | default: '1|2,2|5,4|15' | split: ',' -%}
             {%- for tier in tiers -%}
               {%- assign tp = tier | split: '|' -%}
               {%- assign q = tp[0] | times: 1 -%}
@@ -170,7 +177,7 @@
               {%- assign base = cur.price | times: q -%}
               {%- assign discount = base | times: off | divided_by: 100 -%}
               {%- assign final = base | minus: discount -%}
-              <button type="button" class="cpdp__po-card{% if forloop.last %} is-selected{% endif %}" data-qty="{{ q }}"><span class="cpdp__po-ico">✊</span><span class="cpdp__po-body"><span class="cpdp__po-top">Buy {{ q }} <em>{{ off }}% off</em></span><span class="cpdp__po-price">{{ final | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} <s>{{ base | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s></span></span>{% if forloop.last %}<span class="cpdp__po-badge">Smart Saver</span>{% endif %}</button>
+              <button type="button" class="cpdp__po-card" data-qty="{{ q }}"><span class="cpdp__po-ico">{{ section.settings.po_emoji | default: '✊' }}</span><span class="cpdp__po-body"><span class="cpdp__po-top">{{ section.settings.po_buy_label | default: 'Buy' }} {{ q }} <em>{{ off }}{{ section.settings.po_off_suffix | default: '% off' }}</em></span><span class="cpdp__po-price">{{ final | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} <s>{{ base | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s></span></span>{% if forloop.last %}<span class="cpdp__po-badge">{{ section.settings.po_badge_text | default: 'Smart Saver' }}</span>{% endif %}</button>
             {%- endfor -%}
           </div>
         </div>
@@ -650,6 +657,47 @@
   "tag": "section",
   "class": "creste-pdp-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Purchase options"
+    },
+    {
+      "type": "text",
+      "id": "po_title",
+      "label": "Purchase options title",
+      "default": "Choose Purchase Option"
+    },
+    {
+      "type": "text",
+      "id": "po_tiers",
+      "label": "Purchase tiers (quantity|discount%)",
+      "info": "Comma-separated list of quantity|discount. Example: 1|2,2|5,4|15 means Buy 1 = 2% off, Buy 2 = 5% off, Buy 4 = 15% off. Last tier gets the badge.",
+      "default": "1|2,2|5,4|15"
+    },
+    {
+      "type": "text",
+      "id": "po_buy_label",
+      "label": "Option label prefix",
+      "default": "Buy"
+    },
+    {
+      "type": "text",
+      "id": "po_off_suffix",
+      "label": "Discount suffix",
+      "default": "% off"
+    },
+    {
+      "type": "text",
+      "id": "po_emoji",
+      "label": "Option icon / emoji",
+      "default": "✊"
+    },
+    {
+      "type": "text",
+      "id": "po_badge_text",
+      "label": "Top-tier badge text",
+      "default": "Smart Saver"
+    },
     { "type": "text", "id": "title_override", "label": "Title override (blank = product title)", "default": "DIY Color Your Bag Kit" },
     { "type": "text", "id": "feature_pills", "label": "Feature pills (comma separated)", "default": "Ages 3-8, 45-60 min play, Screen-free, Mess-free" },
     { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.9 · 2,148 reviews" },
