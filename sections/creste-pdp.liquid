@@ -171,7 +171,7 @@
         <div class="cpdp__po">
           <h3 class="cpdp__po-title">{{ section.settings.po_title | default: 'Choose Purchase Option' }}</h3>
           <div class="cpdp__po-grid">
-            {%- assign tiers = section.settings.po_tiers | default: '1|2,2|5,4|15' | split: ',' -%}
+            {%- assign tiers = section.settings.po_tiers | default: '1|0,2|5,4|15' | split: ',' -%}
             {%- for tier in tiers -%}
               {%- assign tp = tier | split: '|' -%}
               {%- assign q = tp[0] | times: 1 -%}
@@ -179,7 +179,7 @@
               {%- assign base = cur.price | times: q -%}
               {%- assign discount = base | times: off | divided_by: 100 -%}
               {%- assign final = base | minus: discount -%}
-              <button type="button" class="cpdp__po-card" data-qty="{{ q }}"><span class="cpdp__po-ico">{{ section.settings.po_emoji | default: '✊' }}</span><span class="cpdp__po-body"><span class="cpdp__po-top">{{ section.settings.po_buy_label | default: 'Buy' }} {{ q }} <em>{{ off }}{{ section.settings.po_off_suffix | default: '% off' }}</em></span><span class="cpdp__po-price">{{ final | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} <s>{{ base | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s></span></span>{% if forloop.last %}<span class="cpdp__po-badge">{{ section.settings.po_badge_text | default: 'Smart Saver' }}</span>{% endif %}</button>
+              <button type="button" class="cpdp__po-card" data-qty="{{ q }}"><span class="cpdp__po-ico">{{ section.settings.po_emoji | default: '✊' }}</span><span class="cpdp__po-body"><span class="cpdp__po-top">{{ section.settings.po_buy_label | default: 'Buy' }} {{ q }} {% if off > 0 %}<em>{{ off }}{{ section.settings.po_off_suffix | default: '% off' }}</em>{% endif %}</span><span class="cpdp__po-price">{{ final | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} {% if off > 0 %}<s>{{ base | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s>{% endif %}</span></span>{% if forloop.last %}<span class="cpdp__po-badge">{{ section.settings.po_badge_text | default: 'Smart Saver' }}</span>{% endif %}</button>
             {%- endfor -%}
           </div>
         </div>
@@ -724,7 +724,7 @@
       "id": "po_tiers",
       "label": "Purchase tiers (quantity|discount%)",
       "info": "Comma-separated list of quantity|discount. Example: 1|2,2|5,4|15 means Buy 1 = 2% off, Buy 2 = 5% off, Buy 4 = 15% off. Last tier gets the badge.",
-      "default": "1|2,2|5,4|15"
+      "default": "1|0,2|5,4|15"
     },
     {
       "type": "text",
