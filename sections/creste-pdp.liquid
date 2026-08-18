@@ -1,3 +1,36 @@
+{%- comment -%} Require purchase-option selection before Add to Cart / Buy Now: no default selection, buttons disabled until a pack is chosen, option grid shakes if clicked early. {%- endcomment -%}
+<style>
+@keyframes cpdpShake{0%,100%{transform:translateX(0)}12%{transform:translateX(-9px)}24%{transform:translateX(9px)}36%{transform:translateX(-7px)}48%{transform:translateX(7px)}60%{transform:translateX(-4px)}72%{transform:translateX(4px)}84%{transform:translateX(-2px)}}
+.cpdp__po-grid.cpdp-shake{animation:cpdpShake .55s ease both}
+.cpdp__atc.cpdp-disabled,.cpdp__buynow.cpdp-disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.35)}
+</style>
+<script>
+(function(){
+  function init(){
+    document.querySelectorAll('.cpdp__buybox').forEach(function(box){
+      if(box.__cpdpGateInit){return;} box.__cpdpGateInit=true;
+      var grid=box.querySelector('.cpdp__po-grid');
+      var cards=box.querySelectorAll('.cpdp__po-card');
+      var atc=box.querySelector('.cpdp__atc');
+      var buynow=box.querySelector('.cpdp__buynow');
+      var form=(atc&&atc.closest('form'))||box.closest('form');
+      if(!cards.length){return;}
+      function anySelected(){return !!box.querySelector('.cpdp__po-card.is-selected');}
+      function syncGate(){var ok=anySelected();[atc,buynow].forEach(function(b){if(!b){return;}if(ok){b.classList.remove('cpdp-disabled');b.removeAttribute('aria-disabled');}else{b.classList.add('cpdp-disabled');b.setAttribute('aria-disabled','true');}});}
+      function shake(){if(!grid){return;}grid.classList.remove('cpdp-shake');void grid.offsetWidth;grid.classList.add('cpdp-shake');setTimeout(function(){grid.classList.remove('cpdp-shake');},600);}
+      cards.forEach(function(c){c.classList.remove('is-selected');});
+      var obs=new MutationObserver(syncGate);
+      cards.forEach(function(c){obs.observe(c,{attributes:true,attributeFilter:['class']});});
+      function guard(e){if(!anySelected()){e.preventDefault();e.stopImmediatePropagation();shake();return false;}}
+      if(atc){atc.addEventListener('click',guard,true);}
+      if(buynow){buynow.addEventListener('click',guard,true);}
+      if(form){form.addEventListener('submit',function(e){if(!anySelected()){e.preventDefault();e.stopImmediatePropagation();shake();}},true);}
+      syncGate();
+    });
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+})();
+</script>
 {%- comment -%}
   Creste — Custom Product Detail Page (PDP) — product-driven
 {%- endcomment -%}
