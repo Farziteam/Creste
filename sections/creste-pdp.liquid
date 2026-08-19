@@ -57,6 +57,17 @@
               <div class="cpdp__slide is-active" data-index="0"><div class="cpdp__img cpdp__img--ph">{{ 'product-apparel-1' | placeholder_svg_tag: 'cpdp__ph-svg' }}</div></div>
             {%- endif -%}
           </div>
+          <!-- Mobile slider dots -->
+          <div class="cpdp__dots">
+            {%- for media in product.media -%}
+              <button
+                type="button"
+                class="cpdp__dot{% if forloop.first %} is-active{% endif %}"
+                data-dot="{{ forloop.index0 }}"
+                aria-label="Go to image {{ forloop.index }}"
+              ></button>
+            {%- endfor -%}
+          </div>
           <button type="button" class="cpdp__nav cpdp__nav--prev" aria-label="Previous image"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
           <button type="button" class="cpdp__nav cpdp__nav--next" aria-label="Next image"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
@@ -102,7 +113,7 @@
         {% comment %} {%- if section.settings.short_desc != blank -%}<p class="cpdp__desc">{{ section.settings.short_desc }}</p> {% endcomment %}
 
         <div class="cpdp__buybox">
-        {%- if product.variants.size > 1 -%}
+        {% comment %} {%- if product.variants.size > 1 -%}
         <div class="cpdp__themebox">
           <h3 class="cpdp__themebox-title">Pick a bag theme</h3>
           <div class="cpdp__themegrid" role="radiogroup" aria-label="Pick a bag theme">
@@ -124,11 +135,59 @@
             {%- endfor -%}
           </div>
         </div>
+        {%- endif -%} {% endcomment %}
+         {%- if product.variants.size > 1 -%}
+          <div class="cpdp__themebox">
+            <h3 class="cpdp__themebox-title">{{ product.options[0] }} 
+              <span class="cpdp__symbol">:</span>
+              <span class="cpdp__selected-option">
+                 {{ cur.option1 }}
+              </span>
+            </h3>
+
+            <div
+              class="cpdp__themegrid"
+              role="radiogroup"
+              aria-label="Pick a bag theme"
+            >
+              {%- for variant in product.variants -%}
+                <button
+                  type="button"
+                  class="cpdp__theme{% if variant.id == cur.id %} is-selected{% endif %}"
+                  role="radio"
+                  aria-checked="{% if variant.id == cur.id %}true{% else %}false{% endif %}"
+                  data-variant-id="{{ variant.id }}"
+                  data-option-value="{{ variant.option1 }}"
+                >
+                 {%- if variant.metafields.custom.variant_icon != blank -%}
+                    <span class="cpdp__theme-ico">
+                      {% comment %} <p>{{variant.metafields.custom.variant_icon.value}}</p> {% endcomment %}
+                       <img
+                          src="{{ variant.metafields.custom.variant_icon.value }}"
+                          alt="{{ variant.title }}"
+                          loading="lazy"
+                          width="100"
+                          height="100"
+                        >
+                    </span>
+                  {%- endif -%}
+                 <span class="cpdp__theme-name">
+                    {%- assign words = variant.title | split: ' ' -%}
+                    {%- assign last_word = words | last -%}
+                    {%- assign words_count = words.size | minus: 1 -%}
+                    {%- assign remaining_words = words | slice: 0, words_count | join: ' ' -%}
+
+                    {{ remaining_words }}<br>{{ last_word }}
+                  </span>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
         {%- endif -%}
         <div class="cpdp__hr"></div>
         <div class="cpdp__price">
-          <span class="cpdp__price-now" data-price>{{ cur.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
-          {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
+          <span class="cpdp__price-now" data-price>{{ cur.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' | replace: '.00',''}}</span>
+          {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' | replace: '.00','' }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
         </div>
         <label class="cpdp__giftwrap">
           
@@ -180,7 +239,29 @@
           <div class="cpdp__trust-item cpdp__trust-item--a"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_3 != blank -%}{{ section.settings.trust_icon_3 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#E0902A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.4L7 22l5-3 5 3-2-8.6"/><circle cx="12" cy="9" r="1.6" fill="#138808" stroke="none"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">{{ section.settings.trust_heading_3 }}</span><span class="cpdp__trust-s">{{ section.settings.trust_subheading_3 }}</span></div>
           <div class="cpdp__trust-item cpdp__trust-item--p"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_4 != blank -%}{{ section.settings.trust_icon_4 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13"/><path d="M12 8S9.6 8 8.6 6.7 8.7 3.6 10.1 4.4 12 8 12 8zM12 8s2.4 0 3.4-1.3-.1-3.1-1.5-2.3S12 8 12 8z"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">{{ section.settings.trust_heading_4 }}</span><span class="cpdp__trust-s">{{ section.settings.trust_subheading_4 }}</span></div>
         </div>
-        {%- if section.settings.safety_text != blank -%}<div class="cpdp__safety"><span class="cpdp__safety-ico">⚠️</span><span class="cpdp__safety-t">{{ section.settings.safety_text }}</span>{%- if section.settings.safety_link != blank -%}<a href="{{ section.settings.safety_link }}" class="cpdp__safety-link">Safety details</a>{%- endif -%}</div>{%- endif -%}
+        {% comment %} {%- if section.settings.safety_text != blank -%}<div class="cpdp__safety"><span class="cpdp__safety-ico">⚠️</span><span class="cpdp__safety-t">{{ section.settings.safety_text }}</span>{%- if section.settings.safety_link != blank -%}<a href="{{ section.settings.safety_link }}" class="cpdp__safety-link">{{ section.settings.safety_link_text }}</a>{%- endif -%}</div>{%- endif -%} {% endcomment %}
+        {%- if section.settings.safety_text != blank -%}
+          <div class="cpdp__safety">
+            
+            <span class="cpdp__safety-ico">!</span>
+            
+            <span class="cpdp__safety-t">
+              {{ section.settings.safety_text }}
+            </span>
+
+            {%- if section.settings.safety_link != blank -%}
+              <a 
+                href="{{ section.settings.safety_link }}" 
+                class="cpdp__safety-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ section.settings.safety_link_text }}
+              </a>
+            {%- endif -%}
+
+          </div>
+        {%- endif -%}
         <div class="cpdp__offers">
           <h3 class="cpdp__offers-title"><span class="cpdp__offers-ico">%</span> Available Offers</h3>
           <div class="cpdp__offers-track">
@@ -298,10 +379,7 @@
   #Cpdp-{{ uid }} .cpdp__promo-img--mobile.cpdp__promo-ph{aspect-ratio:3/4;}
   #Cpdp-{{ uid }} .cpdp__promo-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.45;}
   #Cpdp-{{ uid }} .cpdp__promo-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:var(--cpdp-brown);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
-  @media (max-width:749px){
-    #Cpdp-{{ uid }} .cpdp__promo-img--desktop{display:none;}
-    #Cpdp-{{ uid }} .cpdp__promo-img--mobile{display:block;}
-  }
+  
   #Cpdp-{{ uid }} .cpdp__col-left{position:sticky;top:20px;align-self:start;}
   #Cpdp-{{ uid }} .cpdp__crumbs{display:flex;align-items:center;gap:8px;font-size:14px;color:#6b7280;padding:18px 4px 18px;}
   #Cpdp-{{ uid }} .cpdp__crumbs a{color:#6b7280;text-decoration:none;font-family: 'Poppins',sans-serif;font-size: 14px;}
@@ -374,9 +452,10 @@
   #Cpdp-{{ uid }} .cpdp__buybox .cpdp__themebox{background:transparent;padding:0;margin-bottom:0;}
   #Cpdp-{{ uid }} .cpdp__themebox-title{font-family:var(--cpdp-body);font-size:18px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px;}
   #Cpdp-{{ uid }} .cpdp__themegrid{display:flex;flex-wrap:wrap;gap:10px;padding-bottom: 1.5rem; border-bottom: 1px solid #EFE7DE;}
-  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:6px;text-align:left;background: transparent;border:3px solid #E1DDCF;border-radius:14px;padding:10px 16px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s; height: 68px;}
+  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:6px;text-align:left;background: transparent;border:3px solid #E1DDCF;border-radius:14px;padding:10px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s; height: 68px;}
   #Cpdp-{{ uid }} .cpdp__theme.is-selected{border:3px solid #5FB85A;background: #5BAD6F1A;}
-  #Cpdp-{{ uid }} .cpdp__theme-ico{width:34px;height:34px;flex:0 0 auto;border-radius:0;background:transparent;display:grid;place-items:center;font-size:28px;box-shadow:none;}
+  #Cpdp-{{ uid }} .cpdp__theme-ico{width:48px;height:48px;flex:0 0 auto;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:28px;box-shadow:none;overflow: hidden;}
+  #Cpdp-{{ uid }} .cpdp__theme-ico img{width: 100%; height:100%; object-fit: contain;}
   #Cpdp-{{ uid }} .cpdp__theme-name{font-size:12.5px;font-weight:500;color:var(--cpdp-brown);line-height:1.2;font-family: 'Poppins',sans-serif;letter-spacing: 0px;}
   #Cpdp-{{ uid }} .cpdp__hr{border:none;border-top:1px solid #E3D9C2;margin:18px 0;}
   #Cpdp-{{ uid }} .cpdp__hr--blank{border-top-color:transparent;margin:12px 0;}
@@ -453,11 +532,22 @@
   #Cpdp-{{ uid }} .cpdp__trust-item--b .cpdp__trust-t{color: #2A7E97;}
   #Cpdp-{{ uid }} .cpdp__trust-item--a .cpdp__trust-t{color: #8A6A1E;}
   #Cpdp-{{ uid }} .cpdp__trust-item--p .cpdp__trust-t{color: #6A55C9;}
-  #Cpdp-{{ uid }} .cpdp__safety{display:flex;align-items:center;gap:10px;background:#FEF6E0;border:1px solid #F4E3B0;border-radius:14px;padding:14px 16px;margin-bottom:18px;}
-  #Cpdp-{{ uid }} .cpdp__safety-ico{font-size:18px;}
-  #Cpdp-{{ uid }} .cpdp__safety-t{flex:1;font-size:15px;color:#8a6d1f;font-weight:600;}
-  #Cpdp-{{ uid }} .cpdp__safety-link{color:var(--cpdp-brown);font-weight:700;text-decoration:underline;white-space:nowrap;}
-  #Cpdp-{{ uid }} .cpdp__offers{background: #E4F4F9;border-radius:18px;padding:18px;}
+  #Cpdp-{{ uid }} .cpdp__safety{display:flex;align-items:center;gap:10px;background: #FEF6E2;border-radius:16px;padding:12px 16px;margin-bottom:18px;}
+  #Cpdp-{{ uid }} .cpdp__safety-ico{font-size:16px; width:26px; height: 26px; background: #F7C845;border-radius: 9px;text-align: center;font-weight:700;}
+  #Cpdp-{{ uid }} .cpdp__safety-t{
+    flex:1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 12.5px;
+    line-height: 17.25px;
+  }
+  #Cpdp-{{ uid }} .cpdp__safety-link{color:#6B4E06;text-decoration:underline;white-space:nowrap;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 12.5px;
+    line-height: 17.25px;
+  }
+  #Cpdp-{{ uid }} .cpdp__offers{background: #E4F4F9;border-radius:18px;padding:10px;}
   #Cpdp-{{ uid }} .cpdp__offers-title{display:flex;align-items:center;gap:8px;font-family:var(--cpdp-body);font-size:17px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px;}
   #Cpdp-{{ uid }} .cpdp__offers-ico{display:inline-grid;place-items:center;width:26px;height:26px;background:#2F82C7;color:#fff;border-radius:8px;font-size:14px;font-weight:800;}
   #Cpdp-{{ uid }} .cpdp__offers-track{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#2F7FBF #CFE3F5;}
@@ -495,10 +585,8 @@
   #Cpdp-{{ uid }} .cpdp__green-bg-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.35;}
   #Cpdp-{{ uid }} .cpdp__green-bg-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:var(--cpdp-purple);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
   #Cpdp-{{ uid }} .cpdp__green-bg-overlay{position:absolute;inset:0;background:rgba(30,60,20,.35);}
-  @media (max-width:749px){
-    #Cpdp-{{ uid }} .cpdp__green-bg-img--desktop{display:none;}
-    #Cpdp-{{ uid }} .cpdp__green-bg-img--mobile{display:block;}
-  }
+  #Cpdp-{{ uid }} .cpdp__themebox-title span{display:none;}
+ 
   #Cpdp-{{ uid }} .jdgm-star{color: #F7C845}
   #Cpdp-{{ uid }} .jdgm-prev-badge__text{ 
     font-family: 'Poppins', sans-serif;
@@ -569,13 +657,217 @@
     #Cpdp-{{ uid }} .cpdp__panel{padding:22px;}
   }
   @media (max-width:640px){
-    #Cpdp-{{ uid }} .cpdp__title{font-size:30px;}
-    #Cpdp-{{ uid }} .cpdp__price-now{font-size:34px;}
+    #Cpdp-{{ uid }} .cpdp__title{
+        font-size: 27px;
+        font-weight: 700;
+        line-height: 30.5px;
+    }
+    #Cpdp-{{ uid }} .cpdp__price-now{font-size:27px;font-weight:700;}
+    
     #Cpdp-{{ uid }} .cpdp__themegrid{grid-template-columns:repeat(2,minmax(0,1fr));}
     #Cpdp-{{ uid }} .cpdp__po-grid{grid-template-columns:minmax(0,1fr);}
     #Cpdp-{{ uid }} .cpdp__sticky-meta{display:none;}
     #Cpdp-{{ uid }} .cpdp__atc--sticky{flex:1;min-width:0;}
     #Cpdp-{{ uid }} .cpdp__wa{bottom:88px;width:52px;height:52px;}
+  }
+   @media (max-width:749px){
+    #Cpdp-{{ uid }} .cpdp__green-bg-img--desktop{display:none;}
+    #Cpdp-{{ uid }} .cpdp__green-bg-img--mobile{display:block;}
+    #Cpdp-{{ uid }} .cpdp__gift-body b{font-size: 11.5px;}
+    #Cpdp-{{ uid }} .cpdp__gift-body em{font-size: 9.5px;}
+    #Cpdp-{{ uid }} .cpdp__gift-ico{width: 26px;height:26px;border-radius:8px;}
+    #Cpdp-{{ uid }} .cpdp__giftwrap{gap:8px;border-radius:10px;border: 0.67px solid #D2E8F2;padding:10px 14px;}
+    #Cpdp-{{ uid }} .cpdp__gift-check{width:22px;height:22px;}
+    #Cpdp-{{ uid }} .cpdp__gift-check:checked::after{top:2px;left:7px; }
+    #Cpdp-{{ uid }} .cpdp__price-was{font-size: 12px;}
+    #Cpdp-{{ uid }} .cpdp__price-off{font-size:10px; padding:3px 8px;}
+    #Cpdp-{{ uid }} .cpdp__price{gap:8px;}
+    #Cpdp-{{ uid }} .cpdp__safety-t{font-size:10px; letter-spacing:0px;}
+    #Cpdp-{{ uid }} .cpdp__safety{border-radius:10px;padding: 4px 6px;gap:4px;border:0.67px solid #F1E2BE;}
+    #Cpdp-{{ uid }} .cpdp__safety-ico{    
+      font-size: 11px;
+      width: 17px;
+      height: 17px;
+    }
+    #Cpdp-{{ uid }} .cpdp__safety-link{
+      font-size: 10px;
+      letter-spacing: 0px;
+    }
+    #Cpdp-{{ uid }} .cpdp__ship{
+      font-size: 11px;
+    }
+    #Cpdp-{{ uid }} .cpdp__tutorial-title{
+      font-size: 14px;
+      font-weight:700;
+    } 
+    #Cpdp-{{ uid }} .cpdp__offer-text{
+      font-size: 10px;
+    } 
+    #Cpdp-{{ uid }} .cpdp__offer{
+      flex: 0 0 179px;
+    }
+    #Cpdp-{{ uid }} .cpdp__offer{
+      padding: 3px 6px;
+      justify-content: space-between;
+    } 
+    #Cpdp-{{ uid }} .cpdp__offers{
+      padding: 10px 10px 0px 10px;
+      border-radius: 12px;
+    }
+    #Cpdp-{{ uid }} .cpdp__trust-t{
+      font-size: 10px;
+      line-height: 120%;
+    } 
+    #Cpdp-{{ uid }} .cpdp__trust-s{
+      font-size: 8px;
+    }
+    #Cpdp-{{ uid }} .cpdp__trust-ico-img{
+      height: 32px;
+      width: 32px;
+    } 
+    #Cpdp-{{ uid }} .cpdp__trust{
+      gap: 4px;
+    }
+    /* Mobile PDP Image Slider */
+
+
+    #Cpdp-{{ uid }} .cpdp__gallery {
+      overflow: hidden;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__stage {
+      position: relative;
+      inset: auto;
+
+      display: flex;
+
+      width: 100%;
+      height: 100%;
+
+      overflow-x: auto;
+
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+
+      -webkit-overflow-scrolling: touch;
+
+      scrollbar-width: none;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__stage::-webkit-scrollbar {
+      display: none;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__slide {
+      position: relative;
+      inset: auto;
+
+      flex: 0 0 100%;
+
+      width: 100%;
+      height: 100%;
+
+      opacity: 1 !important;
+
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Hide desktop navigation arrows */
+    #Cpdp-{{ uid }} .cpdp__nav {
+      {% comment %} display: none; {% endcomment %}
+    }
+    #Cpdp-{{ uid }} .cpdp__themebox-title span{display:inline;}
+    #Cpdp-{{ uid }} .jdgm-star{font-size: 10px;}
+
+    /* Hide thumbnails on mobile */
+    #Cpdp-{{ uid }} .cpdp__thumbs {
+      {% comment %} display: none; {% endcomment %}
+      margin: 10px 10px 0px 10px;
+      gap: 8px;
+    }
+
+    /* Dots */
+    #Cpdp-{{ uid }} .cpdp__dots {
+      position: absolute;
+
+      left: 50%;
+      bottom: 14px;
+
+      transform: translateX(-50%);
+
+      z-index: 5;
+
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__dot {
+      width: 7px;
+      height: 7px;
+
+      padding: 0;
+
+      border: none;
+      border-radius: 50%;
+
+      background: rgba(255, 255, 255, 0.65);
+
+      cursor: pointer;
+
+      transition: all 0.25s ease;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__dot.is-active {
+      width: 22px;
+
+      border-radius: 10px;
+
+      background: #fff;
+    }
+    #Cpdp-{{ uid }} .cpdp__promo-img--desktop{display:none;}
+    #Cpdp-{{ uid }} .cpdp__promo-img--mobile{display:block;}
+    #Cpdp-{{ uid }} .cpdp__crumbs a{font-size: 10px;line-height: 150%;}
+    #Cpdp-{{ uid }} .cpdp__crumb-current{font-size: 10px;line-height: 150%;}
+    #Cpdp-{{ uid }} .cpdp__crumb-sep svg{
+      width: 6px;
+      height: 10px;
+    }
+    #Cpdp-{{ uid }} .cpdp__crumbs{padding: 10px 4px 10px;}
+    #Cpdp-{{ uid }} .cpdp__thumb{flex:0 0 52px;height:52px;border-radius: 8px;}
+    #Cpdp-{{ uid }} .cpdp__theme-ico{background: transparent; width: 32px; height: 32px;}
+    #Cpdp-{{ uid }} .cpdp__theme.is-selected{border: 1.6px solid #5FB85A;} 
+    #Cpdp-{{ uid }} .cpdp__theme{
+      border-radius: 50%;
+    }
+    #Cpdp-{{ uid }} .cpdp__theme-name{
+      display: none;
+    }
+    #Cpdp-{{ uid }} .cpdp__buybox{padding: 1rem;}
+    #Cpdp-{{ uid }} .cpdp__theme{height:44px; width: 44px;justify-content:center;border: 1.6px solid #EAE1D0;}
+    #Cpdp-{{ uid }} .cpdp__themegrid{gap:8px;justify-content:space-around;}
+    #Cpdp-{{ uid }} .cpdp__themebox-title{
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #3B2A1DCC;
+    }
+    #Cpdp-{{ uid }} .cpdp__selected-option{
+      color: #58AD6F;
+      font-weight: 700;
+    }
+    #Cpdp-{{ uid }} .jdgm-prev-badge__text{font-size:11.5px;}
+    #Cpdp-{{ uid }} .cpdp__rating-sold{font-size:11.5px;}
+    #Cpdp-{{ uid }} .cpdp__pill{font-size:10px;padding:5px 8px;}
+    #Cpdp-{{ uid }} .cpdp__desc{font-size:12px;}
+   
   }
 </style>
 
@@ -683,6 +975,81 @@
         entries.forEach(function(e){ sticky.classList.toggle('is-visible', !e.isIntersecting && e.boundingClientRect.top < 0); });
       }, {threshold:0}).observe(anchor);
     } else if(sticky){ sticky.classList.add('is-visible'); }
+    var stage = root.querySelector('.cpdp__stage');
+    var slides = root.querySelectorAll('.cpdp__slide');
+    var thumbs = root.querySelectorAll('.cpdp__thumb');
+    var dots = root.querySelectorAll('.cpdp__dot');
+
+    var cur = 0;
+
+    function updateActive(i) {
+      cur = (i + slides.length) % slides.length;
+
+      slides.forEach(function(s, idx) {
+        s.classList.toggle('is-active', idx === cur);
+      });
+
+      thumbs.forEach(function(t, idx) {
+        t.classList.toggle('is-active', idx === cur);
+      });
+
+      dots.forEach(function(dot, idx) {
+        dot.classList.toggle('is-active', idx === cur);
+      });
+    }
+
+
+    function show(i) {
+
+      if (!slides.length) return;
+
+      i = (i + slides.length) % slides.length;
+
+      updateActive(i);
+
+      /* Mobile scroll */
+      if (window.innerWidth <= 749 && stage) {
+
+        stage.scrollTo({
+          left: stage.clientWidth * i,
+          behavior: 'smooth'
+        });
+
+      }
+    }
+  })();
+</script>
+<script>
+  (function () {
+    var root = document.getElementById('Cpdp-{{ uid }}');
+
+    if (!root) return;
+
+    root.querySelectorAll('.cpdp__theme').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+
+        root.querySelectorAll('.cpdp__theme').forEach(function (b) {
+          b.classList.remove('is-selected');
+          b.setAttribute('aria-checked', 'false');
+        });
+
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-checked', 'true');
+
+        /* Update selected option value */
+        var selectedOption = root.querySelector('.cpdp__selected-option');
+
+        if (selectedOption) {
+          selectedOption.textContent = btn.dataset.optionValue || '';
+        }
+
+        /* Update variant */
+        if (typeof selectVariant === 'function') {
+          selectVariant(btn.dataset.variantId);
+        }
+
+      });
+    });
   })();
 </script>
 
@@ -720,6 +1087,7 @@
     { "type": "text", "id": "badge_2", "label": "Badge 2 (white)", "default": "Screen-free fun" },
     { "type": "header", "content": "Safety" },
     { "type": "text", "id": "safety_text", "label": "Safety notice", "default": "Small parts — choking hazard. Not for under 3s." },
+    { "type": "text", "id": "safety_link_text", "label": "Safety Notice Text", "default": "Safety details." },
     { "type": "url", "id": "safety_link", "label": "Safety details link" },
     { "type": "header", "content": "Offers (text|CODE ; separated)" },
     { "type": "textarea", "id": "offers", "label": "Offers", "default": "Get EXTRA 5% Off on First Order|WELCOME5;Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10;Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20" },

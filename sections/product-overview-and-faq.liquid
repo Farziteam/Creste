@@ -40,29 +40,31 @@
   <div class="product-overview-faq__inner">
 
     <!-- Tabs -->
-    <div
-      class="product-overview-faq__tabs"
-      role="tablist"
-    >
-      <button
-        type="button"
-        class="product-overview-faq__tab is-active"
-        data-tab="overview"
-        role="tab"
-        aria-selected="true"
-      >
-        ✦ {{ section.settings.overview_tab_label }}
-      </button>
+    <div class="product-overview-tab-wrapper">
+        <div
+        class="product-overview-faq__tabs"
+        role="tablist"
+        >
+        <button
+            type="button"
+            class="product-overview-faq__tab is-active"
+            data-tab="overview"
+            role="tab"
+            aria-selected="true"
+        >
+            ✦ {{ section.settings.overview_tab_label }}
+        </button>
 
-      <button
-        type="button"
-        class="product-overview-faq__tab"
-        data-tab="faqs"
-        role="tab"
-        aria-selected="false"
-      >
-        ❔ {{ section.settings.faq_tab_label }}
-      </button>
+        <button
+            type="button"
+            class="product-overview-faq__tab"
+            data-tab="faqs"
+            role="tab"
+            aria-selected="false"
+        >
+            {{ 'icon-question.svg' | inline_asset_content }} {{ section.settings.faq_tab_label }}
+        </button>
+        </div>
     </div>
 
 
@@ -72,7 +74,7 @@
       data-panel="overview"
     >
 
-      <div class="product-overview-faq__grid">
+      {% comment %} <div class="product-overview-faq__grid">
 
         <div class="product-overview-faq__content">
 
@@ -185,7 +187,268 @@
 
         </div>
 
-      </div>
+      </div> {% endcomment %}
+      {% assign overview = product.metafields.custom.product_overview.value %}
+
+    <div class="product-overview-faq__grid">
+
+    <div class="product-overview-faq__content">
+
+        {% if overview.heading != blank %}
+        <h2 class="product-overview-faq__heading">
+            {{ overview.heading }}
+        </h2>
+
+        {% elsif section.settings.overview_heading != blank %}
+        <h2 class="product-overview-faq__heading">
+            {{ section.settings.overview_heading }}
+        </h2>
+        {% endif %}
+
+
+        {% if overview.description != blank %}
+        <div class="product-overview-faq__text">
+            {{ overview.description | newline_to_br }}
+        </div>
+
+        {% elsif section.settings.overview_text != blank %}
+        <div class="product-overview-faq__text">
+            {{ section.settings.overview_text }}
+        </div>
+
+        {% elsif product.description != blank %}
+        <div class="product-overview-faq__text">
+            {{ product.description | strip_html | truncatewords: 60 }}
+        </div>
+        {% endif %}
+
+
+        <div class="product-overview-faq__features">
+
+        <!-- Feature 1 -->
+        {% if overview.feature_1_heading != blank
+            or overview.feature_1_description != blank
+            or overview.feature_1_icon != blank
+        %}
+            <div class="product-overview-faq__feature">
+
+            {% if overview.feature_1_icon != blank %}
+                <div class="product-overview-faq__feature-icon">
+                <img
+                    src="{{ overview.feature_1_icon }}"
+                    alt="{{ overview.feature_1_heading }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                </div>
+            {% endif %}
+
+            <div class="product-overview-faq__feature-content">
+
+                {% if overview.feature_1_heading != blank %}
+                <strong>
+                    {{ overview.feature_1_heading }}
+                </strong>
+                {% endif %}
+
+                {% if overview.feature_1_description != blank %}
+                <span>
+                    {{ overview.feature_1_description | newline_to_br }}
+                </span>
+                {% endif %}
+
+            </div>
+
+            </div>
+        {% endif %}
+
+
+        <!-- Feature 2 -->
+        {% if overview.feature_2_heading != blank
+            or overview.feature_2_description != blank
+            or overview.feature_2_icon != blank
+        %}
+            <div class="product-overview-faq__feature">
+
+            {% if overview.feature_2_icon != blank %}
+                <div class="product-overview-faq__feature-icon">
+                <img
+                    src="{{ overview.feature_2_icon }}"
+                    alt="{{ overview.feature_2_heading }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                </div>
+            {% endif %}
+
+            <div class="product-overview-faq__feature-content">
+
+                {% if overview.feature_2_heading != blank %}
+                <strong>
+                    {{ overview.feature_2_heading }}
+                </strong>
+                {% endif %}
+
+                {% if overview.feature_2_description != blank %}
+                <span>
+                    {{ overview.feature_2_description | newline_to_br }}
+                </span>
+                {% endif %}
+
+            </div>
+
+            </div>
+        {% endif %}
+
+
+        <!-- Feature 3 -->
+        {% if overview.feature_3_heading != blank
+            or overview.feature_3_description != blank
+            or overview.feature_3_icon != blank
+        %}
+            <div class="product-overview-faq__feature">
+
+            {% if overview.feature_3_icon != blank %}
+                <div class="product-overview-faq__feature-icon">
+                <img
+                    src="{{ overview.feature_3_icon }}"
+                    alt="{{ overview.feature_3_heading }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                </div>
+            {% endif %}
+
+            <div class="product-overview-faq__feature-content">
+
+                {% if overview.feature_3_heading != blank %}
+                <strong>
+                    {{ overview.feature_3_heading }}
+                </strong>
+                {% endif %}
+
+                {% if overview.feature_3_description != blank %}
+                <span>
+                    {{ overview.feature_3_description | newline_to_br }}
+                </span>
+                {% endif %}
+
+            </div>
+
+            </div>
+        {% endif %}
+
+
+        <!-- Feature 4 -->
+        {% if overview.feature_4_heading != blank
+            or overview.feature_4_description != blank
+            or overview.feature_4_icon != blank
+        %}
+            <div class="product-overview-faq__feature">
+
+            {% if overview.feature_4_icon != blank %}
+                <div class="product-overview-faq__feature-icon">
+                <img
+                    src="{{ overview.feature_4_icon }}"
+                    alt="{{ overview.feature_4_heading }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                >
+                </div>
+            {% endif %}
+
+            <div class="product-overview-faq__feature-content">
+
+                {% if overview.feature_4_heading != blank %}
+                <strong>
+                    {{ overview.feature_4_heading }}
+                </strong>
+                {% endif %}
+
+                {% if overview.feature_4_description != blank %}
+                <span>
+                    {{ overview.feature_4_description | newline_to_br }}
+                </span>
+                {% endif %}
+
+            </div>
+
+            </div>
+        {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Product Overview Image -->
+
+    <div class="product-overview-faq__media">
+
+        {% if overview.image != blank %}
+        <img
+            src="{{ overview.image }}"
+            alt="{{ overview.heading | default: product.title }}"
+            loading="lazy"
+            class="product-overview-faq__image"
+            width="900"
+        >
+
+        {% elsif section.settings.overview_image != blank %}
+
+        {{
+            section.settings.overview_image
+            | image_url: width: 900
+            | image_tag:
+            loading: 'lazy',
+            class: 'product-overview-faq__image',
+            alt: section.settings.overview_image_alt
+        }}
+
+        {% elsif product.featured_image != blank %}
+
+        {{
+            product.featured_image
+            | image_url: width: 900
+            | image_tag:
+            loading: 'lazy',
+            class: 'product-overview-faq__image',
+            alt: product.title
+        }}
+
+        {% endif %}
+        {% if section.settings.mascot_left != blank %}
+        <span class="product-overview-faq__mascot_left">
+            <img
+            src="{{ section.settings.mascot_left | image_url: width: 300 }}"
+            alt="cartoon-image-left"
+            loading="lazy"
+            width="{{ section.settings.mascot_left.width }}"
+            height="{{ section.settings.mascot_left.height }}"
+            >
+        </span>
+        {% endif %}
+
+
+        {% if section.settings.mascot_right != blank %}
+        <span class="product-overview-faq__mascot_right">
+            <img
+            src="{{ section.settings.mascot_right | image_url: width: 300 }}"
+            alt="cartoon-image-right"
+            loading="lazy"
+            width="{{ section.settings.mascot_right.width }}"
+            height="{{ section.settings.mascot_right.height }}"
+            >
+        </span>
+        {% endif %}
+
+    </div>
+
+    </div>
 
     </div>
 
@@ -252,7 +515,7 @@
     --line: #E7E3DA;
 
     position: relative;
-    background: var(--green);
+    {% comment %} background: var(--green); {% endcomment %}
     padding: 44px 20px 54px;
     margin: 40px 0;
 
@@ -260,7 +523,7 @@
   }
 
 
-  #{{ section_id }}::before {
+  {% comment %} #{{ section_id }}::before {
     content: "";
     position: absolute;
     top: -12px;
@@ -275,10 +538,10 @@
         transparent 10px
       )
       0 0 / 18px 14px repeat-x;
-  }
+  } {% endcomment %}
 
 
-  #{{ section_id }}::after {
+  {% comment %} #{{ section_id }}::after {
     content: "";
     position: absolute;
     bottom: -12px;
@@ -293,10 +556,15 @@
         transparent 10px
       )
       0 0 / 18px 14px repeat-x;
-  }
+  } {% endcomment %}
 
 
   /* Background */
+  #{{ section_id }} .product-overview-tab-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 
   #{{ section_id }} .product-overview-faq__background {
     position: absolute;
@@ -312,7 +580,7 @@
     width: 100%;
     height: 100%;
 
-    object-fit: cover;
+    object-fit: unset;
   }
 
 
@@ -335,7 +603,7 @@
     position: relative;
     z-index: 2;
 
-    max-width: 1080px;
+    max-width: 1320px;
     margin: 0 auto;
   }
 
@@ -344,7 +612,8 @@
 
   #{{ section_id }} .product-overview-faq__tabs {
     display: flex;
-    gap: 8px;
+    gap: 24px;
+    width: 90%;
   }
 
 
@@ -355,16 +624,18 @@
 
     cursor: pointer;
 
-    font-family: var(
+    {% comment %} font-family: var(
       --font-heading-family,
       system-ui,
       sans-serif
-    );
+    ); {% endcomment %}
+    font-family: 'Quicksand',sans-serif;
 
-    font-weight: 800;
-    font-size: 20px;
-
-    padding: 18px;
+    font-weight: 700;
+    
+    font-size: 18px;
+    line-height: 28px;
+    padding: 12px 32px;
 
     border-radius: 18px 18px 0 0;
 
@@ -385,17 +656,23 @@
     display: none;
 
     background: #ffffff;
+    border-top-right-radius: 32px;
+    border-top-left-radius: 32px;
 
     border-radius: 0 0 22px 22px;
 
-    border-top: 4px solid var(--orange);
+    border-top: 6px solid var(--orange);
+    padding: 45px 80px;
 
-    padding: 38px;
+    {% comment %} padding: 38px; {% endcomment %}
   }
 
 
   #{{ section_id }} .product-overview-faq__panel.is-active {
     display: block;
+    border-top-right-radius: 32px;
+    border-top-left-radius: 32px;
+
   }
 
 
@@ -416,8 +693,12 @@
 
   #{{ section_id }} .product-overview-faq__heading {
     margin: 0 0 16px;
+    font-family: Fredoka One, sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 123%;
 
-    font-family: var(
+    {% comment %} font-family: var(
       --font-heading-family,
       system-ui,
       sans-serif
@@ -429,7 +710,7 @@
 
     line-height: 1.15;
 
-    color: var(--purple);
+    color: var(--purple); {% endcomment %}
   }
 
 
@@ -439,6 +720,7 @@
     line-height: 1.65;
 
     color: var(--text);
+    font-family: 'Nunito', sans-serif;
 
     margin-bottom: 22px;
 
@@ -460,7 +742,8 @@
 
     gap: 12px;
 
-    align-items: flex-start;
+    align-items: center;
+    border: 0.67px solid #EFE4D2;
 
     background: #FBF6EA;
 
@@ -499,16 +782,26 @@
 
 
   #{{ section_id }} .product-overview-faq__feature-content strong {
-    font-size: 15px;
+    {% comment %} font-size: 15px;
 
-    color: var(--purple);
+    color: var(--purple); {% endcomment %}
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    line-height: 119%;
+    letter-spacing: 0px;
   }
 
 
   #{{ section_id }} .product-overview-faq__feature-content span {
-    font-size: 13px;
+    {% comment %} font-size: 13px; {% endcomment %}
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    line-height: 18.2px;
+    font-weight: 400;
+    letter-spacing: 0;
 
-    color: #7c828c;
+    color: #5B5468;
   }
 
 
@@ -537,15 +830,23 @@
 
     display: block;
   }
+  #{{ section_id }} .product-overview-faq__mascot_left {
+    position: absolute;
+
+    left: 4%;
+    bottom: 0;
+
+    {% comment %} font-size: 52px; {% endcomment %}
+  }
 
 
-  #{{ section_id }} .product-overview-faq__mascot {
+  #{{ section_id }} .product-overview-faq__mascot_right {
     position: absolute;
 
     right: 2%;
     bottom: 0;
 
-    font-size: 52px;
+    {% comment %} font-size: 52px; {% endcomment %}
   }
 
 
@@ -664,6 +965,9 @@
 
     line-height: 1.6;
   }
+  #{{ section_id }} .product-overview-faq__faq-answer p{
+    margin: 0px;
+  }
 
 
   /* Mobile */
@@ -688,9 +992,24 @@
 
 
     #{{ section_id }} .product-overview-faq__tab {
-      font-size: 16px;
-
-      padding: 14px 10px;
+      {% comment %} font-size: 16px; {% endcomment %}
+      font-size: 11px;
+      line-height: 125%;
+      padding: 8px;
+    }
+    #{{ section_id }} .product-overview-faq__tab{
+      border-radius: 10px 10px 0 0;
+    }
+    #{{ section_id }} .product-overview-faq__tab svg{
+      height: 11px;
+      width: 11px;
+    }
+    #{{ section_id }} .product-overview-faq__feature-icon img{
+        width: 20px;
+        height: 20px;
+    }
+    #{{ section_id }} .product-overview-faq__feature-content span,#{{ section_id }} .product-overview-faq__feature-content strong{
+        font-size: 8px;
     }
 
 
@@ -706,13 +1025,35 @@
 
     #{{ section_id }} .product-overview-faq__media {
       max-width: 300px;
-
+      display: none;
       order: -1;
+    }
+    #{{ section_id }} .product-overview-faq__feature{
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 6px;
+        gap:6px;
+    }
+    #{{ section_id }} .product-overview-faq__heading {
+        font-size: 16px;
+        margin: 0 0 10px;
+    }
+    #{{ section_id }} .product-overview-faq__text{
+        font-size: 11.5px;
+        margin-bottom: 10px;
+    }
+    #{{ section_id }} .product-overview-faq__panel.is-active{
+        border-top-right-radius: 12px;
+        border-top-left-radius: 12px;
+    }
+    #{{ section_id }} .product-overview-faq__panel{
+        border-radius: 12px;
+        border-top: 2px solid #F4793A;
     }
 
 
     #{{ section_id }} .product-overview-faq__features {
-      grid-template-columns: 1fr;
+      {% comment %} grid-template-columns: 1fr; {% endcomment %}
     }
 
 
@@ -898,55 +1239,20 @@
       "id": "overview_image_alt",
       "label": "Overview image alt text"
     },
-
+      {
+      "type": "image_picker",
+      "id": "mascot_left",
+      "label": "Mascot Image Left",
+    },
     {
-      "type": "text",
-      "id": "mascot",
-      "label": "Mascot / Emoji",
-      "default": "🐱"
+      "type": "image_picker",
+      "id": "mascot_right",
+      "label": "Mascot Image Right",
     }
 
   ],
 
   "blocks": [
-
-    {
-      "type": "feature",
-      "name": "Feature",
-      "limit": 8,
-      "settings": [
-
-        {
-          "type": "image_picker",
-          "id": "icon",
-          "label": "Icon image"
-        },
-
-        {
-          "type": "text",
-          "id": "emoji",
-          "label": "Emoji",
-          "default": "🎨"
-        },
-
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "Feature heading"
-        },
-
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Description",
-          "default": "Feature description"
-        }
-
-      ]
-    },
-
-
     {
       "type": "faq",
       "name": "FAQ",

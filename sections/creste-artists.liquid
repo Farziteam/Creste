@@ -17,7 +17,7 @@
     <div class="cpdpa__grid">
       {%- for coltype in layout -%}
         <div class="cpdpa__col">
-          {%- if coltype == 'tall' -%}
+          {% comment %} {%- if coltype == 'tall' -%}
             {%- assign vurl = section.blocks[idx].settings.video_url -%}
             <div class="cpdpa__item cpdpa__item--tall">
               {%- if section.blocks[idx].settings.image != blank -%}{{ section.blocks[idx].settings.image | image_url: width: 700 | image_tag: loading: 'lazy', alt: '' }}{%- elsif request.design_mode -%}<div class="cpdpa__ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdpa__ph-svg' }}<span class="cpdpa__ph-label">Upload photo or video — set in block settings</span></div>{%- elsif product.media[idx] -%}{{ product.media[idx] | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}{%- else -%}<span class="cpdpa__img--ph"></span>{%- endif -%}
@@ -33,6 +33,238 @@
               {%- if section.blocks[idx].settings.image != blank -%}{{ section.blocks[idx].settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: '' }}{%- elsif request.design_mode -%}<div class="cpdpa__ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdpa__ph-svg' }}<span class="cpdpa__ph-label">Upload photo — set in block settings</span></div>{%- elsif product.media[idx] -%}{{ product.media[idx] | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}{%- else -%}<span class="cpdpa__img--ph"></span>{%- endif -%}
             </div>
             {%- assign idx = idx | plus: 1 -%}
+          {%- endif -%} {% endcomment %}
+           {%- if coltype == 'tall' -%}
+
+            {%- assign block = section.blocks[idx] -%}
+            {%- assign video = block.settings.video -%}
+
+            <div class="cpdpa__item cpdpa__item--tall">
+
+              {%- if video != blank -%}
+
+                <div class="cpdpa__video" data-video-container>
+
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 700
+                      | image_tag: loading: 'lazy', alt: ''
+                    }}
+
+                  {%- elsif video.preview_image != blank -%}
+                    {{
+                      video.preview_image
+                      | image_url: width: 700
+                      | image_tag: loading: 'lazy', alt: ''
+                    }}
+                  {%- endif -%}
+
+                  {%- assign video_source = video.sources | first -%}
+
+                  <button
+                    type="button"
+                    class="cpdpa__play"
+                    aria-label="Play video"
+                    data-video-src="{{ video_source.url }}"
+                    data-video-type="{{ video_source.mime_type }}"
+                  >
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#F26E21">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </button>
+
+                </div>
+
+              {%- elsif block.settings.image != blank -%}
+
+                {{
+                  block.settings.image
+                  | image_url: width: 700
+                  | image_tag: loading: 'lazy', alt: ''
+                }}
+
+              {%- elsif request.design_mode -%}
+
+                <div class="cpdpa__ph">
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'cpdpa__ph-svg' }}
+                  <span class="cpdpa__ph-label">
+                    Upload photo or video — set in block settings
+                  </span>
+                </div>
+
+              {%- elsif product.media[idx] -%}
+
+                {{
+                  product.media[idx]
+                  | image_url: width: 700
+                  | image_tag: loading: 'lazy', alt: product.title
+                }}
+
+              {%- else -%}
+
+                <span class="cpdpa__img--ph"></span>
+
+              {%- endif -%}
+
+            </div>
+
+            {%- assign idx = idx | plus: 1 -%}
+
+
+          {%- else -%}
+
+            {%- assign block = section.blocks[idx] -%}
+            {%- assign video = block.settings.video -%}
+
+            <div class="cpdpa__item cpdpa__item--half">
+
+              {%- if video != blank -%}
+
+                <div class="cpdpa__video" data-video-container>
+
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 600
+                      | image_tag: loading: 'lazy', alt: ''
+                    }}
+
+                  {%- elsif video.preview_image != blank -%}
+                    {{
+                      video.preview_image
+                      | image_url: width: 600
+                      | image_tag: loading: 'lazy', alt: ''
+                    }}
+                  {%- endif -%}
+
+                  {%- assign video_source = video.sources | first -%}
+
+                  <button
+                    type="button"
+                    class="cpdpa__play"
+                    aria-label="Play video"
+                    data-video-src="{{ video_source.url }}"
+                    data-video-type="{{ video_source.mime_type }}"
+                  >
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#F26E21">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </button>
+
+                </div>
+
+              {%- elsif block.settings.image != blank -%}
+
+                {{
+                  block.settings.image
+                  | image_url: width: 600
+                  | image_tag: loading: 'lazy', alt: ''
+                }}
+
+              {%- elsif request.design_mode -%}
+
+                <div class="cpdpa__ph">
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'cpdpa__ph-svg' }}
+                  <span class="cpdpa__ph-label">
+                    Upload photo or video — set in block settings
+                  </span>
+                </div>
+
+              {%- elsif product.media[idx] -%}
+
+                {{
+                  product.media[idx]
+                  | image_url: width: 600
+                  | image_tag: loading: 'lazy', alt: product.title
+                }}
+
+              {%- else -%}
+
+                <span class="cpdpa__img--ph"></span>
+
+              {%- endif -%}
+
+            </div>
+
+            {%- assign idx = idx | plus: 1 -%}
+
+
+            {%- assign block = section.blocks[idx] -%}
+            {%- assign video = block.settings.video -%}
+
+            <div class="cpdpa__item cpdpa__item--half">
+
+              {%- if video != blank -%}
+
+                <div class="cpdpa__video" data-video-container>
+
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 600
+                      | image_tag: loading: 'lazy', alt: ''
+                    }}
+
+                  {%- elsif video.preview_image != blank -%}
+                    {{
+                      video.preview_image
+                      | image_url: width: 600
+                      | image_tag: loading: 'lazy', alt: ''
+                    }}
+                  {%- endif -%}
+
+                  {%- assign video_source = video.sources | first -%}
+
+                  <button
+                    type="button"
+                    class="cpdpa__play"
+                    aria-label="Play video"
+                    data-video-src="{{ video_source.url }}"
+                    data-video-type="{{ video_source.mime_type }}"
+                  >
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#F26E21">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </button>
+
+                </div>
+
+              {%- elsif block.settings.image != blank -%}
+
+                {{
+                  block.settings.image
+                  | image_url: width: 600
+                  | image_tag: loading: 'lazy', alt: ''
+                }}
+
+              {%- elsif request.design_mode -%}
+
+                <div class="cpdpa__ph">
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'cpdpa__ph-svg' }}
+                  <span class="cpdpa__ph-label">
+                    Upload photo or video — set in block settings
+                  </span>
+                </div>
+
+              {%- elsif product.media[idx] -%}
+
+                {{
+                  product.media[idx]
+                  | image_url: width: 600
+                  | image_tag: loading: 'lazy', alt: product.title
+                }}
+
+              {%- else -%}
+
+                <span class="cpdpa__img--ph"></span>
+
+              {%- endif -%}
+
+            </div>
+
+            {%- assign idx = idx | plus: 1 -%}
+
           {%- endif -%}
         </div>
       {%- endfor -%}
@@ -47,7 +279,7 @@
     font-family:var(--cpdpa-body);
   }
   #CpdpArt-{{ uid }} *{box-sizing:border-box;}
-  #CpdpArt-{{ uid }} .cpdpa__wrap{max-width:1240px;margin:0 auto;padding:{{ section.settings.padding_top | default: 52 }}px 20px {{ section.settings.padding_bottom | default: 56 }}px;}
+  #CpdpArt-{{ uid }} .cpdpa__wrap{max-width:1310px;margin:0 auto;padding:{{ section.settings.padding_top | default: 52 }}px 20px {{ section.settings.padding_bottom | default: 56 }}px;}
   #CpdpArt-{{ uid }} .cpdpa__title{font-family:var(--cpdpa-head);font-weight:800;text-align:center;font-size:clamp(30px,4vw,52px);line-height:1.1;margin:0 0 12px;color:var(--cpdpa-brown);}
   #CpdpArt-{{ uid }} .cpdpa__hl{color:var(--cpdpa-teal);}
   #CpdpArt-{{ uid }} .cpdpa__sub{text-align:center;font-size:clamp(16px,1.6vw,20px);color:var(--cpdpa-ink);max-width:760px;margin:0 auto 34px;line-height:1.5;}
@@ -84,8 +316,12 @@
       "type": "item",
       "name": "Photo / video",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "url", "id": "video_url", "label": "Video link (optional — shows play button)" }
+        { "type": "image_picker", "id": "image", "label": "Image / Video thumbnail" },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (optional)"
+        }
       ]
     }
   ],
