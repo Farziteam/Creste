@@ -952,13 +952,6 @@
     "creste_faq": {
       "type": "creste-faq",
       "blocks": {
-        "faq_kjxDHV": {
-          "type": "faq",
-          "settings": {
-            "question": "What if something is missing or damaged?",
-            "answer": "Message us within 4 days, and we'll replace it. You won't need to fill anything in or send proof. A kit that can't be finished isn't one we're happy to have sent."
-          }
-        },
         "q1": {
           "type": "faq",
           "settings": {
@@ -993,15 +986,22 @@
             "question": "Can I order in bulk for a school, birthday, or corporate event?",
             "answer": "Yes, and it's one of the things Creste does most. Whether it's a classroom set of DIY activity kits, a birthday where every guest makes something and takes it home, or a corporate gifting box for a team of forty, tell us the numbers and the occasion, and we'll handle the rest."
           }
+        },
+        "faq_kjxDHV": {
+          "type": "faq",
+          "settings": {
+            "question": "What if something is missing or damaged?",
+            "answer": "Message us within 4 days, and we'll replace it. You won't need to fill anything in or send proof. A kit that can't be finished isn't one we're happy to have sent."
+          }
         }
       },
       "block_order": [
-        "faq_kjxDHV",
         "q1",
         "q2",
         "q3",
         "q4",
-        "q5"
+        "q5",
+        "faq_kjxDHV"
       ],
       "settings": {
         "section_bg": "#ffffff",
