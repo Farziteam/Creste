@@ -278,6 +278,34 @@
     --cpdpa-body: var(--font-body-family, 'Poppins','Nunito',system-ui,sans-serif);
     font-family:var(--cpdpa-body);
   }
+  #CpdpArt-{{ uid }} .cpdpa__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#CpdpArt-{{ uid }} .cpdpa__loaded-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+#CpdpArt-{{ uid }} .cpdpa__video.is-video-playing .cpdpa__loaded-video {
+  opacity: 1;
+}
+
+#CpdpArt-{{ uid }} .cpdpa__video.is-video-playing > img,
+#CpdpArt-{{ uid }} .cpdpa__video.is-video-playing .cpdpa__play {
+  opacity: 0;
+  pointer-events: none;
+}
   #CpdpArt-{{ uid }} *{box-sizing:border-box;}
   #CpdpArt-{{ uid }} .cpdpa__wrap{max-width:1310px;margin:0 auto;padding:{{ section.settings.padding_top | default: 52 }}px 20px {{ section.settings.padding_bottom | default: 56 }}px;}
   #CpdpArt-{{ uid }} .cpdpa__title{font-family:var(--cpdpa-head);font-weight:800;text-align:center;font-size:clamp(30px,4vw,52px);line-height:1.1;margin:0 0 12px;color:var(--cpdpa-brown);}
@@ -297,6 +325,65 @@
   @media (max-width:920px){ #CpdpArt-{{ uid }} .cpdpa__grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
   @media (max-width:560px){ #CpdpArt-{{ uid }} .cpdpa__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;} #CpdpArt-{{ uid }} .cpdpa__col{gap:12px;} }
 </style>
+
+<script>
+(function () {
+  var section = document.getElementById('CpdpArt-{{ uid }}');
+
+  if (!section) return;
+
+  section.querySelectorAll('[data-video-src]').forEach(function (button) {
+
+    button.addEventListener('click', function () {
+
+      var container = button.closest('[data-video-container]');
+
+      if (!container || container.dataset.loaded === 'true') return;
+
+      container.dataset.loaded = 'true';
+
+      var video = document.createElement('video');
+      var source = document.createElement('source');
+
+      source.src = button.dataset.videoSrc;
+      source.type = button.dataset.videoType || 'video/mp4';
+
+      video.appendChild(source);
+
+      video.controls = true;
+      video.autoplay = false;
+      video.playsInline = true;
+      video.preload = 'auto';
+
+      video.className = 'cpdpa__loaded-video';
+
+      /*
+       * Add video above the existing preview.
+       * Do NOT remove the image immediately.
+       */
+      container.appendChild(video);
+
+      /*
+       * Wait until video has enough data to render.
+       */
+      video.addEventListener('canplay', function () {
+
+        container.classList.add('is-video-playing');
+
+        video.play().catch(function () {});
+
+      }, { once: true });
+
+      /*
+       * Start loading only after click.
+       */
+      video.load();
+
+    });
+
+  });
+})();
+</script>
 
 {% schema %}
 {
