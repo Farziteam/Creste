@@ -952,6 +952,13 @@
     "creste_faq": {
       "type": "creste-faq",
       "blocks": {
+        "faq_ediE4n": {
+          "type": "faq",
+          "settings": {
+            "question": "Do kids need adult supervision to use these kits?",
+            "answer": "Depends on the age and kit — younger kids do best with a parent nearby, older kids (and adults) can usually go solo. Every kit is age-labeled so you know exactly what level of hands-on help is needed."
+          }
+        },
         "q1": {
           "type": "faq",
           "settings": {
@@ -996,6 +1003,7 @@
         }
       },
       "block_order": [
+        "faq_ediE4n",
         "q1",
         "q2",
         "q3",
