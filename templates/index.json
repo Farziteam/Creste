@@ -952,6 +952,13 @@
     "creste_faq": {
       "type": "creste-faq",
       "blocks": {
+        "faq_wChyCM": {
+          "type": "faq",
+          "settings": {
+            "question": "Can complete beginners use these kits with no craft experience?",
+            "answer": "That's exactly who they're made for. Zero experience needed — just follow the box, step by step, and you'll end up..."
+          }
+        },
         "faq_ediE4n": {
           "type": "faq",
           "settings": {
@@ -1003,6 +1010,7 @@
         }
       },
       "block_order": [
+        "faq_wChyCM",
         "faq_ediE4n",
         "q1",
         "q2",
