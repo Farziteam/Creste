@@ -15,6 +15,149 @@
   .drawer {
     visibility: hidden;
   }
+
+/* Creste Cart Drawer Redesign — Figma-accurate rebuild */
+  .cart-drawer, .cart-drawer * { box-sizing: border-box; }
+    .cart-drawer .drawer__inner { background: #FFFFFF; border-radius: 24px 0 0 24px; font-family: 'Nunito Sans', sans-serif; color: #2E2418; display: flex; flex-direction: column; }
+      @media screen and (min-width: 750px) { .cart-drawer .drawer__inner { width: 500px; max-width: 500px; } }
+        @media screen and (max-width: 749px) { .cart-drawer .drawer__inner { border-radius: 0; width: 100vw; max-width: 100vw; } }
+          .cart-drawer .drawer__header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 20px 20px 16px; border-bottom: 2px solid #FFCE00; }
+            .cart-drawer .drawer__heading { font-family: 'Nunito Sans', sans-serif; font-weight: 700; font-size: 24px; line-height: 1.2; color: #2E2418; display: flex; align-items: center; gap: 10px; margin: 0; flex: 1 1 auto; }
+              .cart-drawer .creste-cart-badge { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; background: #FFF2BE; color: #5C4B38; padding: 5px 13px; border-radius: 999px; }
+                .cart-drawer .drawer__close { background: #FFF3C4; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+                  .cart-drawer .creste-cart-tagline { width: 100%; margin: 0; font-family: 'Fredoka One', cursive; font-weight: 400; font-size: 12px; line-height: 1.2; color: #3AACCC; }
+
+                    /* Shipping / gift progress card — single unified design matching Figma */
+                      .creste-cart-progress { margin: 16px 20px; padding: 16px 12px; border-radius: 16px; background: #EDF7F0; display: flex; flex-direction: column; gap: 8px; }
+                        .creste-cart-progress__heading { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 14px; line-height: 1.2; color: #2F6B41; margin: 0; }
+                          .creste-cart-progress__bar { position: relative; height: 10px; border-radius: 999px; background: #D6EBDD; margin-top: 4px; }
+                            .creste-cart-progress__fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 999px; background: #5BAD6F; transition: width .3s ease; }
+                              .creste-cart-progress__message { margin: 0; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 13px; line-height: 1.2; color: #5C4B38; }
+                                .creste-cart-progress__message strong { font-weight: 600; }
+
+                                  /* Cart items */
+                                    .cart-drawer-items thead th { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+                                      .cart-drawer-items tbody { display: block; padding: 4px 20px; }
+                                        .cart-drawer-items tr.cart-item { display: flex; align-items: flex-start; gap: 12px; position: relative; padding: 16px 0; border-bottom: 1px dashed #E7DCC5; }
+                                          .cart-drawer-items tr.cart-item:last-child { border-bottom: 0; }
+                                            .cart-drawer-items .cart-item td { display: block; padding: 0; border: 0; }
+                                              .cart-drawer-items .cart-item__media { flex: 0 0 80px; }
+                                                .cart-drawer-items .cart-item__image { width: 80px; height: 75px; border-radius: 12px; object-fit: cover; }
+                                                  .cart-drawer-items .cart-item__details { flex: 1 1 auto; min-width: 0; padding-right: 28px !important; }
+                                                    .cart-drawer-items .cart-item__name { font-family: 'Nunito Sans', sans-serif; font-weight: 800; font-size: 14px; color: #2E2418; }
+                                                      .cart-drawer-items .cart-item__quantity { flex: 0 0 auto; margin-top: 8px; }
+                                                        .cart-drawer-items .cart-remove-button { position: absolute; top: 16px; right: 0; color: #E0483E; }
+
+                                                          .creste-item-prices { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+                                                            .creste-item-price { font-family: 'Nunito Sans', sans-serif; font-weight: 900; font-size: 16px; color: #F4793A; }
+                                                              .creste-item-compare { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 13px; color: #2B1702; opacity: .4; text-decoration: line-through; }
+                                                                .creste-item-discount { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; color: #5BAD6F; }
+
+                                                                  .quantity-popover-wrapper { background: #FFFFFF; border: 1px solid #E7DCC5; border-radius: 999px; padding: 2px 4px; }
+
+                                                                    /* Gift wrap — applies to the whole order */
+                                                                      .creste-gift-wrap { margin: 4px 20px 16px; background: #FCF0F6; border-radius: 22px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+                                                                        .creste-gift-wrap__label { display: flex; align-items: center; gap: 10px; }
+                                                                          .creste-gift-wrap__title { font-family: 'Nunito Sans', sans-serif; font-weight: 800; font-size: 14px; color: #2E2418; margin: 0; }
+                                                                            .creste-gift-wrap__subtitle { font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 11px; color: #8A6D8F; margin: 2px 0 0; }
+                                                                              .creste-gift-wrap input[type="checkbox"] { width: 20px; height: 20px; accent-color: #F4793A; flex: 0 0 auto; }
+
+                                                                                /* Footer / summary */
+                                                                                  .cart-drawer__footer, .cart-drawer .drawer__footer { background: #FFFFFF; padding: 16px 20px 20px; border-top: 2px solid #FFCE00; }
+                                                                                    .creste-cart-summary { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+                                                                                      .creste-cart-summary__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+                                                                                        .creste-cart-summary__subtotal { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; color: #5C4B38; display: flex; align-items: center; gap: 8px; }
+                                                                                          .creste-cart-summary__view-link { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; color: #F4793A; text-decoration: underline; background: none; border: 0; padding: 0; cursor: pointer; }
+                                                                                            .creste-cart-summary__total { font-family: 'Nunito Sans', sans-serif; font-weight: 700; font-size: 20px; color: #2E2418; margin: 0; }
+                                                                                              .creste-cart-summary__note { font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 11px; color: #A08B76; }
+                                                                                                .creste-cart-summary__savings { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 11px; color: #3E8A54; }
+
+                                                                                                  .cart__checkout-button { background: #F4793A !important; border-radius: 999px !important; width: 100%; min-height: 56px; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 20px; color: #FFFFFF; padding: 14px 48px !important; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+                                                                                                    .creste-trust-badges { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
+                                                                                                      .creste-trust-badges span { font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 11px; color: #7A5C3E; }/* Creste Cart Drawer Redesign — Figma-accurate rebuild */
+                                                                                                        .cart-drawer, .cart-drawer * { box-sizing: border-box; }
+                                                                                                          .cart-drawer .drawer__inner { background: #FFFFFF; border-radius: 24px 0 0 24px; font-family: 'Nunito Sans', sans-serif; color: #2E2418; display: flex; flex-direction: column; }
+                                                                                                            @media screen and (min-width: 750px) { .cart-drawer .drawer__inner { width: 500px; max-width: 500px; } }
+                                                                                                              @media screen and (max-width: 749px) { .cart-drawer .drawer__inner { border-radius: 0; width: 100vw; max-width: 100vw; } }
+                                                                                                                .cart-drawer .drawer__header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 20px 20px 16px; border-bottom: 2px solid #FFCE00; }
+                                                                                                                  .cart-drawer .drawer__heading { font-family: 'Nunito Sans', sans-serif; font-weight: 700; font-size: 24px; line-height: 1.2; color: #2E2418; display: flex; align-items: center; gap: 10px; margin: 0; flex: 1 1 auto; }
+                                                                                                                    .cart-drawer .creste-cart-badge { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; background: #FFF2BE; color: #5C4B38; padding: 5px 13px; border-radius: 999px; }
+                                                                                                                      .cart-drawer .drawer__close { background: #FFF3C4; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+                                                                                                                        .cart-drawer .creste-cart-tagline { width: 100%; margin: 0; font-family: 'Fredoka One', cursive; font-weight: 400; font-size: 12px; line-height: 1.2; color: #3AACCC; }
+
+                                                                                                                          /* Shipping / gift progress card — single unified design matching Figma */
+                                                                                                                            .creste-cart-progress { margin: 16px 20px; padding: 16px 12px; border-radius: 16px; background: #EDF7F0; display: flex; flex-direction: column; gap: 8px; }
+                                                                                                                              .creste-cart-progress__heading { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 14px; line-height: 1.2; color: #2F6B41; margin: 0; }
+                                                                                                                                .creste-cart-progress__bar { position: relative; height: 10px; border-radius: 999px; background: #D6EBDD; margin-top: 4px; }
+                                                                                                                                  .creste-cart-progress__fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 999px; background: #5BAD6F; transition: width .3s ease; }
+                                                                                                                                    .creste-cart-progress__message { margin: 0; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 13px; line-height: 1.2; color: #5C4B38; }
+                                                                                                                                      .creste-cart-progress__message strong { font-weight: 600; }
+
+                                                                                                                                        /* Cart items */
+                                                                                                                                          .cart-drawer-items thead th { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+                                                                                                                                            .cart-drawer-items tbody { display: block; padding: 4px 20px; }
+                                                                                                                                              .cart-drawer-items tr.cart-item { display: flex; align-items: flex-start; gap: 12px; position: relative; padding: 16px 0; border-bottom: 1px dashed #E7DCC5; }
+                                                                                                                                                .cart-drawer-items tr.cart-item:last-child { border-bottom: 0; }
+                                                                                                                                                  .cart-drawer-items .cart-item td { display: block; padding: 0; border: 0; }
+                                                                                                                                                    .cart-drawer-items .cart-item__media { flex: 0 0 80px; }
+                                                                                                                                                      .cart-drawer-items .cart-item__image { width: 80px; height: 75px; border-radius: 12px; object-fit: cover; }
+                                                                                                                                                        .cart-drawer-items .cart-item__details { flex: 1 1 auto; min-width: 0; padding-right: 28px !important; }
+                                                                                                                                                          .cart-drawer-items .cart-item__name { font-family: 'Nunito Sans', sans-serif; font-weight: 800; font-size: 14px; color: #2E2418; }
+                                                                                                                                                            .cart-drawer-items .cart-item__quantity { flex: 0 0 auto; margin-top: 8px; }
+                                                                                                                                                              .cart-drawer-items .cart-remove-button { position: absolute; top: 16px; right: 0; color: #E0483E; }
+
+                                                                                                                                                                .creste-item-prices { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+                                                                                                                                                                  .creste-item-price { font-family: 'Nunito Sans', sans-serif; font-weight: 900; font-size: 16px; color: #F4793A; }
+                                                                                                                                                                    .creste-item-compare { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 13px; color: #2B1702; opacity: .4; text-decoration: line-through; }
+                                                                                                                                                                      .creste-item-discount { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; color: #5BAD6F; }
+
+                                                                                                                                                                        .quantity-popover-wrapper { background: #FFFFFF; border: 1px solid #E7DCC5; border-radius: 999px; padding: 2px 4px; }
+                                                                                                                                                                        ft wrap — applies to the whole order */
+                                                                                                                                                                          .creste-gift-wrap { margin: 4px 20px 16px; background: #FCF0F6; border-radius: 22px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+                                                                                                                                                                            .creste-gift-wrap__label { display: flex; align-items: center; gap: 10px; }
+                                                                                                                                                                              .creste-gift-wrap__title { font-family: 'Nunito Sans', sans-serif; font-weight: 800; font-size: 14px; color: #2E2418; margin: 0; }
+                                                                                                                                                                                .creste-gift-wrap__subtitle { font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 11px; color: #8A6D8F; margin: 2px 0 0; }
+                                                                                                                                                                                  .creste-gift-wrap input[type="checkbox"] { width: 20px; height: 20px; accent-color: #F4793A; flex: 0 0 auto; }
+
+                                                                                                                                                                                    .cart__checkout-button { background: #F4793A !important; border-radius: 999px !important; width: 100%; min-height: 56px; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 20px; color: #FFFFFF; padding: 14px 48px !important; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+                                                                                                                                                                                      .creste-trust-badges { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
+                                                                                                                                                                                        .creste-trust-badges span { font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 11px; color: #7A5C3E; }
+                                    
+/* Cart progress v2 (Figma exact) */
+.creste-cart-progress.ccp2{background:#EAF6EC;border-radius:16px;padding:18px}
+.ccp2__pills{display:flex;justify-content:space-between;gap:10px;margin-bottom:2px}
+.ccp2__pill{font-size:12px;font-weight:800;padding:8px 14px;border-radius:12px;line-height:1.15;max-width:47%}
+.ccp2__pill--ship{background:#62A66B;color:#fff}
+.ccp2__pill--gift{background:#FFF7E0;color:#8a6d1a;border:1px solid #E8B84B}
+.ccp2__pill--gift.is-on{background:#62A66B;color:#fff;border-color:#62A66B}
+.ccp2__track{position:relative;height:46px;margin-top:20px}
+.ccp2__bar{position:absolute;left:2px;right:2px;top:4px;height:12px;background:#CDE7D4;border-radius:999px;overflow:hidden}
+.ccp2__fill{height:100%;background:#62A66B;border-radius:999px;transition:width .45s ease}
+.ccp2__ico{position:absolute;top:10px;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:#fff;border:2px solid #62A66B;display:flex;align-items:center;justify-content:center;color:#62A66B;box-shadow:0 1px 3px rgba(0,0,0,.15);z-index:2}
+.ccp2__ico svg{width:16px;height:16px}
+.ccp2__ico--truck{left:42%}
+.ccp2__ico--gift{left:calc(100% - 15px)}
+.ccp2__ico:not(.is-on){border-color:#B9C9B9;color:#B9C9B9}
+.ccp2__mark{position:absolute;top:30px;transform:translateX(-50%);background:#fff;border:1px solid #E7A867;color:#D4711F;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.ccp2__mark--a{left:42%}
+.ccp2__mark--b{left:calc(100% - 24px)}
+.ccp2__msg{margin:16px 0 0;font-size:14px;color:#3f6b45;text-align:center;line-height:1.4}
+.ccp2__msg b{color:#2b2b2b}
+
+/* Cart line item v2 (Figma) */
+.ci2__price{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0}
+.ci2__now{color:#E8622A;font-weight:800;font-size:15px}
+.ci2__was{color:#9b9b9b;text-decoration:line-through;font-size:13px}
+.ci2__off{color:#2E7D46;font-weight:800;font-size:13px}
+.ci2__giftpill{display:inline-flex;align-items:center;gap:6px;background:#FDE7EF;color:#C2185B;border:1px solid #F6C6D8;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;margin:4px 0}
+
+/* Gift wrap toggle */
+.ci2__gwadd{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#C2185B;border:1px dashed #E9A3BE;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:4px 0}
+.ci2__gwadd:hover{background:#FDF1F5}
+.ci2__gwbtn{cursor:pointer}
+.ci2__gwx{font-weight:700;opacity:.65;margin-left:2px}
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -62,7 +205,7 @@
         </div>
       {%- endif -%}
       <div class="drawer__header">
-        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
+        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}{% if cart != empty %} <span class="creste-cart-badge">{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}</span>{% endif %}</h2>
         <button
           class="drawer__close"
           type="button"
@@ -73,8 +216,46 @@
             {{- 'icon-close.svg' | inline_asset_content -}}
           </span>
         </button>
+        {% if cart != empty %}<p class="creste-cart-tagline">Packed with giggles!</p>{% endif %}
       </div>
-      <cart-drawer-items
+{%- if cart != empty %}
+  {% liquid
+    assign creste_shipping_threshold = 99900
+      assign creste_gift_threshold = 580000
+        assign creste_gift_name = 'Make Your Own Bracelet Kit'
+          assign creste_shipping_unlocked = false
+            assign creste_gift_unlocked = false
+              if cart.total_price >= creste_shipping_threshold
+                  assign creste_shipping_unlocked = true
+                    endif
+                      if cart.total_price >= creste_gift_threshold
+                          assign creste_gift_unlocked = true
+                            endif
+                              assign creste_remaining = creste_gift_threshold | minus: cart.total_price
+                                if creste_remaining < 0
+                                    assign creste_remaining = 0
+                                      endif
+                                        assign creste_progress_percent = cart.total_price | times: 100 | divided_by: creste_gift_threshold
+                                          if creste_progress_percent > 100
+                                              assign creste_progress_percent = 100
+                                                endif
+                                                %}
+                                                <div class="creste-cart-progress ccp2">
+  <div class="ccp2__pills">
+    <span class="ccp2__pill ccp2__pill--ship{% if creste_shipping_unlocked %} is-on{% endif %}">{% if creste_shipping_unlocked %}FREE shipping unlocked!{% else %}FREE shipping at &#8377;999{% endif %}</span>
+    <span class="ccp2__pill ccp2__pill--gift{% if creste_gift_unlocked %} is-on{% endif %}">{% if creste_gift_unlocked %}FREE Bracelet Kit unlocked!{% else %}FREE Bracelet Kit worth &#8377;800!{% endif %}</span>
+  </div>
+  <div class="ccp2__track">
+    <div class="ccp2__bar"><div class="ccp2__fill" style="width: {{ creste_progress_percent }}%;"></div></div>
+    <span class="ccp2__ico ccp2__ico--truck{% if creste_shipping_unlocked %} is-on{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h13v10H1z"/><path d="M14 7h4l3 3v4h-7z"/><circle cx="5" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg></span>
+    <span class="ccp2__ico ccp2__ico--gift{% if creste_gift_unlocked %} is-on{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8S11 3 8 3 6 4.5 6 5.5 8 8 12 8zM12 8s1-5 4-5 2 1.5 2 2.5S16 8 12 8z"/></svg></span>
+    <span class="ccp2__mark ccp2__mark--a">&#8377;999</span>
+    <span class="ccp2__mark ccp2__mark--b">&#8377;5,800</span>
+  </div>
+  <p class="ccp2__msg">{% if creste_gift_unlocked %}You&rsquo;ve unlocked a free {{ creste_gift_name }}!{% else %}Add <b>{{ creste_remaining | money }}</b> more to unlock a <b>{{ creste_gift_name }}</b>{% endif %}</p>
+</div>
+              {%- endif %}
+              <cart-drawer-items
         view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
         view-event-trigger="manual"
         {% if cart == empty %}
@@ -163,25 +344,15 @@
                             -%}
                           </div>
 
+                          {%- if item.properties['Gift wrapping'] == 'Yes' -%}<button type="button" class="ci2__giftpill ci2__gwbtn" data-gw-toggle data-line="{{ forloop.index }}" data-qty="{{ item.quantity }}" data-add="0">&#127873; Gift wrap Added <span class="ci2__gwx">&times;</span></button>{%- else -%}<button type="button" class="ci2__gwadd" data-gw-toggle data-line="{{ forloop.index }}" data-qty="{{ item.quantity }}" data-add="1">&#127873; Add gift wrap &mdash; free</button>{%- endif -%}
+                          {%- assign _cap = item.variant.compare_at_price | default: 0 -%}
                           {%- if item.original_price != item.final_price -%}
-                            <div class="cart-item__discounted-prices">
-                              <span class="visually-hidden">
-                                {{ 'products.product.price.regular_price' | t }}
-                              </span>
-                              <s class="cart-item__old-price product-option">
-                                {{- item.original_price | money -}}
-                              </s>
-                              <span class="visually-hidden">
-                                {{ 'products.product.price.sale_price' | t }}
-                              </span>
-                              <strong class="cart-item__final-price product-option">
-                                {{ item.final_price | money }}
-                              </strong>
-                            </div>
+                            <div class="ci2__price"><span class="ci2__now">{{ item.final_price | money }}</span><s class="ci2__was">{{ item.original_price | money }}</s></div>
+                          {%- elsif _cap > item.price -%}
+                            {%- assign _off = _cap | minus: item.price | times: 100 | divided_by: _cap -%}
+                            <div class="ci2__price"><span class="ci2__now">{{ item.price | money }}</span><s class="ci2__was">{{ _cap | money }}</s><span class="ci2__off">{{ _off }}% off</span></div>
                           {%- else -%}
-                            <div class="product-option">
-                              {{ item.original_price | money }}
-                            </div>
+                            <div class="ci2__price"><span class="ci2__now">{{ item.price | money }}</span></div>
                           {%- endif -%}
 
                           {%- if item.product.has_only_default_variant == false
@@ -245,7 +416,18 @@
                         <td class="cart-item__totals right" role="cell" headers="CartDrawer-ColumnTotal">
                           {%- render 'loading-spinner' -%}
                           <div class="cart-item__price-wrapper">
-                            {%- if item.original_line_price != item.final_line_price -%}
+                            {%- assign _b_off = item.properties['_Bundle Discount'] | default: 0 | times: 1 -%}
+                            {%- if _b_off > 0 -%}
+                              {%- assign _b_base = item.price | times: item.quantity -%}
+                              {%- assign _b_disc = _b_base | times: _b_off | divided_by: 100 -%}
+                              {%- assign _b_final = _b_base | minus: _b_disc -%}
+                              <div class="cart-item__discounted-prices">
+                                <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                                <s class="cart-item__old-price price price--end">{{ _b_base | money }}</s>
+                                <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                                <span class="price price--end">{{ _b_final | money }}</span>
+                              </div>
+                            {%- elsif item.original_line_price != item.final_line_price -%}
                               <div class="cart-item__discounted-prices">
                                 <span class="visually-hidden">
                                   {{ 'products.product.price.regular_price' | t }}
@@ -526,9 +708,53 @@
             {%- endif -%}
           </div>
 
+          <style>
+            .cvs{border-top:1px solid #EADFCE;margin:0 0 6px;}
+            .cvs__toggle{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:12px 2px;font-weight:600;font-size:14px;color:#3a3a3a;}
+            .cvs__toggle::-webkit-details-marker{display:none;}
+            .cvs__chev{transition:transform .2s ease;flex:0 0 auto;}
+            .cvs[open] .cvs__chev{transform:rotate(180deg);}
+            .cvs__body{padding:0 2px 10px;display:flex;flex-direction:column;gap:9px;}
+            .cvs__row{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#5a5a5a;}
+            .cvs__row--save span:last-child{color:#2E7D46;font-weight:600;}
+            .cvs__free{color:#2E7D46;font-weight:600;}
+            .cvs__row--total{border-top:1px dashed #E3D5BE;padding-top:9px;margin-top:2px;font-weight:700;font-size:15px;color:#1f1f1f;}
+          </style>
+          <details class="cvs">
+            <summary class="cvs__toggle">
+              <span>View Summary</span>
+              <svg class="cvs__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6" stroke="#8a8a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="cvs__body">
+              {%- assign _cart_effective_total = 0 -%}
+              {%- for _bl in cart.items -%}
+                {%- assign _bl_off = _bl.properties['_Bundle Discount'] | default: 0 | times: 1 -%}
+                {%- if _bl_off > 0 -%}
+                  {%- assign _bl_base = _bl.price | times: _bl.quantity -%}
+                  {%- assign _bl_disc = _bl_base | times: _bl_off | divided_by: 100 -%}
+                  {%- assign _cart_effective_total = _bl_base | minus: _bl_disc | plus: _cart_effective_total -%}
+                {%- else -%}
+                  {%- assign _cart_effective_total = _bl.final_line_price | plus: _cart_effective_total -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- assign _mrp = 0 -%}
+              {%- assign _gw = 0 -%}
+              {%- for line in cart.items -%}
+                {%- assign _lc = line.variant.compare_at_price | default: 0 -%}
+                {%- if _lc < line.original_price -%}{%- assign _lc = line.original_price -%}{%- endif -%}
+                {%- assign _mrp = _lc | times: line.quantity | plus: _mrp -%}
+                {%- if line.properties['Gift wrapping'] == 'Yes' -%}{%- assign _gw = _gw | plus: 1 -%}{%- endif -%}
+              {%- endfor -%}
+              {%- assign _save = _mrp | minus: _cart_effective_total -%}
+              <div class="cvs__row"><span>Item total</span><span>{{ _mrp | money }}</span></div>
+              {%- if _save > 0 -%}<div class="cvs__row cvs__row--save"><span>You save</span><span>-{{ _save | money }}</span></div>{%- endif -%}
+              {%- if _gw > 0 -%}<div class="cvs__row"><span>Gift wrapping ({{ _gw }})</span><span class="cvs__free">Free</span></div>{%- endif -%}
+              <div class="cvs__row cvs__row--total"><span>Total</span><span>{{ _cart_effective_total | money }}</span></div>
+            </div>
+          </details>
           <div class="totals" role="status">
             <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+            <p class="totals__total-value">{{ _cart_effective_total | money_with_currency }}</p>
           </div>
 
           <small class="tax-note caption-large rte">
@@ -592,3 +818,25 @@
     </div>
   </div>
 </cart-drawer>
+<script>
+(function(){
+  if(window.__ci2gwBound) return; window.__ci2gwBound=true;
+  document.addEventListener('click', async function(e){
+    var btn=e.target.closest('[data-gw-toggle]'); if(!btn) return;
+    e.preventDefault(); if(btn.__busy) return; btn.__busy=true; btn.style.opacity='0.6';
+    var line=Number(btn.getAttribute('data-line'))||1;
+    var qty=Number(btn.getAttribute('data-qty'))||1;
+    var add=btn.getAttribute('data-add')==='1';
+    try{
+      var res=await fetch('/cart/change.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({line:line, quantity:qty, properties: add?{'Gift wrapping':'Yes'}:{'Gift wrapping':''}, sections:'cart-drawer', sections_url: location.pathname })});
+      var data=await res.json();
+      if(data.sections && data.sections['cart-drawer']){
+        var doc=new DOMParser().parseFromString(data.sections['cart-drawer'],'text/html');
+        var fresh=doc.querySelector('cart-drawer'); var cur=document.querySelector('cart-drawer');
+        if(fresh&&cur){ cur.innerHTML=fresh.innerHTML; }
+      }
+    }catch(err){ console.error('gw',err); }
+  });
+})();
+</script>
+
