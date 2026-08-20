@@ -301,12 +301,30 @@
     },
     "creste_birthday": {
       "type": "creste-birthday",
+      "disabled": true,
       "settings": {
         "heading": "Birthday coming up?",
         "text": "Return gifts from Rs. 375 · DIY Party Box Kits for the whole gang!",
         "button_label": "EXPLORE NOW",
         "button_url": "",
         "bg_color": "#7c5ce0"
+      }
+    },
+    "promo_cta_banner_tQH7nP": {
+      "type": "Promo-cta-banner",
+      "name": "Promo CTA Banner",
+      "settings": {
+        "show_promo": true,
+        "promo_title": "Creative fun delivered to your door",
+        "promo_text": "Everything you need for hours of creative fun.",
+        "promo_image": "shopify://shop_images/ic_0a9b886f-f006-43be-913a-711b92df0b0f.png",
+        "promo_button_label": "Explore Now",
+        "promo_button_link": "",
+        "button_bg": "#FFFFFF",
+        "button_text_color": "#3D2817",
+        "promo_bg": "#BD6CE1",
+        "bg_desktop": "shopify://shop_images/111.png",
+        "bg_mobile": "shopify://shop_images/22.png"
       }
     }
   },
@@ -319,6 +337,7 @@
     "creste_love",
     "1787213314fee83c99",
     "creste_reviews",
-    "creste_birthday"
+    "creste_birthday",
+    "promo_cta_banner_tQH7nP"
   ]
 }
