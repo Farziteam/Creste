@@ -416,7 +416,18 @@
                         <td class="cart-item__totals right" role="cell" headers="CartDrawer-ColumnTotal">
                           {%- render 'loading-spinner' -%}
                           <div class="cart-item__price-wrapper">
-                            {%- if item.original_line_price != item.final_line_price -%}
+                            {%- assign _b_off = item.properties['_Bundle Discount'] | default: 0 | times: 1 -%}
+                            {%- if _b_off > 0 -%}
+                              {%- assign _b_base = item.price | times: item.quantity -%}
+                              {%- assign _b_disc = _b_base | times: _b_off | divided_by: 100 -%}
+                              {%- assign _b_final = _b_base | minus: _b_disc -%}
+                              <div class="cart-item__discounted-prices">
+                                <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                                <s class="cart-item__old-price price price--end">{{ _b_base | money }}</s>
+                                <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                                <span class="price price--end">{{ _b_final | money }}</span>
+                              </div>
+                            {%- elsif item.original_line_price != item.final_line_price -%}
                               <div class="cart-item__discounted-prices">
                                 <span class="visually-hidden">
                                   {{ 'products.product.price.regular_price' | t }}
@@ -715,6 +726,17 @@
               <svg class="cvs__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6" stroke="#8a8a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
             <div class="cvs__body">
+              {%- assign _cart_effective_total = 0 -%}
+              {%- for _bl in cart.items -%}
+                {%- assign _bl_off = _bl.properties['_Bundle Discount'] | default: 0 | times: 1 -%}
+                {%- if _bl_off > 0 -%}
+                  {%- assign _bl_base = _bl.price | times: _bl.quantity -%}
+                  {%- assign _bl_disc = _bl_base | times: _bl_off | divided_by: 100 -%}
+                  {%- assign _cart_effective_total = _bl_base | minus: _bl_disc | plus: _cart_effective_total -%}
+                {%- else -%}
+                  {%- assign _cart_effective_total = _bl.final_line_price | plus: _cart_effective_total -%}
+                {%- endif -%}
+              {%- endfor -%}
               {%- assign _mrp = 0 -%}
               {%- assign _gw = 0 -%}
               {%- for line in cart.items -%}
@@ -723,16 +745,16 @@
                 {%- assign _mrp = _lc | times: line.quantity | plus: _mrp -%}
                 {%- if line.properties['Gift wrapping'] == 'Yes' -%}{%- assign _gw = _gw | plus: 1 -%}{%- endif -%}
               {%- endfor -%}
-              {%- assign _save = _mrp | minus: cart.total_price -%}
+              {%- assign _save = _mrp | minus: _cart_effective_total -%}
               <div class="cvs__row"><span>Item total</span><span>{{ _mrp | money }}</span></div>
               {%- if _save > 0 -%}<div class="cvs__row cvs__row--save"><span>You save</span><span>-{{ _save | money }}</span></div>{%- endif -%}
               {%- if _gw > 0 -%}<div class="cvs__row"><span>Gift wrapping ({{ _gw }})</span><span class="cvs__free">Free</span></div>{%- endif -%}
-              <div class="cvs__row cvs__row--total"><span>Total</span><span>{{ cart.total_price | money }}</span></div>
+              <div class="cvs__row cvs__row--total"><span>Total</span><span>{{ _cart_effective_total | money }}</span></div>
             </div>
           </details>
           <div class="totals" role="status">
             <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+            <p class="totals__total-value">{{ _cart_effective_total | money_with_currency }}</p>
           </div>
 
           <small class="tax-note caption-large rte">
