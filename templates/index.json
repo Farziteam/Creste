@@ -733,6 +733,7 @@
         },
         "sv6": {
           "type": "service",
+          "disabled": true,
           "settings": {
             "icon": "shopify://shop_images/svg_1.png",
             "icon_bg": "#fbe9d6",
@@ -742,6 +743,7 @@
         },
         "sv7": {
           "type": "service",
+          "disabled": true,
           "settings": {
             "icon": "shopify://shop_images/svg_4.png",
             "icon_bg": "#e8f0fe",
@@ -751,6 +753,7 @@
         },
         "sv8": {
           "type": "service",
+          "disabled": true,
           "settings": {
             "icon": "shopify://shop_images/svg_3.png",
             "icon_bg": "#fdecec",
