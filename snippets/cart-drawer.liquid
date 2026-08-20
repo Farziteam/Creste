@@ -124,7 +124,28 @@
 
                                                                                                                                                                                       .creste-trust-badges { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
                                                                                                                                                                                         .creste-trust-badges span { font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 11px; color: #7A5C3E; }
-                                    </style>
+                                    
+/* Cart progress v2 (Figma exact) */
+.creste-cart-progress.ccp2{background:#EAF6EC;border-radius:16px;padding:18px}
+.ccp2__pills{display:flex;justify-content:space-between;gap:10px;margin-bottom:2px}
+.ccp2__pill{font-size:12px;font-weight:800;padding:8px 14px;border-radius:12px;line-height:1.15;max-width:47%}
+.ccp2__pill--ship{background:#62A66B;color:#fff}
+.ccp2__pill--gift{background:#FFF7E0;color:#8a6d1a;border:1px solid #E8B84B}
+.ccp2__pill--gift.is-on{background:#62A66B;color:#fff;border-color:#62A66B}
+.ccp2__track{position:relative;height:46px;margin-top:20px}
+.ccp2__bar{position:absolute;left:2px;right:2px;top:4px;height:12px;background:#CDE7D4;border-radius:999px;overflow:hidden}
+.ccp2__fill{height:100%;background:#62A66B;border-radius:999px;transition:width .45s ease}
+.ccp2__ico{position:absolute;top:10px;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:#fff;border:2px solid #62A66B;display:flex;align-items:center;justify-content:center;color:#62A66B;box-shadow:0 1px 3px rgba(0,0,0,.15);z-index:2}
+.ccp2__ico svg{width:16px;height:16px}
+.ccp2__ico--truck{left:42%}
+.ccp2__ico--gift{left:calc(100% - 15px)}
+.ccp2__ico:not(.is-on){border-color:#B9C9B9;color:#B9C9B9}
+.ccp2__mark{position:absolute;top:30px;transform:translateX(-50%);background:#fff;border:1px solid #E7A867;color:#D4711F;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.ccp2__mark--a{left:42%}
+.ccp2__mark--b{left:calc(100% - 24px)}
+.ccp2__msg{margin:16px 0 0;font-size:14px;color:#3f6b45;text-align:center;line-height:1.4}
+.ccp2__msg b{color:#2b2b2b}
+</style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
@@ -187,7 +208,7 @@
 {%- if cart != empty %}
   {% liquid
     assign creste_shipping_threshold = 99900
-      assign creste_gift_threshold = 300000
+      assign creste_gift_threshold = 580000
         assign creste_gift_name = 'Make Your Own Bracelet Kit'
           assign creste_shipping_unlocked = false
             assign creste_gift_unlocked = false
@@ -206,20 +227,22 @@
                                               assign creste_progress_percent = 100
                                                 endif
                                                 %}
-                                                <div class="creste-cart-progress">
-                                                  <div class="creste-cart-progress__badges">
-                                                      <span class="creste-cart-progress__badge{% if creste_shipping_unlocked %} is-unlocked{% endif %}">{% if creste_shipping_unlocked %}FREE shipping unlocked!{% else %}FREE shipping at {{ creste_shipping_threshold | money }}{% endif %}</span>
-                                                          <span class="creste-cart-progress__badge{% if creste_gift_unlocked %} is-unlocked{% endif %}">FREE {{ creste_gift_name }} worth {{ creste_gift_threshold | money }}</span>
-                                                            </div>
-                                                              <div class="creste-cart-progress__bar">
-                                                                  <div class="creste-cart-progress__fill" style="width: {{ creste_progress_percent }}%;"></div>
-                                                                      <span class="creste-cart-progress__icon creste-cart-progress__icon--start{% if creste_shipping_unlocked %} is-unlocked{% endif %}">&#128666;</span>
-                                                                          <span class="creste-cart-progress__icon creste-cart-progress__icon--end{% if creste_gift_unlocked %} is-unlocked{% endif %}">&#127873;</span>
-                                                                            </div>
-                                                                              <p class="creste-cart-progress__message">{% if creste_gift_unlocked %}You've unlocked a free <strong>{{ creste_gift_name }}</strong>!{% else %}Add <strong>{{ creste_remaining | money }}</strong> more to unlock a <strong>{{ creste_gift_name }}</strong>{% endif %}</p>
-                                                                              </div>
-                                                                              {%- endif %}
-                                                                                    <cart-drawer-items
+                                                <div class="creste-cart-progress ccp2">
+  <div class="ccp2__pills">
+    <span class="ccp2__pill ccp2__pill--ship{% if creste_shipping_unlocked %} is-on{% endif %}">{% if creste_shipping_unlocked %}FREE shipping unlocked!{% else %}FREE shipping at &#8377;999{% endif %}</span>
+    <span class="ccp2__pill ccp2__pill--gift{% if creste_gift_unlocked %} is-on{% endif %}">{% if creste_gift_unlocked %}FREE Bracelet Kit unlocked!{% else %}FREE Bracelet Kit worth &#8377;800!{% endif %}</span>
+  </div>
+  <div class="ccp2__track">
+    <div class="ccp2__bar"><div class="ccp2__fill" style="width: {{ creste_progress_percent }}%;"></div></div>
+    <span class="ccp2__ico ccp2__ico--truck{% if creste_shipping_unlocked %} is-on{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h13v10H1z"/><path d="M14 7h4l3 3v4h-7z"/><circle cx="5" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg></span>
+    <span class="ccp2__ico ccp2__ico--gift{% if creste_gift_unlocked %} is-on{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8S11 3 8 3 6 4.5 6 5.5 8 8 12 8zM12 8s1-5 4-5 2 1.5 2 2.5S16 8 12 8z"/></svg></span>
+    <span class="ccp2__mark ccp2__mark--a">&#8377;999</span>
+    <span class="ccp2__mark ccp2__mark--b">&#8377;5,800</span>
+  </div>
+  <p class="ccp2__msg">{% if creste_gift_unlocked %}You&rsquo;ve unlocked a free {{ creste_gift_name }}!{% else %}Add <b>{{ creste_remaining | money }}</b> more to unlock a <b>{{ creste_gift_name }}</b>{% endif %}</p>
+</div>
+              {%- endif %}
+              <cart-drawer-items
         view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
         view-event-trigger="manual"
         {% if cart == empty %}
