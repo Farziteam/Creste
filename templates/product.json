@@ -50,6 +50,22 @@
         "trust_subheading_4": "Add a note at checkout"
       }
     },
+    "product_overview_and_faq_bheLUc": {
+      "type": "product-overview-and-faq",
+      "name": "Product Overview & FAQ",
+      "settings": {
+        "desktop_background": "shopify://shop_images/Frame_2147228366_3a19247e-5aeb-422c-86f4-504a091ab395.png",
+        "mobile_background": "shopify://shop_images/bg_q.png",
+        "background_alt": "",
+        "overview_tab_label": "Overview",
+        "faq_tab_label": "FAQs",
+        "overview_heading": "A blank canvas bag, waiting for their imagination",
+        "overview_text": "",
+        "overview_image_alt": "",
+        "mascot_left": "shopify://shop_images/Group.png",
+        "mascot_right": "shopify://shop_images/attachment-large_5d4ba906-7304-42ae-9198-47f074f50794.png"
+      }
+    },
     "creste_artists": {
       "type": "creste-artists",
       "blocks": {
@@ -330,6 +346,7 @@
   },
   "order": [
     "creste_pdp",
+    "product_overview_and_faq_bheLUc",
     "creste_artists",
     "creste_skills",
     "creste_recommend",
