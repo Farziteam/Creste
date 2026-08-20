@@ -152,6 +152,12 @@
 .ci2__was{color:#9b9b9b;text-decoration:line-through;font-size:13px}
 .ci2__off{color:#2E7D46;font-weight:800;font-size:13px}
 .ci2__giftpill{display:inline-flex;align-items:center;gap:6px;background:#FDE7EF;color:#C2185B;border:1px solid #F6C6D8;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;margin:4px 0}
+
+/* Gift wrap toggle */
+.ci2__gwadd{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#C2185B;border:1px dashed #E9A3BE;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:4px 0}
+.ci2__gwadd:hover{background:#FDF1F5}
+.ci2__gwbtn{cursor:pointer}
+.ci2__gwx{font-weight:700;opacity:.65;margin-left:2px}
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -338,7 +344,7 @@
                             -%}
                           </div>
 
-                          {%- if item.properties['Gift wrapping'] == 'Yes' -%}<div class="ci2__giftpill">&#127873; Gift wrap Added</div>{%- endif -%}
+                          {%- if item.properties['Gift wrapping'] == 'Yes' -%}<button type="button" class="ci2__giftpill ci2__gwbtn" data-gw-toggle data-line="{{ forloop.index }}" data-qty="{{ item.quantity }}" data-add="0">&#127873; Gift wrap Added <span class="ci2__gwx">&times;</span></button>{%- else -%}<button type="button" class="ci2__gwadd" data-gw-toggle data-line="{{ forloop.index }}" data-qty="{{ item.quantity }}" data-add="1">&#127873; Add gift wrap &mdash; free</button>{%- endif -%}
                           {%- assign _cap = item.variant.compare_at_price | default: 0 -%}
                           {%- if item.original_price != item.final_price -%}
                             <div class="ci2__price"><span class="ci2__now">{{ item.final_price | money }}</span><s class="ci2__was">{{ item.original_price | money }}</s></div>
@@ -757,3 +763,25 @@
     </div>
   </div>
 </cart-drawer>
+<script>
+(function(){
+  if(window.__ci2gwBound) return; window.__ci2gwBound=true;
+  document.addEventListener('click', async function(e){
+    var btn=e.target.closest('[data-gw-toggle]'); if(!btn) return;
+    e.preventDefault(); if(btn.__busy) return; btn.__busy=true; btn.style.opacity='0.6';
+    var line=Number(btn.getAttribute('data-line'))||1;
+    var qty=Number(btn.getAttribute('data-qty'))||1;
+    var add=btn.getAttribute('data-add')==='1';
+    try{
+      var res=await fetch('/cart/change.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({line:line, quantity:qty, properties: add?{'Gift wrapping':'Yes'}:{}, sections:'cart-drawer', sections_url: location.pathname })});
+      var data=await res.json();
+      if(data.sections && data.sections['cart-drawer']){
+        var doc=new DOMParser().parseFromString(data.sections['cart-drawer'],'text/html');
+        var fresh=doc.querySelector('cart-drawer'); var cur=document.querySelector('cart-drawer');
+        if(fresh&&cur){ cur.innerHTML=fresh.innerHTML; }
+      }
+    }catch(err){ console.error('gw',err); }
+  });
+})();
+</script>
+
