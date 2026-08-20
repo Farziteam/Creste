@@ -1,7 +1,9 @@
 {%- comment -%} Creste — Six skills purple feature-card grid {%- endcomment -%}
 {%- liquid
   assign uid = section.id
+  assign skills = product.metafields.custom.product_section_features.value
 -%}
+{%- if skills != blank -%}
 <section id="CpdpSk-{{ uid }}" class="cpdpsk" style="--cpdpsk-bg: {{ section.settings.bg_color | default: '#7C5CE0' }};">
   {%- if section.settings.promo_banner_desktop != blank or section.settings.promo_banner_mobile != blank or request.design_mode -%}
     <div class="cpdpsk__bg">
@@ -19,7 +21,6 @@
     </div>
   {%- endif -%}
   <div class="cpdpsk__wrap">
-    {% assign skills = product.metafields.custom.product_section_features.value %}
 
     {% comment %} <h2 class="cpdpsk__title">{{ section.settings.heading | default: 'Six skills hiding inside one bag' }}</h2> {% endcomment %}
     <h2 class="cpdpsk__title">{{ skills.heading }}</h2>
@@ -203,6 +204,7 @@
     </div>
   </div>
 </section>
+{% endif %}
 <style>
   #CpdpSk-{{ uid }}{
     --cpdpsk-head: var(--font-heading-family, 'Baloo 2','Poppins',system-ui,sans-serif);
