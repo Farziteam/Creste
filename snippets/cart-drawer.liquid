@@ -697,6 +697,39 @@
             {%- endif -%}
           </div>
 
+          <style>
+            .cvs{border-top:1px solid #EADFCE;margin:0 0 6px;}
+            .cvs__toggle{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:12px 2px;font-weight:600;font-size:14px;color:#3a3a3a;}
+            .cvs__toggle::-webkit-details-marker{display:none;}
+            .cvs__chev{transition:transform .2s ease;flex:0 0 auto;}
+            .cvs[open] .cvs__chev{transform:rotate(180deg);}
+            .cvs__body{padding:0 2px 10px;display:flex;flex-direction:column;gap:9px;}
+            .cvs__row{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#5a5a5a;}
+            .cvs__row--save span:last-child{color:#2E7D46;font-weight:600;}
+            .cvs__free{color:#2E7D46;font-weight:600;}
+            .cvs__row--total{border-top:1px dashed #E3D5BE;padding-top:9px;margin-top:2px;font-weight:700;font-size:15px;color:#1f1f1f;}
+          </style>
+          <details class="cvs">
+            <summary class="cvs__toggle">
+              <span>View Summary</span>
+              <svg class="cvs__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6" stroke="#8a8a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="cvs__body">
+              {%- assign _mrp = 0 -%}
+              {%- assign _gw = 0 -%}
+              {%- for line in cart.items -%}
+                {%- assign _lc = line.variant.compare_at_price | default: 0 -%}
+                {%- if _lc < line.original_price -%}{%- assign _lc = line.original_price -%}{%- endif -%}
+                {%- assign _mrp = _lc | times: line.quantity | plus: _mrp -%}
+                {%- if line.properties['Gift wrapping'] == 'Yes' -%}{%- assign _gw = _gw | plus: 1 -%}{%- endif -%}
+              {%- endfor -%}
+              {%- assign _save = _mrp | minus: cart.total_price -%}
+              <div class="cvs__row"><span>Item total</span><span>{{ _mrp | money }}</span></div>
+              {%- if _save > 0 -%}<div class="cvs__row cvs__row--save"><span>You save</span><span>-{{ _save | money }}</span></div>{%- endif -%}
+              {%- if _gw > 0 -%}<div class="cvs__row"><span>Gift wrapping ({{ _gw }})</span><span class="cvs__free">Free</span></div>{%- endif -%}
+              <div class="cvs__row cvs__row--total"><span>Total</span><span>{{ cart.total_price | money }}</span></div>
+            </div>
+          </details>
           <div class="totals" role="status">
             <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
             <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
