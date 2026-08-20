@@ -773,7 +773,7 @@
     var qty=Number(btn.getAttribute('data-qty'))||1;
     var add=btn.getAttribute('data-add')==='1';
     try{
-      var res=await fetch('/cart/change.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({line:line, quantity:qty, properties: add?{'Gift wrapping':'Yes'}:{}, sections:'cart-drawer', sections_url: location.pathname })});
+      var res=await fetch('/cart/change.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({line:line, quantity:qty, properties: add?{'Gift wrapping':'Yes'}:{'Gift wrapping':''}, sections:'cart-drawer', sections_url: location.pathname })});
       var data=await res.json();
       if(data.sections && data.sections['cart-drawer']){
         var doc=new DOMParser().parseFromString(data.sections['cart-drawer'],'text/html');
