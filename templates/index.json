@@ -158,7 +158,7 @@
         "a2": {
           "type": "age",
           "settings": {
-            "image": "shopify://shop_images/image_3_3a4e5c18-52fb-4ed4-a631-ac64369546d1.png",
+            "image": "shopify://shop_images/4-6.png",
             "label": "4-6 yrs",
             "desc": "Creative adventures",
             "tint": "#ffeea8",
@@ -169,7 +169,7 @@
         "a3": {
           "type": "age",
           "settings": {
-            "image": "shopify://shop_images/image_4_470679b2-43ef-4815-a664-2865a12aad36.png",
+            "image": "shopify://shop_images/7-10.png",
             "label": "7-10 yrs",
             "desc": "First real projects",
             "tint": "#eaf7d8",
