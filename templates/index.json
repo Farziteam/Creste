@@ -692,7 +692,7 @@
             "icon_bg": "#e1f1f6",
             "title": "Corporate Events",
             "desc": "Create experiences for your clients that tie them to you",
-            "back_image": "shopify://shop_images/Property_1_Variant2_8b5065d8-493b-48d2-b7cd-08b6960789b4.png"
+            "back_image": "shopify://shop_images/Homepage_flip_-_Corporate_Events.png"
           }
         },
         "sv2": {
@@ -701,7 +701,8 @@
             "icon": "shopify://shop_images/svg_1.png",
             "icon_bg": "#e3f0e5",
             "title": "School Workshops",
-            "desc": "The class where no one watches the clock."
+            "desc": "The class where no one watches the clock.",
+            "back_image": "shopify://shop_images/Homepage_flip_-_School_Workshops.png"
           }
         },
         "sv3": {
@@ -710,11 +711,13 @@
             "icon": "shopify://shop_images/svg_3.png",
             "icon_bg": "#ece4f7",
             "title": "Family and Celebrations",
-            "desc": "Longer visits. Stronger loyalty."
+            "desc": "Longer visits. Stronger loyalty.",
+            "back_image": "shopify://shop_images/Homepage_flip_-_Family_and_Celebrations_Events.png"
           }
         },
         "sv4": {
           "type": "service",
+          "disabled": true,
           "settings": {
             "icon": "shopify://shop_images/svg_4.png",
             "icon_bg": "#fbe4e4",
@@ -728,7 +731,8 @@
             "icon": "shopify://shop_images/svg_7.png",
             "icon_bg": "#fbefcb",
             "title": "STEM & Science Sessions",
-            "desc": "Where every kid causes the reaction."
+            "desc": "Where every kid causes the reaction.",
+            "back_image": "shopify://shop_images/Homepage_flip_-_STEM_Science_Sessions.png"
           }
         },
         "sv6": {
