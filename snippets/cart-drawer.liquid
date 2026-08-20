@@ -355,6 +355,44 @@
     scrollbar-width: none;
 
   }
+  @media screen and (max-width: 749px) {
+    .wrap{
+      min-height:255px;
+    }
+  .creste-cart-progress__pill{
+     font-size: 9px;
+  }
+  .creste-cart-progress__message{
+    font-size: 9px;
+  }
+  .creste-cart-progress{
+    margin: 12px 1px;
+  }
+  .creste-cart-summary__subtotal-label{
+    font-size:11px;
+  }
+  .creste-cart-summary__toggle{
+    font-size:11px;
+  }
+  .creste-cart-summary__total{
+    font-size:15px;
+  }
+  .cart-drawer .drawer__footer{
+      padding: 12px 9px 12px;
+  }
+  .creste-cart-summary__savings{
+    font-size:9px;
+  }
+  .cart__checkout-button{
+      padding: 10px 21px !important;
+      min-height: 44px;
+  }
+  .creste-trust-badges{
+    column-gap: 12px;
+    row-gap: 0px;
+  }
+}
+  
 </style>
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
@@ -568,7 +606,7 @@
                           >
                             &#127873; Gift wrap Added <span class="creste-giftwrap-remove-x">&times;</span>
                           </button>
-                        {%- else -%}
+                        {% comment %} {%- else -%}
                           <button
                             type="button"
                             class="creste-giftwrap-add"
@@ -578,7 +616,7 @@
                             data-add="1"
                           >
                             &#127873; Add gift wrap &mdash; free
-                          </button>
+                          </button> {% endcomment %}
                         {%- endif -%}
                       </div>
 
@@ -615,7 +653,7 @@
                           <div class="creste-item-prices">
                             <span class="creste-item-price">{{ item.price | money }}</span>
                             <s class="creste-item-compare">{{ creste_compare | money }}</s>
-                            {% comment %} <span class="creste-item-discount">{{ creste_off }}% off</span> {% endcomment %}
+                            <span class="creste-item-discount">{{ creste_off }}% off</span>
                           </div>
                         {%- else -%}
                           <div class="creste-item-prices">

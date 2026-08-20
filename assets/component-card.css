@@ -556,6 +556,7 @@
   justify-content: space-between;
   align-self: stretch;
   padding: 2px 0;
+  max-width:88px;
 }
 .creste-cart-item__remove {
   color: #e0483e;
@@ -594,18 +595,22 @@
 
 /* Gift wrap toggle (per line item) */
 .creste-giftwrap-added {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #fde7ef;
-  color: #c2185b;
-  border: 1px solid #f6c6d8;
-  border-radius: 7px;
-  padding: 3px 10px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
+      display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 100px;
+    max-width: 111px;
+    text-align: center;
+    background: #fff;
+    padding: 4px;
+    color: #c2185b;
+    border: 1px dashed #e9a3be;
+    border-radius: 8px;
+    font-family: Poppins, sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 2px;
 }
 .creste-giftwrap-add {
    display: inline-flex;
@@ -643,6 +648,9 @@
     height: 60px;
   }
   .creste-cart-item__body {
-    padding-right: 28px;
+    /* padding-right: 28px; */
+  }
+  .creste-cart-item__side{
+    max-width:46px;
   }
 }
