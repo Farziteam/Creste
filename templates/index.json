@@ -393,6 +393,7 @@
         },
         "r7": {
           "type": "review",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Overlay_Shadow.png",
             "title": "So much fun!",
@@ -404,6 +405,7 @@
         },
         "r8": {
           "type": "review",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Overlay_Shadow.png",
             "title": "Highly recommend",
