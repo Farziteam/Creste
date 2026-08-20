@@ -180,8 +180,8 @@
         "a4": {
           "type": "age",
           "settings": {
-            "image": "shopify://shop_images/image_5_4b25eccf-d3a3-4ed2-b39a-a497462cfea6.png",
-            "label": "11-15 yrs",
+            "image": "shopify://shop_images/11-16.png",
+            "label": "11-16 yrs",
             "desc": "Level-up skills",
             "tint": "#f3eeff",
             "collection": "",
@@ -190,6 +190,7 @@
         },
         "a5": {
           "type": "age",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/image_6_a0fde401-000b-4248-bbc3-a9b9e5e7f469.png",
             "label": "16 yrs +",
@@ -202,7 +203,7 @@
         "a6": {
           "type": "age",
           "settings": {
-            "image": "shopify://shop_images/image_7_ed28fe6d-ff40-4857-a19c-c7983e6405fd.png",
+            "image": "shopify://shop_images/Adults.png",
             "label": "Adult",
             "desc": "Craft for the soul",
             "tint": "#e0f7ff",
