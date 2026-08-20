@@ -241,6 +241,26 @@
         "padding_bottom": 64
       }
     },
+    "1787213314fee83c99": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_DxQqg4": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_DxQqg4"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
     "creste_reviews": {
       "type": "creste-reviews",
       "blocks": {
@@ -269,6 +289,7 @@
         "r1",
         "r2"
       ],
+      "disabled": true,
       "settings": {
         "average": "4.56",
         "count": "9",
@@ -296,6 +317,7 @@
     "creste_recommend",
     "creste_favourites_DJKLRz",
     "creste_love",
+    "1787213314fee83c99",
     "creste_reviews",
     "creste_birthday"
   ]
