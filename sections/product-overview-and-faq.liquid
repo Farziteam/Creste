@@ -517,7 +517,7 @@
     position: relative;
     {% comment %} background: var(--green); {% endcomment %}
     padding: 44px 20px 54px;
-    margin: 40px 0;
+    {% comment %} margin: 40px 0; {% endcomment %}
 
     overflow: visible;
   }
@@ -1060,7 +1060,10 @@
     #{{ section_id }} .product-overview-faq__faq-question {
       font-size: 16px;
     }
-
+    #{{ section_id }} .product-overview-faq__tabs {
+        gap: 12px;
+    }
+  
   }
 
 </style>

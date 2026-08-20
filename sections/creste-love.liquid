@@ -1,5 +1,5 @@
 {%- comment -%} Creste — "Why Parents Love it" benefits + stats {%- endcomment -%}
-{%- liquid assign uid = section.id -%}
+{% comment %} {%- liquid assign uid = section.id -%}
 <section id="CpdpLove-{{ uid }}" class="cpdplove" style="--cpdplove-bg: {{ section.settings.bg_color | default: '#DCEBF3' }};">
   <div class="cpdplove__wrap">
     <h2 class="cpdplove__title">{{ section.settings.heading_prefix | default: 'Why Parents' }} <span class="cpdplove__hl">{{ section.settings.heading_highlight | default: 'Love it' }}</span></h2>
@@ -23,7 +23,145 @@
       {%- endif -%}{%- endfor -%}
     </div>
   </div>
+</section> {% endcomment %}
+{%- comment -%} Creste — Why Parents Love It {%- endcomment -%}
+
+{%- liquid
+  assign uid = section.id
+  assign love_it = product.metafields.custom.product_love_it.value
+-%}
+
+{% if love_it != blank %}
+
+<section
+  id="CpdpLove-{{ uid }}"
+  class="cpdplove"
+  style="--cpdplove-bg: {{ section.settings.bg_color | default: '#DCEBF3' }};"
+>
+
+  <div class="cpdplove__wrap">
+
+    <!-- Heading -->
+    {% if love_it.heading != blank %}
+     <h2 class="cpdplove__title">
+      {{ love_it.heading }}
+      <span class="cpdplove__hl">
+        {{ love_it.heading_highlight }}
+      </span>
+    </h2>
+    {% endif %}
+
+
+    <!-- Sub Heading -->
+    {% if love_it.sub_heading != blank %}
+      <p class="cpdplove__sub">
+        {{ love_it.sub_heading }}
+      </p>
+    {% endif %}
+
+
+    <div class="cpdplove__grid">
+      <div class="cpdplove__stats cpdplove__stats_mobile">
+          {% for card in love_it.card_details.value %}
+            {% assign card_parts = card | split: '<br/>' %}
+
+            <div class="cpdplove__stat cpdplove__stat--white">
+              
+              <span class="cpdplove__stat-n">
+                {{ card_parts[0] | remove: '<b>' | remove: '</b>' | strip }}
+              </span>
+
+              {% if card_parts[1] != blank %}
+                <span class="cpdplove__stat-l">
+                  {{ card_parts[1] | strip }}
+                </span>
+              {% endif %}
+
+            </div>
+          {% endfor %}
+        </div>
+
+      <!-- Left Image -->
+      <div class="cpdplove__media">
+
+        {% if love_it.left_image_url != blank %}
+          <img
+            src="{{ love_it.left_image_url }}"
+            class="cpdplove__photo"
+            alt="{{ product.title | escape }}"
+            loading="lazy"
+          >
+
+        {% else %}
+          <div class="cpdplove__photo cpdplove__photo--ph"></div>
+        {% endif %}
+        
+      </div>
+
+      
+
+
+      <!-- Side List -->
+      <div class="cpdplove__points">
+        {% for point in love_it.side_list.value %}
+          {% if point != blank %}
+            <div class="cpdplove__point">
+              <span class="cpdplove__check">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="15"
+                  height="15"
+                  fill="none"
+                  stroke="#3B8A3F"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 6L9 17l-5-5"/>
+                </svg>
+              </span>
+
+              <span class="cpdplove__point-t">
+                {{ point }}
+              </span>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        <div class="cpdplove__stats cpdplove__stats_desktop">
+          {% for card in love_it.card_details.value %}
+            {% assign card_parts = card | split: '<br/>' %}
+
+            <div class="cpdplove__stat cpdplove__stat--white">
+              
+              <span class="cpdplove__stat-n">
+                {{ card_parts[0] | remove: '<b>' | remove: '</b>' | strip }}
+              </span>
+
+              {% if card_parts[1] != blank %}
+                <span class="cpdplove__stat-l">
+                  {{ card_parts[1] | strip }}
+                </span>
+              {% endif %}
+
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+       <!-- Card Details -->
+    
+
+    </div>
+
+
+   
+
+  </div>
+
 </section>
+
+{% endif %}
 <style>
   #CpdpLove-{{ uid }}{--cpdplove-teal:#35A9C9;--cpdplove-brown:#3D2817;--cpdplove-ink:#5b5750;
     --cpdplove-head: var(--font-heading-family, 'Baloo 2','Poppins',system-ui,sans-serif);
@@ -31,27 +169,88 @@
     background:var(--cpdplove-bg);font-family:var(--cpdplove-body);}
   #CpdpLove-{{ uid }} *{box-sizing:border-box;}
   #CpdpLove-{{ uid }} .cpdplove__wrap{max-width:1240px;margin:0 auto;padding:{{ section.settings.padding_top | default: 60 }}px 20px {{ section.settings.padding_bottom | default: 64 }}px;}
-  #CpdpLove-{{ uid }} .cpdplove__title{text-align:center;font-family:var(--cpdplove-head);font-weight:800;font-size:clamp(30px,4vw,52px);color:var(--cpdplove-brown);margin:0 0 10px;}
-  #CpdpLove-{{ uid }} .cpdplove__hl{color:var(--cpdplove-teal);}
-  #CpdpLove-{{ uid }} .cpdplove__sub{text-align:center;font-size:clamp(16px,1.6vw,20px);color:var(--cpdplove-ink);max-width:820px;margin:0 auto 40px;}
-  #CpdpLove-{{ uid }} .cpdplove__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;align-items:center;margin-bottom:20px;}
-  #CpdpLove-{{ uid }} .cpdplove__media{position:relative;aspect-ratio:16/13;border-radius:22px;overflow:hidden;background:#CFE3F5;}
-  #CpdpLove-{{ uid }} .cpdplove__photo,#CpdpLove-{{ uid }} .cpdplove__photo--ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  #CpdpLove-{{ uid }} .cpdplove__title{font-family:'Nunito',sans-serif;text-align:center;font-weight:900;font-size:clamp(30px,4vw,48px);color:var(--cpdplove-brown);margin:0 0 10px;letter-spacing:0px;}
+  #CpdpLove-{{ uid }} .cpdplove__hl{color:var(--cpdplove-teal);font-style:italic;}
+  #CpdpLove-{{ uid }} .cpdplove__sub{text-align:center;font-size:clamp(16px,1.6vw,20px);color:var(--cpdplove-ink);max-width:820px;margin:0 auto 30px;font-family: 'Nunito Sans', sans-serif;letter-spacing:0px;}
+  #CpdpLove-{{ uid }} .cpdplove__grid{display:flex;gap:34px;align-items:center;margin-bottom:20px;}
+  #CpdpLove-{{ uid }} .cpdplove__media{position:relative;border-radius:22px;overflow:hidden;background:#CFE3F5;width: 55%;}
+  #CpdpLove-{{ uid }} .cpdplove__photo,#CpdpLove-{{ uid }} .cpdplove__photo--ph{inset:0;width:100%;height:100%;object-fit:cover;display:block;}
   #CpdpLove-{{ uid }} .cpdplove__photo--ph{background:linear-gradient(135deg,#CFE3F5,#AFCBE8);}
-  #CpdpLove-{{ uid }} .cpdplove__points{display:flex;flex-direction:column;gap:14px;}
-  #CpdpLove-{{ uid }} .cpdplove__point{display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:16px 20px;box-shadow:0 3px 10px rgba(0,0,0,.05);}
-  #CpdpLove-{{ uid }} .cpdplove__check{flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#DCF3DD;display:grid;place-items:center;}
-  #CpdpLove-{{ uid }} .cpdplove__point-t{font-size:16px;color:#43413d;line-height:1.4;}
+  #CpdpLove-{{ uid }} .cpdplove__points{display:flex;flex-direction:column;gap:14px;width: 45%;}
+  #CpdpLove-{{ uid }} .cpdplove__point{display:flex;align-items:center;gap:14px;background:#FFFFFF80;border-radius:16px;padding:10px;box-shadow:0 3px 10px rgba(0,0,0,.05);}
+  #CpdpLove-{{ uid }} .cpdplove__check{flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#fff;display:grid;place-items:center;}
+  #CpdpLove-{{ uid }} .cpdplove__point-t{
+    font-family: 'Poppins', sans-serif;
+    font-size: 11.6px;
+    letter-spacing: 0px;
+    font-weight: 400;
+    line-height: 19px;
+  }
   #CpdpLove-{{ uid }} .cpdplove__stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:20px;}
-  #CpdpLove-{{ uid }} .cpdplove__stat{border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:6px;}
+  #CpdpLove-{{ uid }} .cpdplove__stat{
+    border-radius:19px;padding:20px 10px;display:flex;flex-direction:column;gap:6px;
+  }
   #CpdpLove-{{ uid }} .cpdplove__stat--white{background:#fff;}
   #CpdpLove-{{ uid }} .cpdplove__stat--teal{background:var(--cpdplove-teal);}
   #CpdpLove-{{ uid }} .cpdplove__stat--teal .cpdplove__stat-n,#CpdpLove-{{ uid }} .cpdplove__stat--teal .cpdplove__stat-l{color:#fff;}
-  #CpdpLove-{{ uid }} .cpdplove__stat-n{font-family:var(--cpdplove-head);font-weight:800;font-size:34px;color:var(--cpdplove-brown);line-height:1;}
-  #CpdpLove-{{ uid }} .cpdplove__stat-l{font-size:14px;color:#6b6a66;line-height:1.35;}
+  #CpdpLove-{{ uid }} .cpdplove__stat-n{
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 120%;
+  }
+  #CpdpLove-{{ uid }} .cpdplove__stat-l{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 10.4px;
+    line-height: 14px;
+    font-weight: 700;
+    letter-spacing: 0px;
+  }
+  #CpdpLove-{{ uid }} .cpdplove__stat:nth-child(2),
+  #CpdpLove-{{ uid }} .cpdplove__stat:nth-child(4) {
+    background: var(--cpdplove-teal);
+  }
+
+  #CpdpLove-{{ uid }} .cpdplove__stat:nth-child(2) .cpdplove__stat-n,
+  #CpdpLove-{{ uid }} .cpdplove__stat:nth-child(2) .cpdplove__stat-l,
+  #CpdpLove-{{ uid }} .cpdplove__stat:nth-child(4) .cpdplove__stat-n,
+  #CpdpLove-{{ uid }} .cpdplove__stat:nth-child(4) .cpdplove__stat-l {
+    color: #fff;
+  }
+  #CpdpLove-{{ uid }} .cpdplove__stats_desktop{display: grid;}
+  #CpdpLove-{{ uid }} .cpdplove__stats_mobile{display: none;}
   @media (max-width:820px){
-    #CpdpLove-{{ uid }} .cpdplove__grid{grid-template-columns:minmax(0,1fr);}
-    #CpdpLove-{{ uid }} .cpdplove__stats{grid-template-columns:repeat(2,minmax(0,1fr));}
+    #CpdpLove-{{ uid }} .cpdplove__grid{flex-direction: column-reverse;gap:20px;}
+    #CpdpLove-{{ uid }} .cpdplove__stats{gap: 8px;}
+    #CpdpLove-{{ uid }} .cpdplove__stats_desktop{display: none;}
+    #CpdpLove-{{ uid }} .cpdplove__stats_mobile{display: grid;margin-top: 0px;}
+  }
+  @media (max-width: 768px){
+    #CpdpLove-{{ uid }} .cpdplove__media{
+      width: 100%;
+    }
+    #CpdpLove-{{ uid }} .cpdplove__points{
+      width: 100%;
+    }
+    #CpdpLove-{{ uid }} .cpdplove__point{
+      gap: 10px;
+    } 
+    #CpdpLove-{{ uid }} .cpdplove__stat{padding: 8px;gap: 3px;border-radius:10px;}
+    #CpdpLove-{{ uid }} .cpdplove__stat-n{
+      font-size: 18px;
+    }
+    #CpdpLove-{{ uid }} .cpdplove__stat-l{
+      font-size: 10px;
+    }
+    #CpdpLove-{{ uid }} .cpdplove__wrap{padding: 20px 20px 30px;}
+    #CpdpLove-{{ uid }} .cpdplove__point-t{line-height: 150%;}
+    #CpdpLove-{{ uid }} .cpdplove__sub{
+      margin: 0px auto 15px;
+      line-height: 127%;
+    }
+    #CpdpLove-{{ uid }} .cpdplove__grid{
+      margin-bottom: 5px;
+    }
   }
 </style>
 {% schema %}
