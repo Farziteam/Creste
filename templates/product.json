@@ -93,16 +93,16 @@
       "settings": {
         "fallback_bg": "#f5c518",
         "overlay": 0,
-        "heading": "Our Favourites",
-        "heading_italic": "Favorites",
-        "subtitle": "",
+        "heading": "You may Also",
+        "heading_italic": "Like",
+        "subtitle": "Grab 'em before they disappear!",
         "heading_color": "#2b1702",
-        "collection": "",
+        "collection": "demo",
         "count": 10,
-        "card_width": 250,
+        "card_width": 220,
         "default_rating": "4.9",
-        "badge_tag": "top pick",
-        "badge_text": "TOP PICK",
+        "badge_tag": "",
+        "badge_text": "",
         "button_label": "Add To Cart"
       }
     },
