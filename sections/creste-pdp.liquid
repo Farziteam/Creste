@@ -179,13 +179,14 @@
               {%- assign base = cur.price | times: q -%}
               {%- assign discount = base | times: off | divided_by: 100 -%}
               {%- assign final = base | minus: discount -%}
-              <button type="button" class="cpdp__po-card" data-qty="{{ q }}"><span class="cpdp__po-ico">{{ section.settings.po_emoji | default: '✊' }}</span><span class="cpdp__po-body"><span class="cpdp__po-top">{{ section.settings.po_buy_label | default: 'Buy' }} {{ q }} {% if off > 0 %}<em>{{ off }}{{ section.settings.po_off_suffix | default: '% off' }}</em>{% endif %}</span><span class="cpdp__po-price">{{ final | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} {% if off > 0 %}<s>{{ base | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s>{% endif %}</span></span>{% if forloop.last %}<span class="cpdp__po-badge">{{ section.settings.po_badge_text | default: 'Smart Saver' }}</span>{% endif %}</button>
+              <button type="button" class="cpdp__po-card" data-qty="{{ q }}" data-off="{{ off }}"><span class="cpdp__po-ico">{{ section.settings.po_emoji | default: '✊' }}</span><span class="cpdp__po-body"><span class="cpdp__po-top">{{ section.settings.po_buy_label | default: 'Buy' }} {{ q }} {% if off > 0 %}<em>{{ off }}{{ section.settings.po_off_suffix | default: '% off' }}</em>{% endif %}</span><span class="cpdp__po-price">{{ final | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} {% if off > 0 %}<s>{{ base | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s>{% endif %}</span></span>{% if forloop.last %}<span class="cpdp__po-badge">{{ section.settings.po_badge_text | default: 'Smart Saver' }}</span>{% endif %}</button>
             {%- endfor -%}
           </div>
         </div>
         <div class="cpdp__hr cpdp__hr--blank"></div>
         <p class="cpdp__ship">{{ section.settings.ship_text | default: 'Order before 4 PM → ships today · COD available' }}</p>
         <input type="hidden" name="id" value="{{ cur.id }}" class="cpdp__var-id">
+        <input type="hidden" name="properties[_Bundle Discount]" class="cpdp__bundle-off" value="0">
         <div class="cpdp__buy">
           <div class="cpdp__qty" aria-label="Quantity">
             <button type="button" class="cpdp__qty-btn" data-dir="-1" aria-label="Decrease">−</button>
@@ -549,6 +550,7 @@
     var atcLabels = root.querySelectorAll('[data-atc-label]');
     var atcBtns = root.querySelectorAll('[data-atc]');
     var qtyVal = root.querySelector('.cpdp__qty-val');
+    var bundleOff = root.querySelector('.cpdp__bundle-off');
     function selectVariant(id){
       var v = data.variants[id];
       if(!v) return;
@@ -597,6 +599,7 @@
         root.querySelectorAll('.cpdp__po-card').forEach(function(x){ x.classList.remove('is-selected'); });
         c.classList.add('is-selected');
         if(qtyVal){ qtyVal.value = c.dataset.qty || '1'; }
+        if(bundleOff){ bundleOff.value = c.dataset.off || '0'; }
       });
     });
     var buynow = root.querySelector('[data-buynow]');
