@@ -757,12 +757,12 @@
         },
         "sv8": {
           "type": "service",
-          "disabled": true,
           "settings": {
             "icon": "shopify://shop_images/svg_3.png",
             "icon_bg": "#fdecec",
-            "title": "Team Building",
-            "desc": "Team building where the teams actually build."
+            "title": "Community & Malls Events",
+            "desc": "Longer visits. Stronger loyalty.",
+            "back_image": "shopify://shop_images/Homepage_flip_-_Community_Malls_Events.png"
           }
         },
         "ac1": {
