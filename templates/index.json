@@ -889,8 +889,8 @@
     "creste_buildbox": {
       "type": "creste-buildbox",
       "settings": {
-        "image": "shopify://shop_images/Build_Box_-D_1.png",
-        "image_mobile": "shopify://shop_images/Build_box_-_m.png",
+        "image": "shopify://shop_images/build-your-own-box-desktop-r1.jpg",
+        "image_mobile": "shopify://shop_images/build-your-own-box-mobile-r2.jpg",
         "link": "",
         "alt": "Build your own box",
         "full_width": true,
