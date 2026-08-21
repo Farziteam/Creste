@@ -24,14 +24,28 @@
   }
 
   /* ---------- Shell ---------- */
-  .cart-drawer .drawer__inner {
+  {% comment %} .cart-drawer .drawer__inner {
     background: #ffffff;
     border-radius: 24px 0 0 24px;
     font-family: 'Nunito Sans', sans-serif;
     color: #2e2418;
     display: flex;
     flex-direction: column;
-  }
+  } {% endcomment %}
+  .cart-drawer .drawer__inner {
+  background: #ffffff;
+  border-radius: 24px 0 0 24px;
+  font-family: 'Nunito Sans', sans-serif;
+  color: #2e2418;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+  max-height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+}
   @media screen and (min-width: 750px) {
     .cart-drawer .drawer__inner {
       width: 550px;
@@ -406,7 +420,7 @@
       aria-modal="true"
       aria-label="{{ 'sections.cart.title' | t }}"
       tabindex="-1"
-    >
+     >
       {%- if cart == empty -%}
         <div class="drawer__inner-empty">
           <div class="cart-drawer__warnings center{% if settings.cart_drawer_collection != blank %} cart-drawer__warnings--has-collection{% endif %}">
@@ -1014,29 +1028,30 @@
           </div>
         </div>
 
-        <div class="cart__ctas" {{ block.shopify_attributes }}>
-          <button
-            type="submit"
-            id="CartDrawer-Checkout"
-            class="cart__checkout-button button"
-            name="checkout"
-            form="CartDrawer-Form"
-            {% if cart == empty %}
-              disabled
-            {% endif %}
-          >
-            {{ 'sections.cart.checkout' | t }}
-          </button>
-        </div>
+          <div class="cart__ctas" {{ block.shopify_attributes }}>
+            <button
+              type="submit"
+              id="CartDrawer-Checkout"
+              class="cart__checkout-button button"
+              name="checkout"
+              form="CartDrawer-Form"
+              {% if cart == empty %}
+                disabled
+              {% endif %}
+            >
+              {{ 'sections.cart.checkout' | t }}
+            </button>
+          </div>
 
-        <div class="creste-trust-badges">
-          <span>COD available</span>
-          <span>7-day easy returns</span>
-          <span>Child-safe materials</span>
-        </div>
+          <div class="creste-trust-badges">
+            <span>COD available</span>
+            <span>7-day easy returns</span>
+            <span>Child-safe materials</span>
+          </div>
       </div>
     </div>
   </div>
+  
 </cart-drawer>
 <script>
   (function () {
