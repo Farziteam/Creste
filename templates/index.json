@@ -26,7 +26,7 @@
           "settings": {
             "image": "shopify://shop_images/home_banner.png",
             "image_mobile": "shopify://shop_images/HERO_mob.png",
-            "link": "",
+            "link": "shopify://collections/art-and-craft-collection",
             "alt": "Creste banner"
           }
         }
