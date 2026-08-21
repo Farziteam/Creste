@@ -526,9 +526,9 @@
 }
 .creste-cart-item__name {
   font-family: 'Nunito Sans', sans-serif;
-  font-weight: 800;
-  font-size: 10px;
-  color: #2e2418;
+  /* font-weight: 800; */
+  font-size: 15px;
+  color: black;
   text-decoration: none;
 }
 .creste-cart-item__subtitle {
@@ -576,13 +576,13 @@
 .creste-item-price {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 900;
-  font-size: 10px;
+  font-size: 13px;
   color: #e8622a;
 }
 .creste-item-compare {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
-  font-size: 9px;
+  font-size: 12px;
   color: #9b9b9b;
   text-decoration: line-through;
 }
@@ -595,7 +595,7 @@
 
 /* Gift wrap toggle (per line item) */
 .creste-giftwrap-added {
-      display: inline-flex;
+    /* display: inline-flex;
     align-items: center;
     gap: 6px;
     min-width: 100px;
@@ -610,7 +610,25 @@
     font-size: 7px;
     font-weight: 700;
     cursor: pointer;
+    margin-top: 2px; */
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 100px;
+    max-width: 111px;
+    text-align: center;
+    background: #ffe7f0;
+    padding: 4px;
+    color: #000000;
+    border: 1px solid #e9a3be;
+    border-radius: 8px;
+    font-family: Poppins, sans-serif;
+    font-size: 7px;
+    font-weight: 500;
+    cursor: pointer;
     margin-top: 2px;
+
 }
 .creste-giftwrap-add {
    display: inline-flex;
@@ -653,4 +671,14 @@
   .creste-cart-item__side{
     max-width:46px;
   }
+  .creste-cart-item__name{
+    font-size:10px;
+  }
+  .creste-item-price{
+    font-size: 11px;
+  }
+  .creste-item-compare{
+      font-size: 11px;
+  }
 }
+
