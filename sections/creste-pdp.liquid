@@ -139,14 +139,16 @@
       </div>
 
       <div class="cpdp__col-right">
+        {% if product.metafields.custom.product_pill_feature.value != blank %}
         <div class="cpdp__pills">
-          {%- assign pills = section.settings.feature_pills | default: 'Ages 3-8, 45-60 min play, Screen-free, Mess-free' | split: ',' -%}
+          {%- assign pills = product.metafields.custom.product_pill_feature | split: ',' -%}
           {%- assign pcolors = 'y,b,g,p' | split: ',' -%}
           {%- for p in pills -%}
             {%- assign pc = forloop.index0 | modulo: 4 -%}
             <span class="cpdp__pill cpdp__pill--{{ pcolors[pc] }}">{{ p | strip }}</span>
           {%- endfor -%}
         </div>
+        {% endif %}
         <h1 class="cpdp__title">{{ heading_title }}</h1>
         <div class="cpdp__rating">
           {% comment %} <span class="cpdp__stars" aria-hidden="true">★★★★★</span>
