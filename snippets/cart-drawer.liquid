@@ -550,6 +550,7 @@
           class="cart__contents cart-drawer__form"
           method="post"
         >
+          {{ cart.items | json }}
           <div id="CartDrawer-CartItems" class="drawer__contents js-contents">
             {%- if cart != empty -%}
               <div class="creste-cart-items" role="list">
@@ -628,7 +629,6 @@
                       {%- elsif item.product.type != blank -%}
                         <p class="creste-cart-item__subtitle">{{ item.product.type }}</p>
                       {%- endif -%}
-
                       <div class="cart-item__price-wrapper">
                         {%- render 'loading-spinner' -%}
                         {%- if item.original_price != item.final_price -%}
