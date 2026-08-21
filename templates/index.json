@@ -29,11 +29,21 @@
             "link": "shopify://collections/art-and-craft-collection",
             "alt": "Creste banner"
           }
+        },
+        "slide_AYawCN": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Banner-3-Dussehra-Kit-Desktop-r1.jpg",
+            "image_mobile": "shopify://shop_images/Banner-3-Dussehra-Kit-Mobile-r1.jpg",
+            "link": "shopify://products/diy-dussehra-kit",
+            "alt": "Creste banner"
+          }
         }
       },
       "block_order": [
         "slide_EH4BV7",
-        "slide_3jWpxH"
+        "slide_3jWpxH",
+        "slide_AYawCN"
       ],
       "settings": {
         "bg": "#f4793a",
