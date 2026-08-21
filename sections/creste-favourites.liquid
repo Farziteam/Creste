@@ -145,7 +145,44 @@
 <div class="product-sub-heading">{% if product.metafields.custom.age_group != blank %}<p>{{ product.metafields.custom.age_group }}</p>{% endif %}{% if product.metafields.custom.product_sub_description != blank %}<p>•&nbsp;&nbsp;{{ product.metafields.custom.product_sub_description }}</p>{% endif %}</div>
 {% if pmeta != blank %}<p class='fav-meta'>{{ pmeta }}</p>{% endif %}
 <div class='fav-price'><b>{{ product.price | money_without_trailing_zeros }}</b>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money_without_currency | replace: '.00', '' }}</s>{% assign disc = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}<i>{{ disc }}% off</i>{% endif %}</div>
-<div class='fav-cart'><form method='post' action='/cart/add' enctype='multipart/form-data'><input type='hidden' name='id' value='{{ product.selected_or_first_available_variant.id }}'><button type='submit'{% unless product.available %} disabled{% endunless %}>{{ 'icon-add-to-cart.svg' | inline_asset_content }} {% if product.available %}{{ section.settings.button_label }}{% else %}Sold out{% endif %}</button></form></div>
+{% comment %} <div class='fav-cart'>
+  <form method='post' action='/cart/add' enctype='multipart/form-data'><input type='hidden' name='id' value='{{ product.selected_or_first_available_variant.id }}'><button type='submit'{% unless product.available %} disabled{% endunless %}>{{ 'icon-add-to-cart.svg' | inline_asset_content }} {% if product.available %}{{ section.settings.button_label }}{% else %}Sold out{% endif %}</button>
+</form>
+</div> {% endcomment %}
+<div class='fav-cart'>
+  <form
+    class='fav-atc-form'
+    method='post'
+    action='/cart/add'
+    enctype='multipart/form-data'
+    data-product-id='{{ product.selected_or_first_available_variant.id }}'
+  >
+    <input
+      type='hidden'
+      name='id'
+      value='{{ product.selected_or_first_available_variant.id }}'
+    >
+
+    <input
+      type='hidden'
+      name='quantity'
+      value='1'
+    >
+
+    <button
+      type='submit'
+      {% unless product.available %}disabled{% endunless %}
+    >
+      {{ 'icon-add-to-cart.svg' | inline_asset_content }}
+
+      {% if product.available %}
+        {{ section.settings.button_label }}
+      {% else %}
+        Sold out
+      {% endif %}
+    </button>
+  </form>
+</div>
 </div>
 </div>
 {% endfor %}
@@ -178,6 +215,581 @@
 
     });
   })();
+</script>
+<script>
+/* =========================================
+   CRESTE FAVOURITES
+   AJAX ADD TO CART
+   + DAWN 15.5.0 CART DRAWER
+   + REAL-TIME CART BUBBLE
+   ========================================= */
+
+(function () {
+
+  var section = document.getElementById(
+    'creste-fav-{{ section.id }}'
+  );
+
+  if (!section) return;
+
+
+  /* =========================================
+     ATC FORMS
+     ========================================= */
+
+  var forms = section.querySelectorAll(
+    '.fav-atc-form'
+  );
+
+
+  forms.forEach(function (form) {
+
+    form.addEventListener('submit', function (event) {
+
+      event.preventDefault();
+
+
+      var button = form.querySelector('button');
+
+      if (!button) return;
+
+
+      /* Prevent double click */
+
+      if (button.classList.contains('loading')) {
+        return;
+      }
+
+
+      var originalHTML = button.innerHTML;
+
+
+      button.classList.add('loading');
+      button.disabled = true;
+
+
+      var formData = new FormData(form);
+
+
+      /* =========================================
+         ASK SHOPIFY FOR UPDATED SECTIONS
+         ========================================= */
+
+      formData.append(
+        'sections',
+        'cart-drawer,cart-icon-bubble'
+      );
+
+      formData.append(
+        'sections_url',
+        window.location.pathname
+      );
+
+
+      /* =========================================
+         AJAX ADD TO CART
+         ========================================= */
+
+      fetch(
+        window.routes && window.routes.cart_add_url
+          ? window.routes.cart_add_url
+          : '/cart/add.js',
+        {
+          method: 'POST',
+
+          headers: {
+            'Accept': 'application/json'
+          },
+
+          body: formData
+        }
+      )
+
+
+      /* =========================================
+         RESPONSE
+         ========================================= */
+
+      .then(function (response) {
+
+        if (!response.ok) {
+
+          return response.json().then(function (data) {
+
+            throw new Error(
+              data.description ||
+              'Add to cart failed'
+            );
+
+          });
+
+        }
+
+        return response.json();
+
+      })
+
+
+      .then(function (response) {
+
+        console.log(
+          'CRESTE FAVOURITES: Cart AJAX response',
+          response
+        );
+
+
+        /* =========================================
+           1. UPDATE CART DRAWER
+           ========================================= */
+
+        var drawerHTML =
+          response.sections &&
+          response.sections['cart-drawer'];
+
+
+        var currentDrawer =
+          document.querySelector('cart-drawer');
+
+
+        if (
+          drawerHTML &&
+          currentDrawer
+        ) {
+
+          var parser =
+            new DOMParser();
+
+
+          var drawerDoc =
+            parser.parseFromString(
+              drawerHTML,
+              'text/html'
+            );
+
+
+          var newDrawer =
+            drawerDoc.querySelector(
+              'cart-drawer'
+            );
+
+
+          if (newDrawer) {
+
+            /*
+             * Save ATC button.
+             * Dawn focus management ke liye.
+             */
+
+            var opener = button;
+
+
+            /*
+             * Replace old drawer
+             * with freshly rendered drawer.
+             */
+
+            currentDrawer.replaceWith(
+              newDrawer
+            );
+
+
+            /*
+             * Get new drawer.
+             */
+
+            var updatedDrawer =
+              document.querySelector(
+                'cart-drawer'
+              );
+
+
+            /*
+             * Open NEW drawer.
+             */
+
+            if (
+              updatedDrawer &&
+              typeof updatedDrawer.open === 'function'
+            ) {
+
+              updatedDrawer.open(
+                opener
+              );
+
+            }
+
+            else if (updatedDrawer) {
+
+              /*
+               * Fallback
+               */
+
+              updatedDrawer.classList.remove(
+                'is-empty'
+              );
+
+              updatedDrawer.classList.add(
+                'active'
+              );
+
+              updatedDrawer.setAttribute(
+                'open',
+                ''
+              );
+
+            }
+
+          }
+
+        }
+
+
+        /* =========================================
+           2. UPDATE HEADER CART BUBBLE
+           ========================================= */
+
+        updateFavCartBubble(
+          response.sections &&
+          response.sections['cart-icon-bubble']
+        );
+
+
+        /* =========================================
+           3. ALSO SYNC CART COUNT FROM CART.JS
+           =========================================
+           
+           Ye extra safety hai.
+           
+           Agar kisi reason se Shopify ka
+           cart-icon-bubble section markup
+           different aaye, to actual cart
+           quantity se bubble ko sync kar denge.
+           ========================================= */
+
+        syncFavCartBubbleFromCart();
+
+      })
+
+
+      /* =========================================
+         ERROR
+         ========================================= */
+
+      .catch(function (error) {
+
+        console.error(
+          'CRESTE FAVOURITES Cart AJAX Error:',
+          error
+        );
+
+      })
+
+
+      /* =========================================
+         FINALLY
+         ========================================= */
+
+      .finally(function () {
+
+        button.classList.remove(
+          'loading'
+        );
+
+        button.disabled = false;
+
+        button.innerHTML =
+          originalHTML;
+
+      });
+
+    });
+
+  });
+
+
+  /* =========================================
+     UPDATE DAWN HEADER CART BUBBLE
+     ========================================= */
+
+  function updateFavCartBubble(
+    bubbleHTML
+  ) {
+
+    if (!bubbleHTML) {
+
+      console.warn(
+        'CRESTE FAVOURITES: cart-icon-bubble section missing'
+      );
+
+      return;
+
+    }
+
+
+    var oldBubble =
+      document.querySelector(
+        '#cart-icon-bubble'
+      );
+
+
+    if (!oldBubble) {
+
+      console.warn(
+        'CRESTE FAVOURITES: #cart-icon-bubble not found'
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Dawn 15.5.0 me
+     *
+     * #cart-icon-bubble
+     *
+     * actual <a> element hota hai.
+     *
+     * Shopify ka cart-icon-bubble section
+     * uske andar ka rendered HTML deta hai.
+     *
+     * Isliye poora <a> replace nahi karna.
+     *
+     * Sirf INNER HTML replace karna hai.
+     */
+
+
+    var parser =
+      new DOMParser();
+
+
+    var bubbleDoc =
+      parser.parseFromString(
+        bubbleHTML,
+        'text/html'
+      );
+
+
+    /*
+     * Response me section wrapper ho sakta hai.
+     */
+
+    var sectionWrapper =
+      bubbleDoc.querySelector(
+        '[id^="shopify-section"]'
+      );
+
+
+    var newContent;
+
+
+    if (sectionWrapper) {
+
+      newContent =
+        sectionWrapper.innerHTML;
+
+    }
+
+    else {
+
+      newContent =
+        bubbleDoc.body.innerHTML;
+
+    }
+
+
+    if (!newContent) {
+
+      console.warn(
+        'CRESTE FAVOURITES: Cart bubble HTML empty'
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * Keep existing #cart-icon-bubble
+     * and only update its contents.
+     */
+
+    oldBubble.innerHTML =
+      newContent;
+
+
+    /*
+     * Remove stale aria state if necessary.
+     */
+
+    oldBubble.removeAttribute(
+      'aria-disabled'
+    );
+
+  }
+
+
+  /* =========================================
+     EXTRA CART COUNT SYNC
+     ========================================= */
+
+  function syncFavCartBubbleFromCart() {
+
+    fetch(
+      (window.routes && window.routes.cart_url)
+        ? window.routes.cart_url + '.js'
+        : '/cart.js',
+      {
+        method: 'GET',
+
+        headers: {
+          'Accept': 'application/json'
+        },
+
+        cache: 'no-store'
+      }
+    )
+
+    .then(function (response) {
+
+      if (!response.ok) {
+        throw new Error(
+          'Cart sync failed'
+        );
+      }
+
+      return response.json();
+
+    })
+
+    .then(function (cart) {
+
+      var bubble =
+        document.querySelector(
+          '#cart-icon-bubble'
+        );
+
+      if (!bubble) return;
+
+
+      var quantity =
+        Number(cart.item_count || 0);
+
+
+      /*
+       * Dawn cart count element.
+       */
+
+      var countBubble =
+        bubble.querySelector(
+          '.cart-count-bubble'
+        );
+
+
+      /*
+       * Cart empty hai.
+       */
+
+      if (quantity <= 0) {
+
+        if (countBubble) {
+          countBubble.remove();
+        }
+
+        return;
+
+      }
+
+
+      /*
+       * Existing count bubble hai.
+       */
+
+      if (countBubble) {
+
+        var countSpans =
+          countBubble.querySelectorAll(
+            'span'
+          );
+
+
+        if (countSpans.length) {
+
+          /*
+           * Dawn me usually:
+           *
+           * first span = visible count
+           * second span = visually hidden
+           */
+
+          countSpans[0].textContent =
+            quantity;
+
+          if (countSpans[1]) {
+
+            countSpans[1].textContent =
+              quantity + ' items';
+
+          }
+
+        }
+
+        else {
+
+          countBubble.textContent =
+            quantity;
+
+        }
+
+        return;
+
+      }
+
+
+      /*
+       * Bubble missing hai.
+       *
+       * Create new Dawn-style bubble.
+       */
+
+      var newCountBubble =
+        document.createElement('div');
+
+
+      newCountBubble.className =
+        'cart-count-bubble';
+
+
+      newCountBubble.innerHTML =
+        '<span aria-hidden="true">' +
+        quantity +
+        '</span>' +
+        '<span class="visually-hidden">' +
+        quantity +
+        ' items' +
+        '</span>';
+
+
+      bubble.appendChild(
+        newCountBubble
+      );
+
+    })
+
+    .catch(function (error) {
+
+      console.warn(
+        'CRESTE FAVOURITES: Cart bubble sync failed',
+        error
+      );
+
+    });
+
+  }
+
+})();
 </script>
 {% schema %}
 {
