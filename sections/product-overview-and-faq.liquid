@@ -459,49 +459,117 @@
       data-panel="faqs"
     >
 
-      <div class="product-overview-faq__faq-list">
+      {%- assign product_faqs = product.metafields.custom.faqs.value -%}
 
-        {% for block in section.blocks %}
+    <div class="product-overview-faq__faq-list">
 
-          {% if block.type == 'faq' %}
+    {% if product_faqs != blank %}
 
-            <details
-              class="product-overview-faq__faq"
-              {% if forloop.first %}open{% endif %}
-              {{ block.shopify_attributes }}
-            >
+        {%- comment -%}
+        METAOBJECT FAQs
+        {%- endcomment -%}
 
-              <summary class="product-overview-faq__faq-question">
+        {% for faq in product_faqs %}
 
-                <span>
-                  {{ block.settings.question }}
-                </span>
+        <details
+            class="product-overview-faq__faq"
+            {% if forloop.first %}open{% endif %}
+        >
 
-                <span
-                  class="product-overview-faq__faq-icon"
-                  aria-hidden="true"
-                ></span>
+            <summary class="product-overview-faq__faq-question">
 
-              </summary>
+            <span>
+                {{ faq.question }}
+            </span>
 
+            <span
+                class="product-overview-faq__faq-icon"
+                aria-hidden="true"
+            ></span>
 
-              <div class="product-overview-faq__faq-answer">
-                {{ block.settings.answer }}
-              </div>
+            </summary>
 
-            </details>
+            <div class="product-overview-faq__faq-answer">
+            {{ faq.answer | newline_to_br }}
+            </div>
 
-          {% endif %}
+        </details>
 
         {% endfor %}
 
-      </div>
+
+    {% else %}
+
+        {%- comment -%}
+        FALLBACK: SECTION BLOCK FAQs
+        {%- endcomment -%}
+
+        {% for block in section.blocks %}
+
+        {% if block.type == 'faq' %}
+
+            <details
+            class="product-overview-faq__faq"
+            {% if forloop.first %}open{% endif %}
+            {{ block.shopify_attributes }}
+            >
+
+            <summary class="product-overview-faq__faq-question">
+
+                <span>
+                {{ block.settings.question }}
+                </span>
+
+                <span
+                class="product-overview-faq__faq-icon"
+                aria-hidden="true"
+                ></span>
+
+            </summary>
+
+            <div class="product-overview-faq__faq-answer">
+                {{ block.settings.answer | newline_to_br }}
+            </div>
+
+            </details>
+
+        {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+    </div>
 
     </div>
 
   </div>
 
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const faqList = document.querySelector('.product-overview-faq__faq-list');
+
+    if (!faqList) return;
+
+    const faqs = faqList.querySelectorAll('.product-overview-faq__faq');
+
+    faqs.forEach(function (faq) {
+      faq.addEventListener('toggle', function () {
+
+        if (faq.open) {
+          faqs.forEach(function (otherFaq) {
+            if (otherFaq !== faq) {
+              otherFaq.removeAttribute('open');
+            }
+          });
+        }
+
+      });
+    });
+  });
+</script>
 
 
 <style>
@@ -888,7 +956,7 @@
 
     color: #2b2b2b;
 
-    padding: 20px 0;
+    padding: 16px 0;
 
     list-style: none;
   }
@@ -959,11 +1027,23 @@
 
 
   #{{ section_id }} .product-overview-faq__faq-answer {
-    padding: 0 0 20px;
+    padding: 0 0 10px;
 
     color: var(--text);
-
-    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    color: #2B1702CC;
+    line-height: 150%;
+  }
+  #{{ section_id }} .product-overview-faq__faq-question{
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0px;
+    line-height: 120%;
+    color: #2B1702;
   }
   #{{ section_id }} .product-overview-faq__faq-answer p{
     margin: 0px;
