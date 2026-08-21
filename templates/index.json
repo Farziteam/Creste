@@ -565,7 +565,7 @@
         "l2": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147228133_1.png",
+            "image": "shopify://shop_images/government_of_india_539x260-1.png",
             "name": "MEDIA",
             "row": "top"
           }
@@ -573,7 +573,7 @@
         "l3": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147228135.png",
+            "image": "shopify://shop_images/uttar_pradesh_tourism_548x260-1.jpg",
             "name": "PRESS",
             "row": "top"
           }
@@ -581,7 +581,7 @@
         "l4": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147228132_2.png",
+            "image": "shopify://shop_images/amity_international_school_548x260-1.png",
             "name": "NEWS",
             "row": "top"
           }
@@ -589,7 +589,7 @@
         "l5": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147228132_1.png",
+            "image": "shopify://shop_images/lucknow_mall_548x260_599a2b96-a5ea-46dc-b6f7-cde5f28f76f1.jpg",
             "name": "TIMES",
             "row": "bottom"
           }
@@ -597,23 +597,15 @@
         "l6": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147228131.png",
+            "image": "shopify://shop_images/phoenix_palassio_548x260-2.jpg",
             "name": "DAILY",
             "row": "bottom"
-          }
-        },
-        "logo_acQqQX": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-06-29_123028_1.png",
-            "name": "LOGO",
-            "row": "top"
           }
         },
         "l8": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147228133.png",
+            "image": "shopify://shop_images/file_00000000898c822f84da8be9075522dc.png",
             "name": "POST",
             "row": "bottom"
           }
@@ -626,7 +618,6 @@
         "l4",
         "l5",
         "l6",
-        "logo_acQqQX",
         "l8"
       ],
       "settings": {
