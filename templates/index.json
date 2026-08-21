@@ -38,12 +38,22 @@
             "link": "shopify://products/diy-dussehra-kit",
             "alt": "Creste banner"
           }
+        },
+        "slide_Hk4xrA": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Banner-4-Handcast-Kit-Desktop-r2.jpg",
+            "image_mobile": "shopify://shop_images/Banner-4-Handcast-Kit-Mobile-r2.jpg",
+            "link": "shopify://products/diy-baby-hand-casting-kit-2years",
+            "alt": "Creste banner"
+          }
         }
       },
       "block_order": [
         "slide_EH4BV7",
         "slide_3jWpxH",
-        "slide_AYawCN"
+        "slide_AYawCN",
+        "slide_Hk4xrA"
       ],
       "settings": {
         "bg": "#f4793a",
