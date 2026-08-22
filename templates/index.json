@@ -692,6 +692,16 @@
             "back_image": "shopify://shop_images/Homepage_flip_-_School_Workshops.png"
           }
         },
+        "service_43YMML": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_3.png",
+            "icon_bg": "#e1f1f6",
+            "title": "Family and Celebrations",
+            "desc": "Joy made by hand, not bought off a shelf.",
+            "back_image": "shopify://shop_images/Joyful_Mother-Daughter_Pressed_Flower_Portrait.png"
+          }
+        },
         "service_AXRi3y": {
           "type": "service",
           "settings": {
@@ -820,6 +830,7 @@
       "block_order": [
         "sv1",
         "service_tddQ9g",
+        "service_43YMML",
         "service_AXRi3y",
         "service_jrrKE4",
         "service_GtTXFg",
