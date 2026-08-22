@@ -362,10 +362,10 @@
           "type": "review",
           "settings": {
             "image": "shopify://shop_images/1cc39b65-473e-4ce8-8fbc-a05fa34f0c33.png",
-            "title": "Shambhavi Singh, mother of Aashna",
-            "quote": "I was looking for something fun and meaningful for my 4-year-old, and Creste was such a wonderful choice. She had so much fun throughout the party, and I loved seeing her explore and create things on her own. It was a truly memorable DIY activity experience for both of us.",
-            "name": "Sarah Johnson",
-            "role": "Mother of a 5 year old",
+            "title": "",
+            "quote": "I was looking for something fun and meaningful for my 4-year-old, and I loved seeing her explore and create things on her own. It was a truly memorable DIY activity experience for both of us.",
+            "name": "Shambhavi Singh",
+            "role": "Mother of Aashna",
             "rating": "5"
           }
         },
