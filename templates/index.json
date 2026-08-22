@@ -716,6 +716,16 @@
             "back_image": "shopify://shop_images/Homepage_flip_-_School_Workshops.png"
           }
         },
+        "service_AXRi3y": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/image_916.png",
+            "icon_bg": "#e1f1f6",
+            "title": "Craft Workshops",
+            "desc": "Learning they'd never call learning.",
+            "back_image": "shopify://shop_images/Homepage_flip_-_Family_and_Celebrations_Events.png"
+          }
+        },
         "service_pwmXQz": {
           "type": "service",
           "settings": {
@@ -830,6 +840,7 @@
       "block_order": [
         "sv1",
         "service_tddQ9g",
+        "service_AXRi3y",
         "service_pwmXQz",
         "service_GtTXFg",
         "sv4",
