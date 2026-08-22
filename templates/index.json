@@ -706,6 +706,15 @@
             "back_image": "shopify://shop_images/75a4e0c2-6085-4bb6-9963-111a4c67d237.png"
           }
         },
+        "service_tddQ9g": {
+          "type": "service",
+          "settings": {
+            "icon_bg": "#e1f1f6",
+            "title": "School Workshops",
+            "desc": "The class where no one watches the clock.",
+            "back_image": "shopify://shop_images/Homepage_flip_-_School_Workshops.png"
+          }
+        },
         "sv4": {
           "type": "service",
           "disabled": true,
@@ -803,6 +812,7 @@
       },
       "block_order": [
         "sv1",
+        "service_tddQ9g",
         "sv4",
         "sv6",
         "sv7",
