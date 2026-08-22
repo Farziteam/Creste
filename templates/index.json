@@ -465,8 +465,8 @@
     "creste_giftfinder": {
       "type": "creste-giftfinder",
       "settings": {
-        "image": "shopify://shop_images/GIFT_FINDER_DESKTOP.png",
-        "image_mobile": "shopify://shop_images/GIFT_FINDER_MOBILE.png",
+        "image": "shopify://shop_images/5ecbf982-8d55-4039-8fbb-234e1cda8ecf.png",
+        "image_mobile": "shopify://shop_images/c23d2447-d580-4255-a8a8-849dec365f7d.png",
         "link": "",
         "alt": "Creste banner",
         "max_width": 1600,
