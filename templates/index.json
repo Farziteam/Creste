@@ -899,13 +899,6 @@
     "creste_faq": {
       "type": "creste-faq",
       "blocks": {
-        "faq_wChyCM": {
-          "type": "faq",
-          "settings": {
-            "question": "Can complete beginners use these kits with no craft experience?",
-            "answer": "That's exactly who they're made for. Zero experience needed — just follow the box, step by step, and you'll end up..."
-          }
-        },
         "faq_ediE4n": {
           "type": "faq",
           "settings": {
@@ -913,32 +906,11 @@
             "answer": "Yes that is how our diy kits are built you can follow our YouTube video instructions, instructions guide whichever feels more comfortable to you."
           }
         },
-        "q1": {
+        "faq_Vh67Gb": {
           "type": "faq",
           "settings": {
-            "question": "Does the kit include everything I need, or do I have to buy extra stuff?",
-            "answer": "Everything's in the box. Materials, tools, and instructions are all packedtogether, so there's no last-minute dash to buy glue, wax, or that one missingingredient. Open it, and you're to built."
-          }
-        },
-        "q2": {
-          "type": "faq",
-          "settings": {
-            "question": "Are candle making kits just for adults, or can kids do them too?",
-            "answer": "Adults, honestly, might enjoy them more. There's something about pouring wax and picking scents that scratches a very specific \"I did something with my hands today\" itch. Creste's candle kits aren't dumbed down — they're just designed to be doable by anyone, which turns out to be exactly what stressed-out adults want too."
-          }
-        },
-        "q3": {
-          "type": "faq",
-          "settings": {
-            "question": "What are good DIY activity ideas for a family get-together?",
-            "answer": "The kind of activity where the 6-year-old and the grandparent can both join in and both end up proud of what they made — that's the goal. Hand casting works beautifully for this (multi-generational hand imprints, need we say more), and craft or candle stations let everyone pick their own pace. No one's left out, no one's bored."
-          }
-        },
-        "q4": {
-          "type": "faq",
-          "settings": {
-            "question": "Are Creste DIY kits safe to use?",
-            "answer": "Yes — every kit is made with safe, skin-friendly materials and designed to be worry-free for the age group it's meant for. No sharp surprises, no guesswork — just open the box and start creating."
+            "question": "Are there any kits for get togethers?",
+            "answer": "For get together we suggest you to put the age in the gift finder and find the best kit for you and if not please give us a call and we will be happy to help you or you can visit the party packs section and get the best memory maker for you."
           }
         },
         "q5": {
@@ -957,12 +929,8 @@
         }
       },
       "block_order": [
-        "faq_wChyCM",
         "faq_ediE4n",
-        "q1",
-        "q2",
-        "q3",
-        "q4",
+        "faq_Vh67Gb",
         "q5",
         "faq_kjxDHV"
       ],
