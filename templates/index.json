@@ -136,23 +136,13 @@
             "label": "SINGLE EVENT ATTENDEES",
             "color": "orange"
           }
-        },
-        "s5": {
-          "type": "stat",
-          "settings": {
-            "icon": "shopify://shop_images/image_39_c011c364-9921-42bd-9686-f7e4b5d5532a.png",
-            "number": "70+",
-            "label": "DIY PRODUCTS",
-            "color": "brown"
-          }
         }
       },
       "block_order": [
         "s1",
         "s2",
         "s3",
-        "s4",
-        "s5"
+        "s4"
       ],
       "settings": {
         "bg_desktop": "shopify://shop_images/Section_-_Trust_Banner_1_5dbbaed9-dd1e-4208-96be-6245a78178aa.png",
