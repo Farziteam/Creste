@@ -379,39 +379,13 @@
             "role": "Mother of a 5 year old",
             "rating": "5"
           }
-        },
-        "r7": {
-          "type": "review",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Overlay_Shadow.png",
-            "title": "So much fun!",
-            "quote": "Weekend afternoons are sorted.",
-            "name": "Anjali Rao",
-            "role": "Mother of a 3 year old",
-            "rating": "5"
-          }
-        },
-        "r8": {
-          "type": "review",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Overlay_Shadow.png",
-            "title": "Highly recommend",
-            "quote": "Great quality materials and thoughtful, age-appropriate projects.",
-            "name": "Meera Iyer",
-            "role": "Mother of an 8 year old",
-            "rating": "5"
-          }
         }
       },
       "block_order": [
         "r2",
         "r4",
         "review_UzNTqF",
-        "review_8GAhge",
-        "r7",
-        "r8"
+        "review_8GAhge"
       ],
       "settings": {
         "bg_desktop": "shopify://shop_images/1_2.png",
