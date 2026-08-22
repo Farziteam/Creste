@@ -131,9 +131,9 @@
         "s4": {
           "type": "stat",
           "settings": {
-            "icon": "shopify://shop_images/image_39_c011c364-9921-42bd-9686-f7e4b5d5532a.png",
-            "number": "14000+",
-            "label": "SINGLE EVENT ATTENDEES",
+            "icon": "shopify://shop_images/image_39_1.png",
+            "number": "70+",
+            "label": "DIY ACTIVITIES",
             "color": "orange"
           }
         }
