@@ -346,17 +346,6 @@
     "creste_testimonials": {
       "type": "creste-testimonials",
       "blocks": {
-        "r1": {
-          "type": "review",
-          "settings": {
-            "image": "shopify://shop_images/Overlay_Shadow.png",
-            "title": "One of the Best Decisions We Ever Made",
-            "quote": "Ashna loved every activity — this felt nothing like a regular summer camp.",
-            "name": "Ashna",
-            "role": "",
-            "rating": "5"
-          }
-        },
         "r2": {
           "type": "review",
           "settings": {
@@ -365,17 +354,6 @@
             "quote": "Loved the experience — kids stayed engaged, especially with the standout Christmas tree kit.",
             "name": "Twinkle",
             "role": "",
-            "rating": "5"
-          }
-        },
-        "r3": {
-          "type": "review",
-          "settings": {
-            "image": "shopify://shop_images/Overlay_Shadow.png",
-            "title": "Kids Club Where the Fun Never Stops",
-            "quote": "Every Creste event is wonderful — the kids enjoyed it even more than the parents!",
-            "name": "Urvi",
-            "role": "Mother of a 6 year old",
             "rating": "5"
           }
         },
@@ -390,25 +368,23 @@
             "rating": "5"
           }
         },
-        "r5": {
+        "review_UzNTqF": {
           "type": "review",
           "settings": {
-            "image": "shopify://shop_images/Overlay_Shadow_1.png",
-            "title": "Best purchase this year!",
-            "quote": "My kids ask for their Creste kit before the TV now.",
-            "name": "Ritu Mehra",
-            "role": "Mother of a 4 year old",
+            "title": "Super YouTube alternative!",
+            "quote": "How to get a 5yo from wanting to watch YouTube to wanting to learn by playing.",
+            "name": "Sarah Johnson",
+            "role": "Mother of a 5 year old",
             "rating": "5"
           }
         },
-        "r6": {
+        "review_8GAhge": {
           "type": "review",
           "settings": {
-            "image": "shopify://shop_images/Overlay_Shadow.png",
-            "title": "Paint, Bracelets & Pure Joy",
-            "quote": "The girls had a blast — painting, bracelet-making, and full-on face paint fun!",
-            "name": "Ashna",
-            "role": "Mother of a 7 year old",
+            "title": "Super YouTube alternative!",
+            "quote": "How to get a 5yo from wanting to watch YouTube to wanting to learn by playing.",
+            "name": "Sarah Johnson",
+            "role": "Mother of a 5 year old",
             "rating": "5"
           }
         },
@@ -438,12 +414,10 @@
         }
       },
       "block_order": [
-        "r1",
         "r2",
-        "r3",
         "r4",
-        "r5",
-        "r6",
+        "review_UzNTqF",
+        "review_8GAhge",
         "r7",
         "r8"
       ],
