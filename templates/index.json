@@ -715,6 +715,22 @@
             "back_image": "shopify://shop_images/Homepage_flip_-_School_Workshops.png"
           }
         },
+        "service_pwmXQz": {
+          "type": "service",
+          "settings": {
+            "icon_bg": "#e1f1f6",
+            "title": "STEM & Science Sessions",
+            "desc": "Where every kid causes the reaction."
+          }
+        },
+        "service_GtTXFg": {
+          "type": "service",
+          "settings": {
+            "icon_bg": "#e1f1f6",
+            "title": "",
+            "desc": "Engage your teams with creative, hands-on experiences."
+          }
+        },
         "sv4": {
           "type": "service",
           "disabled": true,
@@ -813,6 +829,8 @@
       "block_order": [
         "sv1",
         "service_tddQ9g",
+        "service_pwmXQz",
+        "service_GtTXFg",
         "sv4",
         "sv6",
         "sv7",
