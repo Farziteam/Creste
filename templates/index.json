@@ -709,6 +709,7 @@
         "service_tddQ9g": {
           "type": "service",
           "settings": {
+            "icon": "shopify://shop_images/svg_1.png",
             "icon_bg": "#e1f1f6",
             "title": "School Workshops",
             "desc": "The class where no one watches the clock.",
