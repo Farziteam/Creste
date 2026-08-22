@@ -875,33 +875,6 @@
     "creste_families": {
       "type": "creste-families",
       "blocks": {
-        "f1": {
-          "type": "reel",
-          "settings": {
-            "video": "shopify://files/videos/Video-269.mp4",
-            "video_url": "",
-            "caption": "",
-            "product": "bouquet-candle-kit"
-          }
-        },
-        "f2": {
-          "type": "reel",
-          "settings": {
-            "video": "shopify://files/videos/Video-446.mp4",
-            "video_url": "",
-            "caption": "",
-            "product": "diy-block-printing-craft-kit-print-press-create"
-          }
-        },
-        "f3": {
-          "type": "reel",
-          "settings": {
-            "video": "shopify://files/videos/TEDDY CANDLE - a.mp4",
-            "video_url": "",
-            "caption": "",
-            "product": "color-your-bag-kit-combo-pack-of-6"
-          }
-        },
         "f4": {
           "type": "reel",
           "settings": {
@@ -913,9 +886,6 @@
         }
       },
       "block_order": [
-        "f1",
-        "f2",
-        "f3",
         "f4"
       ],
       "settings": {
