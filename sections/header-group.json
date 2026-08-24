@@ -62,7 +62,7 @@
             "suffix": "years",
             "tint": "#dcebf5",
             "text-color": "#040404",
-            "link": ""
+            "link": "shopify://collections/age-group-7-10years"
           }
         },
         "ag4": {
@@ -72,7 +72,7 @@
             "suffix": "years",
             "tint": "#ece4f7",
             "text-color": "#040404",
-            "link": ""
+            "link": "shopify://collections/age-group-11years-and-above"
           }
         },
         "ag5": {
@@ -92,7 +92,7 @@
             "suffix": "",
             "tint": "#fce0ec",
             "text-color": "#040404",
-            "link": ""
+            "link": "shopify://collections/age-group-16years"
           }
         },
         "c1": {
