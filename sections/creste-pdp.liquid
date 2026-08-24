@@ -267,7 +267,8 @@
               {%- assign base = cur.price | times: q -%}
               {%- assign discount = base | times: off | divided_by: 100 -%}
               {%- assign final = base | minus: discount -%}
-              <button type="button" class="cpdp__po-card" data-qty="{{ q }}" data-off="{{ off }}"><span class="cpdp__po-ico"><img src="{{ img_url }}" width="30"/><span class="cpdp__po-body"><span class="cpdp__po-top">{{ section.settings.po_buy_label | default: 'Buy' }} {{ q }} {% if off > 0 %}<em>{{ off }}{{ section.settings.po_off_suffix | default: '% off' }}</em>{% endif %}</span><span class="cpdp__po-price">{{ final | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} {% if off > 0 %}<s>{{ base | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s>{% endif %}</span></span>{% if forloop.last %}<span class="cpdp__po-badge">{{ section.settings.po_badge_text | default: 'Smart Saver' }}</span>{% endif %}</button>
+              <button type="button" class="cpdp__po-card" data-qty="{{ q }}" data-off="{{ off }}"><span class="cpdp__po-ico"><img src="{{ img_url }}" width="30"/><span class="cpdp__po-body"><span class="cpdp__po-top">{{ section.settings.po_buy_label | default: 'Buy' }} {{ q }} {% if off > 0 %}<em>{{ off }}{{ section.settings.po_off_suffix | default: '% off' }}</em>{% endif %}</span><span class="cpdp__po-price">{{ final | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} {% if off > 0 %}<s>{{ base | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s>{% endif %}</span></span>{% if forloop.last %}<span class="cpdp__po-badge">{{ section.settings.po_badge_text | default: 'Smart Saver' }}</span>{% endif %}</span>
+            </button>
             {%- endfor -%}
           </div>
         </div>
@@ -1074,7 +1075,7 @@
         fetch('/cart/add.js', { method:'POST', body:fd, headers:{ 'Accept':'application/json' } }).then(function(r){ return r.json(); }).then(function(){ window.location.href = '/checkout'; }).catch(function(){ form.submit(); });
       });
     }
-    var cpdpMainForm = document.getElementById('cpdp-form-{{ uid }}');
+    {% comment %} var cpdpMainForm = document.getElementById('cpdp-form-{{ uid }}');
     if(cpdpMainForm){
     cpdpMainForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -1099,7 +1100,148 @@
     .catch(function(){ cpdpMainForm.submit(); })
     .finally(function(){ if(submitBtn){ submitBtn.disabled = false; } });
     });
+    } {% endcomment %}
+    var cpdpMainForm = document.getElementById('cpdp-form-{{ uid }}');
+
+if (cpdpMainForm) {
+
+  cpdpMainForm.addEventListener('submit', function (e) {
+
+    e.preventDefault();
+
+    var submitBtn = cpdpMainForm.querySelector('[type="submit"]');
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
     }
+
+    var originalHTML = submitBtn
+      ? submitBtn.innerHTML
+      : '';
+
+    var fd = new FormData(cpdpMainForm);
+
+    /*
+     * IMPORTANT:
+     * cart-icon-bubble alag section nahi hai.
+     * Dawn header ke andar cart bubble hai.
+     */
+    fd.append(
+      'sections',
+      'cart-drawer,header'
+    );
+
+    fd.append(
+      'sections_url',
+      window.location.pathname
+    );
+
+    fetch(
+      window.routes && window.routes.cart_add_url
+        ? window.routes.cart_add_url
+        : '/cart/add.js',
+      {
+        method: 'POST',
+
+        headers: {
+          'Accept': 'application/json'
+        },
+
+        body: fd
+      }
+    )
+
+    .then(function (response) {
+
+      if (!response.ok) {
+
+        return response.json().then(function (data) {
+
+          throw new Error(
+            data.description ||
+            'Add to cart failed'
+          );
+
+        });
+
+      }
+
+      return response.json();
+
+    })
+
+    .then(function (data) {
+
+      /*
+       * =====================================
+       * CART DRAWER
+       * =====================================
+       */
+
+      var drawerHTML =
+        data.sections &&
+        data.sections['cart-drawer'];
+
+      if (drawerHTML) {
+
+        updatePdpCartDrawer(
+          drawerHTML,
+          submitBtn
+        );
+
+      }
+
+
+      /*
+       * =====================================
+       * HEADER CART BUBBLE
+       * =====================================
+       */
+
+      var headerHTML =
+        data.sections &&
+        data.sections['header'];
+
+      if (headerHTML) {
+
+        updatePdpHeaderBubble(
+          headerHTML
+        );
+
+      } else {
+
+        refreshPdpHeaderBubble();
+
+      }
+
+    })
+
+    .catch(function (error) {
+
+      console.error(
+        'PDP Cart AJAX Error:',
+        error
+      );
+
+    })
+
+    .finally(function () {
+
+      if (submitBtn) {
+
+        submitBtn.disabled = false;
+
+        submitBtn.innerHTML =
+          originalHTML;
+
+      }
+
+    });
+    
+
+  });
+
+}
     var shareBtn = root.querySelector('[data-share]');
     if(shareBtn){
       shareBtn.addEventListener('click', function(){
@@ -1116,6 +1258,221 @@
         entries.forEach(function(e){ sticky.classList.toggle('is-visible', !e.isIntersecting && e.boundingClientRect.top < 0); });
       }, {threshold:0}).observe(anchor);
     } else if(sticky){ sticky.classList.add('is-visible'); }
+    function updatePdpCartDrawer(drawerHTML, opener) {
+
+  if (!drawerHTML) {
+    console.warn(
+      'PDP: cart-drawer response missing'
+    );
+    return;
+  }
+
+  var currentDrawer =
+    document.querySelector('cart-drawer');
+
+  if (!currentDrawer) {
+    console.warn(
+      'PDP: current cart-drawer not found'
+    );
+    return;
+  }
+
+  var parser =
+    new DOMParser();
+
+  var drawerDoc =
+    parser.parseFromString(
+      drawerHTML,
+      'text/html'
+    );
+
+  var newDrawer =
+    drawerDoc.querySelector('cart-drawer');
+
+  if (!newDrawer) {
+    console.warn(
+      'PDP: new cart-drawer not found'
+    );
+    return;
+  }
+
+  /*
+   * Replace old drawer completely.
+   *
+   * Important for:
+   * EMPTY CART -> FIRST PRODUCT
+   */
+  currentDrawer.replaceWith(
+    newDrawer
+  );
+
+  var updatedDrawer =
+    document.querySelector('cart-drawer');
+
+  if (!updatedDrawer) {
+    return;
+  }
+
+  /*
+   * Dawn cart drawer open
+   */
+  if (
+    typeof updatedDrawer.open ===
+    'function'
+  ) {
+
+    updatedDrawer.open(
+      opener
+    );
+
+  } else {
+
+    updatedDrawer.classList.remove(
+      'is-empty'
+    );
+
+    updatedDrawer.classList.add(
+      'active'
+    );
+
+    updatedDrawer.setAttribute(
+      'open',
+      ''
+    );
+
+  }
+
+}
+
+
+function updatePdpHeaderBubble(headerHTML) {
+
+  if (!headerHTML) {
+    return;
+  }
+
+  var parser =
+    new DOMParser();
+
+  var headerDoc =
+    parser.parseFromString(
+      headerHTML,
+      'text/html'
+    );
+
+  /*
+   * Cart bubble header ke andar hai.
+   */
+  var newBubbles =
+    headerDoc.querySelectorAll(
+      '#cart-icon-bubble'
+    );
+
+  if (!newBubbles.length) {
+
+    console.warn(
+      'PDP: #cart-icon-bubble not found'
+    );
+
+    refreshPdpHeaderBubble();
+
+    return;
+  }
+
+  var oldBubbles =
+    document.querySelectorAll(
+      '#cart-icon-bubble'
+    );
+
+  oldBubbles.forEach(
+    function(oldBubble, index) {
+
+      var newBubble =
+        newBubbles[index] ||
+        newBubbles[0];
+
+      if (!newBubble) {
+        return;
+      }
+
+      /*
+       * Pura anchor replace nahi karna.
+       * Sirf inner HTML update karna hai.
+       */
+      oldBubble.innerHTML =
+        newBubble.innerHTML;
+
+    }
+  );
+
+  if (!oldBubbles.length) {
+
+    refreshPdpHeaderBubble();
+
+  }
+
+}
+
+
+function refreshPdpHeaderBubble() {
+
+  var currentPath =
+    window.location.pathname;
+
+  var url =
+    currentPath +
+    '?sections=header';
+
+  fetch(
+    url,
+    {
+      method: 'GET',
+
+      headers: {
+        'Accept': 'application/json'
+      }
+    }
+  )
+
+  .then(function(response) {
+
+    if (!response.ok) {
+
+      throw new Error(
+        'Header refresh failed'
+      );
+
+    }
+
+    return response.json();
+
+  })
+
+  .then(function(data) {
+
+    if (
+      data &&
+      data.header
+    ) {
+
+      updatePdpHeaderBubble(
+        data.header
+      );
+
+    }
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      'PDP Header Bubble Error:',
+      error
+    );
+
+  });
+
+}
     var stage = root.querySelector('.cpdp__stage');
     var slides = root.querySelectorAll('.cpdp__slide');
     var thumbs = root.querySelectorAll('.cpdp__thumb');
