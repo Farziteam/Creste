@@ -529,6 +529,14 @@
     "creste_featured": {
       "type": "creste-featured",
       "blocks": {
+        "logo_fRHyNk": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/bmw_logo_548x260-1_jpg.jpg",
+            "name": "LOGO",
+            "row": "top"
+          }
+        },
         "logo_AtaKzQ": {
           "type": "logo",
           "settings": {
@@ -595,6 +603,7 @@
         }
       },
       "block_order": [
+        "logo_fRHyNk",
         "logo_AtaKzQ",
         "l1",
         "l2",
