@@ -9,12 +9,12 @@
 #creste-fav-{{ section.id }} .fav-carousel{position:relative;}
 #creste-fav-{{ section.id }} .fav-track{display:flex;gap:28px;overflow-x:auto;overflow-y:hidden;scroll-behavior:smooth;scroll-snap-type:x mandatory;padding:4px 8px;scrollbar-width:none;}
 #creste-fav-{{ section.id }} .fav-track::-webkit-scrollbar{display:none;}
-#creste-fav-{{ section.id }} .fav-card{flex:0 0 {{ section.settings.card_width }}px;scroll-snap-align:start;background:#fff;border:3px solid #0000004D;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;}
+#creste-fav-{{ section.id }} .fav-card{flex:0 0 {{ section.settings.card_width }}px;scroll-snap-align:start;background:#fff;border-radius:24px;overflow:hidden;display:flex;flex-direction:column; border: 4px solid #b7a23a;}
 #creste-fav-{{ section.id }} .fav-img{aspect-ratio:1/1;background:#f6efe3;overflow:hidden;display:block;}
 #creste-fav-{{ section.id }} .fav-img img,#creste-fav-{{ section.id }} .fav-img svg{width:100%;height:100%;object-fit:cover;display:block;}
 #creste-fav-{{ section.id }} .fav-body{padding:12px;display:flex;flex-direction:column;gap:8px; flex: 1;}
 #creste-fav-{{ section.id }} .fav-top{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:24px;}
-#creste-fav-{{ section.id }} .fav-rate{display:inline-flex;align-items:center;gap:4px;background:#FBE9C0;border-radius:9999px;padding:3px 9px;font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:13px;color:#2B1702;}
+#creste-fav-{{ section.id }} .fav-rate{display:inline-flex;align-items:center;gap:4px;background:#FBE9C0;border-radius:9999px;padding:3px 9px;font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:14px;color:#2B1702;}
 #creste-fav-{{ section.id }} .fav-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(90deg,#ff90b2,#f4679a);color:#fff;border-radius:9999px;padding:4px 9px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:11px;}
 #creste-fav-{{ section.id }} .fav-rate em{font-style:normal;color:#111;}
 #creste-fav-{{ section.id }} .fav-badge em{font-style:normal;color:#FFCE00;}
@@ -130,7 +130,10 @@
 {% if section.settings.heading != blank %}<h2 class='fav-h'>{{ section.settings.heading }} <span>{{ section.settings.heading_italic }}</span></h2>{% endif %}
 {% if section.settings.subtitle != blank %}<p class='fav-sub'>{{ section.settings.subtitle }}</p>{% endif %}
 <div class='fav-carousel'>
-<button type='button' class='fav-nav prev' aria-label='Previous' onclick="document.getElementById('favtrack-{{ section.id }}').scrollBy({left:-{{ section.settings.card_width | plus: 56 }},behavior:'smooth'});">&#8249;</button>
+<button type='button' class='fav-nav prev' aria-label='Previous' onclick="document.getElementById('favtrack-{{ section.id }}').scrollBy({left:-{{ section.settings.card_width | plus: 56 }},behavior:'smooth'});"><svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 18L0 9L9 0L11.1 2.1L4.2 9L11.1 15.9L9 18Z" fill="#F4793A"/>
+</svg>
+</button>
 <div class='fav-track' id='favtrack-{{ section.id }}'>
 {% if section.settings.collection != blank %}
 {% assign coll = collections[section.settings.collection] %}
@@ -192,7 +195,12 @@
 {% for i in (0..5) %}<div class='fav-card'><span class='fav-img'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='fav-body'><div class='fav-top'><span class='fav-rate'><em>&#9733;</em>4.9</span>{% assign md = i | modulo: 2 %}{% if md == 0 %}<span class='fav-badge'><em>&#9733;</em>{{ section.settings.badge_text }}</span>{% endif %}</div><span class='fav-title'>{{ ph_titles[i] }}</span><p class='fav-meta'>{{ ph_meta[i] }}</p><div class='fav-price'><b>Rs. 1,299</b><s>2,299</s><i>20% off</i></div><div class='fav-cart'><button type='button'>&#128722; {{ section.settings.button_label }}</button></div></div></div>{% endfor %}
 {% endif %}
 </div>
-<button type='button' class='fav-nav next' aria-label='Next' onclick="document.getElementById('favtrack-{{ section.id }}').scrollBy({left:{{ section.settings.card_width | plus: 56 }},behavior:'smooth'});">&#8250;</button>
+<button type='button' class='fav-nav next' aria-label='Next' onclick="document.getElementById('favtrack-{{ section.id }}').scrollBy({left:{{ section.settings.card_width | plus: 56 }},behavior:'smooth'});">
+  <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.09961 18L11.0996 9L2.09961 0L-0.000391006 2.1L6.89961 9L-0.000391006 15.9L2.09961 18Z" fill="#F4793A"/>
+</svg>
+
+</button>
 </div>
 <div class='fav-dots' id='favdots-{{ section.id }}'></div>
 </div>

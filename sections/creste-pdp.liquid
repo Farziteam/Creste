@@ -110,8 +110,17 @@
               ></button>
             {%- endfor -%}
           </div>
-          <button type="button" class="cpdp__nav cpdp__nav--prev" aria-label="Previous image"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <button type="button" class="cpdp__nav cpdp__nav--next" aria-label="Next image"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          <button type="button" class="cpdp__nav cpdp__nav--prev" aria-label="Previous image">
+          <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18L0 9L9 0L11.1 2.1L4.2 9L11.1 15.9L9 18Z" fill="#F4793A"/>
+          </svg>
+
+          </button>
+          <button type="button" class="cpdp__nav cpdp__nav--next" aria-label="Next image">
+            <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.09961 18L11.0996 9L2.09961 0L-0.000391006 2.1L6.89961 9L-0.000391006 15.9L2.09961 18Z" fill="#F4793A"/>
+            </svg>
+            </button>
         </div>
         <div class="cpdp__thumbs">
           {%- if product.media.size > 0 -%}
@@ -316,7 +325,11 @@
           </div>
         {%- endif -%}
         <div class="cpdp__offers">
-          <h3 class="cpdp__offers-title"><span class="cpdp__offers-ico">%</span> Available Offers</h3>
+          <h3 class="cpdp__offers-title"><span class="cpdp__offers-ico"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16.1711 2.19564C11.3596 1.51135 8.59393 1.38707 3.80822 2.1985C2.87393 2.35564 2.01679 2.72421 1.3825 3.32707C1.05258 3.6396 0.791083 4.01718 0.614532 4.43594C0.437981 4.85469 0.350217 5.30552 0.356789 5.75993V7.42135C0.356789 7.70707 0.526789 7.96421 0.788217 8.07707C1.17265 8.24276 1.50013 8.51743 1.73021 8.86714C1.9603 9.21686 2.08291 9.62631 2.08291 10.0449C2.08291 10.4635 1.9603 10.873 1.73021 11.2227C1.50013 11.5724 1.17265 11.8471 0.788217 12.0128C0.659913 12.0681 0.550655 12.1599 0.473971 12.2767C0.397287 12.3935 0.356545 12.5302 0.356789 12.6699V14.3314C0.356789 16.3642 1.90965 17.6456 3.83536 17.8956C8.64679 18.5242 11.3611 18.5185 16.1639 17.8956C17.1439 17.7699 18.0139 17.3971 18.6468 16.7771C19.2882 16.1485 19.6425 15.3028 19.6425 14.3314V12.6685C19.6425 12.529 19.6016 12.3926 19.5249 12.2761C19.4483 12.1595 19.3392 12.068 19.2111 12.0128C18.8266 11.8471 18.4992 11.5724 18.2691 11.2227C18.039 10.873 17.9164 10.4635 17.9164 10.0449C17.9164 9.62631 18.039 9.21686 18.2691 8.86714C18.4992 8.51743 18.8266 8.24276 19.2111 8.07707C19.3392 8.02183 19.4483 7.93031 19.5249 7.81378C19.6016 7.69726 19.6425 7.56084 19.6425 7.42135V5.75993C19.6425 3.7085 17.9682 2.44993 16.1711 2.19564Z" fill="#8FBFFA"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.40954 8.58688C7.59706 8.59288 7.78387 8.56112 7.95888 8.49349C8.13388 8.42587 8.29351 8.32376 8.42827 8.19323C8.56304 8.0627 8.67019 7.90642 8.74337 7.73367C8.81655 7.56091 8.85426 7.37521 8.85426 7.1876C8.85426 6.99998 8.81655 6.81428 8.74337 6.64153C8.67019 6.46877 8.56304 6.31249 8.42827 6.18196C8.29351 6.05144 8.13388 5.94933 7.95888 5.8817C7.78387 5.81408 7.59706 5.78232 7.40954 5.78831C7.03824 5.78831 6.68215 5.93581 6.41959 6.19836C6.15704 6.46091 6.00954 6.81701 6.00954 7.18831C6.00954 7.55961 6.15704 7.91571 6.41959 8.17826C6.68215 8.44081 7.03824 8.58688 7.40954 8.58688ZM12.5895 14.3297C12.7785 14.3383 12.9673 14.3084 13.1444 14.242C13.3215 14.1756 13.4834 14.0739 13.6201 13.9432C13.7569 13.8125 13.8657 13.6554 13.9401 13.4815C14.0144 13.3076 14.0528 13.1203 14.0528 12.9312C14.0528 12.742 14.0144 12.5548 13.9401 12.3808C13.8657 12.2069 13.7569 12.0498 13.6201 11.9191C13.4834 11.7884 13.3215 11.6868 13.1444 11.6203C12.9673 11.5539 12.7785 11.5241 12.5895 11.5326C12.2262 11.5442 11.8816 11.6967 11.6286 11.9579C11.3757 12.219 11.2343 12.5683 11.2343 12.9319C11.2343 13.2954 11.3757 13.6447 11.6286 13.9059C11.8816 14.167 12.2262 14.3181 12.5895 14.3297ZM13.6753 7.32974C13.8242 7.14541 13.8937 6.90949 13.8687 6.67386C13.8436 6.43824 13.726 6.22221 13.5417 6.07331C13.3574 5.92441 13.1214 5.85483 12.8858 5.87988C12.6502 5.90493 12.4342 6.02256 12.2853 6.20688C10.1138 8.89974 8.71097 10.2855 5.85954 12.6326C5.68293 12.7849 5.57293 13.0003 5.55305 13.2326C5.53318 13.465 5.60501 13.6959 5.75319 13.876C5.90137 14.0561 6.11414 14.1711 6.34598 14.1963C6.57783 14.2216 6.81035 14.1551 6.99383 14.0112C9.92812 11.5969 11.4181 10.1269 13.6753 7.32974Z" fill="#2859C5"/>
+</svg>
+</span> Available Offers</h3>
           <div class="cpdp__offers-track">
             {%- assign offers = section.settings.offers | default: 'Get EXTRA 5% Off on First Order|WELCOME5;Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10;Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20' | split: ';' -%}
             {%- for o in offers -%}
@@ -463,7 +476,8 @@
     line-height: 128%;
   }
   #Cpdp-{{ uid }} .cpdp__expand{position:absolute;top:16px;right:16px;z-index:3;width:40px;height:40px;border:none;border-radius:50%;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.1);}
-  #Cpdp-{{ uid }} .cpdp__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border:none;border-radius:999px;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.14);}
+  #Cpdp-{{ uid }} .cpdp__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border:none;border-radius:999px;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.14);    align-items: center;
+    justify-content: center;}
   #Cpdp-{{ uid }} .cpdp__nav--prev{left:14px;color:#c9c4bd;}
   #Cpdp-{{ uid }} .cpdp__nav--next{right:14px;color:var(--cpdp-orange);}
   #Cpdp-{{ uid }} .cpdp__thumbs{display:flex;gap:12px;margin:18px 20px 0 20px;overflow-x:auto;padding-bottom:4px;
@@ -474,8 +488,29 @@
      display: none; /* Chrome, Safari */
   }
   #Cpdp-{{ uid }} .cpdp__thumb{flex:0 0 65px;height:65px;border-radius:14px;border:2px solid var(--cpdp-line);background:#f4f1ec;overflow:hidden;cursor:pointer;padding:0;}
-  #Cpdp-{{ uid }} .cpdp__thumb.is-active{border-color:var(--cpdp-orange);}
-  #Cpdp-{{ uid }} .cpdp__thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  {% comment %} #Cpdp-{{ uid }} .cpdp__thumb.is-active{border-color:var(--cpdp-orange);}
+  #Cpdp-{{ uid }} .cpdp__thumb img{width:100%;height:100%;object-fit:cover;display:block;} {% endcomment %}
+  #Cpdp-{{ uid }} .cpdp__thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+#Cpdp-{{ uid }} .cpdp__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+#Cpdp-{{ uid }} .cpdp__thumb.is-active {
+  border-color: var(--cpdp-orange);
+}
+
+#Cpdp-{{ uid }} .cpdp__thumb.is-active img {
+  opacity: 1;
+}
+
   #Cpdp-{{ uid }} .cpdp__tutorial{margin-top:26px;}
   #Cpdp-{{ uid }} .cpdp__video-link{display:block;text-decoration:none;}
   #Cpdp-{{ uid }} .cpdp__tutorial-title{
@@ -524,11 +559,11 @@
   #Cpdp-{{ uid }} .cpdp__price-now{font-size:38px;font-weight:800;color:var(--cpdp-brown); line-height: 1;}
   #Cpdp-{{ uid }} .cpdp__price-was{font-size:18px;color:#9aa0a6;text-decoration:line-through;font-family: 'Poppins',sans-serif;}
   #Cpdp-{{ uid }} .cpdp__price-off{background:var(--cpdp-yellow);color:#7a5b00;font-weight:700;font-size:12.5px;padding:5px 12px;border-radius:999px; font-family: 'Quicksand',sans-serif;line-height: 128%;}
-  #Cpdp-{{ uid }} .cpdp__giftwrap{display:flex;align-items:center;gap:14px;background:#DCEDF8;border-radius:22px;padding:10px 18px;cursor:pointer;margin-top:16px;}
+  #Cpdp-{{ uid }} .cpdp__giftwrap{display:flex;align-items:center;gap:14px;background:#E0F7FF;border-radius:22px;padding:10px 18px;cursor:pointer;margin-top:16px;}
   #Cpdp-{{ uid }} .cpdp__gift-ico{width:56px;height:56px;flex:0 0 auto;border-radius:16px;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.05);overflow:hidden;}
   #Cpdp-{{ uid }} .cpdp__gift-ico img{ width: 100%; height: 100%;}
   #Cpdp-{{ uid }} .cpdp__gift-body{flex:1;display:flex;flex-direction:column;gap:2px;}
-  #Cpdp-{{ uid }} .cpdp__gift-body b{font-size:14.5px;color:var(--cpdp-brown);line-height: 138%; font-family: 'Nunito',sans-sarif;}
+  #Cpdp-{{ uid }} .cpdp__gift-body b{font-size:14.5px; font-weight:700; color:var(--cpdp-brown);line-height: 138%; font-family: 'Nunito',sans-sarif;}
   #Cpdp-{{ uid }} .cpdp__gift-body em{font-style:normal;font-size:14px;color:#6b7280;}
   #Cpdp-{{ uid }} .cpdp__gift-check{-webkit-appearance:none;appearance:none;width:28px;height:28px;flex:0 0 auto;border:2px solid #C4D2DC;border-radius:8px;background:#fff;cursor:pointer;position:relative;}
   #Cpdp-{{ uid }} .cpdp__gift-check:checked{background:var(--cpdp-orange);border-color:var(--cpdp-orange);}
@@ -640,8 +675,8 @@
     line-height: 17.25px;
   }
   #Cpdp-{{ uid }} .cpdp__offers{background: #E4F4F9;border-radius:18px;padding:10px;}
-  #Cpdp-{{ uid }} .cpdp__offers-title{display:flex;align-items:center;gap:8px;font-family:var(--cpdp-body);font-size:17px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px;}
-  #Cpdp-{{ uid }} .cpdp__offers-ico{display:inline-grid;place-items:center;width:26px;height:26px;background:#2F82C7;color:#fff;border-radius:8px;font-size:14px;font-weight:800;}
+  #Cpdp-{{ uid }} .cpdp__offers-title{display:flex;align-items:center;gap:8px;font-family:var(--cpdp-body);font-size:17px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px; font-family: 'Nunito', sans-serif;}
+  #Cpdp-{{ uid }} .cpdp__offers-ico{display:inline-grid;place-items:center;width:26px;height:26px;color:#fff;border-radius:8px;font-size:14px;font-weight:800;}
   #Cpdp-{{ uid }} .cpdp__offers-track{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#2F7FBF #CFE3F5;}
   #Cpdp-{{ uid }} .cpdp__offers-track::-webkit-scrollbar{height:7px;}
   #Cpdp-{{ uid }} .cpdp__offers-track::-webkit-scrollbar-track{background:#CFE3F5;border-radius:999px;}
