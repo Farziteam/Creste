@@ -389,6 +389,17 @@
             "role": "",
             "rating": "5"
           }
+        },
+        "review_W4yXC3": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/ad54409d-f89d-42ba-aacd-aa38c040ba85.png",
+            "title": "",
+            "quote": "The kids had a lot of fun, specifically with the tie-and-dye t-shirts. When they wear it on the\nfestival, they'll cherish this hands-on experience even more. Creste makes the festival last\nlonger than a day.",
+            "name": "Amrita Saluja",
+            "role": "Mother of Naomi",
+            "rating": "5"
+          }
         }
       },
       "block_order": [
@@ -396,7 +407,8 @@
         "r2",
         "r4",
         "review_UzNTqF",
-        "review_8GAhge"
+        "review_8GAhge",
+        "review_W4yXC3"
       ],
       "settings": {
         "bg_desktop": "shopify://shop_images/1_2.png",
