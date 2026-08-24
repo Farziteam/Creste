@@ -41,7 +41,7 @@
             "label": "0-3",
             "suffix": "years",
             "tint": "#fde7d6",
-            "text-color": "#040404",
+            "text-color": "#9C4A16",
             "link": "shopify://collections/age-group-up-to-3years"
           }
         },
@@ -107,6 +107,7 @@
         "c2": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/ic_2_86876d23-57ab-433a-85b8-9255a9808ee3.png",
             "name": "Reading & Literacy",
             "subtitle": "Stories that stick",
             "link": ""
