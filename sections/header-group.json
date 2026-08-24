@@ -100,70 +100,71 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/ic_1_be671587-21af-4a9d-af6e-7a96d1df4021.png",
-            "name": "Arts & Crafts",
-            "subtitle": "Paint, create & imagine",
-            "link": "shopify://collections/art-and-craft-collection"
+            "name": "CRAFTY CREW",
+            "subtitle": "Cognitive Development",
+            "link": "shopify://collections/craft-kits-collection"
           }
         },
         "c2": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/ic_2_86876d23-57ab-433a-85b8-9255a9808ee3.png",
-            "name": "Reading & Literacy",
-            "subtitle": "Stories that stick",
-            "link": ""
+            "name": "SCIENCE LABS",
+            "subtitle": "Brain Development",
+            "link": "shopify://collections/science-collection"
           }
         },
         "c3": {
           "type": "category",
           "settings": {
-            "name": "Nature Exploration",
-            "subtitle": "Explore the outdoors",
-            "link": "shopify://collections/budget-friendly-gifts"
+            "name": "ART STUDIO",
+            "subtitle": "Social Development",
+            "link": "shopify://collections/art-and-craft-collection"
           }
         },
         "c4": {
           "type": "category",
           "settings": {
-            "name": "DIY Projects",
-            "subtitle": "Snip, stick & build",
-            "link": ""
+            "name": "STORY WORLDS",
+            "subtitle": "Language & Literacy",
+            "link": "shopify://collections/story-boxes"
           }
         },
         "c5": {
           "type": "category",
           "settings": {
-            "name": "STEM Kits",
-            "subtitle": "Experiment & discover",
-            "link": ""
+            "name": "THREAD CRAFTS",
+            "subtitle": "Fine Motor Skills & Creativity",
+            "link": "shopify://collections/craft-kits-collection"
           }
         },
         "c6": {
           "type": "category",
           "settings": {
-            "name": "Brain Games",
-            "subtitle": "Puzzle it out",
-            "link": ""
+            "name": "PARTY",
+            "subtitle": "Group Play & Social Development",
+            "link": "shopify://collections/diy-party-box-kits"
           }
         },
         "c7": {
           "type": "category",
           "settings": {
-            "name": "Pretend Play",
-            "subtitle": "Dress up & make-believe",
+            "name": "FESTIVAL KITS",
+            "subtitle": "Culture, Creativity & Celebration",
             "link": ""
           }
         },
         "c8": {
           "type": "category",
           "settings": {
-            "name": "Gift Boxes",
-            "subtitle": "Joy, ready to gift",
+            "name": "GROWN-UP DIY",
+            "subtitle": "Calmness and Focus",
             "link": ""
           }
         },
         "c9": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "name": "Best seller",
             "subtitle": "Top loved kits",
@@ -172,6 +173,7 @@
         },
         "c10": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "name": "New Arrival",
             "subtitle": "Fresh & new",
