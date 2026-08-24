@@ -529,6 +529,14 @@
     "creste_featured": {
       "type": "creste-featured",
       "blocks": {
+        "logo_pDhnTG": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/cms_city_montessori_school_548x260_c81b12f4-81e2-4c22-93b6-0e733950b84c.png",
+            "name": "LOGO",
+            "row": "top"
+          }
+        },
         "logo_fRHyNk": {
           "type": "logo",
           "settings": {
@@ -603,6 +611,7 @@
         }
       },
       "block_order": [
+        "logo_pDhnTG",
         "logo_fRHyNk",
         "logo_AtaKzQ",
         "l1",
