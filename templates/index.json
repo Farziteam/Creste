@@ -368,6 +368,17 @@
             "rating": "5"
           }
         },
+        "review_aFnknK": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/35906c6e-a59e-4221-9a7b-9c6c1e5700d9.png",
+            "title": "",
+            "quote": "We are so habituated to doing similar things every day. This DIY candle kit is quite comprehensive and includes everything required. It lets your creative juices flow, and it's a kind of stress buster also.",
+            "name": "Deepali Kacker",
+            "role": "Grown Up Workshop Attendee",
+            "rating": "5"
+          }
+        },
         "review_UzNTqF": {
           "type": "review",
           "settings": {
@@ -406,6 +417,7 @@
         "review_qeKMwy",
         "r2",
         "r4",
+        "review_aFnknK",
         "review_UzNTqF",
         "review_8GAhge",
         "review_W4yXC3"
