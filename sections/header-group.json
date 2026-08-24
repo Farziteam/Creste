@@ -98,6 +98,7 @@
         "c1": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/ic_1_be671587-21af-4a9d-af6e-7a96d1df4021.png",
             "name": "Arts & Crafts",
             "subtitle": "Paint, create & imagine",
             "link": "shopify://collections/art-and-craft-collection"
