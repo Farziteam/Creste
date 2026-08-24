@@ -529,6 +529,14 @@
     "creste_featured": {
       "type": "creste-featured",
       "blocks": {
+        "logo_mAykAr": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/logo_548x260_6706ed6c-3424-4184-8139-1ce5d81d3bf5.png",
+            "name": "LOGO",
+            "row": "top"
+          }
+        },
         "logo_pDhnTG": {
           "type": "logo",
           "settings": {
@@ -611,6 +619,7 @@
         }
       },
       "block_order": [
+        "logo_mAykAr",
         "logo_pDhnTG",
         "logo_fRHyNk",
         "logo_AtaKzQ",
