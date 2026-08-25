@@ -123,6 +123,12 @@
     "creste_artists": {
       "type": "creste-artists",
       "blocks": {
+        "item_aNaqem": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/WhatsApp Video 2026-08-25 at 16.35.00.mp4"
+          }
+        },
         "item_KfcQKQ": {
           "type": "item",
           "settings": {
@@ -143,6 +149,7 @@
         }
       },
       "block_order": [
+        "item_aNaqem",
         "item_KfcQKQ",
         "item_QbEQA6",
         "item_4NEb6H"
