@@ -123,6 +123,12 @@
     "creste_artists": {
       "type": "creste-artists",
       "blocks": {
+        "item_DzqJJE": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/e1c568f4-8cfe-4e9a-9f2b-310f6fe88606.png"
+          }
+        },
         "item_xxXDiE": {
           "type": "item",
           "settings": {
@@ -156,6 +162,7 @@
         }
       },
       "block_order": [
+        "item_DzqJJE",
         "item_xxXDiE",
         "item_aNaqem",
         "item_KfcQKQ",
