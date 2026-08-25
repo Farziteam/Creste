@@ -54,7 +54,7 @@
 #creste-ev-{{ section.id }} .act-label .big{font-size: 48px;line-height:1;}
 #creste-ev-{{ section.id }} form label{font-size:16px;}
 #creste-ev-{{ section.id }} .act-c{width:72px; height: 72px;}
-#creste-ev-{{ section.id }} .form-btn{max-width: 488px;padding: 20px 48px;font-size: 24px;line-height: 28px;height: auto;}
+#creste-ev-{{ section.id }} .form-btn{max-width: 488px;padding: 20px 48px;font-size: 24px;line-height: 28px;height: auto;text-align: center; text-decoration: unset;}
 #creste-ev-{{ section.id }} .form-note{font-size:18px;font-weight:500;}
 }
 #creste-ev-{{ section.id }} .ev-hint svg path{stroke: #E87BAC;}
@@ -90,7 +90,7 @@
 </div>
 <div class='form-box'>
 <h3 class='form-h'>{{ section.settings.form_a }}<br>{{ section.settings.form_pre }}<em> {{ section.settings.form_accent1 }} </em>{{ section.settings.form_mid }}<em> {{ section.settings.form_accent2 }}</em></h3>
-{% form 'contact' %}
+{% comment %} {% form 'contact' %}
 {% if form.posted_successfully? %}<div class='form-ok'>Thanks! Our team will respond within 24 hours.</div>{% endif %}
 <div class='grid'>
 <div><label>Full Name</label><input type='text' name='contact[Full name]' placeholder='Enter'></div>
@@ -102,9 +102,16 @@
 <div><label>City / Venue</label><input type='text' name='contact[City or venue]' placeholder='Enter'></div>
 <div class='m-full span2'><label>Anything Else We Should Know?</label><input type='text' name='contact[Notes]' placeholder='Enter'></div>
 </div>
-<button type='submit' class='form-btn'>{{ section.settings.button_label }}</button>
+{% comment %} <button type='submit' class='form-btn'>{{ section.settings.button_label }}</button>
+<p class='form-note'>{{ section.settings.note }}</p> {% endcomment %}
+{% endform %} {% endcomment %}
+{% comment %} <button type='submit' class='form-btn'>{{ section.settings.button_label }}</button> {% endcomment %}
+{% if section.settings.button_url != blank %}
+  <a href="{{ section.settings.button_url }}" class="form-btn">
+    {{ section.settings.button_label }}
+  </a>
+{% endif %}
 <p class='form-note'>{{ section.settings.note }}</p>
-{% endform %}
 </div>
 </div>
 </div>
@@ -112,7 +119,7 @@
 {
   "name": "Creste Events + Form",
   "tag": "section",
-  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"}, {"type":"color","id":"section_bg","label":"Section background","default":"#F9D8E8"}, {"type":"text","id":"heading_a","label":"Heading start","default":"We create "}, {"type":"text","id":"heading_accent","label":"Heading accent (pink)","default":"meaningful"}, {"type":"text","id":"heading_b","label":"Heading line 2","default":"learning experiences together"}, {"type":"textarea","id":"subtitle","label":"Subtitle","default":"We host engaging DIY & STEM based events for every occasion."}, {"type":"text","id":"hint","label":"Cards hint","default":"Swipe to see more"}, {"type":"text","id":"act_count","label":"Activities count","default":"170+"}, {"type":"text","id":"act_suffix","label":"Activities suffix","default":"Activities We Offer"}, {"type":"range","id":"act_speed","min":10,"max":60,"step":2,"unit":"s","label":"Activity scroll speed","default":26}, {"type":"text","id":"form_a","label":"Form heading line 1","default":"Our activities are designed for all age groups —"}, {"type":"text","id":"form_pre","label":"Line 2 start","default":"because "}, {"type":"text","id":"form_accent1","label":"Form accent 1","default":"creativity"}, {"type":"text","id":"form_mid","label":"Form heading mid","default":" has "}, {"type":"text","id":"form_accent2","label":"Form accent 2","default":"no age!"}, {"type":"text","id":"button_label","label":"Button","default":"Get In touch"}, {"type":"text","id":"note","label":"Note","default":"Drop us a message - our team responds within 24 hours."} ],
+  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"}, {"type":"color","id":"section_bg","label":"Section background","default":"#F9D8E8"}, {"type":"text","id":"heading_a","label":"Heading start","default":"We create "}, {"type":"text","id":"heading_accent","label":"Heading accent (pink)","default":"meaningful"}, {"type":"text","id":"heading_b","label":"Heading line 2","default":"learning experiences together"}, {"type":"textarea","id":"subtitle","label":"Subtitle","default":"We host engaging DIY & STEM based events for every occasion."}, {"type":"text","id":"hint","label":"Cards hint","default":"Swipe to see more"}, {"type":"text","id":"act_count","label":"Activities count","default":"170+"}, {"type":"text","id":"act_suffix","label":"Activities suffix","default":"Activities We Offer"}, {"type":"range","id":"act_speed","min":10,"max":60,"step":2,"unit":"s","label":"Activity scroll speed","default":26}, {"type":"text","id":"form_a","label":"Form heading line 1","default":"Our activities are designed for all age groups —"}, {"type":"text","id":"form_pre","label":"Line 2 start","default":"because "}, {"type":"text","id":"form_accent1","label":"Form accent 1","default":"creativity"}, {"type":"text","id":"form_mid","label":"Form heading mid","default":" has "}, {"type":"text","id":"form_accent2","label":"Form accent 2","default":"no age!"},{"type": "url","id": "button_url","label": "Button Url"}, {"type":"text","id":"button_label","label":"Button","default":"Get In touch"}, {"type":"text","id":"note","label":"Note","default":"Drop us a message - our team responds within 24 hours."} ],
   "blocks": [ {"type":"service","name":"Service card (flip)","settings":[ {"type":"image_picker","id":"icon","label":"Icon"}, {"type":"color","id":"icon_bg","label":"Icon background","default":"#E1F1F6"}, {"type":"text","id":"title","label":"Title","default":"Corporate Events"}, {"type":"textarea","id":"desc","label":"Description","default":"Engage your teams with creative, hands-on experiences."}, {"type":"image_picker","id":"back_image","label":"Flip image (back)"} ]}, {"type":"activity","name":"Activity (circle)","settings":[ {"type":"image_picker","id":"image","label":"Image"}, {"type":"text","id":"label","label":"Label","default":"Slime Making"} ]} ],
   "max_blocks": 40,
   "presets": [ {"name":"Creste Events + Form"} ]

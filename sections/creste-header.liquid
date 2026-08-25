@@ -290,7 +290,33 @@
 <div class='hd-mcol'><h4 class='hd-mtitle'>{{ section.settings.cat_heading }}</h4><div class='hd-catgrid'>{% for block in cats %}<a class='hd-catitem' href='{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}' {{ block.shopify_attributes }}><span class='hd-catthumb'>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 100 }}' alt=''>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</span><span><span class='hd-catname'>{{ block.settings.name }}</span><span class='hd-catsub'>{{ block.settings.subtitle }}</span></span></a>{% endfor %}</div></div>
 <div class='hd-na'><h4>{{ section.settings.na_heading }}</h4> {% assign p = all_products[section.settings.na_product] %}<div class='hd-nacard'>{% if p != blank %}<a class='hd-naimg' href='{{ p.url }}'>{% if p.featured_image %}<img src='{{ p.featured_image | image_url: width: 300 }}' alt='{{ p.title | escape }}'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a><div class='hd-nabody'><div class="hd-card-header"><span class='hd-narate'>&#9733; {{ p.metafields.reviews.rating.value | default: '4.9' }}</span>{% if p.metafields.custom.product_sub_description != blank %}<span class='hd-product-tag'><em>&#9733;</em> {{ p.metafields.custom.product_sub_description }}</span>{% endif %}</div><p class='hd-nat'>{{ p.title }}</p>
 <div class="product-sub-heading">{% if p.metafields.custom.age_group != blank %}<p>{{ p.metafields.custom.age_group }}</p>{% endif %}{% if p.metafields.custom.product_sub_description != blank %}<p>•&nbsp;&nbsp;{{ p.metafields.custom.product_sub_description }}</p>{% endif %}</div>
-<div class='hd-nap'><b>{{ p.price | money_without_trailing_zeros }}</b>{% if p.compare_at_price > p.price %}<s>{{ p.compare_at_price | money_without_currency | replace: '.00', '' }}</s>{% assign disc = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price %}<i>{{ disc }}% off</i>{% endif %}</div><div class='cp-cart'><form method='post' action='/cart/add'><input type='hidden' name='id' value='{{ p.selected_or_first_available_variant.id }}'><button type='submit'>{{ 'icon-add-to-cart.svg' | inline_asset_content }} Add To Cart</button></form></div>
+<div class='hd-nap'><b>{{ p.price | money_without_trailing_zeros }}</b>{% if p.compare_at_price > p.price %}<s>{{ p.compare_at_price | money_without_currency | replace: '.00', '' }}</s>{% assign disc = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price %}<i>{{ disc }}% off</i>{% endif %}</div>
+{% comment %} <div class='cp-cart'><form method='post' action='/cart/add'><input type='hidden' name='id' value='{{ p.selected_or_first_available_variant.id }}'><button type='submit'>{{ 'icon-add-to-cart.svg' | inline_asset_content }} Add To Cart</button></form></div> {% endcomment %}
+ <div class="cp-cart">
+  <form
+    class="cp-atc-form"
+    method="post"
+    action="/cart/add"
+    data-product-id="{{ p.selected_or_first_available_variant.id }}"
+  >
+    <input
+      type="hidden"
+      name="id"
+      value="{{ p.selected_or_first_available_variant.id }}"
+    >
+
+    <input
+      type="hidden"
+      name="quantity"
+      value="1"
+    >
+
+    <button type="submit">
+      {{ 'icon-add-to-cart.svg' | inline_asset_content }}
+      <span>Add To Cart</span>
+    </button>
+  </form>
+</div>
 {% comment %} <a class='hd-nacart' href='{{ p.url }}'>&#128722; View</a> {% endcomment %}
 </div>{% else %}<span class='hd-naimg'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='hd-nabody'><span class='hd-narate'>&#9733; 4.9</span><p class='hd-nat'>Bouquet Candle Kit</p><div class='hd-nap'><b>Rs. 1,299</b></div><a class='hd-nacart' href='#'>&#128722; View</a></div>{% endif %}</div></div>
 </div>
@@ -350,8 +376,32 @@
 </div>
 
 </div>
-<div class='cp-cart'><form method='post' action='/cart/add'><input type='hidden' name='id' value='{{ dp.selected_or_first_available_variant.id }}'><button type='submit'>{{ 'icon-add-to-cart.svg' | inline_asset_content }} Add To Cart</button></form></div>
+{% comment %} <div class='cp-cart'><form method='post' action='/cart/add'><input type='hidden' name='id' value='{{ dp.selected_or_first_available_variant.id }}'><button type='submit'>{{ 'icon-add-to-cart.svg' | inline_asset_content }} Add To Cart</button></form></div> {% endcomment %}
+<div class="cp-cart">
+  <form
+    class="cp-atc-form"
+    method="post"
+    action="/cart/add"
+    data-product-id="{{ dp.selected_or_first_available_variant.id }}"
+  >
+    <input
+      type="hidden"
+      name="id"
+      value="{{ dp.selected_or_first_available_variant.id }}"
+    >
 
+    <input
+      type="hidden"
+      name="quantity"
+      value="1"
+    >
+
+    <button type="submit">
+      {{ 'icon-add-to-cart.svg' | inline_asset_content }}
+      <span>Add To Cart</span>
+    </button>
+  </form>
+</div>
 {% endif %}
 </div>
 </div>
@@ -379,6 +429,501 @@ var trig=r.querySelector('.hd-shoptrigger'),mega=r.querySelector('.hd-mega');if(
 var drawer=document.getElementById('hdm-{{ section.id }}');if(drawer){drawer.querySelectorAll('.js-hd-close').forEach(function(el){el.addEventListener('click',function(){drawer.classList.remove('open');document.body.style.overflow='';});});}
 })();
 </script>
+<script>
+
+/* =========================================
+   CRESTE PLAY
+   AJAX ATC + DAWN 15.5.0 CART DRAWER
+   + REALTIME HEADER CART BUBBLE
+   ========================================= */
+
+(function () {
+
+    var r = document.getElementById('creste-hd-{{ section.id }}');
+    {% comment %} console.log("Inside script"); {% endcomment %}
+    if (!r) return;
+      {% comment %} console.log("Inside script 2",r); {% endcomment %}
+
+
+
+    /* =========================================
+       ATC FORMS
+       ========================================= */
+
+    var atcForms = r.querySelectorAll('.cp-atc-form');
+
+       {% comment %} console.log("Inside script 3", atcForms); {% endcomment %}
+
+    atcForms.forEach(function (form) {
+
+        form.addEventListener('submit', function (e) {
+
+            e.preventDefault();
+
+
+            var button = form.querySelector('button');
+
+            if (!button) return;
+
+
+            if (button.classList.contains('loading')) {
+                return;
+            }
+
+
+            var originalHTML = button.innerHTML;
+
+
+            button.classList.add('loading');
+            button.disabled = true;
+
+
+            var formData = new FormData(form);
+
+
+            
+
+            formData.append(
+                'sections',
+                'cart-drawer,header'
+            );
+
+
+            formData.append(
+                'sections_url',
+                window.location.pathname
+            );
+
+
+            /*
+             * =========================================
+             * ADD TO CART
+             * =========================================
+             */
+
+            fetch(
+                window.routes && window.routes.cart_add_url
+                    ? window.routes.cart_add_url
+                    : '/cart/add.js',
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+
+                    body: formData
+                }
+            )
+
+
+            .then(function (response) {
+
+                if (!response.ok) {
+
+                    return response.json().then(function (data) {
+
+                        throw new Error(
+                            data.description ||
+                            'Add to cart failed'
+                        );
+
+                    });
+
+                }
+
+                return response.json();
+
+            })
+
+
+            .then(function (response) {
+
+
+                /*
+                 * =========================================
+                 * 1. UPDATE CART DRAWER
+                 * =========================================
+                 */
+
+                var drawerHTML =
+                    response.sections &&
+                    response.sections['cart-drawer'];
+
+
+                updateCartDrawer(
+                    drawerHTML,
+                    button
+                );
+
+
+                /*
+                 * =========================================
+                 * 2. UPDATE HEADER BUBBLE
+                 * =========================================
+                 *
+                 * 
+                 */
+
+                var headerHTML =
+                    response.sections &&
+                    response.sections['header'];
+
+
+                if (headerHTML) {
+
+                    updateHeaderBubble(
+                        headerHTML
+                    );
+
+                }
+
+
+                /*
+                 * =========================================
+                 * 3. FALLBACK
+                 * =========================================
+                 *
+                 */
+
+                else {
+
+                    refreshHeaderBubble();
+
+                }
+
+            })
+
+
+            .catch(function (error) {
+
+                console.error(
+                    'CRESTE PLAY Cart AJAX Error:',
+                    error
+                );
+
+            })
+
+
+            .finally(function () {
+
+                button.classList.remove(
+                    'loading'
+                );
+
+                button.disabled = false;
+
+                button.innerHTML =
+                    originalHTML;
+
+            });
+
+        });
+
+    });
+
+
+    /* =========================================
+       UPDATE CART DRAWER
+       ========================================= */
+
+    function updateCartDrawer(
+        drawerHTML,
+        opener
+    ) {
+
+        if (!drawerHTML) {
+
+            console.warn(
+                'CRESTE PLAY: cart-drawer response missing'
+            );
+
+            return;
+
+        }
+
+
+        var currentDrawer =
+            document.querySelector(
+                'cart-drawer'
+            );
+
+
+        if (!currentDrawer) {
+
+            console.warn(
+                'CRESTE PLAY: current cart-drawer not found'
+            );
+
+            return;
+
+        }
+
+
+        var parser =
+            new DOMParser();
+
+
+        var drawerDoc =
+            parser.parseFromString(
+                drawerHTML,
+                'text/html'
+            );
+
+
+        var newDrawer =
+            drawerDoc.querySelector(
+                'cart-drawer'
+            );
+
+
+        if (!newDrawer) {
+
+            console.warn(
+                'CRESTE PLAY: new cart-drawer not found'
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * OLD DRAWER REMOVE
+         */
+
+        currentDrawer.replaceWith(
+            newDrawer
+        );
+
+
+        /*
+         * NEW DRAWER
+         */
+
+        var updatedDrawer =
+            document.querySelector(
+                'cart-drawer'
+            );
+
+
+        if (!updatedDrawer) return;
+
+
+        /*
+         * Dawn 15.5.0
+         *
+         * open(triggeredBy)
+         */
+
+        if (
+            typeof updatedDrawer.open ===
+            'function'
+        ) {
+
+            updatedDrawer.open(
+                opener
+            );
+
+        }
+
+        else {
+
+            /*
+             * Fallback
+             */
+
+            updatedDrawer.classList.remove(
+                'is-empty'
+            );
+
+            updatedDrawer.classList.add(
+                'active'
+            );
+
+            updatedDrawer.setAttribute(
+                'open',
+                ''
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       UPDATE HEADER CART BUBBLE
+       ========================================= */
+
+    function updateHeaderBubble(
+        headerHTML
+    ) {
+
+        if (!headerHTML) return;
+
+
+        var parser =
+            new DOMParser();
+
+
+        var headerDoc =
+            parser.parseFromString(
+                headerHTML,
+                'text/html'
+            );
+
+
+        /*
+         *
+         * #cart-icon-bubble
+         */
+
+        var newBubbles =
+            headerDoc.querySelectorAll(
+                '#cart-icon-bubble'
+            );
+
+
+        if (!newBubbles.length) {
+
+            console.warn(
+                'CRESTE PLAY: #cart-icon-bubble not found in header response'
+            );
+
+            /*
+             * Extra fallback
+             */
+
+            refreshHeaderBubble();
+
+            return;
+
+        }
+
+
+        /*
+         * Current page ke bubbles.
+         */
+
+        var oldBubbles =
+            document.querySelectorAll(
+                '#cart-icon-bubble'
+            );
+
+
+        /*
+         * Normally 1 hota hai.
+         */
+
+        oldBubbles.forEach(function (
+            oldBubble,
+            index
+        ) {
+
+            var newBubble =
+                newBubbles[
+                    index
+                ] || newBubbles[0];
+
+
+            if (!newBubble) return;
+
+            oldBubble.innerHTML =
+                newBubble.innerHTML;
+
+        });
+
+
+        if (!oldBubbles.length) {
+
+            console.warn(
+                'CRESTE PLAY: existing cart bubble not found'
+            );
+
+            refreshHeaderBubble();
+
+        }
+
+    }
+
+
+    /* =========================================
+       HARD FALLBACK:
+       FETCH HEADER SECTION SEPARATELY
+       ========================================= */
+
+    function refreshHeaderBubble() {
+
+
+        /*
+         * Current page ka URL.
+         */
+
+        var currentPath =
+            window.location.pathname;
+
+        var url =
+            currentPath +
+            '?sections=header';
+
+
+        fetch(
+            url,
+            {
+                method: 'GET',
+
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }
+        )
+
+
+        .then(function (response) {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    'Header refresh failed'
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+
+        .then(function (data) {
+
+            if (
+                data &&
+                data.header
+            ) {
+
+                updateHeaderBubble(
+                    data.header
+                );
+
+            }
+
+        })
+
+
+        .catch(function (error) {
+
+            console.error(
+                'CRESTE PLAY Header Bubble Error:',
+                error
+            );
+
+        });
+
+    }
+
+})();
+</script>
+
 {% schema %}
 {
   "name": "Creste Header",

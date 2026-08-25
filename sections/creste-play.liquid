@@ -415,7 +415,7 @@
 
     var atcForms = r.querySelectorAll('.cp-atc-form');
 
-
+    {% comment %} console.log("Creste Play Atc : ", atcForms); {% endcomment %}
     atcForms.forEach(function (form) {
 
         form.addEventListener('submit', function (e) {
@@ -442,19 +442,6 @@
 
             var formData = new FormData(form);
 
-
-            /*
-             * IMPORTANT:
-             *
-             * cart-icon-bubble koi separate section nahi hai.
-             * Dawn me ye HEADER section ke andar hai.
-             *
-             * Isliye:
-             *
-             * cart-drawer + header
-             *
-             * request karenge.
-             */
 
             formData.append(
                 'sections',
@@ -535,7 +522,6 @@
                  * 2. UPDATE HEADER BUBBLE
                  * =========================================
                  *
-                 * Header section se bubble nikaalenge.
                  */
 
                 var headerHTML =
@@ -557,9 +543,6 @@
                  * 3. FALLBACK
                  * =========================================
                  *
-                 * Agar Shopify ne header response me
-                 * return nahi kiya, to header ko separately
-                 * fetch karenge.
                  */
 
                 else {
