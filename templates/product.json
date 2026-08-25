@@ -137,7 +137,9 @@
         },
         "item_4NEb6H": {
           "type": "item",
-          "settings": {}
+          "settings": {
+            "video": "shopify://files/videos/Fruit candle .mp4"
+          }
         }
       },
       "block_order": [
