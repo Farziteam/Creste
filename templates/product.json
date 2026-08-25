@@ -123,6 +123,12 @@
     "creste_artists": {
       "type": "creste-artists",
       "blocks": {
+        "item_KfcQKQ": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/handcasting video by gaurav.MP4"
+          }
+        },
         "item_QbEQA6": {
           "type": "item",
           "settings": {
@@ -135,6 +141,7 @@
         }
       },
       "block_order": [
+        "item_KfcQKQ",
         "item_QbEQA6",
         "item_4NEb6H"
       ],
