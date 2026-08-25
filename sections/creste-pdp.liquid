@@ -5,6 +5,25 @@
 @media (prefers-reduced-motion: reduce){.cpdp__po-card.cpdp-shake{animation:none}}
 .cpdp__buynow-ico-img{width:18px;height:18px;object-fit:contain;vertical-align:middle}
 .cpdp__gift-ico-img{width:30px;height:30px;object-fit:contain}
+.cpdp__tutorial_mobile {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .cpdp__tutorial_mobile {
+    display: block;
+  }
+}
+.cpdp__tutorial_desktop {
+  display: block;
+}
+
+@media screen and (max-width: 749px) {
+  .cpdp__tutorial_desktop {
+    display: none;
+  }
+}
+
 </style>
 <script>
 (function(){
@@ -130,7 +149,7 @@
           {%- endif -%}
         </div>
        {% if product.metafields.custom.product_tutorial_thumbnail.value != blank and product.metafields.custom.product_tutorial_video_link.value != blank %}
-        <div class="cpdp__tutorial">
+        <div class="cpdp__tutorial  cpdp__tutorial_desktop ">
           <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
           {%- if product.metafields.custom.product_tutorial_video_link != blank -%}<a href="{{ product.metafields.custom.product_tutorial_video_link }}" target="_blank" rel="noopener" class="cpdp__video-link">{%- endif -%}
           <div class="cpdp__video">
@@ -171,29 +190,29 @@
         {% comment %} {%- if section.settings.short_desc != blank -%}<p class="cpdp__desc">{{ section.settings.short_desc }}</p> {% endcomment %}
 
         <div class="cpdp__buybox">
-        {% comment %} {%- if product.variants.size > 1 -%}
-        <div class="cpdp__themebox">
-          <h3 class="cpdp__themebox-title">Pick a bag theme</h3>
-          <div class="cpdp__themegrid" role="radiogroup" aria-label="Pick a bag theme">
-            {%- assign theme_map = 'Dinosaur Theme|🦕|Dinosaur,Dog Theme|🐶|Dog,Princess Theme|👸|Princess,Back to School Theme|🎒|Back 2 school,Candy Theme|🍬|Candy,Animal Theme|🐰|Animal' | split: ',' -%}
-            {%- assign rendered = '' -%}
-            {%- for tm in theme_map -%}
-              {%- assign tparts = tm | split: '|' -%}
-              {%- assign tname = tparts[0] -%}
-              {%- assign tv = product.variants | where: 'title', tname | first -%}
-              {%- if tv -%}
-                <button type="button" class="cpdp__theme{% if tv.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if tv.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ tv.id }}"><span class="cpdp__theme-ico">{{ tparts[1] }}</span><span class="cpdp__theme-name">{{ tparts[2] }}<br>Theme</span></button>
-                {%- assign rendered = rendered | append: tname | append: ',' -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- for variant in product.variants -%}
-              {%- unless rendered contains variant.title -%}
-                <button type="button" class="cpdp__theme{% if variant.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if variant.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ variant.id }}"><span class="cpdp__theme-ico">🎨</span><span class="cpdp__theme-name">{{ variant.title }}</span></button>
-              {%- endunless -%}
-            {%- endfor -%}
+          {% comment %} {%- if product.variants.size > 1 -%}
+          <div class="cpdp__themebox">
+            <h3 class="cpdp__themebox-title">Pick a bag theme</h3>
+            <div class="cpdp__themegrid" role="radiogroup" aria-label="Pick a bag theme">
+              {%- assign theme_map = 'Dinosaur Theme|🦕|Dinosaur,Dog Theme|🐶|Dog,Princess Theme|👸|Princess,Back to School Theme|🎒|Back 2 school,Candy Theme|🍬|Candy,Animal Theme|🐰|Animal' | split: ',' -%}
+              {%- assign rendered = '' -%}
+              {%- for tm in theme_map -%}
+                {%- assign tparts = tm | split: '|' -%}
+                {%- assign tname = tparts[0] -%}
+                {%- assign tv = product.variants | where: 'title', tname | first -%}
+                {%- if tv -%}
+                  <button type="button" class="cpdp__theme{% if tv.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if tv.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ tv.id }}"><span class="cpdp__theme-ico">{{ tparts[1] }}</span><span class="cpdp__theme-name">{{ tparts[2] }}<br>Theme</span></button>
+                  {%- assign rendered = rendered | append: tname | append: ',' -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- for variant in product.variants -%}
+                {%- unless rendered contains variant.title -%}
+                  <button type="button" class="cpdp__theme{% if variant.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if variant.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ variant.id }}"><span class="cpdp__theme-ico">🎨</span><span class="cpdp__theme-name">{{ variant.title }}</span></button>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
           </div>
-        </div>
-        {%- endif -%} {% endcomment %}
+          {%- endif -%} {% endcomment %}
          {%- if product.variants.size > 1 -%}
           <div class="cpdp__themebox">
             <h3 class="cpdp__themebox-title">{{ product.options[0] }} 
@@ -244,8 +263,8 @@
         {%- endif -%}
         <div class="cpdp__hr"></div>
         <div class="cpdp__price">
-          <span class="cpdp__price-now" data-price>{{ cur.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' | replace: '.00',''}}</span>
-          {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' | replace: '.00','' }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
+          <span class="cpdp__price-now" data-price>{{ cur.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
+          {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹'  }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
         </div>
         <label class="cpdp__giftwrap">
           
@@ -294,6 +313,20 @@
           <button type="submit" class="cpdp__atc" data-atc{% unless cur.available %} disabled{% endunless %}><span data-atc-label>{% if cur.available %}{{ section.settings.atc_label | default: 'Add to Cart' }}{% else %}{{ section.settings.atc_soldout_label | default: 'Sold out' }}{% endif %}</span></button>
         </div>
         <button type="button" class="cpdp__buynow" data-buynow>{{ section.settings.buynow_label | default: 'Buy Now' }} {%- if section.settings.buynow_icon != blank -%}{{ section.settings.buynow_icon | image_url: width: 40 | image_tag: loading: 'lazy', class: 'cpdp__buynow-ico-img', alt: '' }}{%- else -%}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>{%- endif -%}</button>
+        </div>
+         <div class="cpdp__tutorial  cpdp__tutorial_mobile">
+          <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
+          {%- if product.metafields.custom.product_tutorial_video_link != blank -%}<a href="{{ product.metafields.custom.product_tutorial_video_link }}" target="_blank" rel="noopener" class="cpdp__video-link">{%- endif -%}
+          <div class="cpdp__video">
+            {%- if product.metafields.custom.product_tutorial_thumbnail != blank -%}
+              {% comment %} {{ product.metafields.custom.product_tutorial_thumbnail | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__video-thumb', alt: 'Tutorial' }} {% endcomment %}
+               <img src="{{ product.metafields.custom.product_tutorial_thumbnail }}" alt="product.metafields.custom.product_tutorial_thumbnail">
+            {%- else -%}
+              <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+            {%- endif -%}
+            <span class="cpdp__play" aria-label="Play tutorial"><svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          {%- if product.metafields.custom.product_tutorial_video_link != blank -%}</a>{%- endif -%}
         </div>
         <div class="cpdp__trust">
           <div class="cpdp__trust-item cpdp__trust-item--g"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_1 != blank -%}{{ section.settings.trust_icon_1 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">{{ section.settings.trust_heading_1 }}</span><span class="cpdp__trust-s">{{ section.settings.trust_subheading_1 }}</span></div>
@@ -812,7 +845,7 @@
     #Cpdp-{{ uid }} .cpdp__price-off{font-size:10px; padding:3px 8px;}
     #Cpdp-{{ uid }} .cpdp__price{gap:8px;}
     #Cpdp-{{ uid }} .cpdp__safety-t{font-size:10px; letter-spacing:0px;}
-    #Cpdp-{{ uid }} .cpdp__safety{border-radius:10px;padding: 4px 6px;gap:4px;border:0.67px solid #F1E2BE;}
+    #Cpdp-{{ uid }} .cpdp__safety{border-radius:10px;padding: 9px 6px;gap:4px;border:0.67px solid #F1E2BE;}
     #Cpdp-{{ uid }} .cpdp__po-card.is-selected{border:1.6px solid #5BAD6F}
     #Cpdp-{{ uid }} .cpdp__safety-ico{    
       font-size: 11px;
@@ -1553,6 +1586,66 @@ function refreshPdpHeaderBubble() {
   })();
 </script>
 <script>
+(function () {
+  var root = document.getElementById('Cpdp-{{ uid }}');
+
+  if (!root) return;
+
+  var stickyAtc = root.querySelector('.cpdp__atc--sticky');
+
+  if (!stickyAtc) return;
+
+  stickyAtc.addEventListener('click', function () {
+
+    var selectedPO = root.querySelector('.cpdp__po-card.is-selected');
+
+    /*
+     * If a purchase option is already selected,
+     * keep the existing behavior.
+     */
+    if (selectedPO) return;
+
+    /*
+     * If no purchase option is selected,
+     * use the first purchase option.
+     */
+    var firstPO = root.querySelector('.cpdp__po-card');
+
+    if (!firstPO) return;
+
+    /*
+     * Select the first purchase option.
+     */
+    root.querySelectorAll('.cpdp__po-card').forEach(function (card) {
+      card.classList.remove('is-selected');
+    });
+
+    firstPO.classList.add('is-selected');
+
+    /*
+     * Set the quantity from the first option.
+     */
+    var qtyInput = root.querySelector('.cpdp__qty-val');
+
+    if (qtyInput) {
+      qtyInput.value = firstPO.dataset.qty || '1';
+    }
+
+    /*
+     * Set the bundle discount from the first option.
+     */
+    var bundleOff = root.querySelector('.cpdp__bundle-off');
+
+    if (bundleOff) {
+      bundleOff.value = firstPO.dataset.off || '0';
+    }
+
+  }, true);
+
+})();
+</script>
+
+<script>
   (function () {
     var root = document.getElementById('Cpdp-{{ uid }}');
 
@@ -1677,7 +1770,6 @@ function refreshPdpHeaderBubble() {
       "label": "Top-tier badge text",
       "default": "Smart Saver"
     },
-    { "type": "text", "id": "title_override", "label": "Title override (blank = product title)", "default": "DIY Color Your Bag Kit" },
     { "type": "text", "id": "feature_pills", "label": "Feature pills (comma separated)", "default": "Ages 3-8, 45-60 min play, Screen-free, Mess-free" },
     { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.9 · 2,148 reviews" },
     { "type": "text", "id": "sold_text", "label": "Sold text", "default": "1,900+ bought this month" },
@@ -1744,6 +1836,11 @@ function refreshPdpHeaderBubble() {
   "presets": [ { "name": "Creste PDP" } ]
 }
 {% endschema %}
+
+{% comment %} MOHIT YADAV= title should be same as product.......
+
+ { "type": "text", "id": "title_override", "label": "Title override (blank = product title)", "default": "DIY Color Your Bag Kit" }, {% endcomment %}
+
 
 {% comment %} { "type": "header", "content": "Green section background (optional)" },
     { "type": "paragraph", "content": "Upload an image to use as the background of the Overview/FAQs tabbed area, behind the tabs and panel." },

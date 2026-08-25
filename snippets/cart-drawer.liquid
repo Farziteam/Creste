@@ -233,7 +233,6 @@
   }
 
   .creste-view-summary {
-    border-top: 1px solid #eadfce;
     margin-bottom: 2px;
   }
   .creste-view-summary__body {
@@ -259,9 +258,9 @@
     font-weight: 700;
   }
   .creste-view-summary__row--total {
-    border-top: 1px dashed #e3d5be;
-    padding-top: 9px;
-    margin-top: 2px;
+    border-bottom: 1px solid #e3d5be;
+    {% comment %} padding-top: 9px;
+    margin-top: 2px; {% endcomment %}
     font-weight: 700;
     font-size: 15px;
     color: #1f1f1f;
@@ -366,12 +365,19 @@
 
   }
   @media screen and (max-width: 749px) {
+    .creste-view-summary__body{
+      padding:0px;
+      gap:0px;
+    }
+    .creste-view-summary__row--total span {
+      font-size:11px;
+    }
     .cart-item__price-wrapper{
       max-width: 163px;
     }
-    .wrap{
+    {% comment %} .wrap{
       min-height:255px;
-    }
+    } {% endcomment %}
   .creste-cart-progress__pill{
      font-size: 9px;
   }
