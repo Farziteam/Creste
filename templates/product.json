@@ -132,6 +132,7 @@
         "item_KfcQKQ": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/bcc7da42-05f0-4944-bcb3-455ae4855192_1.png",
             "video": "shopify://files/videos/handcasting video by gaurav.MP4"
           }
         },
