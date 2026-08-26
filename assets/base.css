@@ -3636,3 +3636,20 @@ details-disclosure > details {
 * {
   -webkit-tap-highlight-color: transparent;
 }
+
+#ANDZxZmlEVVdsQUFoe__forms_inline_JthTrx {
+    padding: 2rem 1rem 2rem 1rem !important;
+    margin-top: 8rem;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#ANDZxZmlEVVdsQUFoe__forms_inline_JthTrx shopify-forms-embed{
+    padding: 1rem;
+    /* border: 1px solid red; */
+    box-shadow:
+      0 0 0 1px #ddd,
+      0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
