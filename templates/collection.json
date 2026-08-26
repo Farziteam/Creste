@@ -17,7 +17,7 @@
         "text_color": "#574239",
         "background_image": "shopify://shop_images/11.png",
         "mobile_background_image": "shopify://shop_images/12.png",
-        "hero_subtitle": "Science experiments, candle studios, art kits and slime labs — built for big kid energy.",
+        "hero_subtitle": "",
         "enable_filtering": true,
         "enable_sorting": true,
         "show_category_pills": true,
