@@ -15,6 +15,8 @@
         "show_hero": true,
         "hero_title": "Ages 7–10 years",
         "text_color": "#574239",
+        "background_image": "shopify://shop_images/11.png",
+        "mobile_background_image": "shopify://shop_images/12.png",
         "hero_subtitle": "Science experiments, candle studios, art kits and slime labs — built for big kid energy.",
         "enable_filtering": true,
         "enable_sorting": true,
