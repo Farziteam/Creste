@@ -968,19 +968,11 @@
         </form>
       </cart-drawer-items>
     </div>
-    {%- assign creste_note_price = 50 -%}
-    <div class="creste-cart-note" id="CartDrawer-Note-Banner">
-      <span class="creste-cart-note__icon">
-        📝
-      </span>
-    <span class="creste-cart-note__body"><input type="checkbox" class="creste-cart-note__checkbox" id="CartDrawer-NoteToggle" data-note-toggle></div>
-          <div class="drawer__footer">
+    {%- assign creste_note_price = 50 -%} <div class="creste-cart-note" id="CartDrawer-Note-Banner"> <span class="creste-cart-note__icon">&#128221;</span> <span class="creste-cart-note__body"><span class="creste-cart-note__title">Add Handwritten Note - Rs. {{ creste_note_price }}</span><span class="creste-cart-note__sub">Kraft paper, ribbon and a handwritten note</span></span> <input type="checkbox" class="creste-cart-note__checkbox" id="CartDrawer-NoteToggle" data-note-toggle> </div> <div class="creste-cart-note__field" id="CartDrawer-NoteField"> <label class="creste-cart-note__label" for="CartDrawer-NoteText">Note (Max 100 Words)</label> <textarea class="creste-cart-note__textarea" id="CartDrawer-NoteText" maxlength="600" placeholder="Write your message here..."></textarea> </div> <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
             <summary>
-              <div class="creste-cart-note__field" id="CartDrawer-NoteField">
-                <label class="creste-cart-note__label" for="CartDrawer-NoteText">Note (Max 100 Words)</label><textarea class="creste-cart-note__textarea" id="CartDrawer-NoteText"></textarea>/div><span class="summary__title">
-                {{ 'sections.cart.note' | t }}
+<span class="summary__title"><               {{ 'sections.cart.note' | t }}
                 {{- 'icon-caret.svg' | inline_asset_content -}}
               </span>
             </summary>
@@ -996,7 +988,8 @@
           </details>
         {%- endif -%}
 
-        <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
+        <div class="creste-cart-picks">
+          <p class="creste-cart-picks__title">Picked for ages 0&ndash;3</p><div class="cart-drawer__footer" {{ block.shopify_attributes }}>
           {%- if cart.cart_level_discount_applications.size > 0 -%}
             <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
               {%- for discount in cart.cart_level_discount_applications -%}
