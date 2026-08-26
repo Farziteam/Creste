@@ -444,7 +444,6 @@
 .creste-cart-note__checkbox{width:24px;height:24px;flex:0 0 24px;border-radius:8px;border:1.5px solid var(--creste-orange,#F4793A);background:#fff;cursor:pointer;appearance:none;-webkit-appearance:none;position:relative;}
 .creste-cart-note__checkbox:checked{background:var(--creste-orange,#F4793A);}
 .creste-cart-note__checkbox:checked::after{content:"";position:absolute;left:8px;top:4px;width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}<
-</style>
 .creste-cart-note__field{margin:0 16px;max-height:0;overflow:hidden;transition:max-height .25s ease;}
 .creste-cart-note__field.is-open{max-height:180px;margin-top:8px;}
 .creste-cart-note__label{font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:12px;color:#1E1108;display:block;margin:0 0 6px;}
@@ -455,7 +454,7 @@
 .creste-cart-picks__row{display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;}
 .creste-cart-picks__row::-webkit-scrollbar{display:none;}
 .creste-cart-pick{flex:0 0 auto;width:220px;display:flex;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:10px;align-items:flex-start;}
-
+</style>
 
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
