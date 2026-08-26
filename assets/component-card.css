@@ -523,6 +523,7 @@
   align-items: center;
   /* flex-wrap: wrap; */
   gap: 8px;
+  line-height: 21px;
 }
 .creste-cart-item__name {
   font-family: 'Nunito Sans', sans-serif;
@@ -553,7 +554,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-self: stretch;
   padding: 2px 0;
   max-width:88px;
@@ -595,28 +596,9 @@
 
 /* Gift wrap toggle (per line item) */
 .creste-giftwrap-added {
-    /* display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    min-width: 100px;
-    max-width: 111px;
-    text-align: center;
-    background: #fff;
-    padding: 4px;
-    color: #c2185b;
-    border: 1px dashed #e9a3be;
-    border-radius: 8px;
-    font-family: Poppins, sans-serif;
-    font-size: 7px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 2px; */
-
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    min-width: 100px;
-    max-width: 111px;
     text-align: center;
     background: #ffe7f0;
     padding: 4px;
@@ -628,7 +610,13 @@
     font-weight: 500;
     cursor: pointer;
     margin-top: 2px;
-
+    width: 78%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    font-size: 13px;
 }
 .creste-giftwrap-add {
    display: inline-flex;
@@ -655,6 +643,7 @@
   font-weight: 700;
   opacity: 0.65;
   margin-left: 2px;
+  display: none;
 }
 
 @media screen and (max-width: 749px) {
@@ -672,13 +661,24 @@
     max-width:46px;
   }
   .creste-cart-item__name{
-    font-size:10px;
+    font-size:13px;
+    line-height: 16px;
   }
   .creste-item-price{
-    font-size: 11px;
+    font-size: 12px;
   }
   .creste-item-compare{
-      font-size: 11px;
+      font-size: 12px;
+  }
+  .creste-item-prices{
+    line-height: 1;
+  }
+  .creste-giftwrap-added{
+        font-size: 10px;
+        font-weight: 500;
+        cursor: pointer;
+        justify-content: center;
+        width: 60%;
   }
 }
 

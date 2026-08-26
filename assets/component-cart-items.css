@@ -410,14 +410,14 @@ cart-remove-button .button:not([disabled]):hover {
 
 @media screen and (min-width: 750px) {
   cart-remove-button .button {
-    min-width: 3.5rem;
-    min-height: 3.5rem;
+    min-width: 2.5rem;
+    min-height: 0.5rem;
   }
 }
 
 cart-remove-button .icon-remove {
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
 }
 
 .cart-item .loading__spinner {
