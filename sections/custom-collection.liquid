@@ -35,7 +35,7 @@ assign hero_title =  collection.title
 {%- if section.settings.hero_subtitle != blank -%}
 <p class="cr-hero-sub">{{ section.settings.hero_subtitle | escape }}</p>
 {%- elsif collection.description != blank -%}
-<p class="cr-hero-sub">{{ collection.description | strip_html | truncatewords: 14 }}</p>
+<p class="cr-hero-sub">{{ collection.description | strip_html | truncatewords: 20 }}</p>
 {%- endif -%}
 </div>
 </div>
