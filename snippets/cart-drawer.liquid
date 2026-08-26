@@ -447,7 +447,15 @@
 </style>
 .creste-cart-note__field{margin:0 16px;max-height:0;overflow:hidden;transition:max-height .25s ease;}
 .creste-cart-note__field.is-open{max-height:180px;margin-top:8px;}
-.creste-cart-note__label{font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:12px;color:#1E1108;display:block;margin:0 0 6px;}.creste-cart-note__textarea{width:100%;min-height:70px;border:1px solid #E5DCEA;border-radius:12px;padding:10px 12px;font-family:Poppins,sans-serif;font-size:13px;color:#1E1108;resize:vertical;box-sizing:border-box;}
+.creste-cart-note__label{font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:12px;color:#1E1108;display:block;margin:0 0 6px;}
+.creste-cart-note__textarea{width:100%;min-height:70px;border:1px solid #E5DCEA;border-radius:12px;padding:10px 12px;font-family:Poppins,sans-serif;font-size:13px;color:#1E1108;resize:vertical;box-sizing:border-box;}
+/* ===== Picked for ages recommendation ===== */
+.creste-cart-picks{background:#D8EEF5;border-radius:20px;padding:10px;margin:12px 16px 0;}
+.creste-cart-picks__title{font-family:Nunito Sans,Nunito,sans-serif;font-weight:800;font-size:16px;color:#00677E;margin:2px 4px 8px;line-height:1.2;}
+.creste-cart-picks__row{display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;}
+.creste-cart-picks__row::-webkit-scrollbar{display:none;}
+.creste-cart-pick{flex:0 0 auto;width:220px;display:flex;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:10px;align-items:flex-start;}
+
 
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -961,7 +969,15 @@
         </form>
       </cart-drawer-items>
     </div>
-      <div class="drawer__footer">
+    {%- assign creste_note_price = 50 -%}
+    <div class="creste-cart-note" id="CartDrawer-Note-Banner">
+      <span class="creste-cart-note__icon">
+        📝
+      </span>
+    <span class="creste-cart-note__body">
+<span class="creste-cart-note__title">Add Handwritten Note - Rs. {{ creste_note_price }}</span><span class="creste-cart-note__sub">Kraft paper, ribbon and a handwritten note</span></span><input type="checkbox" class="creste-cart-note__checkbox" id="CartDrawer-NoteToggle" data-note-toggle></div>      </div>
+    </div>
+          <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
             <summary>
