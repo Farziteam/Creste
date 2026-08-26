@@ -900,6 +900,7 @@
         "form_accent1": "",
         "form_mid": "",
         "form_accent2": "",
+        "button_url": "shopify://pages/event-planning-form-page",
         "button_label": "Get In touch",
         "note": "Drop us a message - our team responds within 24 hours."
       }

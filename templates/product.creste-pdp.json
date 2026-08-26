@@ -12,7 +12,6 @@
     "creste_pdp": {
       "type": "creste-pdp",
       "settings": {
-        "title_override": "DIY Color Your Bag Kit",
         "feature_pills": "Ages 3-8, 45-60 min play, Screen-free, Mess-free",
         "rating_text": "4.9 · 2,148 reviews",
         "sold_text": "1,900+ bought this month",
@@ -50,8 +49,6 @@
     "creste_skills": {
       "type": "creste-skills",
       "settings": {
-        "heading": "Six skills hiding inside one bag",
-        "subheading": "Every bag they colour quietly builds a real skill — here are six hiding in the fun.",
         "bg_color": "#7c5ce0",
         "padding_top": 64,
         "padding_bottom": 72,
