@@ -988,8 +988,7 @@
           </details>
         {%- endif -%}
 
-        <div class="creste-cart-picks">
-          <p class="creste-cart-picks__title">Picked for ages 0&ndash;3</p><div class="cart-drawer__footer" {{ block.shopify_attributes }}>
+        {%- if collections['age-group-up-to-3years'] and collections['age-group-up-to-3years'].products.size > 0 -%} <div class="creste-cart-picks"> <p class="creste-cart-picks__title">Picked for ages 0&ndash;3</p> <div class="creste-cart-picks__row"> {%- for product in collections['age-group-up-to-3years'].products limit: 8 -%} {%- assign pv = product.selected_or_first_available_variant -%} <div class="creste-cart-pick"> <div class="creste-cart-pick__image">{%- if product.featured_image -%}{{ product.featured_image | image_url: width: 160 | image_tag: alt: product.title, loading: 'lazy' }}{%- endif -%}</div> <div class="creste-cart-pick__body"> <p class="creste-cart-pick__name">{{ product.title }}</p> <p class="creste-cart-pick__price">{{ pv.price | money }} {%- if pv.compare_at_price > pv.price -%} <span class="creste-cart-pick__compare">{{ pv.compare_at_price | money }}</span> {%- assign pick_off = pv.compare_at_price | minus: pv.price | times: 100 | divided_by: pv.compare_at_price -%} <span class="creste-cart-pick__off">{{ pick_off }}% off</span> {%- endif -%} </p> <button type="button" class="creste-cart-pick__btn" data-pick-add data-variant-id="{{ pv.id }}" {% unless pv.available %}disabled{% endunless %}> {%- if pv.available -%}Add To Cart{%- else -%}Sold out{%- endif -%} </button> </div> </div> {%- endfor -%} </div> </div> {%- endif -%} <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
           {%- if cart.cart_level_discount_applications.size > 0 -%}
             <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
               {%- for discount in cart.cart_level_discount_applications -%}
