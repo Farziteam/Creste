@@ -123,6 +123,12 @@
     "creste_artists": {
       "type": "creste-artists",
       "blocks": {
+        "item_QbEQA6": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/36-CK-DIY Gardening Kit-VK-V1 (1).mp4"
+          }
+        },
         "item_7HatHX": {
           "type": "item",
           "settings": {
@@ -133,6 +139,12 @@
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/e1c568f4-8cfe-4e9a-9f2b-310f6fe88606.png"
+          }
+        },
+        "item_4NEb6H": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/Fruit candle .mp4"
           }
         },
         "item_xxXDiE": {
@@ -153,28 +165,16 @@
             "image": "shopify://shop_images/bcc7da42-05f0-4944-bcb3-455ae4855192_1.png",
             "video": "shopify://files/videos/handcasting video by gaurav.MP4"
           }
-        },
-        "item_QbEQA6": {
-          "type": "item",
-          "settings": {
-            "video": "shopify://files/videos/36-CK-DIY Gardening Kit-VK-V1 (1).mp4"
-          }
-        },
-        "item_4NEb6H": {
-          "type": "item",
-          "settings": {
-            "video": "shopify://files/videos/Fruit candle .mp4"
-          }
         }
       },
       "block_order": [
+        "item_QbEQA6",
         "item_7HatHX",
         "item_DzqJJE",
+        "item_4NEb6H",
         "item_xxXDiE",
         "item_aNaqem",
-        "item_KfcQKQ",
-        "item_QbEQA6",
-        "item_4NEb6H"
+        "item_KfcQKQ"
       ],
       "settings": {
         "heading_prefix": "Made by",
