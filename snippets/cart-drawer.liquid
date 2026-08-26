@@ -973,12 +973,13 @@
       <span class="creste-cart-note__icon">
         📝
       </span>
-    <span class="creste-cart-note__body">input type="checkbox" class="creste-cart-note__checkbox" id="CartDrawer-NoteToggle" data-note-toggle></div>
+    <span class="creste-cart-note__body"><input type="checkbox" class="creste-cart-note__checkbox" id="CartDrawer-NoteToggle" data-note-toggle></div>
           <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
             <summary>
-              <span class="summary__title">
+              <div class="creste-cart-note__field" id="CartDrawer-NoteField">
+                <label class="creste-cart-note__label" for="CartDrawer-NoteText">Note (Max 100 Words)</label><textarea class="creste-cart-note__textarea" id="CartDrawer-NoteText"></textarea>/div><span class="summary__title">
                 {{ 'sections.cart.note' | t }}
                 {{- 'icon-caret.svg' | inline_asset_content -}}
               </span>
