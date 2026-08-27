@@ -252,16 +252,6 @@
             "collection": "demo"
           }
         },
-        "cat2": {
-          "type": "category",
-          "settings": {
-            "icon": "shopify://shop_images/image_47.png",
-            "emoji": "🧪",
-            "name": "STORY WORLDS",
-            "subtitle": "Language & Literacy",
-            "collection": "science-collection"
-          }
-        },
         "cat3": {
           "type": "category",
           "settings": {
@@ -270,6 +260,16 @@
             "name": "ART STUDIO",
             "subtitle": "Self-expression",
             "collection": "demo"
+          }
+        },
+        "cat2": {
+          "type": "category",
+          "settings": {
+            "icon": "shopify://shop_images/image_47.png",
+            "emoji": "🧪",
+            "name": "STORY WORLDS",
+            "subtitle": "Language & Literacy",
+            "collection": "science-collection"
           }
         },
         "cat4": {
@@ -314,8 +314,8 @@
       },
       "block_order": [
         "cat1",
-        "cat2",
         "cat3",
+        "cat2",
         "cat4",
         "cat5",
         "cat6",
