@@ -12,9 +12,20 @@
     "creste_pdp": {
       "type": "creste-pdp",
       "settings": {
+        "atc_label": "Add to Cart",
+        "atc_soldout_label": "Sold out",
+        "buynow_label": "Buy Now",
+        "gift_title": "Add gift wrapping — free",
+        "gift_subtext": "Kraft paper, ribbon and a handwritten note",
+        "po_title": "Choose Purchase Option",
+        "po_tiers": "1|0,2|5,4|15",
+        "po_buy_label": "Buy",
+        "po_off_suffix": "% off",
+        "po_emoji": "✊",
+        "po_badge_text": "Smart Saver",
         "feature_pills": "Ages 3-8, 45-60 min play, Screen-free, Mess-free",
         "rating_text": "4.9 · 2,148 reviews",
-        "sold_text": "1,900+ bought this month",
+        "sold_text": "Creating Memories in Thousands of Homes",
         "short_desc": "A ready-to-paint canvas tote, six non-toxic fabric paints and reusable stencils — everything a 3-8 year old needs to make a bag they'll actually carry to school.",
         "ship_text": "Order before 4 PM → ships today · COD available",
         "gift_icon": "shopify://shop_images/0800a1d771b62006a968ad7770bf4e8f67e6a2d1.png",
@@ -23,6 +34,7 @@
         "badge_1": "#1 Bestseller",
         "badge_2": "Screen-free fun",
         "safety_text": "Small parts — choking hazard. Not for under 3s.",
+        "safety_link_text": "Safety details.",
         "safety_link": "",
         "offers": "Get EXTRA 5% Off on First Order|WELCOME5;Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10;Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20",
         "tutorial_thumb": "shopify://shop_images/Button.png",
@@ -33,7 +45,15 @@
         "faqs": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash.",
         "whatsapp_number": "919999999999",
         "promo_banner_link": "",
-        "promo_banner_alt": ""
+        "promo_banner_alt": "",
+        "trust_heading_1": "",
+        "trust_subheading_1": "",
+        "trust_heading_2": "",
+        "trust_subheading_2": "",
+        "trust_heading_3": "",
+        "trust_subheading_3": "",
+        "trust_heading_4": "",
+        "trust_subheading_4": ""
       }
     },
     "creste_artists": {
