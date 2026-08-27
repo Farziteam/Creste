@@ -1863,40 +1863,40 @@ var res=await fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'appli
      CART NOTE
   ========================= */
 
-  var toggle =
-    document.getElementById('CartDrawer-NoteToggle');
+  document.addEventListener('change', function (e) {
+    var toggle = e.target.closest('#CartDrawer-NoteToggle');
 
-  var field =
-    document.getElementById('CartDrawer-NoteField');
+    if (!toggle) return;
 
-  if (toggle && field) {
-    toggle.addEventListener('change', function () {
+    var field = document.getElementById('CartDrawer-NoteField');
+
+    if (field) {
       field.classList.toggle(
         'is-open',
         toggle.checked
       );
-    });
-  }
+    }
+  });
 
-  var noteText =
-    document.getElementById('CartDrawer-NoteText');
 
-  if (noteText) {
-    noteText.addEventListener('blur', function () {
-      fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          note: noteText.value
-        })
-      }).catch(function (err) {
-        console.error('note-update', err);
-      });
+  document.addEventListener('blur', function (e) {
+    var noteText = e.target.closest('#CartDrawer-NoteText');
+
+    if (!noteText) return;
+
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        note: noteText.value
+      })
+    }).catch(function (err) {
+      console.error('note-update', err);
     });
-  }
+  }, true);
 
 
   /* =========================
@@ -1971,8 +1971,10 @@ var res=await fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'appli
       }, 1500);
     }
   });
+
 })();
 </script>
+
 
 
 
