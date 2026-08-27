@@ -1165,3 +1165,40 @@
     
   })();
 </script>
+<script>
+  (function(){
+    var toggle=document.getElementById('CartDrawer-NoteToggle');
+    var field=document.getElementById('CartDrawer-NoteField');
+    if(toggle&&field){toggle.addEventListener('change',function(){
+      field.classList.toggle('is-open',toggle.checked);
+    });}
+    var noteText=document.getElementById('CartDrawer-NoteText');
+    if(noteText){noteText.addEventListener('blur',function(){fetch('/cart/update.js',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({note:noteText.value})
+    }).catch(function(err){console.error('note-update',err);});
+  });}document.addEventListener('click',async function(e){
+    var btn=e.target.closest('[data-pick-add]');if(!btn)return;
+    e.preventDefault();if(btn.disabled)return;
+    var variantId=btn.getAttribute('data-variant-id');btn.disabled=true;
+    var originalText=btn.textContent;btn.textContent='Adding...';
+    try{
+var res=await fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({items:[{id:variantId,quantity:1}]})
+    });
+    if(!res.ok){throw new Error('add failed');}
+    var sectionsRes=await fetch('/?sections=cart-drawer');
+    var sectionsData=await sectionsRes.json();
+    if(sectionsData['cart-drawer']&&typeof refreshDrawer==='function'){
+      refreshDrawer(sectionsData['cart-drawer']);
+      btn.textContent='Added!';
+    }
+    setTimeout(function(){
+      btn.textContent=originalText;btn.disabled=false;
+    },1500);
+  }catch(err){
+    console.error('pick-add',err);btn.textContent=originalText;btn.disabled=false;
+  }
+});
+})();
+</script>
+
