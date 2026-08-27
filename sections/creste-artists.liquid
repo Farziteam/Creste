@@ -324,11 +324,17 @@
   #CpdpArt-{{ uid }} .cpdpa__play{position:absolute;inset:0;margin:auto;width:60px;height:60px;border-radius:999px;background:rgba(255,255,255,.94);display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.2);padding-left:3px;z-index:2;}
   @media (max-width:920px){ #CpdpArt-{{ uid }} .cpdpa__grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
   @media (max-width: 768px){
+    #CpdpArt-{{ uid }} .cpdpa__title{
+       margin:0 0 10px;
+    }
     #CpdpArt-{{ uid }} .cpdpa__grid > .cpdpa__col:nth-child(3) {
       display: none;
     }
     #CpdpArt-{{ uid }}  .cpdpa__wrap{
       padding: 24px 14px 24px;
+    }
+    #CpdpArt-{{ uid }} .cpdpa__sub{
+      margin:0 auto 15px;
     }
   }
   @media (max-width:560px){ #CpdpArt-{{ uid }} .cpdpa__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;} #CpdpArt-{{ uid }} .cpdpa__col{gap:12px;} }

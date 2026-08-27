@@ -153,37 +153,37 @@
           <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
          {%- assign video_url = product.metafields.custom.product_tutorial_video_link.value -%}
 
-{%- if video_url != blank -%}
-  <a
-    href="{{ video_url }}"
-    target="_blank"
-    rel="noopener"
-    class="cpdp__video-link"
-  >
-{%- endif -%}
+          {%- if video_url != blank -%}
+            <a
+              href="{{ video_url }}"
+              target="_blank"
+              rel="noopener"
+              class="cpdp__video-link"
+            >
+          {%- endif -%}
 
-<div class="cpdp__video">
+          <div class="cpdp__video">
 
-  {%- comment -%}
-    First priority: Custom thumbnail
-  {%- endcomment -%}
+            {%- comment -%}
+              First priority: Custom thumbnail
+            {%- endcomment -%}
 
-  {% comment %} {%- if product.metafields.custom.product_tutorial_thumbnail != blank -%}
+            {% comment %} {%- if product.metafields.custom.product_tutorial_thumbnail != blank -%}
 
-    <img
-      src="{{ product.metafields.custom.product_tutorial_thumbnail }}"
-      class="cpdp__video-thumb"
-      alt="Product tutorial"
-      loading="lazy"
-    > {% endcomment %}
+              <img
+                src="{{ product.metafields.custom.product_tutorial_thumbnail }}"
+                class="cpdp__video-thumb"
+                alt="Product tutorial"
+                loading="lazy"
+              > {% endcomment %}
 
-  {%- if video_url != blank -%}
+            {%- if video_url != blank -%}
 
-    {%- comment -%}
-      Extract YouTube video ID
-    {%- endcomment -%}
+              {%- comment -%}
+                Extract YouTube video ID
+              {%- endcomment -%}
 
-    {%- assign video_id = '' -%}
+              {%- assign video_id = '' -%}
 
           {%- if video_url contains 'youtube.com/watch' -%}
 
@@ -392,7 +392,7 @@
         </div>
         <button type="button" class="cpdp__buynow" data-buynow>{{ section.settings.buynow_label | default: 'Buy Now' }} {%- if section.settings.buynow_icon != blank -%}{{ section.settings.buynow_icon | image_url: width: 40 | image_tag: loading: 'lazy', class: 'cpdp__buynow-ico-img', alt: '' }}{%- else -%}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>{%- endif -%}</button>
         </div>
-         <div class="cpdp__tutorial  cpdp__tutorial_mobile">
+         {% comment %} <div class="cpdp__tutorial  cpdp__tutorial_mobile">
           <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
           {%- if product.metafields.custom.product_tutorial_video_link != blank -%}<a href="{{ product.metafields.custom.product_tutorial_video_link }}" target="_blank" rel="noopener" class="cpdp__video-link">{%- endif -%}
           <div class="cpdp__video">
@@ -405,7 +405,93 @@
             <span class="cpdp__play" aria-label="Play tutorial"><svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
           {%- if product.metafields.custom.product_tutorial_video_link != blank -%}</a>{%- endif -%}
+        </div> {% endcomment %}
+        {%- assign video_url = product.metafields.custom.product_tutorial_video_link.value -%}
+
+        {%- if video_url != blank -%}
+          <a
+            href="{{ video_url }}"
+            target="_blank"
+            rel="noopener"
+            class="cpdp__video-link"
+          >
+        {%- endif -%}
+
+        <div class="cpdp__video cpdp__tutorial_mobile">
+
+          {%- comment -%}
+            First priority: Custom thumbnail
+          {%- endcomment -%}
+
+          {% comment %} {%- if product.metafields.custom.product_tutorial_thumbnail != blank -%}
+
+            <img
+              src="{{ product.metafields.custom.product_tutorial_thumbnail }}"
+              class="cpdp__video-thumb"
+              alt="Product tutorial"
+              loading="lazy"
+            > {% endcomment %}
+
+          {%- if video_url != blank -%}
+
+            {%- comment -%}
+              Extract YouTube video ID
+            {%- endcomment -%}
+
+            {%- assign video_id = '' -%}
+
+            {%- if video_url contains 'youtube.com/watch' -%}
+
+              {%- assign video_id = video_url | split: 'v=' | last | split: '&' | first -%}
+
+            {%- elsif video_url contains 'youtu.be/' -%}
+
+              {%- assign video_id = video_url | split: 'youtu.be/' | last | split: '?' | first -%}
+
+            {%- elsif video_url contains '/shorts/' -%}
+
+              {%- assign video_id = video_url | split: '/shorts/' | last | split: '?' | first -%}
+
+            {%- elsif video_url contains '/embed/' -%}
+
+              {%- assign video_id = video_url | split: '/embed/' | last | split: '?' | first -%}
+
+            {%- endif -%}
+
+            {%- if video_id != blank -%}
+
+              <img
+                src="https://img.youtube.com/vi/{{ video_id }}/hqdefault.jpg"
+                class="cpdp__video-thumb"
+                alt="Product tutorial"
+                loading="lazy"
+              >
+
+            {%- else -%}
+
+              <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+
+            {%- endif -%}
+
+          {%- else -%}
+
+            <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+
+          {%- endif -%}
+
+          <span class="cpdp__play" aria-label="Play tutorial">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </span>
+
         </div>
+
+        {%- if video_url != blank -%}
+          </a>
+        {%- endif -%}
+        
+        
         <div class="cpdp__trust">
           <div class="cpdp__trust-item cpdp__trust-item--g"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_1 != blank -%}{{ section.settings.trust_icon_1 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">{{ section.settings.trust_heading_1 }}</span><span class="cpdp__trust-s">{{ section.settings.trust_subheading_1 }}</span></div>
           <div class="cpdp__trust-item cpdp__trust-item--b"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_2 != blank -%}{{ section.settings.trust_icon_2 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#3B82C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M15.5 15.2a3 3 0 1 1-.9-3.1"/><path d="M15.6 12.2v2h-2"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">{{ section.settings.trust_heading_2 }}</span><span class="cpdp__trust-s">{{ section.settings.trust_subheading_2 }}</span></div>
@@ -998,6 +1084,7 @@
     }
     #Cpdp-{{ uid }} .cpdp__ship{
       font-size: 11px;
+      margin: 6px 0 6px;
     }
     #Cpdp-{{ uid }} .cpdp__tutorial-title{
       font-size: 14px;
