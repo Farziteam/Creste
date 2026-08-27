@@ -72,9 +72,9 @@
 {% if section.settings.address != blank %}<div class='ft-addr'><span class='pin'>{{ 'icon-location.svg' | inline_asset_content }}</span><span>{{ section.settings.address }}</span></div>{% endif %}
 </div></div>
 </div>
-<div class='ft-store' style='background: url({{ section.settings.bg_desktop | image_url: width: 1400}}) no-repeat center/cover;'>
+<div class='ft-store'  style='background: url({{ section.settings.bg_desktop | image_url: width: 1400}}) no-repeat center/cover;'>
 <div><h3>{{ section.settings.banner_title }}</h3><p>{{ section.settings.banner_text }}</p></div>
-<a class='btn' href='{{ section.settings.banner_link | default: '#' }}'>{{ section.settings.banner_btn }}</a>
+<a class='btn' target='_blank' href='{{ section.settings.banner_link | default: '#' }}'>{{ section.settings.banner_btn }}</a>
 </div>
 <div class='ft-bottom'>{{ section.settings.copyright }}</div>
 </div>

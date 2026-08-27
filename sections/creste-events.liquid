@@ -2,10 +2,10 @@
 {%- assign _bgid = 'creste-ev-' | append: section.id -%}
 <style>
 #creste-ev-{{ section.id }}{padding:28px 0;background:{{ section.settings.section_bg }};background-size:cover;background-position:center;}
-#creste-ev-{{ section.id }} .ev-wrap{background:#fff;border-radius:28px;width:94%;max-width:1560px;margin:0 auto;padding:22px 16px;display:flex;flex-direction:column;gap:20px;}
+#creste-ev-{{ section.id }} .ev-wrap{background:#fff;border-radius:28px;width:94%;max-width:1560px;margin:0 auto;padding:18px 16px;display:flex;flex-direction:column;gap:13px;}
 #creste-ev-{{ section.id }} .ev-h{margin:0;text-align:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:26px;line-height:1;letter-spacing:0px; color:#2B1702;}
 #creste-ev-{{ section.id }} .ev-h em{font-style:normal;color:#E87BAC;}
-#creste-ev-{{ section.id }} .ev-sub{margin:-4px 0 0;text-align:center;font-family:'Poppins',sans-serif;font-weight:500;font-size:15px;line-height:1.5;color:var(--creste-brown);}
+#creste-ev-{{ section.id }} .ev-sub{margin:-4px 0 0;text-align:center;font-family:'Poppins',sans-serif;font-weight:500;font-size:15px;line-height:1.5;color:var(--creste-brown);letter-spacing:0px;}
 #creste-ev-{{ section.id }} .ev-do{overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;}
 #creste-ev-{{ section.id }} .ev-do::-webkit-scrollbar{display:none;}
 #creste-ev-{{ section.id }} .ev-do-track{display:flex;gap:18px;width:max-content;padding:10px 2px;}
@@ -25,7 +25,7 @@
 #creste-ev-{{ section.id }} .act-box{display:flex;flex-direction:column;gap:0;}
 #creste-ev-{{ section.id }} .act-label{width:100%;background:#B94A75;border-radius:16px 16px 0 0;color:#FEE900;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:8px;text-align:center;padding:12px 10px;}
 #creste-ev-{{ section.id }} .act-label .big{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;line-height:1.1;}
-#creste-ev-{{ section.id }} .act-label .sm{font-family:'Poppins',sans-serif;font-weight:500;font-size:16px;line-height:1.2;}
+#creste-ev-{{ section.id }} .act-label .sm{font-family:'Poppins',sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:0px;}
 #creste-ev-{{ section.id }} .act-right{width:100%;overflow:hidden;display:flex;align-items:center;border:1.33px solid #E9DCC7;border-top:0;border-radius:0 0 16px 16px;background:#fff;padding:12px 0;/*-webkit-mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);*/}
 #creste-ev-{{ section.id }} .act-track{display:flex;gap:14px;width:max-content;animation:ev-mq var(--aspd,26s) linear infinite;}
 #creste-ev-{{ section.id }} .act-right:hover .act-track{animation-play-state:paused;}
@@ -45,7 +45,7 @@
 #creste-ev-{{ section.id }} .form-note{margin:8px 0 0;text-align:center;font-family:'Nunito',sans-serif;font-weight:500;font-size:11px;color: #000000D9; letter-spacing: 0px;}
 #creste-ev-{{ section.id }} .form-ok{background:#e3f6e8;border:1px solid #57b26f;color:#256b39;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-family:'Poppins',sans-serif;font-size:13px;}
 @keyframes ev-mq{to{transform:translateX(-50%);}}
-@media(min-width:750px){#creste-ev-{{ section.id }}{padding:44px 0;}#creste-ev-{{ section.id }} .ev-wrap{width:90%;padding:32px 32px;}#creste-ev-{{ section.id }} .ev-h{font-size:80px;line-height:0.9;}#creste-ev-{{ section.id }} .flip{width:230px;height:290px;}#creste-ev-{{ section.id }} .act-box{flex-direction:row;align-items:center;margin:0px 20px 20px 20px;}#creste-ev-{{ section.id }} .act-label{width:20%;flex-direction:column;border-top-left-radius:18px;border-bottom-left-radius:18px;border-top-right-radius:0px;padding:21px 15px;gap:0px;}#creste-ev-{{ section.id }} .act-label .sm{margin-top:2px;}#creste-ev-{{ section.id }} .act-right{border-top:1.33px solid #E9DCC7;border-top-right-radius: 18px;border-bottom-right-radius: 18px; border-bottom-left-radius: 0px;border-left: 0;padding: 6px 0px;}#creste-ev-{{ section.id }} .form-h{font-size:40px;margin-bottom:24px;}#creste-ev-{{ section.id }} form .grid{grid-template-columns:1fr 1fr 1fr;gap: 27px;}#creste-ev-{{ section.id }} form .m-full{grid-column:auto;}#creste-ev-{{ section.id }} form .span2{grid-column:span 2;}
+@media(min-width:750px){#creste-ev-{{ section.id }}{padding:44px 0;}#creste-ev-{{ section.id }} .ev-wrap{width:90%;padding:32px 32px;}#creste-ev-{{ section.id }} .ev-h{font-size:80px;line-height:0.9;}#creste-ev-{{ section.id }} .flip{width:230px;height:290px;}#creste-ev-{{ section.id }} .act-box{flex-direction:row;align-items:center;margin:0px 20px 20px 20px;}#creste-ev-{{ section.id }} .act-label{width:20%;flex-direction:column;border-top-left-radius:18px;border-bottom-left-radius:18px;border-top-right-radius:0px;padding:21px 15px;gap:0px;}#creste-ev-{{ section.id }} .act-label .sm{margin-top:2px;font-size:16px;}#creste-ev-{{ section.id }} .act-right{border-top:1.33px solid #E9DCC7;border-top-right-radius: 18px;border-bottom-right-radius: 18px; border-bottom-left-radius: 0px;border-left: 0;padding: 6px 0px;}#creste-ev-{{ section.id }} .form-h{font-size:40px;margin-bottom:24px;}#creste-ev-{{ section.id }} form .grid{grid-template-columns:1fr 1fr 1fr;gap: 27px;}#creste-ev-{{ section.id }} form .m-full{grid-column:auto;}#creste-ev-{{ section.id }} form .span2{grid-column:span 2;}
 #creste-ev-{{ section.id }} .ev-sub{font-size: 20px;}
 #creste-ev-{{ section.id }} .flip-ic{width: 80px; height: 80px;}
 #creste-ev-{{ section.id }} .flip-f{gap: 12px;}
@@ -60,8 +60,8 @@
 #creste-ev-{{ section.id }} .ev-hint svg path{stroke: #E87BAC;}
 #creste-ev-{{ section.id }} .flip-icon{display:none;}
 @media(max-width: 749px){
-  #creste-ev-{{ section.id }} .flip{width:160px;height:220px;}
-  #creste-ev-{{ section.id }} .ev-do-track{gap: 12px;}
+  #creste-ev-{{ section.id }} .flip{width:150px;height:220px;}
+  #creste-ev-{{ section.id }} .ev-do-track{gap: 12px;padding: 4px 2px;}
   #creste-ev-{{ section.id }} .flip-f{ justify-content: normal;}
   #creste-ev-{{ section.id }} .flip-d{ 
     display: -webkit-box;
@@ -74,6 +74,9 @@
     display: block;
     top: 10px;
     right: 10px;
+  }
+  #creste-ev-{{ section.id }} .ev-hint{
+    line-height: 1;
   }
 }
 </style>

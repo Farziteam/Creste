@@ -2,7 +2,7 @@
 {%- assign stages = section.blocks | where: 'type', 'stage' -%}
 {%- assign _bgid = 'creste-sg-' | append: section.id -%}
 <style>
-#creste-sg-{{ section.id }}{padding:36px 16px;background:{{ section.settings.section_bg }};background-size:contain;background-position:center;}
+#creste-sg-{{ section.id }}{padding:16px 16px;background:{{ section.settings.section_bg }};background-size:contain;background-position:center;}
 #creste-sg-{{ section.id }} .sg-in{max-width:1200px;margin:0 auto;}
 #creste-sg-{{ section.id }} .sg-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;margin:0 0 8px;}
 #creste-sg-{{ section.id }} .sg-head span.t{font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;line-height:1.1;color:#2B1702;}
@@ -33,9 +33,11 @@
 }
 #creste-sg-{{ section.id }} .sg-sub{
   text-align: center;
+  margin: 0 0 15px;
 }
 #creste-sg-{{ section.id }} .sg-row {
   flex-direction: column;
+  gap: 4px;
 }
 #creste-sg-{{ section.id }}  .sg-card{
   flex-direction: row;
