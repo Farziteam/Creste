@@ -1124,34 +1124,7 @@
         </form>
       </cart-drawer-items>
       {%- if cart != empty -%}
-              {%- assign creste_note_price = 50 -%}
-            <div class="creste-cart-note" id="CartDrawer-Note-Banner">
-              <label id="creste-note-label" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 0;font-weight:600;" for="creste-note-toggle"><input type="checkbox" id="creste-note-toggle" style="width:18px;height:18px;cursor:pointer;"><span>Add Handwritten Note</span>&nbsp;<span style="color:#555;font-size:0.9em;">(+Rs.{{ creste_note_price }})</span></label>
-              <div id="creste-note-expanded" style="display:none;margin-top:4px;">
-                <p style="font-weight:700;margin:0 0 8px;font-size:1em;">&#128221; Handwritten Note</p>
-                <p style="color:#2a7c2a;font-size:0.88em;margin:8px 0 0;font-weight:600;">Rs.{{ creste_note_price }} for handwritten note will be added to your order</p>
-              </div>
-            </div>
-            <script>document.addEventListener('DOMContentLoaded',function(){function initNote(){var cb=document.getElementById('creste-note-toggle'),noteDiv=document.getElementById('creste-note-expanded'),details=document.getElementById('Details-CartDrawer'),noteTA=document.getElementById('CartDrawer-Note');if(!cb)return;cb.removeEventListener('change',cb._cresteHandler);cb._cresteHandler=function(){if(noteDiv)noteDiv.style.display=this.checked?'block':'none';if(details){if(this.checked){details.setAttribute('open','');details.style.display='';}else{details.removeAttribute('open');details.style.display='none';if(noteTA){noteTA.value='';noteTA.dispatchEvent(new Event('input'));}}}};cb.addEventListener('change',cb._cresteHandler);if(!cb.checked&&details)details.style.display='none';}initNote();document.addEventListener('cart:refresh',initNote);});</script>
-
-            <div
-              class="creste-cart-note__field"
-              id="CartDrawer-NoteField"
-            >
-              <label
-                class="creste-cart-note__label"
-                for="CartDrawer-NoteText"
-              >
-                Note (Max 100 Words)
-              </label>
-
-              <textarea
-                class="creste-cart-note__textarea"
-                id="CartDrawer-NoteText"
-                maxlength="600"
-                placeholder="Write your message here..."
-              ></textarea>
-            </div>
+              {%- assign creste_note_price = 50 -%} <div class="creste-cart-note" id="CartDrawer-Note-Banner"> <label id="creste-note-label" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 0;font-weight:600;" for="creste-note-toggle"><input type="checkbox" id="creste-note-toggle" style="width:18px;height:18px;cursor:pointer;"><span>Add Handwritten Note</span>&nbsp;<span style="color:#555;font-size:0.9em;">(+Rs.{{ creste_note_price }})</span></label><div id="creste-note-expanded" style="display:none;margin-top:4px;"><p style="font-weight:700;margin:0 0 8px;font-size:1em;">&#128221; Handwritten Note</p><cart-note class="cart__note field"><label class="visually-hidden" for="CartDrawer-Note">Handwritten Note</label><textarea id="CartDrawer-Note" class="text-area text-area--resize-vertical field__input" name="note" placeholder="Write your personalized message here...">{{ cart.note }}</textarea></cart-note><p style="color:#2a7c2a;font-size:0.88em;margin:8px 0 0;font-weight:600;">Rs.{{ creste_note_price }} for handwritten note will be added to your order</p></div></div><script>document.addEventListener('DOMContentLoaded',function(){function initNote(){var cb=document.getElementById('creste-note-toggle'),box=document.getElementById('creste-note-expanded');if(!cb||!box)return;cb.removeEventListener('change',cb._cresteHandler);cb._cresteHandler=function(){box.style.display=this.checked?'block':'none';if(!this.checked){var ta=document.getElementById('CartDrawer-Note');if(ta){ta.value='';ta.dispatchEvent(new Event('input'));}}};cb.addEventListener('change',cb._cresteHandler);}initNote();document.addEventListener('cart:refresh',initNote);});</script>
 {%- if collections['age-group-up-to-3years']
   and collections['age-group-up-to-3years'].products.size > 0
 -%}
