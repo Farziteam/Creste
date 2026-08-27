@@ -1125,6 +1125,11 @@
       </cart-drawer-items>
       {%- if cart != empty -%}
               {%- assign creste_note_price = 50 -%}
+              {%- assign creste_note_price_cents = creste_note_price | times: 100 -%}
+              {%- assign creste_note_active = false -%}
+              {%- if cart.attributes['Handwritten Note'] == 'Yes' -%}
+                {%- assign creste_note_active = true -%}
+              {%- endif -%}
 
             <div
               class="creste-cart-note"
@@ -1161,11 +1166,13 @@
                 class="creste-cart-note__checkbox"
                 id="CartDrawer-NoteToggle"
                 data-note-toggle
+                data-note-price="{{ creste_note_price }}"
+                {% if creste_note_active %}checked{% endif %}
               >
             </div>
 
             <div
-              class="creste-cart-note__field"
+              class="creste-cart-note__field{% if creste_note_active %} is-open{% endif %}"
               id="CartDrawer-NoteField"
             >
               <label
@@ -1317,6 +1324,10 @@
             assign creste_item_discount = creste_mrp | minus: creste_items_subtotal
             assign creste_cart_discount = creste_items_subtotal | minus: cart.total_price
             assign creste_total_savings = creste_mrp | minus: cart.total_price
+            assign creste_grand_total = cart.total_price
+            if creste_note_active
+              assign creste_grand_total = cart.total_price | plus: creste_note_price_cents
+            endif
           -%}
 
           <details class="creste-view-summary" id="CartDrawer-ViewSummary">
@@ -1344,9 +1355,15 @@
                   <span>Free</span>
                 </div>
               {%- endif -%}
+              {%- if creste_note_active -%}
+                <div class="creste-view-summary__row" id="CartDrawer-NoteFeeRow">
+                  <span>Add Handwritten Note</span>
+                  <span>{{ creste_note_price_cents | money }}</span>
+                </div>
+              {%- endif -%}
               <div class="creste-view-summary__row creste-view-summary__row--total">
                 <span>Sub Total</span>
-                <span>{{ cart.total_price | money }}</span>
+                <span>{{ creste_grand_total | money }}</span>
               </div>
             </div>
           </details>
@@ -1358,7 +1375,7 @@
                 &nbsp;<button type="button" class="creste-cart-summary__toggle" data-view-summary-toggle aria-expanded="false" aria-controls="CartDrawer-ViewSummary">View Summary</button>
               </span>
               <span class="creste-cart-summary__total totals__total-value" role="status">
-                {{ cart.total_price | money_with_currency }}
+                {{ creste_grand_total | money_with_currency }}
               </span>
             </div>
             <div class="creste-cart-summary__row">
@@ -1891,6 +1908,39 @@ var res=await fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'appli
         toggle.checked
       );
     }
+
+    if (toggle.__busy) return;
+    toggle.__busy = true;
+
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        attributes: {
+          'Handwritten Note': toggle.checked ? 'Yes' : 'No'
+        },
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Note fee update failed');
+        return res.json();
+      })
+      .then(function (data) {
+        if (data.sections && data.sections['cart-drawer']) {
+          refreshDrawer(data.sections['cart-drawer']);
+        }
+      })
+      .catch(function (err) {
+        console.error('note-toggle', err);
+      })
+      .finally(function () {
+        toggle.__busy = false;
+      });
   });
 
 
