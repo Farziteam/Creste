@@ -12,7 +12,6 @@
     "creste_pdp": {
       "type": "creste-pdp",
       "settings": {
-        "title_override": "DIY Color Your Bag Kit",
         "feature_pills": "Ages 3-8, 45-60 min play, Screen-free, Mess-free",
         "rating_text": "4.9 · 2,148 reviews",
         "sold_text": "1,900+ bought this month",
@@ -49,73 +48,7 @@
     },
     "creste_skills": {
       "type": "creste-skills",
-      "blocks": {
-        "s1": {
-          "type": "skill",
-          "settings": {
-            "icon": "",
-            "title": "Fine motor control",
-            "text": "Holding a brush, tracing an edge and pressing a stencil build the exact grip strength that handwriting needs.",
-            "color": "green"
-          }
-        },
-        "s2": {
-          "type": "skill",
-          "settings": {
-            "icon": "🎨",
-            "title": "Colour reasoning",
-            "text": "Six paints, dozens of mixes. Kids discover that yellow and blue make their own green — nobody has to tell them.",
-            "color": "blue"
-          }
-        },
-        "s3": {
-          "type": "skill",
-          "settings": {
-            "icon": "⏳",
-            "title": "Focus stamina",
-            "text": "A 45-minute project with a visible finish line teaches sitting-with-it — the skill screens quietly erase.",
-            "color": "cream"
-          }
-        },
-        "s4": {
-          "type": "skill",
-          "settings": {
-            "icon": "👜",
-            "title": "Pride of ownership",
-            "text": "It is not a fridge drawing. It is a real bag they use, which turns one afternoon into months of quiet pride.",
-            "color": "peach"
-          }
-        },
-        "s5": {
-          "type": "skill",
-          "settings": {
-            "icon": "💡",
-            "title": "Creative confidence",
-            "text": "There is no wrong bag. Free-paint mode means the result is theirs, and they know it every time they carry it.",
-            "color": "pink"
-          }
-        },
-        "s6": {
-          "type": "skill",
-          "settings": {
-            "icon": "📋",
-            "title": "Planning & sequencing",
-            "text": "Outline first, fill second, details last. The instruction cards teach order of operations without a worksheet.",
-            "color": "lavender"
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3",
-        "s4",
-        "s5",
-        "s6"
-      ],
       "settings": {
-        "heading": "Six skills hiding inside one bag",
-        "subheading": "Every bag they colour quietly builds a real skill — here are six hiding in the fun.",
         "bg_color": "#7c5ce0",
         "padding_top": 64,
         "padding_bottom": 72,

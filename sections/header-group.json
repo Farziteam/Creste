@@ -16,6 +16,7 @@
       "blocks": {
         "nv1": {
           "type": "nav",
+          "disabled": true,
           "settings": {
             "label": "Our Tribe",
             "link": "/pages/our-tribe"
@@ -23,6 +24,7 @@
         },
         "nv2": {
           "type": "nav",
+          "disabled": true,
           "settings": {
             "label": "Our Story",
             "link": "shopify://pages/about-us"
@@ -30,6 +32,7 @@
         },
         "nv3": {
           "type": "nav",
+          "disabled": true,
           "settings": {
             "label": "Contact us",
             "link": "/pages/contact"
@@ -41,7 +44,7 @@
             "label": "0-3",
             "suffix": "years",
             "tint": "#fde7d6",
-            "text-color": "#9C4A16",
+            "text-color": "#9c4a16",
             "link": "shopify://collections/age-group-up-to-3years"
           }
         },
@@ -51,7 +54,7 @@
             "label": "4-6",
             "suffix": "years",
             "tint": "#fce0ec",
-            "text-color": "#B94A75",
+            "text-color": "#b94a75",
             "link": "shopify://collections/age-group-2-6years"
           }
         },
@@ -61,7 +64,7 @@
             "label": "7-10",
             "suffix": "years",
             "tint": "#dcebf5",
-            "text-color": "#1E7D99",
+            "text-color": "#1e7d99",
             "link": "shopify://collections/age-group-7-10years"
           }
         },
@@ -71,7 +74,7 @@
             "label": "11-16",
             "suffix": "years",
             "tint": "#ece4f7",
-            "text-color": "#6B4FA8",
+            "text-color": "#6b4fa8",
             "link": "shopify://collections/age-group-11years-and-above"
           }
         },
@@ -82,7 +85,7 @@
             "label": "16+",
             "suffix": "years",
             "tint": "#fbe9d6",
-            "text-color": "#9C4A16",
+            "text-color": "#9c4a16",
             "link": ""
           }
         },
@@ -92,7 +95,7 @@
             "label": "Adults",
             "suffix": "",
             "tint": "#fce0ec",
-            "text-color": "#B94A75",
+            "text-color": "#b94a75",
             "link": "shopify://collections/age-group-16years"
           }
         },

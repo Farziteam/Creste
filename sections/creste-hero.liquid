@@ -1,11 +1,47 @@
 {%- assign slides = section.blocks | where: 'type', 'slide' -%}
 <style>
-#creste-hb-{{ section.id }}{position:relative;overflow:hidden;background:{{ section.settings.bg }};line-height:0;}
-#creste-hb-{{ section.id }} .hb-slide{display:none;}
-#creste-hb-{{ section.id }} .hb-slide.active{display:block;}
-#creste-hb-{{ section.id }} .hb-slide a{display:block;}
-#creste-hb-{{ section.id }} .hb-slide picture{display:block;}
-#creste-hb-{{ section.id }} .hb-slide img,#creste-hb-{{ section.id }} .hb-ph svg{display:block;width:100%;height:auto;}
+#creste-hb-{{ section.id }}{position:relative;overflow:hidden;background:{{ section.settings.bg }};line-height:0;
+aspect-ratio: 72/35;
+}
+#creste-hb-{{ section.id }} .hb-slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#creste-hb-{{ section.id }} .hb-slide{
+  {% comment %} display:none; {% endcomment %}
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  opacity: 0;
+  visibility: hidden;
+
+  {% comment %} transition: opacity 0.3s ease; {% endcomment %}
+}
+#creste-hb-{{ section.id }} .hb-slide.active{
+  {% comment %} display:block; {% endcomment %}
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+{% comment %} #creste-hb-{{ section.id }} .hb-slide a{display:block;}
+#creste-hb-{{ section.id }} .hb-slide picture{display:block;} {% endcomment %}
+#creste-hb-{{ section.id }} .hb-slide a,
+#creste-hb-{{ section.id }} .hb-slide picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#creste-hb-{{ section.id }} .hb-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+#creste-hb-{{ section.id }} .hb-ph svg{display:block;width:100%;height:auto;}
 #creste-hb-{{ section.id }} .hb-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3;line-height:1;}
 #creste-hb-{{ section.id }} .hb-dot{width:12px;height:12px;border-radius:50%;background:#fff;opacity:.55;border:none;cursor:pointer;padding:0;}
 #creste-hb-{{ section.id }} .hb-dot.on{opacity:1;box-shadow:0 0 0 4px rgba(244,121,58,.35);}
@@ -14,6 +50,9 @@
 #creste-hb-{{ section.id }} .hb-arrow.next{right:12px;}
 @media(max-width: 749px){
   #creste-hb-{{ section.id }} .hb-arrow{display:none;}
+  #creste-hb-{{ section.id }}{
+    aspect-ratio: 5/8;
+  }
 }
 </style>
 <div id='creste-hb-{{ section.id }}' class='creste-section'>

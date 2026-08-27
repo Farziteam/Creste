@@ -23,7 +23,6 @@
         "po_off_suffix": "% off",
         "po_emoji": "✊",
         "po_badge_text": "Smart Saver",
-        "title_override": "",
         "feature_pills": "",
         "rating_text": "",
         "sold_text": "1,900+ bought this month",
@@ -116,6 +115,7 @@
         "faq_tab_label": "FAQs",
         "overview_heading": "A blank canvas bag, waiting for their imagination",
         "overview_text": "",
+        "overview_image": "shopify://shop_images/Aqua_fridge_magnet.jpg",
         "overview_image_alt": "",
         "mascot_left": "shopify://shop_images/Group.png",
         "mascot_right": "shopify://shop_images/attachment-large_5d4ba906-7304-42ae-9198-47f074f50794.png"
@@ -124,60 +124,58 @@
     "creste_artists": {
       "type": "creste-artists",
       "blocks": {
-        "item_BxkUDQ": {
+        "item_QbEQA6": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147227685_1_bf664a7e-5c1d-452f-8d23-469b9c934513.png",
-            "video": "shopify://files/videos/15283135-hd_1080_1920_30fps.mp4"
+            "video": "shopify://files/videos/36-CK-DIY Gardening Kit-VK-V1 (1).mp4"
           }
         },
-        "item_iX4b8c": {
+        "item_7HatHX": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/image_4_470679b2-43ef-4815-a664-2865a12aad36.png"
+            "image": "shopify://shop_images/2fea659e-abde-4f0b-bae8-c9d6dc3ad800.png"
           }
         },
-        "item_LYz3Ae": {
+        "item_DzqJJE": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/image_4_470679b2-43ef-4815-a664-2865a12aad36.png"
+            "image": "shopify://shop_images/e1c568f4-8cfe-4e9a-9f2b-310f6fe88606.png"
           }
         },
-        "item_ehgppP": {
+        "item_4NEb6H": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147227685_1_bf664a7e-5c1d-452f-8d23-469b9c934513.png",
-            "video": "shopify://files/videos/15283135-hd_1080_1920_30fps.mp4"
+            "video": "shopify://files/videos/Fruit candle .mp4"
           }
         },
-        "item_6ewgAn": {
+        "item_xxXDiE": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/1dc4052b8f354d307a2b78be7e09d9889ddd0d94.png"
+            "image": "shopify://shop_images/6712bc94-6d99-4932-8afb-e5e315c3d911.png"
           }
         },
-        "item_hXkmCw": {
+        "item_aNaqem": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/1dc4052b8f354d307a2b78be7e09d9889ddd0d94.png"
+            "video": "shopify://files/videos/WhatsApp Video 2026-08-25 at 16.35.00.mp4"
           }
         },
-        "item_Xge4dM": {
+        "item_KfcQKQ": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Frame_2147227685_1_bf664a7e-5c1d-452f-8d23-469b9c934513.png",
-            "video": "shopify://files/videos/15283135-hd_1080_1920_30fps.mp4"
+            "image": "shopify://shop_images/bcc7da42-05f0-4944-bcb3-455ae4855192_1.png",
+            "video": "shopify://files/videos/handcasting video by gaurav.MP4"
           }
         }
       },
       "block_order": [
-        "item_BxkUDQ",
-        "item_iX4b8c",
-        "item_LYz3Ae",
-        "item_ehgppP",
-        "item_6ewgAn",
-        "item_hXkmCw",
-        "item_Xge4dM"
+        "item_QbEQA6",
+        "item_7HatHX",
+        "item_DzqJJE",
+        "item_4NEb6H",
+        "item_xxXDiE",
+        "item_aNaqem",
+        "item_KfcQKQ"
       ],
       "settings": {
         "heading_prefix": "Made by",

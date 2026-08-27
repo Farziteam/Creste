@@ -27,7 +27,7 @@
           "settings": {
             "heading": "Help Desk",
             "underline": "#00677e",
-            "links": "Contact Us|/pages/contact\nTrack Your Order|/apps/17TRACK\nBulk Order and Return Gifts|https://api.whatsapp.com/send/?phone=%2B918081026320&text&type=phone_number&app_absent=0&wame_ctl=1\nDirect Chat Support|https://api.whatsapp.com/send/?phone=%2B918081026320&text&type=phone_number&app_absent=0&wame_ctl=1\nFAQ's|/pages/faqs"
+            "links": "Contact Us|/pages/contact\nTrack Your Order|/apps/17TRACK\nBulk Order and Return Gifts|https://api.whatsapp.com/send/?phone=%2B918081026320&text&type=phone_number&app_absent=0&wame_ctl=1\nDirect Chat Support|https://api.whatsapp.com/send/?phone=%2B918081026320&text&type=phone_number&app_absent=0&wame_ctl=1"
           }
         },
         "so1": {
@@ -79,7 +79,7 @@
         "banner_title": "Find a Creste Store near you",
         "banner_text": "Discover a world of play and learning. Visit our physical spaces to experience our DIY kits and toy collections firsthand.",
         "banner_btn": "SEARCH NOW",
-        "banner_link": "",
+        "banner_link": "https://share.google/BXuzEBjinX5LXzOAw",
         "copyright": "© 2024 Creste DIY. Made By Farziengineer ."
       }
     }

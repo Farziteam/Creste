@@ -91,7 +91,8 @@
       ▶
     </button>{% elsif block.settings.video_url != blank %}{{ block.settings.video_url | external_video_tag }}{% elsif block.settings.poster != blank %}<img src='{{ block.settings.poster | image_url: width: 500 }}' alt='{{ block.settings.caption | escape }}'>{% else %}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</div>
 {% if block.settings.caption != blank %}<p class='fam-cap'>{{ block.settings.caption }}</p>{% endif %}
-{% assign prod = block.settings.product %}{% if prod != blank %}<div class='fam-prod'><a class='fam-pthumb' href='{{ prod.url }}'>{% if prod.featured_image %}<img src='{{ prod.featured_image | image_url: width: 120 }}' alt='{{ prod.title | escape }}'>{% endif %}</a><div class='fam-pinfo'><a class='fam-pt' href='{{ prod.url }}'>{{ prod.title }}</a><span class='fam-pp'>{{ prod.price | money }}</span></div><div class='fam-add'><form class='fam-addform' method='post' action='{{ routes.cart_add_url }}'><input type='hidden' name='id' value='{{ prod.selected_or_first_available_variant.id }}'><input type='hidden' name='quantity' value='1'><button type='submit'{% unless prod.available %} disabled{% endunless %}>{% if prod.available %}Add{% else %}Sold out{% endif %}</button></form></div></div>{% endif %}
+{% assign prod = block.settings.product %}{% if prod != blank %}<div class='fam-prod'><a class='fam-pthumb' href='{{ prod.url }}'>{% if prod.featured_image %}<img src='{{ prod.featured_image | image_url: width: 120 }}' alt='{{ prod.title | escape }}'>{% endif %}</a><div class='fam-pinfo'><a class='fam-pt' href='{{ prod.url }}'>{{ prod.title }}</a><span class='fam-pp'>{{ prod.price | money }}</span></div><div class='fam-add'>
+  <form class='fam-addform' method='post' action='{{ routes.cart_add_url }}'><input type='hidden' name='id' value='{{ prod.selected_or_first_available_variant.id }}'><input type='hidden' name='quantity' value='1'><button type='submit'{% unless prod.available %} disabled{% endunless %}>{% if prod.available %}Add{% else %}Sold out{% endif %}</button></form></div></div>{% endif %}
 </div>{% endif %}{% endfor %}
 {% if section.blocks.size == 0 %}{% for i in (1..4) %}<div class='fam-card'><div class='fam-vid'>{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div><div class='fam-prod'><span class='fam-pthumb'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='fam-pinfo'><span class='fam-pt'>Linked product</span><span class='fam-pp'>Rs. 0</span></div><div class='fam-add'><button type='button'>Add</button></div></div></div>{% endfor %}{% endif %}
 </div>
@@ -141,6 +142,244 @@ document.querySelectorAll(".fam-vid").forEach((wrapper) => {
     playBtn.style.display = "flex";
   });
 });
+</script>
+<script>
+(function () {
+
+  var famForms = document.querySelectorAll('.fam-addform');
+
+  famForms.forEach(function (form) {
+
+    form.addEventListener('submit', function (e) {
+
+      e.preventDefault();
+
+      var button = form.querySelector('button');
+
+      if (!button || button.disabled) return;
+
+      if (button.classList.contains('loading')) return;
+
+      var originalHTML = button.innerHTML;
+
+      button.classList.add('loading');
+      button.disabled = true;
+
+      var formData = new FormData(form);
+
+      formData.append(
+        'sections',
+        'cart-drawer,header'
+      );
+
+      formData.append(
+        'sections_url',
+        window.location.pathname
+      );
+
+      fetch(
+        window.routes && window.routes.cart_add_url
+          ? window.routes.cart_add_url
+          : '/cart/add.js',
+        {
+          method: 'POST',
+
+          headers: {
+            'Accept': 'application/json'
+          },
+
+          body: formData
+        }
+      )
+      .then(function (response) {
+
+        if (!response.ok) {
+          return response.json().then(function (data) {
+            throw new Error(
+              data.description || 'Add to cart failed'
+            );
+          });
+        }
+
+        return response.json();
+      })
+      .then(function (response) {
+
+        /* =========================
+           UPDATE CART DRAWER
+        ========================== */
+
+        var drawerHTML =
+          response.sections &&
+          response.sections['cart-drawer'];
+
+        updateCartDrawer(drawerHTML, button);
+
+
+        /* =========================
+           UPDATE HEADER BUBBLE
+        ========================== */
+
+        var headerHTML =
+          response.sections &&
+          response.sections['header'];
+
+        if (headerHTML) {
+          updateHeaderBubble(headerHTML);
+        } else {
+          refreshHeaderBubble();
+        }
+
+      })
+      .catch(function (error) {
+
+        console.error(
+          'FAM Add To Cart Error:',
+          error
+        );
+
+      })
+      .finally(function () {
+
+        button.classList.remove('loading');
+        button.disabled = false;
+        button.innerHTML = originalHTML;
+
+      });
+
+    });
+
+  });
+
+
+  /* =========================
+     UPDATE CART DRAWER
+  ========================== */
+
+  function updateCartDrawer(drawerHTML, opener) {
+
+    if (!drawerHTML) return;
+
+    var currentDrawer =
+      document.querySelector('cart-drawer');
+
+    if (!currentDrawer) return;
+
+    var parser = new DOMParser();
+
+    var drawerDoc =
+      parser.parseFromString(
+        drawerHTML,
+        'text/html'
+      );
+
+    var newDrawer =
+      drawerDoc.querySelector('cart-drawer');
+
+    if (!newDrawer) return;
+
+    currentDrawer.replaceWith(newDrawer);
+
+    var updatedDrawer =
+      document.querySelector('cart-drawer');
+
+    if (!updatedDrawer) return;
+
+    if (typeof updatedDrawer.open === 'function') {
+
+      updatedDrawer.open(opener);
+
+    } else {
+
+      updatedDrawer.classList.remove('is-empty');
+      updatedDrawer.classList.add('active');
+      updatedDrawer.setAttribute('open', '');
+
+    }
+
+  }
+
+
+  /* =========================
+     UPDATE HEADER BUBBLE
+  ========================== */
+
+  function updateHeaderBubble(headerHTML) {
+
+    if (!headerHTML) return;
+
+    var parser = new DOMParser();
+
+    var headerDoc =
+      parser.parseFromString(
+        headerHTML,
+        'text/html'
+      );
+
+    var newBubbles =
+      headerDoc.querySelectorAll(
+        '#cart-icon-bubble'
+      );
+
+    var oldBubbles =
+      document.querySelectorAll(
+        '#cart-icon-bubble'
+      );
+
+    oldBubbles.forEach(function (
+      oldBubble,
+      index
+    ) {
+
+      var newBubble =
+        newBubbles[index] ||
+        newBubbles[0];
+
+      if (newBubble) {
+        oldBubble.innerHTML =
+          newBubble.innerHTML;
+      }
+
+    });
+
+  }
+
+
+  /* =========================
+     HEADER FALLBACK
+  ========================== */
+
+  function refreshHeaderBubble() {
+
+    fetch(
+      window.location.pathname +
+      '?sections=header',
+      {
+        headers: {
+          'Accept': 'application/json'
+        }
+      }
+    )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+
+      if (data && data.header) {
+        updateHeaderBubble(data.header);
+      }
+
+    })
+    .catch(function (error) {
+      console.error(
+        'Header refresh error:',
+        error
+      );
+    });
+
+  }
+
+})();
 </script>
 {% schema %}
 {

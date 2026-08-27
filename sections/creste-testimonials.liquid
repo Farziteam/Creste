@@ -21,6 +21,12 @@
     overflow:hidden;
     position:relative;
     padding-bottom:80px;
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+#creste-tst-{{ section.id }}.is-ready .ct-list {
+    opacity: 1;
 }
 #creste-tst-{{ section.id }} .ct-h b,.ct-h span{
     text-align: left !important;
@@ -120,7 +126,7 @@
 {%- endif -%}
 #creste-tst-{{ section.id }} .ct-wtop{position:absolute;top:0;left:0;right:0;height:20px;background:{{ section.settings.wave_color }};-webkit-mask:radial-gradient(10px at 10px 0,#0000 99%,#000) 0 0/20px 20px repeat-x;mask:radial-gradient(10px at 10px 0,#0000 99%,#000) 0 0/20px 20px repeat-x;}
 #creste-tst-{{ section.id }} .ct-in{position:relative;z-index:1;max-width:1200px;margin:0 auto;}
-#creste-tst-{{ section.id }} .ct-h{text-align:center;margin:0 0 24px;}
+#creste-tst-{{ section.id }} .ct-h{text-align:center;margin:20px 0 24px;}
 #creste-tst-{{ section.id }} .ct-h b{display:block;font-family:'Nunito',sans-serif;font-weight:900;font-size:26px;color:#2B1702;}
 #creste-tst-{{ section.id }} .ct-h span{display:block;font-family:'Fredoka One',cursive;font-size:44px;line-height:1.1;color:#7E57C2;}
 #creste-tst-{{ section.id }} .ct-list{display:flex;gap:14px;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none;position: relative;}
@@ -192,6 +198,9 @@
         right: -15px;
         top: -8px;
    }
+   #creste-tst-{{ section.id }} .ct-h{
+       margin: 0 0 24px;
+   }
 }
 
 </style>
@@ -213,6 +222,255 @@
 </div>
 </div>
 <script>
+    (function () {
+
+    const root = document.getElementById("creste-tst-{{ section.id }}");
+
+    if (!root) return;
+
+    const list = root.querySelector(".ct-list");
+
+    if (!list) return;
+
+    const cards = [...list.querySelectorAll(".ct-card")];
+
+    const btn = document.getElementById("ctmore-{{ section.id }}");
+
+    const cols = {{ section.settings.columns }};
+    const gap = 20;
+
+    let expanded = false;
+    let resizeTimer;
+
+
+    /* =========================
+       MASONRY
+    ========================= */
+
+    function masonry(expand = false) {
+
+        if (window.innerWidth < 750) return;
+
+        const listWidth = list.clientWidth;
+
+        if (!listWidth) return;
+
+        const cardWidth =
+            (listWidth - gap * (cols - 1)) / cols;
+
+        const heights = new Array(cols).fill(0);
+
+
+        cards.forEach(card => {
+
+            card.style.position = "absolute";
+
+            card.style.width = cardWidth + "px";
+
+
+            let col = 0;
+
+
+            for (let i = 1; i < cols; i++) {
+
+                if (heights[i] < heights[col]) {
+
+                    col = i;
+
+                }
+
+            }
+
+
+            card.style.left =
+                (col * (cardWidth + gap)) + "px";
+
+            card.style.top =
+                heights[col] + "px";
+
+
+            heights[col] +=
+                card.offsetHeight + gap;
+
+        });
+
+
+        const maxHeight = Math.max(...heights);
+
+
+        if (expand) {
+
+            list.style.height = maxHeight + "px";
+
+        } else {
+
+            const rows = [
+                ...new Set(
+                    cards.map(card =>
+                        parseFloat(card.style.top)
+                    )
+                )
+            ].sort((a, b) => a - b);
+
+
+            if (rows.length > 2) {
+
+                list.style.height =
+                    (rows[2] + cards[0].offsetHeight / 2) + "px";
+
+            } else {
+
+                list.style.height = maxHeight + "px";
+
+            }
+
+        }
+
+    }
+
+
+    /* =========================
+       UPDATE LAYOUT
+    ========================= */
+
+    function updateLayout() {
+
+        if (window.innerWidth < 750) {
+
+
+            list.style.height = "";
+            list.style.minHeight = "";
+            list.style.maxHeight =
+                expanded ? "none" : "980px";
+
+            list.style.overflow = "hidden";
+
+
+            cards.forEach(card => {
+
+                card.style.position = "";
+                card.style.width = "";
+                card.style.left = "";
+                card.style.top = "";
+
+            });
+
+
+        } else {
+
+
+            list.style.maxHeight = "";
+            list.style.overflow = "hidden";
+
+
+            masonry(expanded);
+
+        }
+
+    }
+
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    if (btn) {
+
+        btn.addEventListener("click", function () {
+
+            expanded = true;
+
+            list.classList.add("is-expanded");
+
+
+            if (window.innerWidth < 750) {
+
+                list.style.maxHeight = "none";
+
+            } else {
+
+                masonry(true);
+
+            }
+
+
+            btn.parentElement.style.display = "none";
+
+        });
+
+    }
+
+
+    /* =========================
+       INITIALIZE IMMEDIATELY
+    ========================= */
+
+    function init() {
+
+        updateLayout();
+
+
+        requestAnimationFrame(function () {
+
+            updateLayout();
+
+            root.classList.add("is-ready");
+
+        });
+
+    }
+
+
+    init();
+
+
+    /* =========================
+       IMAGE LOAD RECALCULATION
+    ========================= */
+
+    cards.forEach(card => {
+
+        const images = card.querySelectorAll("img");
+
+
+        images.forEach(img => {
+
+            if (!img.complete) {
+
+                img.addEventListener("load", function () {
+
+                    updateLayout();
+
+                }, { once: true });
+
+            }
+
+        });
+
+    });
+
+
+    /* =========================
+       RESIZE
+    ========================= */
+
+    window.addEventListener("resize", function () {
+
+        clearTimeout(resizeTimer);
+
+
+        resizeTimer = setTimeout(function () {
+
+            updateLayout();
+
+        }, 150);
+
+    });
+
+
+})();
+</script>
+{% comment %} <script>
 (function () {
 
     const root = document.getElementById("creste-tst-{{ section.id }}");
@@ -368,7 +626,7 @@
     });
 
 })();
-</script>
+</script> {% endcomment %}
 {% comment %} <script>
 (function(){
 

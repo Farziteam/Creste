@@ -168,7 +168,7 @@
 
       <div class="cpdp__col-right">
         <div class="cpdp__pills">
-          {%- assign pills = section.settings.feature_pills | default: 'Ages 3-8, 45-60 min play, Screen-free, Mess-free' | split: ',' -%}
+          {%- assign pills = product.metafields.custom.product_pill_feature | split: ',' -%}
           {%- assign pcolors = 'y,b,g,p' | split: ',' -%}
           {%- for p in pills -%}
             {%- assign pc = forloop.index0 | modulo: 4 -%}
