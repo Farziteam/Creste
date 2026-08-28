@@ -948,6 +948,7 @@
           "settings": {
             "video": "shopify://files/videos/diwali kit.mp4",
             "video_url": "",
+            "poster": "shopify://shop_images/Diwali-Banner-Mobile.jpg",
             "caption": "",
             "product": "diy-diwali-kit"
           }
