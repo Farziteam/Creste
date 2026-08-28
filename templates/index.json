@@ -943,6 +943,15 @@
     "creste_families": {
       "type": "creste-families",
       "blocks": {
+        "reel_bHA4jw": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Dussehra.mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "diy-dussehra-kit"
+          }
+        },
         "reel_4HcYU6": {
           "type": "reel",
           "settings": {
@@ -964,6 +973,7 @@
         }
       },
       "block_order": [
+        "reel_bHA4jw",
         "reel_4HcYU6",
         "f4"
       ],
