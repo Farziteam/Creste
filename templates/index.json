@@ -943,6 +943,15 @@
     "creste_families": {
       "type": "creste-families",
       "blocks": {
+        "reel_tcabgK": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/diwali kit.mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "diy-diwali-kit"
+          }
+        },
         "reel_bHA4jw": {
           "type": "reel",
           "settings": {
@@ -973,6 +982,7 @@
         }
       },
       "block_order": [
+        "reel_tcabgK",
         "reel_bHA4jw",
         "reel_4HcYU6",
         "f4"
