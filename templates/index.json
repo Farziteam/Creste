@@ -943,6 +943,15 @@
     "creste_families": {
       "type": "creste-families",
       "blocks": {
+        "reel_4HcYU6": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Gardening_Instructional_Video (1).mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "diy-gardening-kit"
+          }
+        },
         "f4": {
           "type": "reel",
           "settings": {
@@ -955,6 +964,7 @@
         }
       },
       "block_order": [
+        "reel_4HcYU6",
         "f4"
       ],
       "settings": {
