@@ -946,10 +946,11 @@
         "f4": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/Video-348.mp4",
+            "video": "shopify://files/videos/IMG_5230.MP4",
             "video_url": "",
+            "poster": "shopify://shop_images/bcc7da42-05f0-4944-bcb3-455ae4855192_1.png",
             "caption": "",
-            "product": "diy-baby-hand-casting-kit-2years"
+            "product": "diy-hand-casting-kit-for-couples-2years"
           }
         }
       },
