@@ -1124,12 +1124,16 @@
         </form>
       </cart-drawer-items>
       {%- if cart != empty -%}
-              {%- assign creste_note_price = 50 -%}
-              {%- assign creste_note_price_cents = creste_note_price | times: 100 -%}
-              {%- assign creste_note_active = false -%}
-              {%- if cart.attributes['Handwritten Note'] == 'Yes' -%}
-                {%- assign creste_note_active = true -%}
-              {%- endif -%}
+{%- assign creste_note_price = 50 -%}
+{%- assign creste_note_variant_id = 48203361779870 -%}
+{%- assign creste_note_active = false -%}
+
+{%- for item in cart.items -%}
+  {%- if item.variant.id == creste_note_variant_id -%}
+    {%- assign creste_note_active = true -%}
+  {%- endif -%}
+{%- endfor -%}
+
 
             <div
               class="creste-cart-note"
@@ -1137,7 +1141,7 @@
             >
               {% comment %} &#128221; {% endcomment %}
               <span class="creste-cart-note__icon">
-                {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="orange" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-notebook-pen-icon lucide-notebook-pen"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><path d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg> {% endcomment %}
+
                  <span class="creste-cart-note__icon">
   <img
     src="https://cdn.shopify.com/s/files/1/0673/0114/6782/files/52db2e7ef254d8193e49405b79dd7646563b6b8c.jpg?v=1787814819"
@@ -1182,12 +1186,17 @@
                 Note (Max 100 Words)
               </label>
 
-              <textarea
-                class="creste-cart-note__textarea"
-                id="CartDrawer-NoteText"
-                maxlength="600"
-                placeholder="Write your message here..."
-              ></textarea>
+                <textarea
+                  class="creste-cart-note__textarea"
+                  id="CartDrawer-NoteText"
+                  maxlength="600"
+                  placeholder="Write your message here..."
+                >{%- for item in cart.items -%}
+                  {%- if item.variant.id == creste_note_variant_id -%}
+                    {{ item.properties['Handwritten Note'] | escape }}
+                  {%- endif -%}
+                {%- endfor -%}</textarea>
+
             </div>
 {%- if collections['age-group-up-to-3years']
   and collections['age-group-up-to-3years'].products.size > 0
@@ -1325,9 +1334,7 @@
             assign creste_cart_discount = creste_items_subtotal | minus: cart.total_price
             assign creste_total_savings = creste_mrp | minus: cart.total_price
             assign creste_grand_total = cart.total_price
-            if creste_note_active
-              assign creste_grand_total = cart.total_price | plus: creste_note_price_cents
-            endif
+
           -%}
 
           <details class="creste-view-summary" id="CartDrawer-ViewSummary">
@@ -1419,341 +1426,6 @@
   </div>
   
 </cart-drawer>
-{% comment %} <script>
-  (function () {
-    if (window.__cresteCartDrawerBound) return;
-    window.__cresteCartDrawerBound = true;
-
-    function refreshDrawer(sectionsHtml) {
-      var doc = new DOMParser().parseFromString(sectionsHtml, 'text/html');
-      var fresh = doc.querySelector('cart-drawer');
-      var current = document.querySelector('cart-drawer');
-      if (fresh && current) current.innerHTML = fresh.innerHTML;
-    }
-
-    document.addEventListener('click', async function (e) {
-      var toggle = e.target.closest('[data-view-summary-toggle]');
-      if (toggle) {
-        var details = document.getElementById('CartDrawer-ViewSummary');
-        if (details) {
-          var willOpen = !details.open;
-          details.open = willOpen;
-          toggle.setAttribute('aria-expanded', String(willOpen));
-          toggle.textContent = willOpen ? 'Hide Summary' : 'View Summary';
-        }
-        return;
-      }
-
-      var gwBtn = e.target.closest('[data-gw-toggle]');
-      if (gwBtn) {
-        e.preventDefault();
-        if (gwBtn.__busy) return;
-        gwBtn.__busy = true;
-        gwBtn.style.opacity = '0.6';
-        var line = Number(gwBtn.getAttribute('data-line')) || 1;
-        var qty = Number(gwBtn.getAttribute('data-qty')) || 1;
-        var add = gwBtn.getAttribute('data-add') === '1';
-        try {
-          var res = await fetch('/cart/change.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              line: line,
-              quantity: qty,
-              properties: add ? { 'Gift wrapping': 'Yes' } : { 'Gift wrapping': '' },
-              sections: 'cart-drawer',
-              sections_url: location.pathname,
-            }),
-          });
-          var data = await res.json();
-          if (data.sections && data.sections['cart-drawer']) {
-            refreshDrawer(data.sections['cart-drawer']);
-          }
-        } catch (err) {
-          console.error('gw', err);
-        }
-        return;
-      }
-    });
-
-
-    
-  })();
-</script>
-<script>
-  (function(){
-    var toggle=document.getElementById('CartDrawer-NoteToggle');
-    var field=document.getElementById('CartDrawer-NoteField');
-    if(toggle&&field){toggle.addEventListener('change',function(){
-      field.classList.toggle('is-open',toggle.checked);
-    });}
-    var noteText=document.getElementById('CartDrawer-NoteText');
-    if(noteText){noteText.addEventListener('blur',function(){fetch('/cart/update.js',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({note:noteText.value})
-    }).catch(function(err){console.error('note-update',err);});
-  });}document.addEventListener('click',async function(e){
-    var btn=e.target.closest('[data-pick-add]');if(!btn)return;
-    e.preventDefault();if(btn.disabled)return;
-    var variantId=btn.getAttribute('data-variant-id');btn.disabled=true;
-    var originalText=btn.textContent;btn.textContent='Adding...';
-    try{
-var res=await fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({items:[{id:variantId,quantity:1}]})
-    });
-    if(!res.ok){throw new Error('add failed');}
-    var sectionsRes=await fetch('/?sections=cart-drawer');
-    var sectionsData=await sectionsRes.json();
-    if(sectionsData['cart-drawer']&&typeof refreshDrawer==='function'){
-      refreshDrawer(sectionsData['cart-drawer']);
-      btn.textContent='Added!';
-    }
-    setTimeout(function(){
-      btn.textContent=originalText;btn.disabled=false;
-    },1500);
-  }catch(err){
-    console.error('pick-add',err);btn.textContent=originalText;btn.disabled=false;
-  }
-});
-})();
-</script> {% endcomment %}
-
-{% comment %}///////////// <script>
-(function () {
-  if (window.__cresteCartDrawerBound) return;
-  window.__cresteCartDrawerBound = true;
-
-  function refreshDrawer(sectionsHtml) {
-    if (!sectionsHtml) return;
-
-    var doc = new DOMParser().parseFromString(sectionsHtml, 'text/html');
-    var freshDrawer = doc.querySelector('cart-drawer');
-    var currentDrawer = document.querySelector('cart-drawer');
-
-    if (freshDrawer && currentDrawer) {
-      currentDrawer.innerHTML = freshDrawer.innerHTML;
-    }
-  }
-
-  async function refreshCartDrawer() {
-    try {
-      var res = await fetch('/?sections=cart-drawer', {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      });
-
-      if (!res.ok) throw new Error('Drawer refresh failed');
-
-      var data = await res.json();
-
-      if (data['cart-drawer']) {
-        refreshDrawer(data['cart-drawer']);
-      }
-    } catch (err) {
-      console.error('cart-drawer-refresh', err);
-    }
-  }
-
-  document.addEventListener('click', async function (e) {
-
-    /* =========================
-       ADD CART PICK
-    ========================= */
-
-    var btn = e.target.closest('[data-pick-add]');
-
-    if (btn) {
-      e.preventDefault();
-
-      if (btn.disabled) return;
-
-      var variantId = btn.getAttribute('data-variant-id');
-      var originalText = btn.textContent.trim();
-
-      btn.disabled = true;
-      btn.textContent = 'Adding...';
-
-      try {
-        var res = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            items: [
-              {
-                id: Number(variantId),
-                quantity: 1
-              }
-            ]
-          })
-        });
-
-        if (!res.ok) {
-          var errorData = await res.json().catch(function () {
-            return {};
-          });
-
-          throw new Error(
-            errorData.description || 'Product could not be added'
-          );
-        }
-
-        /* Get the latest drawer after adding the product */
-        await refreshCartDrawer();
-
-        btn.textContent = 'Added!';
-
-        /* The drawer is now updated with the latest cart data */
-
-        setTimeout(function () {
-          btn.textContent = originalText;
-          btn.disabled = false;
-        }, 1500);
-
-      } catch (err) {
-        console.error('pick-add', err);
-
-        btn.textContent = 'Try Again';
-
-        setTimeout(function () {
-          btn.textContent = originalText;
-          btn.disabled = false;
-        }, 1500);
-      }
-
-      return;
-    }
-
-
-    /* =========================
-       VIEW SUMMARY TOGGLE
-    ========================= */
-
-    var toggle = e.target.closest('[data-view-summary-toggle]');
-
-    if (toggle) {
-      var details = document.getElementById('CartDrawer-ViewSummary');
-
-      if (details) {
-        var willOpen = !details.open;
-
-        details.open = willOpen;
-        toggle.setAttribute(
-          'aria-expanded',
-          String(willOpen)
-        );
-
-        toggle.textContent = willOpen
-          ? 'Hide Summary'
-          : 'View Summary';
-      }
-
-      return;
-    }
-
-
-    /* =========================
-       GIFT WRAPPING
-    ========================= */
-
-    var gwBtn = e.target.closest('[data-gw-toggle]');
-
-    if (gwBtn) {
-      e.preventDefault();
-
-      if (gwBtn.__busy) return;
-
-      gwBtn.__busy = true;
-      gwBtn.style.opacity = '0.6';
-
-      var line = Number(
-        gwBtn.getAttribute('data-line')
-      ) || 1;
-
-      var qty = Number(
-        gwBtn.getAttribute('data-qty')
-      ) || 1;
-
-      var add =
-        gwBtn.getAttribute('data-add') === '1';
-
-      try {
-        var res = await fetch('/cart/change.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            line: line,
-            quantity: qty,
-            properties: add
-              ? { 'Gift wrapping': 'Yes' }
-              : { 'Gift wrapping': '' },
-            sections: 'cart-drawer',
-            sections_url: window.location.pathname
-          })
-        });
-
-        if (!res.ok) {
-          throw new Error('Gift wrap update failed');
-        }
-
-        var data = await res.json();
-
-        if (
-          data.sections &&
-          data.sections['cart-drawer']
-        ) {
-          refreshDrawer(
-            data.sections['cart-drawer']
-          );
-        }
-
-      } catch (err) {
-        console.error('gw', err);
-
-      } finally {
-        gwBtn.__busy = false;
-        gwBtn.style.opacity = '';
-      }
-
-      return;
-    }
-
-  });
-
-
-  /* =========================
-     CART NOTE
-  ========================= */
-
-  var noteText =
-    document.getElementById('CartDrawer-NoteText');
-
-  if (noteText) {
-    noteText.addEventListener('blur', function () {
-
-      fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          note: noteText.value
-        })
-      }).catch(function (err) {
-        console.error('note-update', err);
-      });
-
-    });
-  }
-
-})();
-</script> {% endcomment %}
 
 <script>
 (function () {
@@ -1892,10 +1564,166 @@ var res=await fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'appli
 
 
   /* =========================
-     CART NOTE
+     HANDWRITTEN NOTE
   ========================= */
 
-  document.addEventListener('change', function (e) {
+  var HANDWRITTEN_NOTE_VARIANT_ID = 48203361779870;
+
+  async function getCart() {
+    var res = await fetch('/cart.js', {
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error('Could not get cart');
+    }
+
+    return await res.json();
+  }
+
+
+  async function addHandwrittenNote(noteText) {
+    var cart = await getCart();
+
+    var existingNoteItem = cart.items.find(function (item) {
+      return Number(item.variant_id) === HANDWRITTEN_NOTE_VARIANT_ID;
+    });
+
+    /* Already added - just update the message */
+    if (existingNoteItem) {
+      return updateHandwrittenNote(
+        existingNoteItem.key,
+        noteText
+      );
+
+    }
+
+    var res = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            id: HANDWRITTEN_NOTE_VARIANT_ID,
+            quantity: 1,
+            properties: {
+              'Handwritten Note': noteText || ''
+            }
+          }
+        ],
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    });
+
+    if (!res.ok) {
+      var errorData = await res.json().catch(function () {
+        return {};
+      });
+
+      throw new Error(
+        errorData.description ||
+        'Could not add handwritten note'
+      );
+    }
+
+    return await res.json();
+  }
+
+
+  async function updateHandwrittenNote(lineKey, noteText) {
+    var res = await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: lineKey,
+        quantity: 1,
+        properties: {
+          'Handwritten Note': noteText || ''
+        },
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error('Could not update handwritten note');
+    }
+
+    return await res.json();
+  }
+
+      async function saveCurrentHandwrittenNote() {
+  var toggle =
+    document.getElementById('CartDrawer-NoteToggle');
+
+  var noteText =
+    document.getElementById('CartDrawer-NoteText');
+
+  if (!toggle || !toggle.checked || !noteText) {
+    return;
+  }
+
+  var cart = await getCart();
+
+  var noteItem = cart.items.find(function (item) {
+    return Number(item.variant_id) ===
+      HANDWRITTEN_NOTE_VARIANT_ID;
+  });
+
+  if (!noteItem) {
+    return;
+  }
+
+  await updateHandwrittenNote(
+    noteItem.key,
+    noteText.value.trim()
+  );
+}
+
+
+  async function removeHandwrittenNote() {
+    var cart = await getCart();
+
+    var noteItem = cart.items.find(function (item) {
+      return Number(item.variant_id) === HANDWRITTEN_NOTE_VARIANT_ID;
+    });
+
+    if (!noteItem) {
+      return;
+    }
+
+    var res = await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: noteItem.key,
+        quantity: 0,
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error('Could not remove handwritten note');
+    }
+
+    return await res.json();
+  }
+
+
+  document.addEventListener('change', async function (e) {
     var toggle = e.target.closest('#CartDrawer-NoteToggle');
 
     if (!toggle) return;
@@ -1910,58 +1738,178 @@ var res=await fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'appli
     }
 
     if (toggle.__busy) return;
-    toggle.__busy = true;
 
-    fetch('/cart/update.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        attributes: {
-          'Handwritten Note': toggle.checked ? 'Yes' : 'No'
-        },
-        sections: 'cart-drawer',
-        sections_url: location.pathname
-      })
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error('Note fee update failed');
-        return res.json();
-      })
-      .then(function (data) {
-        if (data.sections && data.sections['cart-drawer']) {
-          refreshDrawer(data.sections['cart-drawer']);
+    toggle.__busy = true;
+    toggle.disabled = true;
+
+    try {
+
+      if (toggle.checked) {
+
+        var noteTextElement =
+          document.getElementById('CartDrawer-NoteText');
+
+        var noteText =
+          noteTextElement
+            ? noteTextElement.value.trim()
+            : '';
+
+        var data =
+          await addHandwrittenNote(noteText);
+
+        if (
+          data.sections &&
+          data.sections['cart-drawer']
+        ) {
+          refreshDrawer(
+            data.sections['cart-drawer']
+          );
+        } else {
+          await refreshCartDrawer();
         }
-      })
-      .catch(function (err) {
-        console.error('note-toggle', err);
-      })
-      .finally(function () {
-        toggle.__busy = false;
-      });
+
+      } else {
+
+        var data =
+          await removeHandwrittenNote();
+
+        if (
+          data &&
+          data.sections &&
+          data.sections['cart-drawer']
+        ) {
+          refreshDrawer(
+            data.sections['cart-drawer']
+          );
+        } else {
+          await refreshCartDrawer();
+        }
+
+      }
+
+    } catch (err) {
+
+      console.error(
+        'handwritten-note-toggle',
+        err
+      );
+
+      /*
+       * If something failed, restore checkbox state.
+       */
+      toggle.checked = !toggle.checked;
+
+      if (field) {
+        field.classList.toggle(
+          'is-open',
+          toggle.checked
+        );
+      }
+
+    } finally {
+
+      toggle.__busy = false;
+      toggle.disabled = false;
+
+    }
   });
 
 
-  document.addEventListener('blur', function (e) {
-    var noteText = e.target.closest('#CartDrawer-NoteText');
+  /*
+   * Save handwritten message to the ₹50 product
+   * line-item property.
+   */
+  document.addEventListener('blur', async function (e) {
+
+    var noteText =
+      e.target.closest('#CartDrawer-NoteText');
 
     if (!noteText) return;
 
-    fetch('/cart/update.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        note: noteText.value
-      })
-    }).catch(function (err) {
-      console.error('note-update', err);
-    });
+    var toggle =
+      document.getElementById('CartDrawer-NoteToggle');
+
+    if (!toggle || !toggle.checked) return;
+
+    var text =
+      noteText.value.trim();
+
+    try {
+
+      var cart = await getCart();
+
+      var noteItem = cart.items.find(function (item) {
+        return Number(item.variant_id) ===
+          HANDWRITTEN_NOTE_VARIANT_ID;
+      });
+
+      if (!noteItem) return;
+
+      await updateHandwrittenNote(
+        noteItem.key,
+        text
+      );
+
+    } catch (err) {
+
+      console.error(
+        'handwritten-note-text',
+        err
+      );
+
+    }
+
   }, true);
+  /* =========================
+   CHECKOUT - SAVE NOTE FIRST
+========================= */
+
+document.addEventListener('click', async function (e) {
+
+  var checkoutButton =
+    e.target.closest('#CartDrawer-Checkout');
+
+  if (!checkoutButton) return;
+
+  if (checkoutButton.__noteSaving) return;
+
+  var toggle =
+    document.getElementById('CartDrawer-NoteToggle');
+
+  if (!toggle || !toggle.checked) {
+    return;
+  }
+
+  e.preventDefault();
+
+  checkoutButton.__noteSaving = true;
+  checkoutButton.disabled = true;
+
+  try {
+
+    await saveCurrentHandwrittenNote();
+
+    /*
+     * Now allow checkout to continue.
+     */
+    window.location.href = '/checkout';
+
+  } catch (err) {
+
+    console.error(
+      'checkout-note-save',
+      err
+    );
+
+    checkoutButton.__noteSaving = false;
+    checkoutButton.disabled = false;
+
+    alert(
+      'Please wait a moment and try checkout again.'
+    );
+  }
+
+});
 
 
   /* =========================
