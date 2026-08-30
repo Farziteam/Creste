@@ -23,10 +23,16 @@
     "collection_list_3aRcEX": {
       "type": "collection-list",
       "blocks": {
+        "featured_collection_jhfQLz": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "festive-kits"
+          }
+        },
         "featured_collection_TDMXyV": {
           "type": "featured_collection",
           "settings": {
-            "collection": ""
+            "collection": "best-seller"
           }
         },
         "featured_collection_iHHtKK": {
@@ -73,6 +79,7 @@
         }
       },
       "block_order": [
+        "featured_collection_jhfQLz",
         "featured_collection_TDMXyV",
         "featured_collection_iHHtKK",
         "featured_collection_dDQaWN",
