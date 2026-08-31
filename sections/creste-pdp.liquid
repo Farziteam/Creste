@@ -406,6 +406,8 @@
           </div>
           {%- if product.metafields.custom.product_tutorial_video_link != blank -%}</a>{%- endif -%}
         </div> {% endcomment %}
+         {% if product.metafields.custom.product_tutorial_video_link.value != blank %}
+
         {%- assign video_url = product.metafields.custom.product_tutorial_video_link.value -%}
 
         {%- if video_url != blank -%}
@@ -473,9 +475,9 @@
 
             {%- endif -%}
 
-          {%- else -%}
+          {% comment %} {%- else -%} {% endcomment %}
 
-            <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+            {% comment %} <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div> {% endcomment %}
 
           {%- endif -%}
 
@@ -489,6 +491,7 @@
 
         {%- if video_url != blank -%}
           </a>
+        {%- endif -%}
         {%- endif -%}
         
         
