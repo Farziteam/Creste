@@ -162,7 +162,7 @@
             "desc": "Stories and first touches",
             "tint": "#e0f7ff",
             "collection": "age-group-up-to-3years",
-            "link": ""
+            "link": "shopify://collections/age-group-up-to-3years"
           }
         },
         "a2": {
@@ -259,7 +259,7 @@
             "emoji": "🎨",
             "name": "ART STUDIO",
             "subtitle": "Self-expression",
-            "collection": "demo"
+            "collection": "art-studio"
           }
         },
         "cat2": {
