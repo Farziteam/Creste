@@ -237,7 +237,6 @@
     margin-top:10px;
      flex-shrink: 0;
   }
-
   .creste-view-summary {
     margin-bottom: 2px;
   }
@@ -444,8 +443,185 @@
     padding: 4px 11px;
   }
 }
-  
+    .creste-cart-progress__pill{
+    max-width: 49%;
+    min-width: 49%;
+    padding: 4px 11px;
+  }
+/* ===== Add Handwritten Note ===== */
+/* ===== Add Handwritten Note ===== */
+
+.creste-cart-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FCF0F6;
+  border-radius: 22px;
+  padding: 12px 16px;
+  margin: 12px 16px 0;
+}
+
+.creste-cart-note__icon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.creste-cart-note__icon svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.creste-cart-note__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.creste-cart-note__title {
+  font-family: Nunito Sans, Nunito, sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #1E1108;
+  margin: 0 0 2px;
+}
+
+.creste-cart-note__sub {
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #7A5C3E;
+  margin: 0;
+}
+
+
+/* ===== Custom Checkbox ===== */
+
+.creste-cart-note__checkbox {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  margin: 0;
+  padding: 0;
+  border-radius: 8px;
+  border: 1.5px solid var(--creste-orange, #F4793A);
+  background: #fff;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.creste-cart-note__checkbox:checked {
+  {% comment %} background: var(--creste-orange, #F4793A); {% endcomment %}
+  border-color: var(--creste-orange, #F4793A);
+}
+
+{% comment %} .creste-cart-note__checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 11px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+} {% endcomment %}
+.creste-cart-note__checkbox:checked::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("{{ 'face.png' | asset_url }}");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 17px 17px;
+}
+
+
+
+/* ===== Handwritten Note Text Field ===== */
+
+.creste-cart-note__field {
+  margin: 0 16px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-15px);
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    transform 0.4s ease,
+    margin-top 0.4s ease;
+}
+
+
+/* ===== Field Open Animation ===== */
+
+.creste-cart-note__field.is-open {
+  max-height: 180px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 8px;
+}
+
+
+/* ===== Label ===== */
+
+.creste-cart-note__label {
+  font-family: Nunito Sans, Nunito, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #1E1108;
+  display: block;
+  margin: 0 0 6px;
+}
+
+
+/* ===== Textarea ===== */
+
+.creste-cart-note__textarea {
+  width: 100%;
+  min-height: 70px;
+  border: 1px solid #E5DCEA;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-family: Poppins, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #1E1108;
+  background: #fff;
+  resize: vertical;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.creste-cart-note__textarea:focus {
+  border-color: var(--creste-orange, #F4793A);
+  box-shadow: 0 0 0 2px rgba(244, 121, 58, 0.1);
+}
+
+/* ===== Picked for ages recommendation ===== */
+.creste-cart-picks{background:#D8EEF5;border-radius:20px;padding:10px;margin:12px 16px 0;}
+.creste-cart-picks__title{font-family:Nunito Sans,Nunito,sans-serif;font-weight:800;font-size:16px;color:#00677E;margin:2px 4px 8px;line-height:1.2;}
+.creste-cart-picks__row{display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;}
+.creste-cart-picks__row::-webkit-scrollbar{display:none;}
+.creste-cart-pick{flex:0 0 auto;width:220px;display:flex;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:10px;align-items:flex-start;}
+.creste-cart-pick__image{width:64px;height:64px;flex:0 0 64px;border-radius:10px;overflow:hidden;background:#F5F1EB;} .creste-cart-pick__image img{width:100%;height:100%;object-fit:cover;display:block;}
+ .creste-cart-pick__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;} .creste-cart-pick__name{font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:12px;line-height:1.3;color:#1E1108;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;} .creste-cart-pick__price{font-family:Nunito Sans,Nunito,sans-serif;font-weight:800;font-size:13px;color:#F4793A;margin:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap;} .creste-cart-pick__compare{font-weight:500;font-size:11px;color:#9b9b9b;text-decoration:line-through;} .creste-cart-pick__off{font-weight:700;font-size:11px;color:#58AD6F;} .creste-cart-pick__btn{display:flex;align-items:center;justify-content:center;width:100%;background:#F4793A;color:#fff;border:none;border-radius:16px;padding:6px 8px;font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:11px;cursor:pointer;white-space:nowrap;margin-top:2px;} .creste-cart-pick__btn[disabled]{opacity:.6;cursor:default;}
 </style>
+
+
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
     <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
@@ -489,8 +665,8 @@
             </div>
           {%- endif -%}
         </div>
-      {%- endif -%}
-      <div class="drawer__header">
+       {%- endif -%}
+       <div class="drawer__header">
         <h2 class="drawer__heading">
           {{ 'sections.cart.title' | t }}
           {%- if cart != empty %}
@@ -510,9 +686,9 @@
           </span>
         </button>
         {% if cart != empty %}<p class="creste-cart-tagline">Packed with giggles!</p>{% endif %}
-      </div>
+       </div>
 
-      {%- if cart != empty %}
+       {%- if cart != empty %}
         {%- liquid
           assign creste_shipping_threshold = 99900
           assign creste_gift_threshold = 580000
@@ -568,7 +744,13 @@
               class="creste-cart-progress__icon{% if creste_gift_unlocked %} is-on{% endif %}"
               style="left: 96%;"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8S11 3 8 3 6 4.5 6 5.5 8 8 12 8zM12 8s1-5 4-5 2 1.5 2 2.5S16 8 12 8z"/></svg>
+              {% comment %} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8S11 3 8 3 6 4.5 6 5.5 8 8 12 8zM12 8s1-5 4-5 2 1.5 2 2.5S16 8 12 8z"/></svg> {% endcomment %}
+                <img
+                src="{{ 'bracelet.png' | asset_url }}"
+                alt="Gift"
+                width="24"
+                height="24"
+              >
             </span>
             <span class="creste-cart-progress__mark" style="left: {{ creste_ship_mark_percent }}%;">
               <svg style="    position: absolute;
@@ -596,9 +778,9 @@
             {%- endif -%}
           </p>
         </div>
-      {%- endif %}
+       {%- endif %}
 
-      <cart-drawer-items
+       <cart-drawer-items
         view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
         view-event-trigger="manual"
         {% if cart == empty %}
@@ -992,12 +1174,169 @@
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
       </cart-drawer-items>
+      {%- if cart != empty -%}
+{%- assign creste_note_price = 50 -%}
+{%- assign creste_note_variant_id = 48203361779870 -%}
+{%- assign creste_note_active = false -%}
+
+{%- for item in cart.items -%}
+  {%- if item.variant.id == creste_note_variant_id -%}
+    {%- assign creste_note_active = true -%}
+  {%- endif -%}
+{%- endfor -%}
+
+
+            <div
+              class="creste-cart-note"
+              id="CartDrawer-Note-Banner"
+            >
+              {% comment %} &#128221; {% endcomment %}
+              <span class="creste-cart-note__icon">
+
+                 <span class="creste-cart-note__icon">
+  <img
+    src="https://cdn.shopify.com/s/files/1/0673/0114/6782/files/52db2e7ef254d8193e49405b79dd7646563b6b8c.jpg?v=1787814819"
+    alt="Note"
+    width="24"
+    height="24"
+    loading="lazy"
+  >
+</span>
+
+            </span>
+
+              <span class="creste-cart-note__body">
+                <span class="creste-cart-note__title">
+                  Add Handwritten Note - Rs. {{ creste_note_price }}
+                </span>
+
+                <span class="creste-cart-note__sub">
+                  <br>
+                  Kraft paper, ribbon and a handwritten note
+                </span>
+              </span>
+
+              <input
+                type="checkbox"
+                class="creste-cart-note__checkbox"
+                id="CartDrawer-NoteToggle"
+                data-note-toggle
+                data-note-price="{{ creste_note_price }}"
+                {% if creste_note_active %}checked{% endif %}
+              >
+            </div>
+
+            <div
+              class="creste-cart-note__field{% if creste_note_active %} is-open{% endif %}"
+              id="CartDrawer-NoteField"
+            >
+              <label
+                class="creste-cart-note__label"
+                for="CartDrawer-NoteText"
+              >
+                Note (Max 100 Words)
+              </label>
+
+                <textarea
+                  class="creste-cart-note__textarea"
+                  id="CartDrawer-NoteText"
+                  maxlength="600"
+                  placeholder="Write your message here..."
+                >{%- for item in cart.items -%}
+                  {%- if item.variant.id == creste_note_variant_id -%}
+                    {{ item.properties['Handwritten Note'] | escape }}
+                  {%- endif -%}
+                {%- endfor -%}</textarea>
+
+            </div>
+{%- if collections['age-group-up-to-3years']
+  and collections['age-group-up-to-3years'].products.size > 0
+-%}
+
+  <div class="creste-cart-picks">
+
+    <p class="creste-cart-picks__title">
+      Picked for ages 0&ndash;3
+    </p>
+
+    <div class="creste-cart-picks__row">
+
+      {%- for product in collections['age-group-up-to-3years'].products limit: 8 -%}
+
+        {%- assign pv = product.selected_or_first_available_variant -%}
+
+        <div class="creste-cart-pick">
+
+          <div class="creste-cart-pick__image">
+            {%- if product.featured_image -%}
+              {{
+                product.featured_image
+                | image_url: width: 160
+                | image_tag: alt: product.title, loading: 'lazy'
+              }}
+            {%- endif -%}
+          </div>
+
+          <div class="creste-cart-pick__body">
+
+            <p class="creste-cart-pick__name">
+              {{ product.title }}
+            </p>
+
+            <p class="creste-cart-pick__price">
+              {{ pv.price | money }}
+
+              {%- if pv.compare_at_price > pv.price -%}
+
+                <span class="creste-cart-pick__compare">
+                  {{ pv.compare_at_price | money }}
+                </span>
+
+                {%- assign pick_off = pv.compare_at_price
+                  | minus: pv.price
+                  | times: 100
+                  | divided_by: pv.compare_at_price
+                -%}
+
+                <span class="creste-cart-pick__off">
+                  {{ pick_off }}% off
+                </span>
+
+              {%- endif -%}
+            </p>
+
+            <button
+              type="button"
+              class="creste-cart-pick__btn"
+              data-pick-add
+              data-variant-id="{{ pv.id }}"
+              {% unless pv.available %}disabled{% endunless %}
+            >
+              {%- if pv.available -%}
+                Add To Cart
+              {%- else -%}
+                Sold out
+              {%- endif -%}
+            </button>
+
+          </div>
+
+        </div>
+
+      {%- endfor -%}
+
     </div>
-      <div class="drawer__footer">
+
+  </div>
+
+{%- endif -%}
+{%- endif -%}
+    </div>
+    <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
             <summary>
-              <span class="summary__title">
+             <span class="summary__title">
                 {{ 'sections.cart.note' | t }}
                 {{- 'icon-caret.svg' | inline_asset_content -}}
               </span>
@@ -1014,6 +1353,7 @@
           </details>
         {%- endif -%}
 
+  
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
           {%- if cart.cart_level_discount_applications.size > 0 -%}
             <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
@@ -1044,6 +1384,8 @@
             assign creste_item_discount = creste_mrp | minus: creste_items_subtotal
             assign creste_cart_discount = creste_items_subtotal | minus: cart.total_price
             assign creste_total_savings = creste_mrp | minus: cart.total_price
+            assign creste_grand_total = cart.total_price
+
           -%}
 
           <details class="creste-view-summary" id="CartDrawer-ViewSummary">
@@ -1071,6 +1413,12 @@
                   <span>Free</span>
                 </div>
               {%- endif -%}
+              {%- if creste_note_active -%}
+                <div class="creste-view-summary__row" id="CartDrawer-NoteFeeRow">
+                  <span>Add Handwritten Note</span>
+                  <span>{{ creste_note_price_cents | money }}</span>
+                </div>
+              {%- endif -%}
               <div class="creste-view-summary__row creste-view-summary__row--total">
                 <span>Sub Total</span>
                 <span>{{ cart.total_price | money | replace: "Rs. ", "₹ " }}</span>
@@ -1085,7 +1433,7 @@
                 &nbsp;<button type="button" class="creste-cart-summary__toggle" data-view-summary-toggle aria-expanded="false" aria-controls="CartDrawer-ViewSummary">View Summary</button>
               </span>
               <span class="creste-cart-summary__total totals__total-value" role="status">
-                {{ cart.total_price | money_with_currency | replace: "Rs. " , "₹ " }}
+                {{ creste_grand_total | money_with_currency | replace: "Rs. " , "₹ " }}
               </span>
             </div>
             <div class="creste-cart-summary__row">
@@ -1112,9 +1460,9 @@
             >
               {{ 'sections.cart.checkout' | t }}
                   <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M4.6 6L0 1.4L1.4 0L7.4 6L1.4 12L0 10.6L4.6 6Z" fill="white"/>
-</svg>
-            </button>
+            <path d="M4.6 6L0 1.4L1.4 0L7.4 6L1.4 12L0 10.6L4.6 6Z" fill="white"/>
+            </svg>
+        </button>
         
 
           </div>
@@ -1129,64 +1477,568 @@
   </div>
   
 </cart-drawer>
+
 <script>
-  (function () {
-    if (window.__cresteCartDrawerBound) return;
-    window.__cresteCartDrawerBound = true;
+(function () {
+  if (window.__cresteCartDrawerBound) return;
+  window.__cresteCartDrawerBound = true;
 
-    function refreshDrawer(sectionsHtml) {
-      var doc = new DOMParser().parseFromString(sectionsHtml, 'text/html');
-      var fresh = doc.querySelector('cart-drawer');
-      var current = document.querySelector('cart-drawer');
-      if (fresh && current) current.innerHTML = fresh.innerHTML;
+  function refreshDrawer(sectionsHtml) {
+    if (!sectionsHtml) return;
+
+    var doc = new DOMParser().parseFromString(sectionsHtml, 'text/html');
+    var fresh = doc.querySelector('cart-drawer');
+    var current = document.querySelector('cart-drawer');
+
+    if (fresh && current) {
+      current.innerHTML = fresh.innerHTML;
     }
+  }
 
-    document.addEventListener('click', async function (e) {
-      var toggle = e.target.closest('[data-view-summary-toggle]');
-      if (toggle) {
-        var details = document.getElementById('CartDrawer-ViewSummary');
-        if (details) {
-          var willOpen = !details.open;
-          details.open = willOpen;
-          toggle.setAttribute('aria-expanded', String(willOpen));
-          toggle.textContent = willOpen ? 'Hide Summary' : 'View Summary';
+  async function refreshCartDrawer() {
+    try {
+      var res = await fetch('/?sections=cart-drawer', {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
         }
-        return;
+      });
+
+      if (!res.ok) {
+        throw new Error('Drawer refresh failed');
       }
 
-      var gwBtn = e.target.closest('[data-gw-toggle]');
-      if (gwBtn) {
-        e.preventDefault();
-        if (gwBtn.__busy) return;
-        gwBtn.__busy = true;
-        gwBtn.style.opacity = '0.6';
-        var line = Number(gwBtn.getAttribute('data-line')) || 1;
-        var qty = Number(gwBtn.getAttribute('data-qty')) || 1;
-        var add = gwBtn.getAttribute('data-add') === '1';
-        try {
-          var res = await fetch('/cart/change.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              line: line,
-              quantity: qty,
-              properties: add ? { 'Gift wrapping': 'Yes' } : { 'Gift wrapping': '' },
-              sections: 'cart-drawer',
-              sections_url: location.pathname,
-            }),
-          });
-          var data = await res.json();
-          if (data.sections && data.sections['cart-drawer']) {
-            refreshDrawer(data.sections['cart-drawer']);
-          }
-        } catch (err) {
-          console.error('gw', err);
-        }
-        return;
+      var data = await res.json();
+
+      if (data['cart-drawer']) {
+        refreshDrawer(data['cart-drawer']);
+      }
+    } catch (err) {
+      console.error('cart-drawer-refresh', err);
+    }
+  }
+
+
+  /* =========================
+     VIEW SUMMARY
+  ========================= */
+
+  document.addEventListener('click', function (e) {
+    var toggle = e.target.closest('[data-view-summary-toggle]');
+
+    if (!toggle) return;
+
+    var details = document.getElementById('CartDrawer-ViewSummary');
+
+    if (details) {
+      var willOpen = !details.open;
+
+      details.open = willOpen;
+
+      toggle.setAttribute(
+        'aria-expanded',
+        String(willOpen)
+      );
+
+      toggle.textContent = willOpen
+        ? 'Hide Summary'
+        : 'View Summary';
+    }
+  });
+
+
+  /* =========================
+     GIFT WRAPPING
+  ========================= */
+
+  document.addEventListener('click', async function (e) {
+    var gwBtn = e.target.closest('[data-gw-toggle]');
+
+    if (!gwBtn) return;
+
+    e.preventDefault();
+
+    if (gwBtn.__busy) return;
+
+    gwBtn.__busy = true;
+    gwBtn.style.opacity = '0.6';
+
+    var line =
+      Number(gwBtn.getAttribute('data-line')) || 1;
+
+    var qty =
+      Number(gwBtn.getAttribute('data-qty')) || 1;
+
+    var add =
+      gwBtn.getAttribute('data-add') === '1';
+
+    try {
+      var res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          line: line,
+          quantity: qty,
+          properties: add
+            ? { 'Gift wrapping': 'Yes' }
+            : { 'Gift wrapping': '' },
+          sections: 'cart-drawer',
+          sections_url: location.pathname
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error('Gift wrap update failed');
+      }
+
+      var data = await res.json();
+
+      if (
+        data.sections &&
+        data.sections['cart-drawer']
+      ) {
+        refreshDrawer(
+          data.sections['cart-drawer']
+        );
+      }
+
+    } catch (err) {
+      console.error('gw', err);
+
+    } finally {
+      gwBtn.__busy = false;
+      gwBtn.style.opacity = '';
+    }
+  });
+
+
+  /* =========================
+     HANDWRITTEN NOTE
+  ========================= */
+
+  var HANDWRITTEN_NOTE_VARIANT_ID = 48203361779870;
+
+  async function getCart() {
+    var res = await fetch('/cart.js', {
+      headers: {
+        'Accept': 'application/json'
       }
     });
 
+    if (!res.ok) {
+      throw new Error('Could not get cart');
+    }
 
-    
-  })();
+    return await res.json();
+  }
+
+
+  async function addHandwrittenNote(noteText) {
+    var cart = await getCart();
+
+    var existingNoteItem = cart.items.find(function (item) {
+      return Number(item.variant_id) === HANDWRITTEN_NOTE_VARIANT_ID;
+    });
+
+    /* Already added - just update the message */
+    if (existingNoteItem) {
+      return updateHandwrittenNote(
+        existingNoteItem.key,
+        noteText
+      );
+
+    }
+
+    var res = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            id: HANDWRITTEN_NOTE_VARIANT_ID,
+            quantity: 1,
+            properties: {
+              'Handwritten Note': noteText || ''
+            }
+          }
+        ],
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    });
+
+    if (!res.ok) {
+      var errorData = await res.json().catch(function () {
+        return {};
+      });
+
+      throw new Error(
+        errorData.description ||
+        'Could not add handwritten note'
+      );
+    }
+
+    return await res.json();
+  }
+
+
+  async function updateHandwrittenNote(lineKey, noteText) {
+    var res = await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: lineKey,
+        quantity: 1,
+        properties: {
+          'Handwritten Note': noteText || ''
+        },
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error('Could not update handwritten note');
+    }
+
+    return await res.json();
+  }
+
+      async function saveCurrentHandwrittenNote() {
+  var toggle =
+    document.getElementById('CartDrawer-NoteToggle');
+
+  var noteText =
+    document.getElementById('CartDrawer-NoteText');
+
+  if (!toggle || !toggle.checked || !noteText) {
+    return;
+  }
+
+  var cart = await getCart();
+
+  var noteItem = cart.items.find(function (item) {
+    return Number(item.variant_id) ===
+      HANDWRITTEN_NOTE_VARIANT_ID;
+  });
+
+  if (!noteItem) {
+    return;
+  }
+
+  await updateHandwrittenNote(
+    noteItem.key,
+    noteText.value.trim()
+  );
+}
+
+
+  async function removeHandwrittenNote() {
+    var cart = await getCart();
+
+    var noteItem = cart.items.find(function (item) {
+      return Number(item.variant_id) === HANDWRITTEN_NOTE_VARIANT_ID;
+    });
+
+    if (!noteItem) {
+      return;
+    }
+
+    var res = await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: noteItem.key,
+        quantity: 0,
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error('Could not remove handwritten note');
+    }
+
+    return await res.json();
+  }
+
+
+  document.addEventListener('change', async function (e) {
+    var toggle = e.target.closest('#CartDrawer-NoteToggle');
+
+    if (!toggle) return;
+
+    var field = document.getElementById('CartDrawer-NoteField');
+
+    if (field) {
+      field.classList.toggle(
+        'is-open',
+        toggle.checked
+      );
+    }
+
+    if (toggle.__busy) return;
+
+    toggle.__busy = true;
+    toggle.disabled = true;
+
+    try {
+
+      if (toggle.checked) {
+
+        var noteTextElement =
+          document.getElementById('CartDrawer-NoteText');
+
+        var noteText =
+          noteTextElement
+            ? noteTextElement.value.trim()
+            : '';
+
+        var data =
+          await addHandwrittenNote(noteText);
+
+        if (
+          data.sections &&
+          data.sections['cart-drawer']
+        ) {
+          refreshDrawer(
+            data.sections['cart-drawer']
+          );
+        } else {
+          await refreshCartDrawer();
+        }
+
+      } else {
+
+        var data =
+          await removeHandwrittenNote();
+
+        if (
+          data &&
+          data.sections &&
+          data.sections['cart-drawer']
+        ) {
+          refreshDrawer(
+            data.sections['cart-drawer']
+          );
+        } else {
+          await refreshCartDrawer();
+        }
+
+      }
+
+    } catch (err) {
+
+      console.error(
+        'handwritten-note-toggle',
+        err
+      );
+
+      /*
+       * If something failed, restore checkbox state.
+       */
+      toggle.checked = !toggle.checked;
+
+      if (field) {
+        field.classList.toggle(
+          'is-open',
+          toggle.checked
+        );
+      }
+
+    } finally {
+
+      toggle.__busy = false;
+      toggle.disabled = false;
+
+    }
+  });
+
+
+  /*
+   * Save handwritten message to the ₹50 product
+   * line-item property.
+   */
+  document.addEventListener('blur', async function (e) {
+
+    var noteText =
+      e.target.closest('#CartDrawer-NoteText');
+
+    if (!noteText) return;
+
+    var toggle =
+      document.getElementById('CartDrawer-NoteToggle');
+
+    if (!toggle || !toggle.checked) return;
+
+    var text =
+      noteText.value.trim();
+
+    try {
+
+      var cart = await getCart();
+
+      var noteItem = cart.items.find(function (item) {
+        return Number(item.variant_id) ===
+          HANDWRITTEN_NOTE_VARIANT_ID;
+      });
+
+      if (!noteItem) return;
+
+      await updateHandwrittenNote(
+        noteItem.key,
+        text
+      );
+
+    } catch (err) {
+
+      console.error(
+        'handwritten-note-text',
+        err
+      );
+
+    }
+
+  }, true);
+  /* =========================
+   CHECKOUT - SAVE NOTE FIRST
+========================= */
+
+document.addEventListener('click', async function (e) {
+
+  var checkoutButton =
+    e.target.closest('#CartDrawer-Checkout');
+
+  if (!checkoutButton) return;
+
+  if (checkoutButton.__noteSaving) return;
+
+  var toggle =
+    document.getElementById('CartDrawer-NoteToggle');
+
+  if (!toggle || !toggle.checked) {
+    return;
+  }
+
+  e.preventDefault();
+
+  checkoutButton.__noteSaving = true;
+  checkoutButton.disabled = true;
+
+  try {
+
+    await saveCurrentHandwrittenNote();
+
+    /*
+     * Now allow checkout to continue.
+     */
+    window.location.href = '/checkout';
+
+  } catch (err) {
+
+    console.error(
+      'checkout-note-save',
+      err
+    );
+
+    checkoutButton.__noteSaving = false;
+    checkoutButton.disabled = false;
+
+    alert(
+      'Please wait a moment and try checkout again.'
+    );
+  }
+
+});
+
+
+  /* =========================
+     ADD CART PICK
+  ========================= */
+
+  document.addEventListener('click', async function (e) {
+    var btn = e.target.closest('[data-pick-add]');
+
+    if (!btn) return;
+
+    e.preventDefault();
+
+    if (btn.disabled) return;
+
+    var variantId =
+      btn.getAttribute('data-variant-id');
+
+    var originalText =
+      btn.textContent.trim();
+
+    btn.disabled = true;
+    btn.textContent = 'Adding...';
+
+    try {
+      var res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              id: Number(variantId),
+              quantity: 1
+            }
+          ]
+        })
+      });
+
+      if (!res.ok) {
+        var errorData = await res.json().catch(function () {
+          return {};
+        });
+
+        throw new Error(
+          errorData.description ||
+          'Product could not be added'
+        );
+      }
+
+      /* Get the latest cart drawer */
+      await refreshCartDrawer();
+
+      btn.textContent = 'Added!';
+
+      /* Restore the button after a short delay */
+      setTimeout(function () {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }, 1500);
+
+    } catch (err) {
+      console.error('pick-add', err);
+
+      btn.textContent = 'Try Again';
+
+      setTimeout(function () {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }, 1500);
+    }
+  });
+
+})();
 </script>
+
+
+
+

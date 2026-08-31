@@ -943,25 +943,57 @@
     "creste_families": {
       "type": "creste-families",
       "blocks": {
+        "reel_tcabgK": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/diwali kit.mp4",
+            "video_url": "",
+            "poster": "shopify://shop_images/Diwali-Banner-Mobile.jpg",
+            "caption": "",
+            "product": "diy-diwali-kit"
+          }
+        },
+        "reel_bHA4jw": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Dussehra.mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "diy-dussehra-kit"
+          }
+        },
+        "reel_4HcYU6": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Gardening_Instructional_Video (1).mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "diy-gardening-kit"
+          }
+        },
         "f4": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/Video-348.mp4",
+            "video": "shopify://files/videos/IMG_5230.MP4",
             "video_url": "",
+            "poster": "shopify://shop_images/bcc7da42-05f0-4944-bcb3-455ae4855192_1.png",
             "caption": "",
-            "product": "diy-baby-hand-casting-kit-2years"
+            "product": "diy-hand-casting-kit-for-couples-2years"
           }
         }
       },
       "block_order": [
+        "reel_tcabgK",
+        "reel_bHA4jw",
+        "reel_4HcYU6",
         "f4"
       ],
       "settings": {
         "section_bg": "#dfd6f5",
-        "heading": "From Our Families to",
-        "heading_italic": "Yours",
+        "heading": "Picked & Loved by",
+        "heading_italic": "Our Family",
         "heading_italic_color": "#8b5cf6",
-        "subtitle": "Grab 'em before they disappear!"
+        "subtitle": "See why our families can’t stop loving these! ✨"
       }
     },
     "creste_faq": {

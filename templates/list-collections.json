@@ -1,7 +1,17 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-list-collections",
+      "disabled": true,
       "settings": {
         "title": "Collections",
         "sort": "alphabetical",
@@ -9,9 +19,93 @@
         "columns_desktop": 3,
         "columns_mobile": "2"
       }
+    },
+    "collection_list_3aRcEX": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_jhfQLz": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "festive-kits"
+          }
+        },
+        "featured_collection_TDMXyV": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "best-seller"
+          }
+        },
+        "featured_collection_iHHtKK": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "thread-craft-kit"
+          }
+        },
+        "featured_collection_dDQaWN": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "story-boxes"
+          }
+        },
+        "featured_collection_fLfatK": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "science-collection"
+          }
+        },
+        "featured_collection_WtTPXP": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "art-studio"
+          }
+        },
+        "featured_collection_FNAxr8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "crafty-crew"
+          }
+        },
+        "featured_collection_b9ayTz": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "grown-up-diy"
+          }
+        },
+        "featured_collection_zprY3K": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "diy-party-box-kits"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_jhfQLz",
+        "featured_collection_TDMXyV",
+        "featured_collection_iHHtKK",
+        "featured_collection_dDQaWN",
+        "featured_collection_fLfatK",
+        "featured_collection_WtTPXP",
+        "featured_collection_FNAxr8",
+        "featured_collection_b9ayTz",
+        "featured_collection_zprY3K"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Collections",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "collection_list_3aRcEX"
   ]
 }
