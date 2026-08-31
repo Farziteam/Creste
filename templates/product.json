@@ -389,7 +389,7 @@
         "promo_text": "Everything you need for hours of creative fun.",
         "promo_image": "shopify://shop_images/ic_0a9b886f-f006-43be-913a-711b92df0b0f.png",
         "promo_button_label": "Explore Now",
-        "promo_button_link": "",
+        "promo_button_link": "shopify://collections/our-favrourites",
         "button_bg": "#ffffff",
         "button_text_color": "#3d2817",
         "promo_bg": "#bd6ce1",
