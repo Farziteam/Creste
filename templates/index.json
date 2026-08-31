@@ -305,6 +305,7 @@
         "cat7": {
           "type": "category",
           "settings": {
+            "icon": "shopify://shop_images/760e109c-758d-4d29-9e22-18f93c763394.png",
             "emoji": "👟",
             "name": "GROWN-UP",
             "subtitle": "Calmness and Focus",
@@ -549,7 +550,7 @@
         "logo_fRHyNk": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/bmw_logo_548x260-1_jpg.jpg",
+            "image": "shopify://shop_images/BMW.svg",
             "name": "LOGO",
             "row": "top"
           }
@@ -609,14 +610,6 @@
             "name": "DAILY",
             "row": "bottom"
           }
-        },
-        "l8": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/file_00000000898c822f84da8be9075522dc.png",
-            "name": "POST",
-            "row": "bottom"
-          }
         }
       },
       "block_order": [
@@ -629,8 +622,7 @@
         "l3",
         "l4",
         "l5",
-        "l6",
-        "l8"
+        "l6"
       ],
       "settings": {
         "heading": "Featured In",
@@ -801,14 +793,14 @@
         "ac1": {
           "type": "activity",
           "settings": {
-            "image": "shopify://shop_images/ic_3_aa7267a3-e681-4fb1-bee5-915f4ff5234b.png",
+            "image": "shopify://shop_images/ic_7.png",
             "label": "Slime Making"
           }
         },
         "ac2": {
           "type": "activity",
           "settings": {
-            "image": "shopify://shop_images/ic_1_7af097f3-8d56-486f-956e-39fd6691b40a.png",
+            "image": "shopify://shop_images/ic_6.png",
             "label": "Candle Making"
           }
         },
@@ -851,7 +843,7 @@
         "ac8": {
           "type": "activity",
           "settings": {
-            "image": "shopify://shop_images/ic_cc38f290-c941-4938-83bc-a5e7ae64327e.png",
+            "image": "shopify://shop_images/ic_7.png",
             "label": "Bookmark DIY"
           }
         },
