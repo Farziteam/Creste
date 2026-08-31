@@ -22,7 +22,7 @@
   .cart-drawer * {
     box-sizing: border-box;
   }
-
+ 
   /* ---------- Shell ---------- */
   .cart-drawer .drawer__inner {
   background: #ffffff;
@@ -104,7 +104,7 @@
 
   /* ---------- Free shipping / gift progress card ---------- */
   .creste-cart-progress {
-    margin: 16px 20px;
+    margin: 16px 4px;
     padding: 18px;
     border-radius: 16px;
     background: #eaf6ec;
@@ -129,6 +129,11 @@
     align-items: center;
     justify-content: center;
     text-align:center;
+  }
+     .creste-cart-progress__pill{
+    max-width: 24%;
+    min-width: 36%;
+    padding: 4px 11px;
   }
   .creste-cart-progress__pill--ship {
     background: #62a66b;
@@ -438,17 +443,12 @@
     cursor: pointer;
   }
   .creste-cart-progress__pill{
-    max-width: 49%;
-    min-width: 49%;
+    max-width: 42%;
+    min-width: 42%;
     padding: 4px 11px;
   }
 }
-    .creste-cart-progress__pill{
-    max-width: 49%;
-    min-width: 49%;
-    padding: 4px 11px;
-  }
-/* ===== Add Handwritten Note ===== */
+
 /* ===== Add Handwritten Note ===== */
 
 .creste-cart-note {
@@ -457,8 +457,8 @@
   gap: 12px;
   background: #FCF0F6;
   border-radius: 22px;
-  padding: 12px 16px;
-  margin: 12px 16px 0;
+  padding: 17px 14px;
+  margin: 14px 1px 0;
 }
 
 .creste-cart-note__icon {
@@ -482,6 +482,7 @@
 .creste-cart-note__body {
   flex: 1;
   min-width: 0;
+  line-height:1;
 }
 
 .creste-cart-note__title {
@@ -612,13 +613,19 @@
 }
 
 /* ===== Picked for ages recommendation ===== */
-.creste-cart-picks{background:#D8EEF5;border-radius:20px;padding:10px;margin:12px 16px 0;}
+.creste-cart-picks{background:#D8EEF5;border-radius:20px;padding:10px;margin:12px 4px 0;}
 .creste-cart-picks__title{font-family:Nunito Sans,Nunito,sans-serif;font-weight:800;font-size:16px;color:#00677E;margin:2px 4px 8px;line-height:1.2;}
 .creste-cart-picks__row{display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;}
 .creste-cart-picks__row::-webkit-scrollbar{display:none;}
-.creste-cart-pick{flex:0 0 auto;width:220px;display:flex;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:10px;align-items:flex-start;}
+.creste-cart-pick{flex:0 0 auto;width:240px;display:flex;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:10px;align-items:flex-start;}
 .creste-cart-pick__image{width:64px;height:64px;flex:0 0 64px;border-radius:10px;overflow:hidden;background:#F5F1EB;} .creste-cart-pick__image img{width:100%;height:100%;object-fit:cover;display:block;}
  .creste-cart-pick__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;} .creste-cart-pick__name{font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:12px;line-height:1.3;color:#1E1108;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;} .creste-cart-pick__price{font-family:Nunito Sans,Nunito,sans-serif;font-weight:800;font-size:13px;color:#F4793A;margin:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap;} .creste-cart-pick__compare{font-weight:500;font-size:11px;color:#9b9b9b;text-decoration:line-through;} .creste-cart-pick__off{font-weight:700;font-size:11px;color:#58AD6F;} .creste-cart-pick__btn{display:flex;align-items:center;justify-content:center;width:100%;background:#F4793A;color:#fff;border:none;border-radius:16px;padding:6px 8px;font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:11px;cursor:pointer;white-space:nowrap;margin-top:2px;} .creste-cart-pick__btn[disabled]{opacity:.6;cursor:default;}
+
+@media screen and (max-width: 749px){
+  .creste-cart-note__title{
+    font-size:13px;
+  }
+}
 </style>
 
 
@@ -742,7 +749,7 @@
             </span>
             <span
               class="creste-cart-progress__icon{% if creste_gift_unlocked %} is-on{% endif %}"
-              style="left: 96%;"
+              style="left: 83%;"
             >
               {% comment %} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8S11 3 8 3 6 4.5 6 5.5 8 8 12 8zM12 8s1-5 4-5 2 1.5 2 2.5S16 8 12 8z"/></svg> {% endcomment %}
                 <img
@@ -761,10 +768,10 @@
 
               {{ creste_shipping_threshold | money_without_trailing_zeros  | replace: "Rs. ", "₹" }}
             </span>
-            <span class="creste-cart-progress__mark" style="left: 92%;">
+            <span class="creste-cart-progress__mark" style="left: 83%;">
                   <svg style="    position: absolute;
     top: -8px;
-    right: 13px;" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+    right: 27px;" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M5.19629 0L10.3924 6.75H0.000136852L5.19629 0Z" fill="#d4711f"/>
 </svg>
               {{ creste_gift_threshold | money_without_trailing_zeros | replace: "Rs. ", "₹"  }}
@@ -1385,7 +1392,6 @@
             assign creste_cart_discount = creste_items_subtotal | minus: cart.total_price
             assign creste_total_savings = creste_mrp | minus: cart.total_price
             assign creste_grand_total = cart.total_price
-
           -%}
 
           <details class="creste-view-summary" id="CartDrawer-ViewSummary">
@@ -1415,8 +1421,8 @@
               {%- endif -%}
               {%- if creste_note_active -%}
                 <div class="creste-view-summary__row" id="CartDrawer-NoteFeeRow">
-                  <span>Add Handwritten Note</span>
-                  <span>{{ creste_note_price_cents | money }}</span>
+                  <span>Handwritten Note</span>
+                  <span>{{ creste_note_price | times:100 | money | replace: "Rs. ", "₹ " }}</span>
                 </div>
               {%- endif -%}
               <div class="creste-view-summary__row creste-view-summary__row--total">
