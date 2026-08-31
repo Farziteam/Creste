@@ -148,7 +148,7 @@
             {%- endfor -%}
           {%- endif -%}
         </div>
-       {% if product.metafields.custom.product_tutorial_thumbnail.value != blank and product.metafields.custom.product_tutorial_video_link.value != blank %}
+       {% if product.metafields.custom.product_tutorial_video_link.value != blank %}
         <div class="cpdp__tutorial  cpdp__tutorial_desktop ">
           <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
          {%- assign video_url = product.metafields.custom.product_tutorial_video_link.value -%}
