@@ -137,9 +137,10 @@
         "c5": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/bf920b61-5c6e-4aeb-9c49-cf40cf301461.png",
             "name": "THREAD CRAFTS",
             "subtitle": "Fine Motor Skills & Creativity",
-            "link": "shopify://collections/craft-kits-collection"
+            "link": "shopify://collections/thread-craft-kit"
           }
         },
         "c6": {
