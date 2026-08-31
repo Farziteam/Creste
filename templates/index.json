@@ -269,7 +269,7 @@
             "emoji": "🧪",
             "name": "STORY WORLDS",
             "subtitle": "Language & Literacy",
-            "collection": "science-collection"
+            "collection": "story-boxes"
           }
         },
         "cat4": {
@@ -279,7 +279,7 @@
             "emoji": "🧠",
             "name": "THREAD CRAFTS",
             "subtitle": "Fine Motor Skills & Creativity",
-            "collection": "demo"
+            "collection": "thread-craft-kit"
           }
         },
         "cat5": {
@@ -289,7 +289,7 @@
             "emoji": "📖",
             "name": "PARTY PACKS",
             "subtitle": "Group Play",
-            "collection": "demo"
+            "collection": "diy-party-box-kits"
           }
         },
         "cat6": {
@@ -308,7 +308,7 @@
             "emoji": "👟",
             "name": "GROWN-UP",
             "subtitle": "Calmness and Focus",
-            "collection": "demo"
+            "collection": "grown-up-diy"
           }
         }
       },
