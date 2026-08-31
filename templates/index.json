@@ -265,8 +265,8 @@
         "cat2": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/6c2cdf53-aab7-4fc7-bb4c-b35baecb6a8a_261528a0-5167-4747-be19-4465647faa7e.png",
-            "emoji": "☀️",
+            "icon": "shopify://shop_images/image_47.png",
+            "emoji": "🧪",
             "name": "STORY WORLDS",
             "subtitle": "Language & Literacy",
             "collection": "story-boxes"
@@ -305,7 +305,6 @@
         "cat7": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/760e109c-758d-4d29-9e22-18f93c763394.png",
             "emoji": "👟",
             "name": "GROWN-UP",
             "subtitle": "Calmness and Focus",
@@ -430,7 +429,7 @@
         "mobile_logo": "shopify://shop_images/png_creste.png",
         "overlap_top": 24,
         "overlap_bottom": 0,
-        "section_bg": "#dcc9f5",
+        "section_bg": "#FFFFFF",
         "wave_color": "#ede4fb",
         "heading_a": "Loved By",
         "heading_b": "50k+ Little Makers",
@@ -531,14 +530,6 @@
     "creste_featured": {
       "type": "creste-featured",
       "blocks": {
-        "logo_qypL3a": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/file_00000000898c822f84da8be9075522dc.png",
-            "name": "LOGO",
-            "row": "top"
-          }
-        },
         "logo_mAykAr": {
           "type": "logo",
           "settings": {
@@ -558,7 +549,7 @@
         "logo_fRHyNk": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/BMW.svg",
+            "image": "shopify://shop_images/bmw_logo_548x260-1_jpg.jpg",
             "name": "LOGO",
             "row": "top"
           }
@@ -618,10 +609,17 @@
             "name": "DAILY",
             "row": "bottom"
           }
+        },
+        "l8": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/file_00000000898c822f84da8be9075522dc.png",
+            "name": "POST",
+            "row": "bottom"
+          }
         }
       },
       "block_order": [
-        "logo_qypL3a",
         "logo_mAykAr",
         "logo_pDhnTG",
         "logo_fRHyNk",
@@ -631,7 +629,8 @@
         "l3",
         "l4",
         "l5",
-        "l6"
+        "l6",
+        "l8"
       ],
       "settings": {
         "heading": "Featured In",
