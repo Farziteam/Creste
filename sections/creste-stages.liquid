@@ -1,0 +1,99 @@
+{% render 'creste-tokens' %}
+{%- assign stages = section.blocks | where: 'type', 'stage' -%}
+{%- assign _bgid = 'creste-sg-' | append: section.id -%}
+<style>
+#creste-sg-{{ section.id }}{padding:16px 16px;background:{{ section.settings.section_bg }};background-size:contain;background-position:center;}
+#creste-sg-{{ section.id }} .sg-in{max-width:1200px;margin:0 auto;}
+#creste-sg-{{ section.id }} .sg-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;margin:0 0 8px;}
+#creste-sg-{{ section.id }} .sg-head span.t{font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;line-height:1.1;color:#2B1702;}
+#creste-sg-{{ section.id }} .sg-bigarrow{flex:0 0 auto;}
+#creste-sg-{{ section.id }} .sg-sub{margin:0 0 24px;font-family:'Poppins',sans-serif;font-weight:600;font-size:16px;line-height:1.5;color:var(--creste-brown);text-align:center;}
+#creste-sg-{{ section.id }} .sg-row{display:flex;align-items:stretch;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:6px;}
+#creste-sg-{{ section.id }} .sg-row::-webkit-scrollbar{display:none;}
+#creste-sg-{{ section.id }} .sg-arr{display:none;align-self:center;flex:0 0 auto;color:#333;font-size:16px;}
+#creste-sg-{{ section.id }} .sg-card{flex:0 0 72%;scroll-snap-align:start;background:{{ section.settings.card_bg }};border-radius:18px;padding:10px 10px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+#creste-sg-{{ section.id }} .sg-imgwrap{position:relative;width:100%;}
+#creste-sg-{{ section.id }} .sg-img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px;display:block;background:#dcd3f0;}
+#creste-sg-{{ section.id }} .sg-img.ph svg{width:100%;height:100%;object-fit:cover;border-radius:14px;background:#dcd3f0;}
+#creste-sg-{{ section.id }} .sg-badge{position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);width:34px;height:34px;border-radius:50%;background:{{ section.settings.badge_color }};border:3px solid #FBF1E3;box-shadow:0 4px 7px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;z-index:2;}
+#creste-sg-{{ section.id }} .sg-txt{margin-top:24px;padding:0 4px;}
+#creste-sg-{{ section.id }} .sg-t{margin:0 0 10px;font-family:'Poppins',sans-serif;font-weight:600;font-size:16px;line-height:1.2;color:#27241F;}
+#creste-sg-{{ section.id }} .sg-d{margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:12px;line-height:1.5;color:#615C54;}
+#creste-sg-{{ section.id }} .sg-arr-mobile{ display: none;}
+@media(min-width:750px){#creste-sg-{{ section.id }}{padding:56px 24px 56px;}#creste-sg-{{ section.id }} .sg-head span.t{font-size:47px;}#creste-sg-{{ section.id }} .sg-sub{text-align:left;margin: 18px 0 24px;}#creste-sg-{{ section.id }} .sg-row{overflow:visible;gap:6px;justify-content:center;}#creste-sg-{{ section.id }} .sg-card{flex:1 1 0;}#creste-sg-{{ section.id }} .sg-arr{display:block;}}
+@media(max-width:749px){#creste-sg-{{ section.id }} .sg-bigarrow{display:none;}#creste-sg-{{ section.id }} .sg-head{justify-content:flex-start;}#creste-sg-{{ section.id }} .sg-sub{text-align:left;}
+#creste-sg-{{ section.id }} .sg-head span.t1{
+  width: 71%;
+}
+#creste-sg-{{ section.id }} .sg-head span.t2{
+  width: 50%;
+}
+#creste-sg-{{ section.id }} .sg-head svg{
+  width: 40%;
+}
+#creste-sg-{{ section.id }} .sg-sub{
+  text-align: center;
+  margin: 0 0 15px;
+}
+#creste-sg-{{ section.id }} .sg-row {
+  flex-direction: column;
+  gap: 4px;
+}
+#creste-sg-{{ section.id }}  .sg-card{
+  flex-direction: row;
+}
+#creste-sg-{{ section.id }} .sg-imgwrap{
+  width: 30%;
+}
+#creste-sg-{{ section.id }} .sg-txt{
+  width: 100%;
+}
+#creste-sg-{{ section.id }} .sg-t{
+  margin:0 0 4px;
+}
+#creste-sg-{{ section.id }} .sg-badge{
+  right: -10%;
+  top: 20%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transform: translateY(50%);
+  left: 85%;
+  border: 2px solid #FBF1E3;
+}
+#creste-sg-{{ section.id }} .sg-txt{
+  margin-top: 0px;
+  padding: 0 22px;
+  text-align: left;
+}
+#creste-sg-{{ section.id }} .sg-arr-mobile{
+  text-align: center;
+  display: block;
+  line-height: 100%;
+}
+}
+</style>
+{% render 'creste-bg', id: _bgid, d: section.settings.bg_desktop, m: section.settings.bg_mobile %}
+<div id='creste-sg-{{ section.id }}' class='creste-section'>
+<div class='sg-in'>
+<div class='sg-head'><span class='t t1'>{{ section.settings.heading_1 }}</span><!-- <span class='sg-bigarrow'><svg viewBox='0 0 62 30' width='58' height='28' fill='none'><path d='M3 21 C 20 3, 42 3, 57 15' stroke='{{ section.settings.badge_color }}' stroke-width='3' stroke-linecap='round'/><path d='M49 7 L59 15 L47 20' stroke='{{ section.settings.badge_color }}' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg></span> --><svg width="102" height="43" viewBox="0 0 102 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.00098 23.839C11.319 0.544064 34.6139 -4.11493 48.5909 9.86205C57.9089 19.18 53.2499 33.157 41.6024 30.8275C32.2844 28.498 34.6139 14.521 46.2614 14.521C64.8974 14.521 78.8744 28.498 97.5104 28.498" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round"/>
+<path d="M83.1377 19.144L99.5972 29.0481L82.1445 38.3279" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<span class='t t2'>{{ section.settings.heading_2 }}</span></div>
+<p class='sg-sub'>{{ section.settings.subtitle }}</p>
+<div class='sg-row'>
+{% for block in stages %}<div class='sg-card' {{ block.shopify_attributes }}><div class='sg-imgwrap'>{% if block.settings.image != blank %}<img class='sg-img' src='{{ block.settings.image | image_url: width: 500 }}' alt='{{ block.settings.title | escape }}'>{% else %}<span class='sg-img ph'>{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</span>{% endif %}<span class='sg-badge'>{{ block.settings.emoji }}</span></div><div class='sg-txt'><p class='sg-t'>{{ block.settings.title }}</p><p class='sg-d'>{{ block.settings.desc }}</p></div></div>{% unless forloop.last %}<span class='sg-arr'>{{ 'icon-arrow-right-long.svg' | inline_asset_content }}</span><span class="sg-arr-mobile">{{ 'icon-arrow-bottom.svg' | inline_asset_content }}</span>{% endunless %}{% endfor %}
+</div>
+</div>
+</div>
+{% schema %}
+{
+  "name": "Creste Growth Stages",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"}, {"type":"color","id":"section_bg","label":"Background color","default":"#FFFFFF"}, {"type":"text","id":"heading_1","label":"Heading part 1","default":"From Happy Childhoods"}, {"type":"text","id":"heading_2","label":"Heading part 2","default":"To Happy Adulthoods"}, {"type":"textarea","id":"subtitle","label":"Subtitle","default":"The little moments you create today shape the confident, creative adults of tomorrow."}, {"type":"color","id":"card_bg","label":"Card background","default":"#EDE9F8"}, {"type":"color","id":"badge_color","label":"Badge / arrow color","default":"#7E6BB8"} ],
+  "blocks": [ {"type":"stage","name":"Stage","settings":[ {"type":"image_picker","id":"image","label":"Image"}, {"type":"text","id":"emoji","label":"Badge emoji","default":"💡"}, {"type":"text","id":"title","label":"Title","default":"Spark Curiosity"}, {"type":"textarea","id":"desc","label":"Description","default":"Every activity sparks curiosity and imagination."} ]} ],
+  "max_blocks": 10,
+  "presets": [ {"name":"Creste Growth Stages","blocks":[ {"type":"stage","settings":{"title":"Spark Curiosity","desc":"Every activity sparks curiosity and imagination.","emoji":"💡"}}, {"type":"stage","settings":{"title":"Build Skills","desc":"They learn, explore and build real-life skills.","emoji":"🛠"}}, {"type":"stage","settings":{"title":"Stronger Bonds","desc":"Shared moments today build unbreakable bonds.","emoji":"🤝"}}, {"type":"stage","settings":{"title":"Confidence Grows","desc":"Every step builds real self-belief.","emoji":"⭐"}}, {"type":"stage","settings":{"title":"Confident Tomorrow","desc":"Growing into confident, creative and kind adults.","emoji":"🎓"}} ]} ]
+}
+{% endschema %}

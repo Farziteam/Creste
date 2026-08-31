@@ -1,0 +1,182 @@
+<style>
+  .cr-strip-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    background: {{ section.settings.bg-color }};
+  }
+
+  .cr-strip-track-{{ section.id }} {
+    display: flex;
+    width: max-content;
+    animation: cr-strip-scroll-{{ section.id }} {{ section.settings.speed }}s linear infinite;
+    will-change: transform;
+  }
+
+  .cr-strip-group-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 8px 0;
+    flex-shrink: 0;
+    padding-right: 32px;
+  }
+
+  .cr-strip-block-{{ section.id }} {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .cr-strip-icon-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cr-strip-icon-{{ section.id }} img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  .cr-strip-text-{{ section.id }} {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    line-height: 130%;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  @keyframes cr-strip-scroll-{{ section.id }} {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .cr-strip-{{ section.id }}:hover
+  .cr-strip-track-{{ section.id }} {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cr-strip-track-{{ section.id }} {
+      animation: none;
+    }
+  }
+</style>
+
+<div
+  class="cr-strip-{{ section.id }}"
+  style="background: {{ section.settings.bg-color }};"
+>
+  <div class="cr-strip-track-{{ section.id }}">
+
+    <!-- First group -->
+    <div class="cr-strip-group-{{ section.id }}">
+      {% for block in section.blocks %}
+        <div class="cr-strip-block-{{ section.id }}" {{ block.shopify_attributes }}>
+
+          {% if block.settings.info-icon != blank %}
+            <div class="cr-strip-icon-{{ section.id }}">
+              <img
+                src="{{ block.settings.info-icon | image_url: width: 64 }}"
+                alt="{{ block.settings.info-text | escape }}"
+                width="32"
+                height="32"
+                loading="lazy"
+              >
+            </div>
+          {% endif %}
+
+          <div class="cr-strip-text-{{ section.id }}">
+            {{ block.settings.info-text }}
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Duplicate group for seamless infinite scroll -->
+    <div class="cr-strip-group-{{ section.id }}" aria-hidden="true">
+      {% for block in section.blocks %}
+        <div class="cr-strip-block-{{ section.id }}">
+
+          {% if block.settings.info-icon != blank %}
+            <div class="cr-strip-icon-{{ section.id }}">
+              <img
+                src="{{ block.settings.info-icon | image_url: width: 64 }}"
+                alt=""
+                width="32"
+                height="32"
+                loading="lazy"
+              >
+            </div>
+          {% endif %}
+
+          <div class="cr-strip-text-{{ section.id }}">
+            {{ block.settings.info-text }}
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Creste Strip",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg-color",
+      "label": "Strip Background",
+      "default": "#FFF2BE"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll Speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "infomation",
+      "name": "Information",
+      "settings": [
+        {
+          "type": "text",
+          "id": "info-text",
+          "label": "Info Text",
+          "default": "4-Day No-Questions-Asked Returns"
+        },
+        {
+          "type": "image_picker",
+          "id": "info-icon",
+          "label": "Info Icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Creste Strip"
+    }
+  ]
+}
+{% endschema %}

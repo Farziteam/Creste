@@ -1,75 +1,1061 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "creste_hero": {
+      "type": "creste-hero",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "slide_EH4BV7": {
+          "type": "slide",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "image": "shopify://shop_images/Banner-2-Candle-Kit-Desktop-r1-1.jpg",
+            "image_mobile": "shopify://shop_images/Banner-2-Candle-Kit-Mobile-r1-1.jpg",
+            "link": "shopify://collections/candles-kits",
+            "alt": "Creste banner"
           }
         },
-        "button": {
-          "type": "buttons",
+        "slide_3jWpxH": {
+          "type": "slide",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "image": "shopify://shop_images/home_banner.png",
+            "image_mobile": "shopify://shop_images/HERO_mob.png",
+            "link": "shopify://collections/art-and-craft-collection",
+            "alt": "Creste banner"
+          }
+        },
+        "slide_AYawCN": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Banner-4-Handcast-Kit-Desktop-r2-1.jpg",
+            "image_mobile": "shopify://shop_images/Banner-4-Handcast-Kit-Mobile-r2-1.jpg",
+            "link": "shopify://collections/casting-kits",
+            "alt": "Creste banner"
+          }
+        },
+        "slide_Hk4xrA": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Banner-3-Dussehra-Kit-Desktop-r1-1.jpg",
+            "image_mobile": "shopify://shop_images/Banner-3-Dussehra-Kit-Mobile-r1-1.jpg",
+            "link": "shopify://products/diy-dussehra-kit",
+            "alt": "Creste banner"
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "slide_EH4BV7",
+        "slide_3jWpxH",
+        "slide_AYawCN",
+        "slide_Hk4xrA"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "bg": "rgba(0,0,0,0)",
+        "show_dots": true,
+        "show_arrows": true,
+        "speed": 5
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "creste_custom_strip_3qRzUG": {
+      "type": "creste-custom-strip",
+      "blocks": {
+        "infomation_jmfNkF": {
+          "type": "infomation",
+          "settings": {
+            "info-text": "4-Day No-Questions-Asked Returns",
+            "info-icon": "shopify://shop_images/pd-feature-emoji.png"
+          }
+        },
+        "infomation_GX7yUr": {
+          "type": "infomation",
+          "settings": {
+            "info-text": "4-Day No-Questions-Asked Returns",
+            "info-icon": "shopify://shop_images/image_920.png"
+          }
+        },
+        "infomation_Hcwn9i": {
+          "type": "infomation",
+          "settings": {
+            "info-text": "4-Day No-Questions-Asked Returns",
+            "info-icon": "shopify://shop_images/image_920.png"
+          }
+        }
+      },
+      "block_order": [
+        "infomation_jmfNkF",
+        "infomation_GX7yUr",
+        "infomation_Hcwn9i"
+      ],
+      "name": "Creste Strip",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "bg-color": "#fff2be",
+        "speed": 30
+      }
+    },
+    "creste_stats": {
+      "type": "creste-stats",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "icon": "shopify://shop_images/image_39_4.png",
+            "number": "100,000+",
+            "label": "HAPPY FACES",
+            "color": "teal"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "icon": "shopify://shop_images/image_39_2.png",
+            "number": "20+",
+            "label": "SCHOOLS ENGAGED",
+            "color": "orange"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "icon": "shopify://shop_images/image_39_5.png",
+            "number": "170+",
+            "label": "WORKSHOPS FORMATS",
+            "color": "teal"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "icon": "shopify://shop_images/image_39_1.png",
+            "number": "70+",
+            "label": "DIY ACTIVITIES",
+            "color": "orange"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/Section_-_Trust_Banner_1_5dbbaed9-dd1e-4208-96be-6245a78178aa.png",
+        "bg_mobile": "shopify://shop_images/ho1.png",
+        "section_bg": "#ffffff",
+        "tagline": "Creste Makes Learning through play easy , purposeful & Joyful!"
+      }
+    },
+    "creste_age": {
+      "type": "creste-age",
+      "blocks": {
+        "a1": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/1e16b7da-91b6-4931-a75e-832cb6b911c5.png",
+            "label": "0 - 3 yrs",
+            "desc": "Stories and first touches",
+            "tint": "#e0f7ff",
+            "collection": "age-group-up-to-3years",
+            "link": ""
+          }
+        },
+        "a2": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/4-6.png",
+            "label": "4-6 yrs",
+            "desc": "Creative adventures",
+            "tint": "#ffeea8",
+            "collection": "age-group-2-6years",
+            "link": ""
+          }
+        },
+        "a3": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/7-10.png",
+            "label": "7-10 yrs",
+            "desc": "First real projects",
+            "tint": "#eaf7d8",
+            "collection": "",
+            "link": ""
+          }
+        },
+        "a4": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/11-16.png",
+            "label": "11-16 yrs",
+            "desc": "Level-up skills",
+            "tint": "#f3eeff",
+            "collection": "",
+            "link": ""
+          }
+        },
+        "a5": {
+          "type": "age",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/image_6_a0fde401-000b-4248-bbc3-a9b9e5e7f469.png",
+            "label": "16 yrs +",
+            "desc": "Make it your own",
+            "tint": "#fffae5",
+            "collection": "",
+            "link": ""
+          }
+        },
+        "a6": {
+          "type": "age",
+          "settings": {
+            "image": "shopify://shop_images/Adults.png",
+            "label": "Adult",
+            "desc": "Craft for the soul",
+            "tint": "#1c7291",
+            "collection": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5",
+        "a6"
+      ],
+      "settings": {
+        "background": "shopify://shop_images/Shop_by_Age_1_7ba846c1-d787-4714-9249-e007c16c5585.png",
+        "overlap": 30,
+        "character": "shopify://shop_images/attachment-large_1.png",
+        "title_a": "Shop by",
+        "title_b": "Age",
+        "subtitle": "Perfectly leveled fun for every stage!"
+      }
+    },
+    "creste_play": {
+      "type": "creste-play",
+      "blocks": {
+        "cat1": {
+          "type": "category",
+          "settings": {
+            "icon": "shopify://shop_images/crafty-crew_1.png",
+            "emoji": "✂",
+            "name": "CRAFTY CREW",
+            "subtitle": "Creative development",
+            "collection": "demo"
+          }
+        },
+        "cat3": {
+          "type": "category",
+          "settings": {
+            "icon": "shopify://shop_images/image_47_1.png",
+            "emoji": "🎨",
+            "name": "ART STUDIO",
+            "subtitle": "Self-expression",
+            "collection": "demo"
+          }
+        },
+        "cat2": {
+          "type": "category",
+          "settings": {
+            "icon": "shopify://shop_images/image_47.png",
+            "emoji": "🧪",
+            "name": "STORY WORLDS",
+            "subtitle": "Language & Literacy",
+            "collection": "science-collection"
+          }
+        },
+        "cat4": {
+          "type": "category",
+          "settings": {
+            "icon": "shopify://shop_images/image_47_2.png",
+            "emoji": "🧠",
+            "name": "THREAD CRAFTS",
+            "subtitle": "Fine Motor Skills & Creativity",
+            "collection": "demo"
+          }
+        },
+        "cat5": {
+          "type": "category",
+          "settings": {
+            "icon": "shopify://shop_images/Container_1.png",
+            "emoji": "📖",
+            "name": "PARTY PACKS",
+            "subtitle": "Group Play",
+            "collection": "demo"
+          }
+        },
+        "cat6": {
+          "type": "category",
+          "settings": {
+            "icon": "shopify://shop_images/image_47_3.png",
+            "emoji": "🛠",
+            "name": "FESTIVAL KITS",
+            "subtitle": "Culture, Creativity & Celebration",
+            "collection": "demo"
+          }
+        },
+        "cat7": {
+          "type": "category",
+          "settings": {
+            "emoji": "👟",
+            "name": "GROWN-UP",
+            "subtitle": "Calmness and Focus",
+            "collection": "demo"
+          }
+        }
+      },
+      "block_order": [
+        "cat1",
+        "cat3",
+        "cat2",
+        "cat4",
+        "cat5",
+        "cat6",
+        "cat7"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/Play_with_Purpose-d_9d1521c6-96b8-43b3-a117-298289dd2970.png",
+        "bg_mobile": "shopify://shop_images/Play_with_Purpose-m.png",
+        "title_a": "Play with",
+        "title_b": "Purpose",
+        "subtitle": "Creativity builds confidence, curiosity opens doors, and hands-on making sparks joy.",
+        "view_all_label": "View All",
+        "view_all_fallback": "",
+        "wave_top": "#62a66b",
+        "wave_bottom": "#c9b8e8"
+      }
+    },
+    "creste_testimonials": {
+      "type": "creste-testimonials",
+      "blocks": {
+        "review_qeKMwy": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/4822b0ee-0c6f-4aba-81d8-619dbcd0313a.png",
+            "title": "",
+            "quote": "I was wondering whether my child, would enjoy it, as she is very introvert. But she was happy the entire time. A fabulous DIY experience, and everything was arranged so nicely.",
+            "name": "Akansha",
+            "role": "Mother of Trishya",
+            "rating": "5"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/52eb41d6-17a5-4f69-98f3-b871100af0a4.png",
+            "title": "",
+            "quote": "The hands-on activities were so thoughtfully designed and they were so sensitive towards the needs of the children. One of the most satisfying decisions I have ever taken for my child.",
+            "name": "Isha Duhan",
+            "role": "Mother of a 4 y/o",
+            "rating": "5"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/40e8ac08-4755-492e-a10a-2cd0f264cb90.png",
+            "title": "",
+            "quote": "Creste is very different. It's very entertaining and there are so many different things to do. My daughter is only two years ten months and she was able to do a lot.",
+            "name": "Sanya Michael",
+            "role": "Mother of Danya",
+            "rating": "5"
+          }
+        },
+        "review_aFnknK": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/35906c6e-a59e-4221-9a7b-9c6c1e5700d9.png",
+            "title": "",
+            "quote": "We are so habituated to doing similar things every day. This DIY candle kit is quite comprehensive and includes everything required. It lets your creative juices flow, and it's a kind of stress buster also.",
+            "name": "Deepali Kacker",
+            "role": "Grown Up Workshop Attendee",
+            "rating": "5"
+          }
+        },
+        "review_UzNTqF": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/1cc39b65-473e-4ce8-8fbc-a05fa34f0c33.png",
+            "title": "",
+            "quote": "I was looking for something fun and meaningful for my 4-year-old, and I loved seeing her explore and create things on her own. It was a truly memorable DIY activity experience for both of us.",
+            "name": "Shambhavi Singh",
+            "role": "Mother of Aashna",
+            "rating": "5"
+          }
+        },
+        "review_8GAhge": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/4c37ed0e-e343-4c57-8b14-5e8acbe6c519.png",
+            "title": "",
+            "quote": "We did Creste's Halloween DIY activities and it was amazing. My kids really had fun, everything was so well organised. A great hands-on experience.",
+            "name": "Mother of an 8 y/o child",
+            "role": "",
+            "rating": "5"
+          }
+        },
+        "review_W4yXC3": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/ad54409d-f89d-42ba-aacd-aa38c040ba85.png",
+            "title": "",
+            "quote": "The kids had a lot of fun, specifically with the tie-and-dye t-shirts. When they wear it on the\nfestival, they'll cherish this hands-on experience even more. Creste makes the festival last\nlonger than a day.",
+            "name": "Amrita Saluja",
+            "role": "Mother of Naomi",
+            "rating": "5"
+          }
+        }
+      },
+      "block_order": [
+        "review_qeKMwy",
+        "r2",
+        "r4",
+        "review_aFnknK",
+        "review_UzNTqF",
+        "review_8GAhge",
+        "review_W4yXC3"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/1_2.png",
+        "bg_mobile": "shopify://shop_images/Testimonials_Section_long_2_1.png",
+        "mobile_logo": "shopify://shop_images/png_creste.png",
+        "overlap_top": 24,
+        "overlap_bottom": 0,
+        "section_bg": "#dcc9f5",
+        "wave_color": "#ede4fb",
+        "heading_a": "Loved By",
+        "heading_b": "50k+ Little Makers",
+        "columns": "3",
+        "visible": 5,
+        "button_label": "View More Reviews"
+      }
+    },
+    "creste_giftfinder": {
+      "type": "creste-giftfinder",
+      "settings": {
+        "image": "shopify://shop_images/5ecbf982-8d55-4039-8fbb-234e1cda8ecf.png",
+        "image_mobile": "shopify://shop_images/c23d2447-d580-4255-a8a8-849dec365f7d.png",
+        "link": "",
+        "alt": "Creste banner",
+        "max_width": 1600,
+        "radius": 24,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "creste_howitbegan": {
+      "type": "creste-howitbegan",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/IMAGE_1981e49e-d93b-4f66-ba34-e60e9385e708.png",
+            "color": "#f4793a",
+            "heading": "It all started in the middle of the 2020 lockdown",
+            "body": "Screens didn’t just take over playtime, they took over studies and school. Kids were on a screen at least five hours a day, and something about that didn’t sit right with Nidhi.",
+            "btn1_label": "",
+            "btn1_link": "",
+            "btn2_label": "",
+            "btn2_link": ""
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_50.png",
+            "color": "#3aa6c0",
+            "heading": "The joy of learning by doing went missing",
+            "body": "It wasn’t just the screen time. The feel of paper, the fun of projects, real research, and learning beside friends were all quietly going missing.",
+            "btn1_label": "",
+            "btn1_link": "",
+            "btn2_label": "",
+            "btn2_link": ""
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_51.png",
+            "color": "#8e6fd6",
+            "heading": "That’s when Nidhi decided to build something better.",
+            "body": "So she started a little school for her own kids at the dining table, bells ringing for lessons and breaks, experiments and models bringing each topic to life. Soon her friends were asking her to teach their kids too.",
+            "btn1_label": "",
+            "btn1_link": "",
+            "btn2_label": "",
+            "btn2_link": ""
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/100_Pure_Himalayan_Kapiva_Shilajit_Resin_-_30gm.png",
+            "color": "#6bb07a",
+            "heading": " A dining-table school turned into Creste",
+            "body": "Then came friends of friends, and a cycle began. By 2022 this was needed everywhere, and Creste was born, turning that same spirit into DIY kits for kids that make hands-on learning something they build with their own two hands.",
+            "btn1_label": "Learn More About Us",
+            "btn1_link": "/pages/our-story",
+            "btn2_label": "Explore Products",
+            "btn2_link": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/How_it_all_began1.png",
+        "bg_mobile": "shopify://shop_images/How_it_all_began-m.png",
+        "section_bg": "#fcede6",
+        "heading": "How It All Began",
+        "dog_left": "shopify://shop_images/Jack-_dog1.png",
+        "dog_right": "shopify://shop_images/dog2.png",
+        "dog_w": 130,
+        "dog_top": 0,
+        "dog_side": 12,
+        "offset_desktop": 252,
+        "offset_mobile": 196
+      }
+    },
+    "creste_featured": {
+      "type": "creste-featured",
+      "blocks": {
+        "logo_mAykAr": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/logo_548x260_6706ed6c-3424-4184-8139-1ce5d81d3bf5.png",
+            "name": "LOGO",
+            "row": "top"
+          }
+        },
+        "logo_pDhnTG": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/cms_city_montessori_school_548x260_c81b12f4-81e2-4c22-93b6-0e733950b84c.png",
+            "name": "LOGO",
+            "row": "top"
+          }
+        },
+        "logo_fRHyNk": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/bmw_logo_548x260-1_jpg.jpg",
+            "name": "LOGO",
+            "row": "top"
+          }
+        },
+        "logo_AtaKzQ": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/thf_logo_548x260_jpg.jpg",
+            "name": "LOGO",
+            "row": "top"
+          }
+        },
+        "l1": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2147228131_1.png",
+            "name": "BRAND",
+            "row": "top"
+          }
+        },
+        "l2": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/government_of_india_539x260-1.png",
+            "name": "MEDIA",
+            "row": "top"
+          }
+        },
+        "l3": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/uttar_pradesh_tourism_548x260-1.jpg",
+            "name": "PRESS",
+            "row": "top"
+          }
+        },
+        "l4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/amity_international_school_548x260-1.png",
+            "name": "NEWS",
+            "row": "top"
+          }
+        },
+        "l5": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/reliance_digital_548x260_a5dfd497-36e2-4082-9fb6-e5fdf4d016a3.png",
+            "name": "TIMES",
+            "row": "bottom"
+          }
+        },
+        "l6": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/phoenix_palassio_548x260-2.jpg",
+            "name": "DAILY",
+            "row": "bottom"
+          }
+        },
+        "l8": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/file_00000000898c822f84da8be9075522dc.png",
+            "name": "POST",
+            "row": "bottom"
+          }
+        }
+      },
+      "block_order": [
+        "logo_mAykAr",
+        "logo_pDhnTG",
+        "logo_fRHyNk",
+        "logo_AtaKzQ",
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l5",
+        "l6",
+        "l8"
+      ],
+      "settings": {
+        "heading": "Featured In",
+        "bg": "#ffffff",
+        "speed": 12
+      }
+    },
+    "creste_stages": {
+      "type": "creste-stages",
+      "blocks": {
+        "g1": {
+          "type": "stage",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-08-05_140300.png",
+            "emoji": "💡",
+            "title": "Little Hands Learn",
+            "desc": "Fingers figure out what the world feels like."
+          }
+        },
+        "g2": {
+          "type": "stage",
+          "settings": {
+            "image": "shopify://shop_images/photo-wrap_3.png",
+            "emoji": "🛠",
+            "title": "Focus Finds Them",
+            "desc": "They start finishing what they begin."
+          }
+        },
+        "g3": {
+          "type": "stage",
+          "settings": {
+            "image": "shopify://shop_images/photo-wrap_4.png",
+            "emoji": "🤝",
+            "title": "Friendships Build",
+            "desc": "Making friends together teaches them how to be with people."
+          }
+        },
+        "g4": {
+          "type": "stage",
+          "settings": {
+            "image": "shopify://shop_images/photo-wrap_5.png",
+            "emoji": "⭐",
+            "title": "Personality grows",
+            "desc": "They learn to build something bigger than themselves."
+          }
+        },
+        "g5": {
+          "type": "stage",
+          "settings": {
+            "image": "shopify://shop_images/photo-wrap_6.png",
+            "emoji": "🎓",
+            "title": "Confident Adults",
+            "desc": "Grown up chasing depth, not the next notification."
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/abc2.png",
+        "bg_mobile": "shopify://shop_images/abc.png",
+        "section_bg": "#ffffff",
+        "heading_1": "From Happy Childhoods",
+        "heading_2": "To Happy Adulthoods",
+        "subtitle": "The little moments you create today shape the confident, creative adults of tomorrow.",
+        "card_bg": "#ede9f8",
+        "badge_color": "#7e6bb8"
+      }
+    },
+    "creste_events": {
+      "type": "creste-events",
+      "blocks": {
+        "sv1": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg.png",
+            "icon_bg": "#e1f1f6",
+            "title": "Corporate Events",
+            "desc": "Create experiences for your clients that tie them to you",
+            "back_image": "shopify://shop_images/75a4e0c2-6085-4bb6-9963-111a4c67d237.png"
+          }
+        },
+        "service_tddQ9g": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_1.png",
+            "icon_bg": "#e1f1f6",
+            "title": "School Workshops",
+            "desc": "The class where no one watches the clock.",
+            "back_image": "shopify://shop_images/Homepage_flip_-_School_Workshops.png"
+          }
+        },
+        "service_43YMML": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_3.png",
+            "icon_bg": "#e1f1f6",
+            "title": "Family and Celebrations",
+            "desc": "Joy made by hand, not bought off a shelf.",
+            "back_image": "shopify://shop_images/Joyful_Mother-Daughter_Pressed_Flower_Portrait.png"
+          }
+        },
+        "service_AXRi3y": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/image_916.png",
+            "icon_bg": "#e1f1f6",
+            "title": "Craft Workshops",
+            "desc": "Learning they'd never call learning.",
+            "back_image": "shopify://shop_images/Homepage_flip_-_Family_and_Celebrations_Events.png"
+          }
+        },
+        "service_jrrKE4": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_7.png",
+            "icon_bg": "#e1f1f6",
+            "title": "STEM and Science",
+            "desc": "Where every kid causes the reaction.",
+            "back_image": "shopify://shop_images/Homepage_flip_-_STEM_Science_Sessions.png"
+          }
+        },
+        "service_GtTXFg": {
+          "type": "service",
+          "settings": {
+            "icon": "shopify://shop_images/svg_4.png",
+            "icon_bg": "#e1f1f6",
+            "title": "Malls and Communities",
+            "desc": "Where visits becomes longer stays",
+            "back_image": "shopify://shop_images/Homepage_flip_-_Community_Malls_Events.png"
+          }
+        },
+        "sv4": {
+          "type": "service",
+          "disabled": true,
+          "settings": {
+            "icon": "shopify://shop_images/svg_4.png",
+            "icon_bg": "#fbe4e4",
+            "title": "School Workshops",
+            "desc": "Joy made by hand, not bought off a shelf."
+          }
+        },
+        "sv6": {
+          "type": "service",
+          "disabled": true,
+          "settings": {
+            "icon": "shopify://shop_images/svg_1.png",
+            "icon_bg": "#fbe9d6",
+            "title": "Holiday Camps",
+            "desc": "Learning they'd never call learning."
+          }
+        },
+        "sv7": {
+          "type": "service",
+          "disabled": true,
+          "settings": {
+            "icon": "shopify://shop_images/svg_4.png",
+            "icon_bg": "#e8f0fe",
+            "title": "Weddings & Birthdays",
+            "desc": "The return gift they made themselves."
+          }
+        },
+        "ac1": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_7.png",
+            "label": "Slime Making"
+          }
+        },
+        "ac2": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_6.png",
+            "label": "Candle Making"
+          }
+        },
+        "ac3": {
+          "type": "activity",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/ic_3.png",
+            "label": "Tie-Dye"
+          }
+        },
+        "ac4": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_3.png",
+            "label": "Painting"
+          }
+        },
+        "ac5": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_6.png",
+            "label": "DIY Crafts"
+          }
+        },
+        "ac6": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_2.png",
+            "label": "Experiments"
+          }
+        },
+        "ac7": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_5.png",
+            "label": "Texture Art"
+          }
+        },
+        "ac8": {
+          "type": "activity",
+          "settings": {
+            "image": "shopify://shop_images/ic_7.png",
+            "label": "Bookmark DIY"
+          }
+        },
+        "ac9": {
+          "type": "activity",
+          "disabled": true,
+          "settings": {
+            "label": "Hand Casting"
+          }
+        }
+      },
+      "block_order": [
+        "sv1",
+        "service_tddQ9g",
+        "service_43YMML",
+        "service_AXRi3y",
+        "service_jrrKE4",
+        "service_GtTXFg",
+        "sv4",
+        "sv6",
+        "sv7",
+        "ac1",
+        "ac2",
+        "ac3",
+        "ac4",
+        "ac5",
+        "ac6",
+        "ac7",
+        "ac8",
+        "ac9"
+      ],
+      "settings": {
+        "bg_desktop": "shopify://shop_images/FAQ_Section.png",
+        "bg_mobile": "shopify://shop_images/mob_red_1db5c52d-47cb-4261-862c-f307cab9478b.png",
+        "section_bg": "#f9d8e8",
+        "heading_a": "We create",
+        "heading_accent": "meaningful",
+        "heading_b": "learning experiences together",
+        "subtitle": "Interactive activations for schools, corporates, malls, and every occasion in between.",
+        "hint": "Swipe to see more",
+        "act_count": "170+",
+        "act_suffix": "Activities We Offer",
+        "act_speed": 26,
+        "form_a": "Planning an event? Let's build it together.",
+        "form_pre": "",
+        "form_accent1": "",
+        "form_mid": "",
+        "form_accent2": "",
+        "button_url": "shopify://pages/event-planning-form-page",
+        "button_label": "Get In touch",
+        "note": "Drop us a message - our team responds within 24 hours."
+      }
+    },
+    "creste_favourites": {
+      "type": "creste-favourites",
+      "settings": {
+        "background": "shopify://shop_images/Section_-_Best_Sellers.png",
+        "bg_mobile": "shopify://shop_images/favorites-_m.png",
+        "fallback_bg": "#f5c518",
+        "overlay": 0,
+        "heading": "The",
+        "heading_italic": "Favorites",
+        "subtitle": "Grab 'em before they disappear!",
+        "heading_color": "#2b1702",
+        "collection": "demo",
+        "count": 10,
+        "card_width": 250,
+        "default_rating": "4.9",
+        "badge_tag": "top pick",
+        "badge_text": "TOP PICK",
+        "button_label": "Add To Cart"
+      }
+    },
+    "creste_buildbox": {
+      "type": "creste-buildbox",
+      "settings": {
+        "image": "shopify://shop_images/577686a6-a5f0-4ba0-9dcc-2e816cfd753f_1.png",
+        "image_mobile": "shopify://shop_images/4aa748b0-69c1-4354-98f7-cc8cdf0e6ddd_1.png",
+        "link": "",
+        "alt": "Build your own box",
+        "full_width": true,
+        "section_bg": "#ffffff",
+        "max_width": 1200,
+        "radius": 24,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "creste_families": {
+      "type": "creste-families",
+      "blocks": {
+        "reel_tcabgK": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/diwali kit.mp4",
+            "video_url": "",
+            "poster": "shopify://shop_images/Diwali-Banner-Mobile.jpg",
+            "caption": "",
+            "product": "diy-diwali-kit"
+          }
+        },
+        "reel_bHA4jw": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Dussehra.mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "diy-dussehra-kit"
+          }
+        },
+        "reel_4HcYU6": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/Gardening_Instructional_Video (1).mp4",
+            "video_url": "",
+            "caption": "",
+            "product": "diy-gardening-kit"
+          }
+        },
+        "f4": {
+          "type": "reel",
+          "settings": {
+            "video": "shopify://files/videos/IMG_5230.MP4",
+            "video_url": "",
+            "poster": "shopify://shop_images/bcc7da42-05f0-4944-bcb3-455ae4855192_1.png",
+            "caption": "",
+            "product": "diy-hand-casting-kit-for-couples-2years"
+          }
+        }
+      },
+      "block_order": [
+        "reel_tcabgK",
+        "reel_bHA4jw",
+        "reel_4HcYU6",
+        "f4"
+      ],
+      "settings": {
+        "section_bg": "#dfd6f5",
+        "heading": "Picked & Loved by",
+        "heading_italic": "Our Family",
+        "heading_italic_color": "#8b5cf6",
+        "subtitle": "See why our families can’t stop loving these! ✨"
+      }
+    },
+    "creste_faq": {
+      "type": "creste-faq",
+      "blocks": {
+        "faq_ediE4n": {
+          "type": "faq",
+          "settings": {
+            "question": "Can complete beginners use these kits with no craft experience?",
+            "answer": "Yes that is how our diy kits are built you can follow our YouTube video instructions, instructions guide whichever feels more comfortable to you."
+          }
+        },
+        "faq_Vh67Gb": {
+          "type": "faq",
+          "settings": {
+            "question": "Are there any kits for get togethers?",
+            "answer": "For get together we suggest you to put the age in the gift finder and find the best kit for you and if not please give us a call and we will be happy to help you or you can visit the party packs section and get the best memory maker for you."
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the instructions easy to follow?",
+            "answer": "Ridiculously easy. Every kit comes with simple, step-by-step instructions made for absolute beginners — no craft experience, no YouTube tutorials, no stress. If you can follow a recipe, you can follow this."
+          }
+        },
+        "faq_kjxDHV": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I order Creste DIY Kits in bulk?",
+            "answer": "Yes, and it's one of the things Creste does most  or else you can connect us and we will be happy to help you place your bulk orders."
+          }
+        }
+      },
+      "block_order": [
+        "faq_ediE4n",
+        "faq_Vh67Gb",
+        "q5",
+        "faq_kjxDHV"
+      ],
+      "settings": {
+        "section_bg": "#ffffff",
+        "heading": "Parents Often Ask...",
+        "subtitle": ""
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "creste_hero",
+    "creste_custom_strip_3qRzUG",
+    "creste_stats",
+    "creste_age",
+    "creste_play",
+    "creste_testimonials",
+    "creste_giftfinder",
+    "creste_howitbegan",
+    "creste_featured",
+    "creste_stages",
+    "creste_events",
+    "creste_favourites",
+    "creste_buildbox",
+    "creste_families",
+    "creste_faq"
   ]
 }

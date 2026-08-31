@@ -1,0 +1,1991 @@
+{%- comment -%} Purchase-option upsell nudge: no pack pre-selected; Add to Cart / Buy Now stay visually enabled but, when no pack is chosen, they nudge (shake the higher packs, strongest on the top tier) instead of adding. Also a gentle shake on load. {%- endcomment -%}
+<style>
+@keyframes cpdpShake{0%,100%{transform:translateX(0)}10%{transform:translateX(calc(var(--cpdp-amp,6px) * -1))}22%{transform:translateX(var(--cpdp-amp,6px))}34%{transform:translateX(calc(var(--cpdp-amp,6px) * -0.8))}46%{transform:translateX(calc(var(--cpdp-amp,6px) * 0.8))}58%{transform:translateX(calc(var(--cpdp-amp,6px) * -0.5))}70%{transform:translateX(calc(var(--cpdp-amp,6px) * 0.5))}82%{transform:translateX(calc(var(--cpdp-amp,6px) * -0.25))}}
+.cpdp__po-card.cpdp-shake{animation:cpdpShake .6s ease both;will-change:transform;z-index:1;}
+@media (prefers-reduced-motion: reduce){.cpdp__po-card.cpdp-shake{animation:none}}
+.cpdp__buynow-ico-img{width:18px;height:18px;object-fit:contain;vertical-align:middle}
+.cpdp__gift-ico-img{width:30px;height:30px;object-fit:contain}
+.cpdp__tutorial_mobile {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .cpdp__tutorial_mobile {
+    display: block;
+  }
+}
+.cpdp__tutorial_desktop {
+  display: block;
+}
+
+@media screen and (max-width: 749px) {
+  .cpdp__tutorial_desktop {
+    display: none;
+  }
+}
+
+</style>
+<script>
+(function(){
+  function init(){
+    document.querySelectorAll('.cpdp__buybox').forEach(function(box){
+      if(box.__cpdpUpsellInit){return;} box.__cpdpUpsellInit=true;
+      var cards=[].slice.call(box.querySelectorAll('.cpdp__po-card'));
+      var atc=box.querySelector('.cpdp__atc');
+      var buynow=box.querySelector('.cpdp__buynow');
+      var form=(atc&&atc.closest('form'))||box.closest('form');
+      if(!cards.length){return;}
+      function anySelected(){return !!box.querySelector('.cpdp__po-card.is-selected');}
+      var ranked=cards.map(function(c){return {el:c,q:parseInt(c.getAttribute('data-qty')||'0',10)};}).sort(function(a,b){return a.q-b.q;});
+      function shakeUpsell(){
+        var n=ranked.length;
+        ranked.forEach(function(o,i){
+          if(i===0){return;}
+          var amp=4+i*3;
+          o.el.style.setProperty('--cpdp-amp',amp+'px');
+          o.el.style.animationDelay=((n-1-i)*70)+'ms';
+          o.el.classList.remove('cpdp-shake'); void o.el.offsetWidth; o.el.classList.add('cpdp-shake');
+          setTimeout(function(){o.el.classList.remove('cpdp-shake');o.el.style.animationDelay='';},900+i*90);
+        });
+      }
+      box.__cpdpShakeUpsell=shakeUpsell;
+      function guard(e){ if(!anySelected()){ e.preventDefault(); e.stopImmediatePropagation(); shakeUpsell(); return false; } }
+      if(atc){atc.addEventListener('click',guard,true);}
+      if(buynow){buynow.addEventListener('click',guard,true);}
+      if(form){form.addEventListener('submit',function(e){ if(!anySelected()){ e.preventDefault(); e.stopImmediatePropagation(); shakeUpsell(); } },true);}
+      setTimeout(shakeUpsell,1200);
+    });
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+})();
+</script>
+{%- comment -%}
+  Creste — Custom Product Detail Page (PDP) — product-driven
+{%- endcomment -%}
+
+{%- liquid
+  assign uid = section.id
+  assign wa = section.settings.whatsapp_number | default: '919999999999'
+  assign cur = product.selected_or_first_available_variant
+  assign heading_title = section.settings.title_override
+  if heading_title == blank
+    assign heading_title = product.title
+  endif
+-%}
+
+<section id="Cpdp-{{ uid }}" class="cpdp" data-section-id="{{ uid }}">
+  <div class="cpdp__wrap">
+
+    {%- if section.settings.promo_banner_desktop != blank or section.settings.promo_banner_mobile != blank or request.design_mode -%}
+      <div class="cpdp__promo-banner">
+        {%- if section.settings.promo_banner_link != blank -%}<a href="{{ section.settings.promo_banner_link }}" class="cpdp__promo-link">{%- endif -%}
+          {%- if section.settings.promo_banner_desktop != blank -%}
+            {{ section.settings.promo_banner_desktop | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'cpdp__promo-img cpdp__promo-img--desktop', alt: section.settings.promo_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdp__promo-img cpdp__promo-img--desktop cpdp__promo-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__promo-ph-svg' }}<span class="cpdp__promo-ph-label">Desktop banner — upload in section settings</span></div>
+          {%- endif -%}
+          {%- if section.settings.promo_banner_mobile != blank -%}
+            {{ section.settings.promo_banner_mobile | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'cpdp__promo-img cpdp__promo-img--mobile', alt: section.settings.promo_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdp__promo-img cpdp__promo-img--mobile cpdp__promo-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__promo-ph-svg' }}<span class="cpdp__promo-ph-label">Mobile banner — upload in section settings</span></div>
+          {%- endif -%}
+        {%- if section.settings.promo_banner_link != blank -%}</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <nav class="cpdp__crumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="cpdp__crumb-sep">{{'icon-arrow-right.svg' | inline_asset_content }}</span>
+      <span class="cpdp__crumb-current">{{ heading_title }}</span>
+    </nav>
+
+    <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" id="cpdp-form-{{ uid }}" class="cpdp__form">
+    <div class="cpdp__hero">
+
+      <div class="cpdp__col-left">
+        <div class="cpdp__gallery">
+          <div class="cpdp__badges">
+            {%- if product.metafields.custom.product_tag != blank -%}<span class="cpdp__badge cpdp__badge--best">{{ product.metafields.custom.product_tag }}</span>{%- endif -%}
+            {%- if section.settings.badge_2 != blank -%}<span class="cpdp__badge cpdp__badge--soft">{{ section.settings.badge_2 }}</span>{%- endif -%}
+          </div>
+          <button type="button" class="cpdp__expand" data-share data-share-url="{{ shop.secure_url }}{{ product.url }}" data-share-title="{{ product.title | escape }}" aria-label="Share">{{ 'icon-share-pdp.svg' | inline_asset_content }}</button>
+          <div class="cpdp__stage">
+            {%- if product.media.size > 0 -%}
+              {%- for media in product.media -%}
+                <div class="cpdp__slide{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}" data-media-id="{{ media.id }}">{{ media | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__img', alt: media.alt | default: product.title }}</div>
+              {%- endfor -%}
+            {%- else -%}
+              <div class="cpdp__slide is-active" data-index="0"><div class="cpdp__img cpdp__img--ph">{{ 'product-apparel-1' | placeholder_svg_tag: 'cpdp__ph-svg' }}</div></div>
+            {%- endif -%}
+          </div>
+          <!-- Mobile slider dots -->
+          <div class="cpdp__dots">
+            {%- for media in product.media -%}
+              <button
+                type="button"
+                class="cpdp__dot{% if forloop.first %} is-active{% endif %}"
+                data-dot="{{ forloop.index0 }}"
+                aria-label="Go to image {{ forloop.index }}"
+              ></button>
+            {%- endfor -%}
+          </div>
+          <button type="button" class="cpdp__nav cpdp__nav--prev" aria-label="Previous image">
+          <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18L0 9L9 0L11.1 2.1L4.2 9L11.1 15.9L9 18Z" fill="#F4793A"/>
+          </svg>
+
+          </button>
+          <button type="button" class="cpdp__nav cpdp__nav--next" aria-label="Next image">
+            <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.09961 18L11.0996 9L2.09961 0L-0.000391006 2.1L6.89961 9L-0.000391006 15.9L2.09961 18Z" fill="#F4793A"/>
+            </svg>
+            </button>
+        </div>
+        <div class="cpdp__thumbs">
+          {%- if product.media.size > 0 -%}
+            {%- for media in product.media -%}
+              <button type="button" class="cpdp__thumb{% if forloop.first %} is-active{% endif %}" data-target="{{ forloop.index0 }}" aria-label="View image {{ forloop.index }}">{{ media | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</button>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+       {% if product.metafields.custom.product_tutorial_thumbnail.value != blank and product.metafields.custom.product_tutorial_video_link.value != blank %}
+        <div class="cpdp__tutorial  cpdp__tutorial_desktop ">
+          <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
+         {%- assign video_url = product.metafields.custom.product_tutorial_video_link.value -%}
+
+{%- if video_url != blank -%}
+  <a
+    href="{{ video_url }}"
+    target="_blank"
+    rel="noopener"
+    class="cpdp__video-link"
+  >
+{%- endif -%}
+
+<div class="cpdp__video">
+
+  {%- comment -%}
+    First priority: Custom thumbnail
+  {%- endcomment -%}
+
+  {% comment %} {%- if product.metafields.custom.product_tutorial_thumbnail != blank -%}
+
+    <img
+      src="{{ product.metafields.custom.product_tutorial_thumbnail }}"
+      class="cpdp__video-thumb"
+      alt="Product tutorial"
+      loading="lazy"
+    > {% endcomment %}
+
+  {%- if video_url != blank -%}
+
+    {%- comment -%}
+      Extract YouTube video ID
+    {%- endcomment -%}
+
+    {%- assign video_id = '' -%}
+
+          {%- if video_url contains 'youtube.com/watch' -%}
+
+            {%- assign video_id = video_url | split: 'v=' | last | split: '&' | first -%}
+
+          {%- elsif video_url contains 'youtu.be/' -%}
+
+            {%- assign video_id = video_url | split: 'youtu.be/' | last | split: '?' | first -%}
+
+          {%- elsif video_url contains '/shorts/' -%}
+
+            {%- assign video_id = video_url | split: '/shorts/' | last | split: '?' | first -%}
+
+          {%- elsif video_url contains '/embed/' -%}
+
+            {%- assign video_id = video_url | split: '/embed/' | last | split: '?' | first -%}
+
+          {%- endif -%}
+
+          {%- if video_id != blank -%}
+
+            <img
+              src="https://img.youtube.com/vi/{{ video_id }}/hqdefault.jpg"
+              class="cpdp__video-thumb"
+              alt="Product tutorial"
+              loading="lazy"
+            >
+
+          {%- else -%}
+
+            <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+
+          {%- endif -%}
+
+        {%- else -%}
+
+          <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+
+        {%- endif -%}
+
+        <span class="cpdp__play" aria-label="Play tutorial">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </span>
+
+      </div>
+
+      {%- if video_url != blank -%}
+        </a>
+      {%- endif -%}
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="cpdp__col-right">
+        <div class="cpdp__pills">
+          {%- assign pills = product.metafields.custom.product_pill_feature | split: ',' -%}
+          {%- assign pcolors = 'y,b,g,p' | split: ',' -%}
+          {%- for p in pills -%}
+            {%- assign pc = forloop.index0 | modulo: 4 -%}
+            <span class="cpdp__pill cpdp__pill--{{ pcolors[pc] }}">{{ p | strip }}</span>
+          {%- endfor -%}
+        </div>
+        <h1 class="cpdp__title">{{ heading_title }}</h1>
+        <div class="cpdp__rating">
+          {% comment %} <span class="cpdp__stars" aria-hidden="true">★★★★★</span>
+          <a href="#cpdp-reviews" class="cpdp__rating-link">{{ section.settings.rating_text | default: '4.9 · 2,148 reviews' }}</a> {% endcomment %}
+             <!-- Start of Judge.me code -->
+            <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
+                {{ product.metafields.judgeme.badge }}
+              </div>
+              <!-- End of Judge.me code -->
+          <span class="cpdp__rating-sold">{{ section.settings.sold_text | default: '1,900+ bought this month' }}</span>
+        </div>
+        {%- if product.description != blank -%}
+          <p class="cpdp__desc">{{ product.description | strip_html }}</p>
+          <button type="button" class="cpdp__read-more">
+            Read more
+          </button>
+        {%- endif -%}
+        {% comment %} {%- if section.settings.short_desc != blank -%}<p class="cpdp__desc">{{ section.settings.short_desc }}</p> {% endcomment %}
+
+        <div class="cpdp__buybox">
+          {% comment %} {%- if product.variants.size > 1 -%}
+          <div class="cpdp__themebox">
+            <h3 class="cpdp__themebox-title">Pick a bag theme</h3>
+            <div class="cpdp__themegrid" role="radiogroup" aria-label="Pick a bag theme">
+              {%- assign theme_map = 'Dinosaur Theme|🦕|Dinosaur,Dog Theme|🐶|Dog,Princess Theme|👸|Princess,Back to School Theme|🎒|Back 2 school,Candy Theme|🍬|Candy,Animal Theme|🐰|Animal' | split: ',' -%}
+              {%- assign rendered = '' -%}
+              {%- for tm in theme_map -%}
+                {%- assign tparts = tm | split: '|' -%}
+                {%- assign tname = tparts[0] -%}
+                {%- assign tv = product.variants | where: 'title', tname | first -%}
+                {%- if tv -%}
+                  <button type="button" class="cpdp__theme{% if tv.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if tv.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ tv.id }}"><span class="cpdp__theme-ico">{{ tparts[1] }}</span><span class="cpdp__theme-name">{{ tparts[2] }}<br>Theme</span></button>
+                  {%- assign rendered = rendered | append: tname | append: ',' -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- for variant in product.variants -%}
+                {%- unless rendered contains variant.title -%}
+                  <button type="button" class="cpdp__theme{% if variant.id == cur.id %} is-selected{% endif %}" role="radio" aria-checked="{% if variant.id == cur.id %}true{% else %}false{% endif %}" data-variant-id="{{ variant.id }}"><span class="cpdp__theme-ico">🎨</span><span class="cpdp__theme-name">{{ variant.title }}</span></button>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+          </div>
+          {%- endif -%} {% endcomment %}
+         {%- if product.variants.size > 1 -%}
+          <div class="cpdp__themebox">
+            <h3 class="cpdp__themebox-title">{{ product.options[0] }} 
+              <span class="cpdp__symbol">:</span>
+              <span class="cpdp__selected-option">
+                 {{ cur.option1 }}
+              </span>
+            </h3>
+
+            <div
+              class="cpdp__themegrid"
+              role="radiogroup"
+              aria-label="Pick a bag theme"
+            >
+              {%- for variant in product.variants -%}
+                <button
+                  type="button"
+                  class="cpdp__theme{% if variant.id == cur.id %} is-selected{% endif %}"
+                  role="radio"
+                  aria-checked="{% if variant.id == cur.id %}true{% else %}false{% endif %}"
+                  data-variant-id="{{ variant.id }}"
+                  data-option-value="{{ variant.option1 }}"
+                >
+                 {%- if variant.metafields.custom.variant_icon != blank -%}
+                    <span class="cpdp__theme-ico">
+                      {% comment %} <p>{{variant.metafields.custom.variant_icon.value}}</p> {% endcomment %}
+                       <img
+                          src="{{ variant.metafields.custom.variant_icon.value }}"
+                          alt="{{ variant.title }}"
+                          loading="lazy"
+                          width="100"
+                          height="100"
+                        >
+                    </span>
+                  {%- endif -%}
+                 <span class="cpdp__theme-name">
+                    {%- assign words = variant.title | split: ' ' -%}
+                    {%- assign last_word = words | last -%}
+                    {%- assign words_count = words.size | minus: 1 -%}
+                    {%- assign remaining_words = words | slice: 0, words_count | join: ' ' -%}
+
+                    {{ remaining_words }}<br>{{ last_word }}
+                  </span>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+        <div class="cpdp__hr"></div>
+        <div class="cpdp__price">
+          <span class="cpdp__price-now" data-price>{{ cur.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
+          {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹'  }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
+        </div>
+        <label class="cpdp__giftwrap">
+          
+          <span class="cpdp__gift-ico">
+            {% if section.settings.gift_icon != blank %}
+              <img
+                src="{{ section.settings.gift_icon | image_url: width: 100 }}"
+                alt="Gift Icon"
+                loading="lazy"
+                width="100"
+                height="100"
+              >
+            {% endif %}
+          </span>
+          
+         <span class="cpdp__gift-body"><b>{{ section.settings.gift_heading }}</b><em>{{ section.settings.gift_sub_heading }}</em></span><input type="checkbox" name="properties[Gift wrapping]" value="Yes" class="cpdp__gift-check"></label>
+        {% comment %} <label class="cpdp__giftwrap"><span class="cpdp__gift-ico">{%- if section.settings.gift_icon != blank -%}{{ section.settings.gift_icon | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__gift-ico-img', alt: '' }}{%- else -%}<svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><circle cx="11" cy="13" r="2.4" fill="#EC407A"/><circle cx="21" cy="10" r="2" fill="#FF7043"/><circle cx="30" cy="14" r="2.4" fill="#EF5350"/><circle cx="15" cy="22" r="2" fill="#F06292"/><circle cx="25" cy="21" r="2.4" fill="#FF8A65"/><circle cx="31" cy="27" r="2" fill="#EC407A"/><circle cx="11" cy="29" r="2.4" fill="#FF7043"/><circle cx="21" cy="31" r="2" fill="#EF5350"/></svg>{%- endif -%}</span><span class="cpdp__gift-body"><b>{{ section.settings.gift_title | default: 'Add gift wrapping — free' }}</b><em>{{ section.settings.gift_subtext | default: 'Kraft paper, ribbon and a handwritten note' }}</em></span><input type="checkbox" name="properties[Gift wrapping]" value="Yes" class="cpdp__gift-check"></label> {% endcomment %}
+        <div class="cpdp__hr cpdp__hr--blank"></div>
+        <div class="cpdp__po">
+          <h3 class="cpdp__po-title">{{ section.settings.po_title | default: 'Choose Purchase Option' }}</h3>
+          <div class="cpdp__po-grid">
+            {%- assign tiers = section.settings.po_tiers | default: '1|0,2|5,4|15' | split: ',' -%}
+            {%- for tier in tiers -%}
+              {%- assign tp = tier | split: '|' -%}
+              {%- assign q = tp[0] | times: 1 -%}
+              {%- assign off = tp[1] | times: 1 -%}
+              {%- assign img_url = tp[2] -%}
+              {%- assign base = cur.price | times: q -%}
+              {%- assign discount = base | times: off | divided_by: 100 -%}
+              {%- assign final = base | minus: discount -%}
+              <button type="button" class="cpdp__po-card" data-qty="{{ q }}" data-off="{{ off }}"><span class="cpdp__po-ico"><img src="{{ img_url }}" width="30"/><span class="cpdp__po-body"><span class="cpdp__po-top">{{ section.settings.po_buy_label | default: 'Buy' }} {{ q }} {% if off > 0 %}<em>{{ off }}{{ section.settings.po_off_suffix | default: '% off' }}</em>{% endif %}</span><span class="cpdp__po-price">{{ final | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} {% if off > 0 %}<s>{{ base | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s>{% endif %}</span></span>{% if forloop.last %}<span class="cpdp__po-badge">{{ section.settings.po_badge_text | default: 'Smart Saver' }}</span>{% endif %}</span>
+            </button>
+            {%- endfor -%}
+          </div>
+        </div>
+        <div class="cpdp__hr cpdp__hr--blank"></div>
+        <p class="cpdp__ship">{{ section.settings.ship_text | default: 'Order before 4 PM → ships today · COD available' }}</p>
+        <input type="hidden" name="id" value="{{ cur.id }}" class="cpdp__var-id">
+        <input type="hidden" name="properties[_Bundle Discount]" class="cpdp__bundle-off" value="0">
+        <div class="cpdp__buy">
+          <div class="cpdp__qty" aria-label="Quantity">
+            <button type="button" class="cpdp__qty-btn" data-dir="-1" aria-label="Decrease">−</button>
+            <input class="cpdp__qty-val" type="text" name="quantity" inputmode="numeric" value="1" aria-label="Quantity" readonly>
+            <button type="button" class="cpdp__qty-btn" data-dir="1" aria-label="Increase">+</button>
+          </div>
+          <button type="submit" class="cpdp__atc" data-atc{% unless cur.available %} disabled{% endunless %}><span data-atc-label>{% if cur.available %}{{ section.settings.atc_label | default: 'Add to Cart' }}{% else %}{{ section.settings.atc_soldout_label | default: 'Sold out' }}{% endif %}</span></button>
+        </div>
+        <button type="button" class="cpdp__buynow" data-buynow>{{ section.settings.buynow_label | default: 'Buy Now' }} {%- if section.settings.buynow_icon != blank -%}{{ section.settings.buynow_icon | image_url: width: 40 | image_tag: loading: 'lazy', class: 'cpdp__buynow-ico-img', alt: '' }}{%- else -%}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>{%- endif -%}</button>
+        </div>
+         <div class="cpdp__tutorial  cpdp__tutorial_mobile">
+          <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
+          {%- if product.metafields.custom.product_tutorial_video_link != blank -%}<a href="{{ product.metafields.custom.product_tutorial_video_link }}" target="_blank" rel="noopener" class="cpdp__video-link">{%- endif -%}
+          <div class="cpdp__video">
+            {%- if product.metafields.custom.product_tutorial_thumbnail != blank -%}
+              {% comment %} {{ product.metafields.custom.product_tutorial_thumbnail | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__video-thumb', alt: 'Tutorial' }} {% endcomment %}
+               <img src="{{ product.metafields.custom.product_tutorial_thumbnail }}" alt="product.metafields.custom.product_tutorial_thumbnail">
+            {%- else -%}
+              <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+            {%- endif -%}
+            <span class="cpdp__play" aria-label="Play tutorial"><svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
+          </div>
+          {%- if product.metafields.custom.product_tutorial_video_link != blank -%}</a>{%- endif -%}
+        </div>
+        <div class="cpdp__trust">
+          <div class="cpdp__trust-item cpdp__trust-item--g"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_1 != blank -%}{{ section.settings.trust_icon_1 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">{{ section.settings.trust_heading_1 }}</span><span class="cpdp__trust-s">{{ section.settings.trust_subheading_1 }}</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--b"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_2 != blank -%}{{ section.settings.trust_icon_2 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#3B82C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M15.5 15.2a3 3 0 1 1-.9-3.1"/><path d="M15.6 12.2v2h-2"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">{{ section.settings.trust_heading_2 }}</span><span class="cpdp__trust-s">{{ section.settings.trust_subheading_2 }}</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--a"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_3 != blank -%}{{ section.settings.trust_icon_3 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#E0902A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.4L7 22l5-3 5 3-2-8.6"/><circle cx="12" cy="9" r="1.6" fill="#138808" stroke="none"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">{{ section.settings.trust_heading_3 }}</span><span class="cpdp__trust-s">{{ section.settings.trust_subheading_3 }}</span></div>
+          <div class="cpdp__trust-item cpdp__trust-item--p"><span class="cpdp__trust-ico">{%- if section.settings.trust_icon_4 != blank -%}{{ section.settings.trust_icon_4 | image_url: width: 60 | image_tag: loading: 'lazy', class: 'cpdp__trust-ico-img', alt: '' }}{%- elsif request.design_mode -%}<span class="cpdp__trust-ico-ph" title="Upload icon in section settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>{%- else -%}<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13"/><path d="M12 8S9.6 8 8.6 6.7 8.7 3.6 10.1 4.4 12 8 12 8zM12 8s2.4 0 3.4-1.3-.1-3.1-1.5-2.3S12 8 12 8z"/></svg>{%- endif -%}</span><span class="cpdp__trust-t">{{ section.settings.trust_heading_4 }}</span><span class="cpdp__trust-s">{{ section.settings.trust_subheading_4 }}</span></div>
+        </div>
+        {% comment %} {%- if section.settings.safety_text != blank -%}<div class="cpdp__safety"><span class="cpdp__safety-ico">⚠️</span><span class="cpdp__safety-t">{{ section.settings.safety_text }}</span>{%- if section.settings.safety_link != blank -%}<a href="{{ section.settings.safety_link }}" class="cpdp__safety-link">{{ section.settings.safety_link_text }}</a>{%- endif -%}</div>{%- endif -%} {% endcomment %}
+        {%- if section.settings.safety_text != blank -%}
+          <div class="cpdp__safety">
+            
+            <span class="cpdp__safety-ico">!</span>
+            
+            <span class="cpdp__safety-t">
+              {{ section.settings.safety_text }}
+            </span>
+
+            {%- if section.settings.safety_link != blank -%}
+              <a 
+                href="{{ section.settings.safety_link }}" 
+                class="cpdp__safety-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ section.settings.safety_link_text }}
+              </a>
+            {%- endif -%}
+
+          </div>
+        {%- endif -%}
+        <div class="cpdp__offers">
+          <h3 class="cpdp__offers-title"><span class="cpdp__offers-ico"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16.1711 2.19564C11.3596 1.51135 8.59393 1.38707 3.80822 2.1985C2.87393 2.35564 2.01679 2.72421 1.3825 3.32707C1.05258 3.6396 0.791083 4.01718 0.614532 4.43594C0.437981 4.85469 0.350217 5.30552 0.356789 5.75993V7.42135C0.356789 7.70707 0.526789 7.96421 0.788217 8.07707C1.17265 8.24276 1.50013 8.51743 1.73021 8.86714C1.9603 9.21686 2.08291 9.62631 2.08291 10.0449C2.08291 10.4635 1.9603 10.873 1.73021 11.2227C1.50013 11.5724 1.17265 11.8471 0.788217 12.0128C0.659913 12.0681 0.550655 12.1599 0.473971 12.2767C0.397287 12.3935 0.356545 12.5302 0.356789 12.6699V14.3314C0.356789 16.3642 1.90965 17.6456 3.83536 17.8956C8.64679 18.5242 11.3611 18.5185 16.1639 17.8956C17.1439 17.7699 18.0139 17.3971 18.6468 16.7771C19.2882 16.1485 19.6425 15.3028 19.6425 14.3314V12.6685C19.6425 12.529 19.6016 12.3926 19.5249 12.2761C19.4483 12.1595 19.3392 12.068 19.2111 12.0128C18.8266 11.8471 18.4992 11.5724 18.2691 11.2227C18.039 10.873 17.9164 10.4635 17.9164 10.0449C17.9164 9.62631 18.039 9.21686 18.2691 8.86714C18.4992 8.51743 18.8266 8.24276 19.2111 8.07707C19.3392 8.02183 19.4483 7.93031 19.5249 7.81378C19.6016 7.69726 19.6425 7.56084 19.6425 7.42135V5.75993C19.6425 3.7085 17.9682 2.44993 16.1711 2.19564Z" fill="#8FBFFA"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.40954 8.58688C7.59706 8.59288 7.78387 8.56112 7.95888 8.49349C8.13388 8.42587 8.29351 8.32376 8.42827 8.19323C8.56304 8.0627 8.67019 7.90642 8.74337 7.73367C8.81655 7.56091 8.85426 7.37521 8.85426 7.1876C8.85426 6.99998 8.81655 6.81428 8.74337 6.64153C8.67019 6.46877 8.56304 6.31249 8.42827 6.18196C8.29351 6.05144 8.13388 5.94933 7.95888 5.8817C7.78387 5.81408 7.59706 5.78232 7.40954 5.78831C7.03824 5.78831 6.68215 5.93581 6.41959 6.19836C6.15704 6.46091 6.00954 6.81701 6.00954 7.18831C6.00954 7.55961 6.15704 7.91571 6.41959 8.17826C6.68215 8.44081 7.03824 8.58688 7.40954 8.58688ZM12.5895 14.3297C12.7785 14.3383 12.9673 14.3084 13.1444 14.242C13.3215 14.1756 13.4834 14.0739 13.6201 13.9432C13.7569 13.8125 13.8657 13.6554 13.9401 13.4815C14.0144 13.3076 14.0528 13.1203 14.0528 12.9312C14.0528 12.742 14.0144 12.5548 13.9401 12.3808C13.8657 12.2069 13.7569 12.0498 13.6201 11.9191C13.4834 11.7884 13.3215 11.6868 13.1444 11.6203C12.9673 11.5539 12.7785 11.5241 12.5895 11.5326C12.2262 11.5442 11.8816 11.6967 11.6286 11.9579C11.3757 12.219 11.2343 12.5683 11.2343 12.9319C11.2343 13.2954 11.3757 13.6447 11.6286 13.9059C11.8816 14.167 12.2262 14.3181 12.5895 14.3297ZM13.6753 7.32974C13.8242 7.14541 13.8937 6.90949 13.8687 6.67386C13.8436 6.43824 13.726 6.22221 13.5417 6.07331C13.3574 5.92441 13.1214 5.85483 12.8858 5.87988C12.6502 5.90493 12.4342 6.02256 12.2853 6.20688C10.1138 8.89974 8.71097 10.2855 5.85954 12.6326C5.68293 12.7849 5.57293 13.0003 5.55305 13.2326C5.53318 13.465 5.60501 13.6959 5.75319 13.876C5.90137 14.0561 6.11414 14.1711 6.34598 14.1963C6.57783 14.2216 6.81035 14.1551 6.99383 14.0112C9.92812 11.5969 11.4181 10.1269 13.6753 7.32974Z" fill="#2859C5"/>
+</svg>
+</span> Available Offers</h3>
+          <div class="cpdp__offers-track">
+            {%- assign offers = section.settings.offers | default: 'Get EXTRA 5% Off on First Order|WELCOME5;Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10;Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20' | split: ';' -%}
+            {%- for o in offers -%}
+              {%- assign op = o | split: '|' -%}
+              <div class="cpdp__offer"><p class="cpdp__offer-text">{{ op[0] | strip }}</p><button type="button" class="cpdp__offer-code" data-code="{{ op[1] | strip }}"><span>Code: {{ op[1] | strip }}</span><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+    {% comment %} Green Banner Section {% endcomment %}
+    {% comment %} <div class="cpdp__green">
+      {%- if section.settings.green_banner_desktop != blank or section.settings.green_banner_mobile != blank or request.design_mode -%}
+        <div class="cpdp__green-bg">
+          {%- if section.settings.green_banner_desktop != blank -%}
+            {{ section.settings.green_banner_desktop | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'cpdp__green-bg-img cpdp__green-bg-img--desktop', alt: section.settings.green_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdp__green-bg-img cpdp__green-bg-img--desktop cpdp__green-bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__green-bg-ph-svg' }}<span class="cpdp__green-bg-ph-label">Desktop background — upload in section settings</span></div>
+          {%- endif -%}
+          {%- if section.settings.green_banner_mobile != blank -%}
+            {{ section.settings.green_banner_mobile | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'cpdp__green-bg-img cpdp__green-bg-img--mobile', alt: section.settings.green_banner_alt }}
+          {%- elsif request.design_mode -%}
+            <div class="cpdp__green-bg-img cpdp__green-bg-img--mobile cpdp__green-bg-ph">{{ 'lifestyle-1' | placeholder_svg_tag: 'cpdp__green-bg-ph-svg' }}<span class="cpdp__green-bg-ph-label">Mobile background — upload in section settings</span></div>
+          {%- endif -%}
+          <div class="cpdp__green-bg-overlay"></div>
+        </div>
+      {%- endif -%}
+      <div class="cpdp__tabs" role="tablist">
+        <button type="button" class="cpdp__tab is-active" data-tab="overview" role="tab" aria-selected="true">✦ Overview</button>
+        <button type="button" class="cpdp__tab" data-tab="faqs" role="tab" aria-selected="false">❔ FAQs</button>
+      </div>
+      <div class="cpdp__panel is-active" data-panel="overview">
+        <div class="cpdp__panel-grid">
+          <div class="cpdp__panel-copy">
+            <h2 class="cpdp__panel-title">{{ section.settings.overview_heading | default: 'A blank canvas bag, waiting for their imagination' }}</h2>
+            <div class="cpdp__panel-text">{%- if section.settings.overview_text != blank -%}{{ section.settings.overview_text }}{%- else -%}{{ product.description | strip_html | truncatewords: 60 }}{%- endif -%}</div>
+            <div class="cpdp__feat-grid">
+              <div class="cpdp__feat"><span class="cpdp__feat-ico">🎨</span><span class="cpdp__feat-body"><strong>Made for creating</strong><em>Blank cotton canvas + 8 markers</em></span></div>
+              <div class="cpdp__feat"><span class="cpdp__feat-ico">🧼</span><span class="cpdp__feat-body"><strong>Non-toxic &amp; washable</strong><em>Gentle on hands and clothes</em></span></div>
+              <div class="cpdp__feat"><span class="cpdp__feat-ico">💪</span><span class="cpdp__feat-body"><strong>Built to be used</strong><em>Roomy enough for books &amp; toys</em></span></div>
+              <div class="cpdp__feat"><span class="cpdp__feat-ico">🎉</span><span class="cpdp__feat-body"><strong>Great for groups</strong><em>A hit at parties &amp; playdates</em></span></div>
+            </div>
+          </div>
+          <div class="cpdp__panel-media">
+            {%- if section.settings.overview_image != blank -%}{{ section.settings.overview_image | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: 'Child coloring a bag' }}{%- elsif product.media[2] -%}{{ product.media[2] | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: product.title }}{%- elsif product.media[1] -%}{{ product.media[1] | image_url: width: 700 | image_tag: loading: 'lazy', class: 'cpdp__panel-photo', alt: product.title }}{%- else -%}<div class="cpdp__panel-photo cpdp__panel-photo--ph"></div>{%- endif -%}
+            <span class="cpdp__mascot" aria-hidden="true">🐱</span>
+          </div>
+        </div>
+      </div>
+      <div class="cpdp__panel" data-panel="faqs">
+        <div class="cpdp__faq-card">
+          {%- assign faqs = section.settings.faqs | default: 'What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash.' | split: ';' -%}
+          {%- for f in faqs -%}
+            {%- assign fp = f | split: '|' -%}
+            <details class="cpdp__faq"{% if forloop.first %} open{% endif %}><summary class="cpdp__faq-q"><span>{{ fp[0] | strip }}</span><span class="cpdp__faq-chev" aria-hidden="true"></span></summary><p class="cpdp__faq-a">{{ fp[1] | strip }}</p></details>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div> {% endcomment %}
+     {% comment %} <div id="cfbws-1238"></div> {% endcomment %}
+  </div>
+
+  <div class="cpdp__sticky" data-sticky>
+    <div class="cpdp__sticky-info">
+      <div class="cpdp__sticky-thumb">{%- if product.featured_image -%}{{ product.featured_image | image_url: width: 96 | image_tag: loading: 'lazy', alt: '' }}{%- else -%}{{ 'product-apparel-1' | placeholder_svg_tag }}{%- endif -%}</div>
+      <div class="cpdp__sticky-meta">
+        <span class="cpdp__sticky-name">{{ heading_title }}</span>
+        <span class="cpdp__sticky-price">{%- if cur.compare_at_price > cur.price -%}<s data-sticky-compare>{{ cur.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s> {%- endif -%}<b data-sticky-price>{{ cur.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</b>{%- if cur.compare_at_price > cur.price -%} <em data-sticky-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</em>{%- endif -%}</span>
+      </div>
+    </div>
+    <button type="submit" form="cpdp-form-{{ uid }}" class="cpdp__atc cpdp__atc--sticky"><span data-atc-label>{% if cur.available %}Add to Cart{% else %}Sold out{% endif %}</span></button>
+  </div>
+
+  <a class="cpdp__wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" width="30" height="30" fill="#fff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2z"/></svg></a>
+</section>
+
+<script>
+  window.CPDP = window.CPDP || {};
+  window.CPDP["{{ uid }}"] = {
+    variants: {
+      {%- for variant in product.variants -%}
+      "{{ variant.id }}": {
+        "available": {{ variant.available }},
+        "price": {{ variant.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' | json }},
+        "compare": {% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' | json }}{% else %}null{% endif %},
+        "off": {% if variant.compare_at_price > variant.price %}"{{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round }}% off"{% else %}null{% endif %},
+        "mediaId": {% if variant.featured_media %}"{{ variant.featured_media.id }}"{% else %}null{% endif %}
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    }
+  };
+  document.querySelectorAll('#Cpdp-{{ uid }} .cpdp__read-more').forEach((button) => {
+  button.addEventListener('click', function () {
+    const description = this.previousElementSibling;
+
+    description.classList.toggle('is-expanded');
+
+    if (description.classList.contains('is-expanded')) {
+      this.textContent = 'Read less';
+    } else {
+      this.textContent = 'Read more';
+    }
+  });
+});
+</script>
+
+<style>
+  #Cpdp-{{ uid }}{
+    --cpdp-orange:#F26E21; --cpdp-orange-d:#d95d15;
+    --cpdp-yellow:#F7C948; --cpdp-cream:#FBF3D9;
+    --cpdp-green:#6EA847; --cpdp-purple:#5A2D8C; --cpdp-brown:#3D2817;
+    --cpdp-ink:#4B5563; --cpdp-line:#E7E3DA; --cpdp-radius:22px;
+    --cpdp-head: var(--font-heading-family, 'Baloo 2','Poppins',system-ui,sans-serif);
+    --cpdp-body: var(--font-body-family, 'Poppins','Nunito',system-ui,sans-serif);
+    font-family:var(--cpdp-body); color:var(--cpdp-brown); position:relative;
+  }
+  #Cpdp-{{ uid }} *{box-sizing:border-box;}
+  #Cpdp-{{ uid }} .cpdp__form{margin:0;}
+  #Cpdp-{{ uid }} .cpdp__wrap{max-width:1320px;margin:0 auto;padding:90px 15px 40px;overflow-x:clip;}
+  #Cpdp-{{ uid }} .cpdp__promo-banner{width:100%;margin:0 0 22px;border-radius:var(--cpdp-radius);overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__promo-link{display:block;}
+  #Cpdp-{{ uid }} .cpdp__promo-img{display:block;width:100%;height:auto;}
+  #Cpdp-{{ uid }} .cpdp__promo-img--mobile{display:none;}
+  #Cpdp-{{ uid }} .cpdp__promo-ph{position:relative;aspect-ratio:4/1;background:#E7D9F5;display:flex;align-items:center;justify-content:center;}
+  #Cpdp-{{ uid }} .cpdp__promo-img--mobile.cpdp__promo-ph{aspect-ratio:3/4;}
+  #Cpdp-{{ uid }} .cpdp__promo-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.45;}
+  #Cpdp-{{ uid }} .cpdp__promo-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:var(--cpdp-brown);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
+  
+  #Cpdp-{{ uid }} .cpdp__col-left{position:sticky;top:20px;align-self:start;}
+  #Cpdp-{{ uid }} .cpdp__crumbs{display:flex;align-items:center;gap:8px;font-size:14px;color:#6b7280;padding:18px 4px 18px;}
+  #Cpdp-{{ uid }} .cpdp__crumbs a{color:#6b7280;text-decoration:none;font-family: 'Poppins',sans-serif;font-size: 14px;}
+  #Cpdp-{{ uid }} .cpdp__crumb-current{color:var(--cpdp-brown);font-weight:700; font-family: 'Poppins',sans-serif;font-size: 14px;}
+  #Cpdp-{{ uid }} .cpdp__hero{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1fr);gap:36px;align-items:start;}
+  #Cpdp-{{ uid }} .cpdp__gallery{position:relative;background:#EFE7F7;border-radius:var(--cpdp-radius);overflow:hidden;aspect-ratio:1/1;}
+  #Cpdp-{{ uid }} .cpdp__stage,#Cpdp-{{ uid }} .cpdp__slide{position:absolute;inset:0;}
+  #Cpdp-{{ uid }} .cpdp__slide{opacity:0;transition:opacity .3s ease;}
+  #Cpdp-{{ uid }} .cpdp__slide.is-active{opacity:1;}
+  #Cpdp-{{ uid }} .cpdp__img{width:100%;height:100%;object-fit:cover;display:block;}
+  #Cpdp-{{ uid }} .cpdp__img--ph,#Cpdp-{{ uid }} .cpdp__ph-svg{width:100%;height:100%;background:#E7D9F5;}
+  #Cpdp-{{ uid }} .cpdp__badges{position:absolute;top:16px;left:16px;z-index:3;display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
+  #Cpdp-{{ uid }} .cpdp__badge{font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px;box-shadow:0 4px 10px rgba(0,0,0,.08);}
+  #Cpdp-{{ uid }} .cpdp__badge--best{
+    background:var(--cpdp-orange);
+    color:#fff;
+    font-size: 12px;
+    font-family: 'Quicksand', sans-serif;
+    letter-spacing: 0%;
+    line-height: 128%;
+  }
+  #Cpdp-{{ uid }} .cpdp__badge--soft{
+    background:#fff;
+    color: #58AD6F;
+    font-size: 12px;
+    font-family: 'Quicksand', sans-serif;
+    letter-spacing: 0%;
+    line-height: 128%;
+  }
+  #Cpdp-{{ uid }} .cpdp__expand{position:absolute;top:16px;right:16px;z-index:3;width:40px;height:40px;border:none;border-radius:50%;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.1);}
+  #Cpdp-{{ uid }} .cpdp__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border:none;border-radius:999px;background:#fff;color:var(--cpdp-brown);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.14);    align-items: center;
+    justify-content: center;}
+  #Cpdp-{{ uid }} .cpdp__nav--prev{left:14px;color:#c9c4bd;}
+  #Cpdp-{{ uid }} .cpdp__nav--next{right:14px;color:var(--cpdp-orange);}
+  #Cpdp-{{ uid }} .cpdp__thumbs{display:flex;gap:12px;margin:18px 20px 0 20px;overflow-x:auto;padding-bottom:4px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+  }
+  #Cpdp-{{ uid }} .cpdp__thumbs::-webkit-scrollbar {
+     display: none; /* Chrome, Safari */
+  }
+  #Cpdp-{{ uid }} .cpdp__thumb{flex:0 0 65px;height:65px;border-radius:14px;border:2px solid var(--cpdp-line);background:#f4f1ec;overflow:hidden;cursor:pointer;padding:0;}
+  {% comment %} #Cpdp-{{ uid }} .cpdp__thumb.is-active{border-color:var(--cpdp-orange);}
+  #Cpdp-{{ uid }} .cpdp__thumb img{width:100%;height:100%;object-fit:cover;display:block;} {% endcomment %}
+  #Cpdp-{{ uid }} .cpdp__thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+#Cpdp-{{ uid }} .cpdp__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+#Cpdp-{{ uid }} .cpdp__thumb.is-active {
+  border-color: var(--cpdp-orange);
+}
+
+#Cpdp-{{ uid }} .cpdp__thumb.is-active img {
+  opacity: 1;
+}
+
+  #Cpdp-{{ uid }} .cpdp__tutorial{margin-top:26px;}
+  #Cpdp-{{ uid }} .cpdp__video-link{display:block;text-decoration:none;}
+  #Cpdp-{{ uid }} .cpdp__tutorial-title{
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 133%;
+    letter-spacing: 0px;
+    color: #3A2A1E;
+    margin:0 0 12px;
+  }
+  #Cpdp-{{ uid }} .cpdp__video{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/10;background:#FBE9E4;}
+  #Cpdp-{{ uid }} .cpdp__video-thumb{width:100%;height:100%;object-fit:cover;}
+  #Cpdp-{{ uid }} .cpdp__video-thumb--ph{background:linear-gradient(135deg,#FBE0D8,#F6C9Bb);}
+  #Cpdp-{{ uid }} .cpdp__play{position:absolute;inset:0;margin:auto;width:74px;height:74px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;}
+  #Cpdp-{{ uid }} .cpdp__pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+  #Cpdp-{{ uid }} .cpdp__pill{
+    letter-spacing: 0%;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 12.5px;
+    padding:8px 16px;border-radius:999px;
+    font-weight: 700;
+  }
+  #Cpdp-{{ uid }} .cpdp__pill--y{background:#FEF6E2;color:#8A6A1E;}
+  #Cpdp-{{ uid }} .cpdp__pill--b{background:#E4F4F9;color:#2A7E97;}
+  #Cpdp-{{ uid }} .cpdp__pill--g{background:#E9F5EC;color:#3F8955;}
+  #Cpdp-{{ uid }} .cpdp__pill--p{background:#FCEDF3;color:#B85481;}
+  #Cpdp-{{ uid }} .cpdp__title{font-family:'Nunito', sans-serif;font-weight:900;font-size:clamp(32px,3.8vw,52px);line-height:1.08;margin:6px 0 6px;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__rating{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:16px;}
+  #Cpdp-{{ uid }} .cpdp__stars{color:#F5B301;font-size:20px;letter-spacing:2px;}
+  #Cpdp-{{ uid }} .cpdp__rating-link{color:var(--cpdp-brown);font-weight:700;text-decoration:underline;}
+  #Cpdp-{{ uid }} .cpdp__rating-sold{color:#16A34A;font-weight:700;}
+  {% comment %} #Cpdp-{{ uid }} .cpdp__desc{font-size:15px;font-family: 'Poppins', sans-serif;line-height:1.55;/*color:var(--cpdp-ink);*/color: #6E5A4A;margin:0 0 22px;-webkit-line-clamp: 2;-webkit-box-orient: vertical; overflow: hidden; display: -webkit-box;} {% endcomment %}
+  #Cpdp-{{ uid }} .cpdp__desc {
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.55;
+  color: #6E5A4A;
+  margin: 0 0;
+
+  /* Initially show approximately 2 lines */
+  max-height: 46px;
+  overflow: hidden;
+
+  transition: max-height 0.5s ease;
+}
+
+#Cpdp-{{ uid }} .cpdp__desc.is-expanded {
+  max-height: 1000px;
+}
+
+#Cpdp-{{ uid }} .cpdp__read-more {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0px 0px 10px 0;
+
+  color: #6E5A4A;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+#Cpdp-{{ uid }} .cpdp__description-wrapper {
+  position: relative;
+}
+#Cpdp-{{ uid }} .cpdp__description-wrapper:not(.expanded)::after {
+  content: "...";
+  position: absolute;
+  right: 0;
+  top: 23px;
+  background: #fff; /* match your section background */
+  padding-left: 3px;
+}
+
+/* Mobile */
+{% comment %} @media (max-width: 749px) {
+  #Cpdp-{{ uid }} .cpdp__desc {
+    font-size: 12px;
+  }
+} {% endcomment %}
+  #Cpdp-{{ uid }} .cpdp__buybox{background: #FFFBEB;border-radius:22px;padding:24px;margin-bottom:18px;}
+  #Cpdp-{{ uid }} .cpdp__buybox .cpdp__themebox{background:transparent;padding:0;margin-bottom:0;}
+  #Cpdp-{{ uid }} .cpdp__themebox-title{font-family:var(--cpdp-body);font-size:18px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px;}
+  #Cpdp-{{ uid }} .cpdp__themegrid{display:flex;flex-wrap:wrap;gap:10px;padding-bottom: 1.5rem; border-bottom: 1px solid #EFE7DE;}
+  #Cpdp-{{ uid }} .cpdp__theme{display:flex;align-items:center;gap:6px;text-align:left;background: transparent;border:3px solid #E1DDCF;border-radius:14px;padding:10px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s; height: 68px;}
+  #Cpdp-{{ uid }} .cpdp__theme.is-selected{border:3px solid #5FB85A;background: #5BAD6F1A;}
+  #Cpdp-{{ uid }} .cpdp__theme-ico{width:48px;height:48px;flex:0 0 auto;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:28px;box-shadow:none;overflow: hidden;}
+  #Cpdp-{{ uid }} .cpdp__theme-ico img{width: 100%; height:100%; object-fit: contain;}
+  #Cpdp-{{ uid }} .cpdp__theme-name{font-size:12.5px;font-weight:500;color:var(--cpdp-brown);line-height:1.2;font-family: 'Poppins',sans-serif;letter-spacing: 0px;}
+  #Cpdp-{{ uid }} .cpdp__hr{border:none;border-top:1px solid #E3D9C2;margin:18px 0;}
+  #Cpdp-{{ uid }} .cpdp__hr--blank{border-top-color:transparent;margin:12px 0;}
+  #Cpdp-{{ uid }} .cpdp__price{display:flex;align-items:center;gap:14px;margin:0;font-family: 'Nunito',sans-serif;letter-spacing: 0px;margin-top: 1.2rem;}
+  #Cpdp-{{ uid }} .cpdp__price-now{font-size:38px;font-weight:800;color:var(--cpdp-brown); line-height: 1;}
+  #Cpdp-{{ uid }} .cpdp__price-was{font-size:18px;color:#9aa0a6;text-decoration:line-through;font-family: 'Poppins',sans-serif;}
+  #Cpdp-{{ uid }} .cpdp__price-off{background:var(--cpdp-yellow);color:#7a5b00;font-weight:700;font-size:12.5px;padding:5px 12px;border-radius:999px; font-family: 'Quicksand',sans-serif;line-height: 128%;}
+  #Cpdp-{{ uid }} .cpdp__giftwrap{display:flex;align-items:center;gap:14px;background:#E0F7FF;border-radius:22px;padding:10px 18px;cursor:pointer;margin-top:16px;}
+  #Cpdp-{{ uid }} .cpdp__gift-ico{width:56px;height:56px;flex:0 0 auto;border-radius:16px;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.05);overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__gift-ico img{ width: 100%; height: 100%;}
+  #Cpdp-{{ uid }} .cpdp__gift-body{flex:1;display:flex;flex-direction:column;gap:2px;}
+  #Cpdp-{{ uid }} .cpdp__gift-body b{font-size:14.5px; font-weight:700; color:var(--cpdp-brown);line-height: 138%; font-family: 'Nunito',sans-sarif;}
+  #Cpdp-{{ uid }} .cpdp__gift-body em{font-style:normal;font-size:14px;color:#6b7280;}
+  #Cpdp-{{ uid }} .cpdp__gift-check{-webkit-appearance:none;appearance:none;width:28px;height:28px;flex:0 0 auto;border:2px solid #C4D2DC;border-radius:8px;background:#fff;cursor:pointer;position:relative;}
+  #Cpdp-{{ uid }} .cpdp__gift-check:checked{background:var(--cpdp-orange);border-color:var(--cpdp-orange);}
+  #Cpdp-{{ uid }} .cpdp__gift-check:checked::after{content:"";position:absolute;left:9px;top:4px;width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}
+  #Cpdp-{{ uid }} .cpdp__po{padding: 1rem 0 1.5rem 0; border-bottom: 1px solid #EFE7DE;}
+  #Cpdp-{{ uid }} .cpdp__po-title{font-family:var(--cpdp-body);font-size:17px;font-weight:700;color:var(--cpdp-brown);margin:0 0 12px;}
+  #Cpdp-{{ uid }} .cpdp__po-grid{display:flex;gap:15px;margin-bottom:0;align-items:start;}
+  #Cpdp-{{ uid }} .cpdp__po-card{position:relative;display:flex;flex-wrap:wrap;gap:8px;text-align:left;background:transparent;border:3px solid #E1DDCF;border-radius:14px;align-items: baseline;padding:8px;cursor:pointer;font-family:inherit;width:150px;min-height:75px;overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__po-card.is-selected{border:3px solid #5BAD6F;background:#F1F9F2;}
+  #Cpdp-{{ uid }} .cpdp__po-ico{
+    font-size:30px;
+    flex:0 0 auto;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  #Cpdp-{{ uid }} .cpdp__po-body{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0;}
+  #Cpdp-{{ uid }} .cpdp__po-top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #3A2A1ECC;
+  }
+  #Cpdp-{{ uid }} .cpdp__po-top em{font-style:normal;background:#4CA36A;color:#fff;font-size:9px;padding:2px 7px;border-radius:10px;font-family: 'Quicksand',sans-serif;}
+  #Cpdp-{{ uid }} .cpdp__po-price{
+    display:flex;
+    flex-direction:column;
+    font-weight:600;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    line-height: 120%;
+  }
+  #Cpdp-{{ uid }} .cpdp__po-price s{font-weight:500;font-size:12px;color:#9aa0a6;}
+  #Cpdp-{{ uid }} .cpdp__po-badge{
+    position: absolute;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    flex-basis:100%;margin:8px 0 0;background:#4CA36A;color:#fff;text-align:center;font-size:10px;font-weight:700;padding:3px 10px;}
+  #Cpdp-{{ uid }} .cpdp__ship{
+    text-align:center;color:#574239;margin:10px 0 10px;
+    font-size: 12.5px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0px;
+
+  }
+  #Cpdp-{{ uid }} .cpdp__po-grid > .cpdp__po-card:nth-child(3) {
+    height: 93px;
+  }
+  #Cpdp-{{ uid }} .cpdp__buybox .cpdp__buy{margin-bottom:0;}
+  #Cpdp-{{ uid }} .cpdp__buynow{width:100%;border:none;border-radius:999px;background:#4FB0E0;color:#fff;font-family:'Quicksand',sans-sarif;font-weight:700;font-size:20px;padding:15px;margin-top:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;letter-spacing: 0px;}
+  #Cpdp-{{ uid }} .cpdp__buynow:hover{background:#3fa0d3;}
+  #Cpdp-{{ uid }} .cpdp__buy{display:flex;gap:14px;margin-bottom:24px;align-items:center;}
+  #Cpdp-{{ uid }} .cpdp__qty{
+    display:flex;align-items:center;gap:8px;
+    border-radius: 120px;
+    padding: 0.7rem;
+    background-color: #F5F1EB;
+  }
+  #Cpdp-{{ uid }} .cpdp__qty-btn{width:40px;height:40px;border:1px solid var(--cpdp-line);border-radius:999px;background:#fff;font-size:22px;cursor:pointer;color: #7A5C3E;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.06);}
+  #Cpdp-{{ uid }} .cpdp__qty-val{width:26px;border:none;text-align:center;font-size:17px;font-weight:700;color:var(--cpdp-brown);background:transparent;font-family: 'Nunito', sans-serif;}
+  #Cpdp-{{ uid }} .cpdp__atc{flex:1;border:none;border-radius:999px;background:var(--cpdp-orange);color:#fff;font-family:var(--cpdp-head);font-weight:700;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;transition:background .15s;font-family: 'Quicksand', sans-serif;letter-spacing: 0px;}
+  #Cpdp-{{ uid }} .cpdp__atc:hover{background:var(--cpdp-orange-d);}
+  #Cpdp-{{ uid }} .cpdp__atc[disabled]{background:#c7c2ba;cursor:not-allowed;}
+  #Cpdp-{{ uid }} .cpdp__trust{/*display:grid;grid-template-columns:repeat(4,minmax(0,1fr));*/
+    gap:14px;
+    display: flex;
+    margin-bottom: 18px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+  #Cpdp-{{ uid }} .cpdp__trust-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:6px 4px;}
+  #Cpdp-{{ uid }} .cpdp__trust-ico{position:relative;display:grid;place-items:center;}
+  #Cpdp-{{ uid }} .cpdp__trust-ico-img{width:60px;height:60px;object-fit:contain;display:block;}
+  #Cpdp-{{ uid }} .cpdp__trust-ico-ph{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;border:1.5px dashed #c9c4bd;color:#9a958c;background:#F8F6F1;}
+  #Cpdp-{{ uid }} .cpdp__trust-t{color:var(--cpdp-purple);
+    font-size: 13px;
+    line-height: 128%;
+    font-family: 'Quicksand', sans-serif;
+    letter-spacing: 0px;
+    font-weight: 700;
+  }
+  #Cpdp-{{ uid }} .cpdp__trust-s{font-size:12px;color: #6E5A4A; font-family: 'Poppins', sans-serif;line-height: 1;}
+  #Cpdp-{{ uid }} .cpdp__trust-t,#Cpdp-{{ uid }} .cpdp__trust-s{overflow-wrap:break-word;}
+  #Cpdp-{{ uid }} .cpdp__trust-item--g .cpdp__trust-t{color: #3F8955;}
+  .cpdp__crumb-sep svg path{fill: #000000;}
+  #Cpdp-{{ uid }} .cpdp__trust-item--b .cpdp__trust-t{color: #2A7E97;}
+  #Cpdp-{{ uid }} .cpdp__trust-item--a .cpdp__trust-t{color: #8A6A1E;}
+  #Cpdp-{{ uid }} .cpdp__trust-item--p .cpdp__trust-t{color: #6A55C9;}
+  #Cpdp-{{ uid }} .cpdp__safety{display:flex;align-items:center;gap:10px;background: #FEF6E2;border-radius:16px;padding:12px 16px;margin-bottom:18px;}
+  #Cpdp-{{ uid }} .cpdp__safety-ico{font-size:16px; width:26px; height: 26px; background: #F7C845;border-radius: 9px;text-align: center;font-weight:700;}
+  #Cpdp-{{ uid }} .cpdp__safety-t{
+    flex:1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 12.5px;
+    line-height: 17.25px;
+  }
+  #Cpdp-{{ uid }} .cpdp__safety-link{color:#6B4E06;text-decoration:underline;white-space:nowrap;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 12.5px;
+    line-height: 17.25px;
+  }
+  #Cpdp-{{ uid }} .cpdp__offers{background: #E4F4F9;border-radius:18px;padding:10px;}
+  #Cpdp-{{ uid }} .cpdp__offers-title{display:flex;align-items:center;gap:8px;font-family:var(--cpdp-body);font-size:17px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px; font-family: 'Nunito', sans-serif;}
+  #Cpdp-{{ uid }} .cpdp__offers-ico{display:inline-grid;place-items:center;width:26px;height:26px;color:#fff;border-radius:8px;font-size:14px;font-weight:800;}
+  #Cpdp-{{ uid }} .cpdp__offers-track{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#2F7FBF #CFE3F5;}
+  #Cpdp-{{ uid }} .cpdp__offers-track::-webkit-scrollbar{height:7px;}
+  #Cpdp-{{ uid }} .cpdp__offers-track::-webkit-scrollbar-track{background:#CFE3F5;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__offers-track::-webkit-scrollbar-thumb{background:#2F7FBF;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__offer{flex:0 0 196px;background:#fff;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;align-items:center;}
+  #Cpdp-{{ uid }} .cpdp__offer-text{
+    margin:0;color:#334155;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    line-height: 160%;
+    font-weight: 400;
+    letter-spacing: 0px;
+  }
+  #Cpdp-{{ uid }} .cpdp__offer-code{display:flex;align-items:center;gap:8px;border:1px solid #3E92B5;border-radius:5px;background:#f8fafc;padding:6px;font-weight:700;font-size:13px;color:#334155;cursor:pointer;}
+  #Cpdp-{{ uid }} .cpdp__offer-code svg{color: #3E92B5;}
+  #Cpdp-{{ uid }} .cpdp__offer-code span{
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 100%;
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+    color: #231F20;
+  }
+  #Cpdp-{{ uid }} .cpdp__offer-code.is-copied{border-color:#16A34A;color:#16A34A;}
+  #Cpdp-{{ uid }} .cpdp__green{position:relative;margin-top:40px;background:var(--cpdp-green);padding:44px 20px 54px;}
+  #Cpdp-{{ uid }} .cpdp__green::before{content:"";position:absolute;top:-12px;left:0;right:0;height:14px;background:radial-gradient(circle at 9px -3px, var(--cpdp-green) 9px, transparent 10px) 0 0/18px 14px repeat-x;}
+  #Cpdp-{{ uid }} .cpdp__green::after{content:"";position:absolute;bottom:-12px;left:0;right:0;height:14px;background:radial-gradient(circle at 9px 17px, var(--cpdp-green) 9px, transparent 10px) 0 0/18px 14px repeat-x;}
+  #Cpdp-{{ uid }} .cpdp__green-bg{position:absolute;inset:0;overflow:hidden;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-img--mobile{display:none;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-ph{background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-ph-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.35;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-ph-label{position:relative;z-index:1;font-weight:700;font-size:13px;color:var(--cpdp-purple);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:999px;}
+  #Cpdp-{{ uid }} .cpdp__green-bg-overlay{position:absolute;inset:0;background:rgba(30,60,20,.35);}
+  #Cpdp-{{ uid }} .cpdp__themebox-title span{display:none;}
+ 
+  #Cpdp-{{ uid }} .jdgm-star{color: #F7C845}
+  #Cpdp-{{ uid }} .jdgm-prev-badge__text{ 
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    letter-spacing: 0px;
+    line-height: 123%;
+    text-decoration: underline;
+    color: #7A5C3E;
+  }
+  #Cpdp-{{ uid }} .cpdp__tabs{position:relative;z-index:1;display:flex;gap:8px;max-width:1080px;margin:0 auto;}
+  #Cpdp-{{ uid }} .cpdp__tab{flex:1;border:none;cursor:pointer;font-family:var(--cpdp-head);font-weight:800;font-size:20px;padding:18px;border-radius:18px 18px 0 0;background:#fff;color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__tab.is-active{background:var(--cpdp-orange);color:#fff;}
+  #Cpdp-{{ uid }} .cpdp__panel{position:relative;z-index:1;display:none;max-width:1080px;margin:0 auto;background:#fff;border-radius:0 0 22px 22px;border-top:4px solid var(--cpdp-orange);padding:38px;}
+  #Cpdp-{{ uid }} .cpdp__panel.is-active{display:block;}
+  #Cpdp-{{ uid }} .cpdp__panel-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:34px;align-items:center;}
+  #Cpdp-{{ uid }} .cpdp__panel-title{font-family:var(--cpdp-head);font-weight:800;font-size:clamp(24px,2.4vw,32px);color:var(--cpdp-purple);margin:0 0 16px;line-height:1.15;}
+  #Cpdp-{{ uid }} .cpdp__panel-text{font-size:16px;line-height:1.65;color:var(--cpdp-ink);margin:0 0 22px;}
+  #Cpdp-{{ uid }} .cpdp__panel-text h3{font-family:var(--cpdp-head);color:var(--cpdp-brown);font-size:18px;margin:16px 0 8px;}
+  #Cpdp-{{ uid }} .cpdp__panel-text ul{margin:0 0 12px;padding-left:20px;}
+  #Cpdp-{{ uid }} .cpdp__panel-text li{margin-bottom:6px;}
+  #Cpdp-{{ uid }} .cpdp__panel-text img{max-width:100%;height:auto;}
+  #Cpdp-{{ uid }} .cpdp__panel-text{overflow-wrap:break-word;word-break:break-word;}
+  #Cpdp-{{ uid }} .cpdp__feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  #Cpdp-{{ uid }} .cpdp__feat{display:flex;gap:12px;align-items:flex-start;background:#FBF6EA;border-radius:14px;padding:14px;}
+  #Cpdp-{{ uid }} .cpdp__feat-ico{font-size:22px;}
+  #Cpdp-{{ uid }} .cpdp__feat-body{display:flex;flex-direction:column;gap:2px;}
+  #Cpdp-{{ uid }} .cpdp__feat-body strong{color:var(--cpdp-purple);font-size:15px;}
+  #Cpdp-{{ uid }} .cpdp__feat-body em{font-style:normal;color:#7c828c;font-size:13px;}
+  #Cpdp-{{ uid }} .cpdp__panel-media{position:relative;width:100%;max-width:400px;margin:0 auto;aspect-ratio:1/1;}
+  #Cpdp-{{ uid }} .cpdp__panel-photo{width:100%;height:100%;object-fit:cover;border-radius:999px;display:block;}
+  #Cpdp-{{ uid }} .cpdp__panel-photo--ph{background:linear-gradient(135deg,#CFE8B8,#A7D48A);}
+  #Cpdp-{{ uid }} .cpdp__mascot{position:absolute;right:2%;bottom:0;font-size:52px;}
+  #Cpdp-{{ uid }} .cpdp__faq-card{display:flex;flex-direction:column;}
+  #Cpdp-{{ uid }} .cpdp__faq{border-bottom:1px solid var(--cpdp-line);padding:4px 2px;}
+  #Cpdp-{{ uid }} .cpdp__faq:last-child{border-bottom:none;}
+  #Cpdp-{{ uid }} .cpdp__faq-q{display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;font-weight:700;font-size:18px;color:#2b2b2b;padding:20px 0;list-style:none;}
+  #Cpdp-{{ uid }} .cpdp__faq-q::-webkit-details-marker{display:none;}
+  #Cpdp-{{ uid }} .cpdp__faq-chev{position:relative;flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:2px solid #7CB342;}
+  #Cpdp-{{ uid }} .cpdp__faq-chev::before,#Cpdp-{{ uid }} .cpdp__faq-chev::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#7CB342;}
+  #Cpdp-{{ uid }} .cpdp__faq-chev::before{width:12px;height:2px;}
+  #Cpdp-{{ uid }} .cpdp__faq-chev::after{width:2px;height:12px;}
+  #Cpdp-{{ uid }} .cpdp__faq[open] .cpdp__faq-chev{border-color:var(--cpdp-orange);}
+  #Cpdp-{{ uid }} .cpdp__faq[open] .cpdp__faq-chev::before{background:var(--cpdp-orange);}
+  #Cpdp-{{ uid }} .cpdp__faq[open] .cpdp__faq-chev::after{display:none;}
+  #Cpdp-{{ uid }} .cpdp__faq-a{margin:0 0 20px;color:var(--cpdp-ink);line-height:1.6;font-size:16px;max-width:90%;}
+  #Cpdp-{{ uid }} .cpdp__sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#FBF7EE;border-top:1px solid #eadfca;padding:12px 22px;box-shadow:0 -6px 18px rgba(0,0,0,.06);transform:translateY(100%);transition:transform .25s ease;}
+  #Cpdp-{{ uid }} .cpdp__sticky.is-visible{transform:translateY(0);}
+  #Cpdp-{{ uid }} .cpdp__sticky-info{display:flex;align-items:center;gap:14px;}
+  #Cpdp-{{ uid }} .cpdp__sticky-thumb{width:52px;height:52px;border-radius:12px;overflow:hidden;background:#eee;flex:0 0 auto;}
+  #Cpdp-{{ uid }} .cpdp__sticky-thumb img{width:100%;height:100%;object-fit:cover;}
+  #Cpdp-{{ uid }} .cpdp__sticky-meta{display:flex;flex-direction:column;gap:2px;}
+  #Cpdp-{{ uid }} .cpdp__sticky-name{font-weight:700;font-size:16px;}
+  #Cpdp-{{ uid }} .cpdp__sticky-price{font-size:15px;color:#6b7280;}
+  #Cpdp-{{ uid }} .cpdp__sticky-price b{color:var(--cpdp-brown);}
+  #Cpdp-{{ uid }} .cpdp__sticky-price em{font-style:normal;background:var(--cpdp-yellow);color:#7a5b00;font-weight:700;font-size:12px;padding:2px 8px;border-radius:999px;margin-left:4px;}
+  #Cpdp-{{ uid }} .cpdp__atc--sticky{flex:0 0 auto;min-width:220px;height:52px;padding:0 26px;}
+  #Cpdp-{{ uid }} .cpdp__wa{position:fixed;right:22px;bottom:92px;z-index:55;width:58px;height:58px;border-radius:999px;background:#25D366;display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.2);}
+  #Cpdp-{{ uid }} .cpdp__video img{width: 100%; height: 100%;}
+  @media (max-width:1000px){
+    #Cpdp-{{ uid }} .cpdp__hero{grid-template-columns:minmax(0,1fr);gap:28px;}
+    #Cpdp-{{ uid }} .cpdp__col-left{position:static;}
+    #Cpdp-{{ uid }} .cpdp__trust{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+    #Cpdp-{{ uid }} .cpdp__panel-grid{grid-template-columns:minmax(0,1fr);}
+    #Cpdp-{{ uid }} .cpdp__panel-media{order:-1;max-width:320px;}
+    #Cpdp-{{ uid }} .cpdp__feat-grid{grid-template-columns:1fr;}
+    #Cpdp-{{ uid }} .cpdp__tabs{gap:6px;}
+    #Cpdp-{{ uid }} .cpdp__tab{font-size:17px;padding:14px;}
+    #Cpdp-{{ uid }} .cpdp__panel{padding:22px;}
+  }
+  @media (max-width:640px){
+    #Cpdp-{{ uid }} .cpdp__title{
+        font-size: 27px;
+        font-weight: 700;
+        line-height: 30.5px;
+    }
+    #Cpdp-{{ uid }} .cpdp__price-now{font-size:27px;font-weight:700;}
+    
+    #Cpdp-{{ uid }} .cpdp__themegrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    #Cpdp-{{ uid }} .cpdp__po-grid{grid-template-columns:minmax(0,1fr);}
+    #Cpdp-{{ uid }} .cpdp__sticky-meta{display:none;}
+    #Cpdp-{{ uid }} .cpdp__atc--sticky{flex:1;min-width:0;}
+    #Cpdp-{{ uid }} .cpdp__wa{bottom:88px;width:52px;height:52px;}
+  }
+  
+   @media (max-width:749px){
+    #Cpdp-{{ uid }} .cpdp__green-bg-img--desktop{display:none;}
+    #Cpdp-{{ uid }} .cpdp__green-bg-img--mobile{display:block;}
+    #Cpdp-{{ uid }} .cpdp__gift-body b{font-size: 11.5px;}
+    #Cpdp-{{ uid }} .cpdp__gift-body em{font-size: 9.5px;}
+    #Cpdp-{{ uid }} .cpdp__gift-ico{width: 26px;height:26px;border-radius:8px;}
+    #Cpdp-{{ uid }} .cpdp__giftwrap{gap:8px;border-radius:10px;border: 0.67px solid #D2E8F2;padding:10px 14px;}
+    #Cpdp-{{ uid }} .cpdp__gift-check{width:22px;height:22px;}
+    #Cpdp-{{ uid }} .cpdp__gift-check:checked::after{top:2px;left:7px; }
+    #Cpdp-{{ uid }} .cpdp__price-was{font-size: 12px;}
+    #Cpdp-{{ uid }} .cpdp__price-off{font-size:10px; padding:3px 8px;}
+    #Cpdp-{{ uid }} .cpdp__price{gap:8px;}
+    #Cpdp-{{ uid }} .cpdp__safety-t{font-size:10px; letter-spacing:0px;}
+    #Cpdp-{{ uid }} .cpdp__safety{border-radius:10px;padding: 9px 6px;gap:4px;border:0.67px solid #F1E2BE;}
+    #Cpdp-{{ uid }} .cpdp__po-card.is-selected{border:1.6px solid #5BAD6F}
+    #Cpdp-{{ uid }} .cpdp__safety-ico{    
+      font-size: 11px;
+      width: 17px;
+      height: 17px;
+    }
+    #Cpdp-{{ uid }} .cpdp__safety-link{
+      font-size: 10px;
+      letter-spacing: 0px;
+    }
+    #Cpdp-{{ uid }} .cpdp__ship{
+      font-size: 11px;
+    }
+    #Cpdp-{{ uid }} .cpdp__tutorial-title{
+      font-size: 14px;
+      font-weight:700;
+    } 
+    #Cpdp-{{ uid }} .cpdp__offer-text{
+      font-size: 10px;
+    } 
+    #Cpdp-{{ uid }} .cpdp__offer{
+      flex: 0 0 179px;
+    }
+    #Cpdp-{{ uid }} .cpdp__offer{
+      padding: 3px 6px;
+      justify-content: space-between;
+    } 
+    #Cpdp-{{ uid }} .cpdp__offers{
+      padding: 10px 10px 0px 10px;
+      border-radius: 12px;
+    }
+    #Cpdp-{{ uid }} .cpdp__trust-t{
+      font-size: 10px;
+      line-height: 120%;
+    } 
+    #Cpdp-{{ uid }} .cpdp__trust-s{
+      font-size: 8px;
+    }
+    #Cpdp-{{ uid }} .cpdp__trust-ico-img{
+      height: 32px;
+      width: 32px;
+    } 
+    #Cpdp-{{ uid }} .cpdp__trust{
+      gap: 4px;
+    }
+    #Cpdp-{{ uid }} .cpdp__po-ico img{
+      display: none;
+    }
+    #Cpdp-{{ uid }} .cpdp__po-grid {
+      gap: 6px;
+    }
+    #Cpdp-{{ uid }} .cpdp__po-card{
+      border: 1.67px solid #E1DDCF;
+    }
+    /* Mobile PDP Image Slider */
+
+
+    #Cpdp-{{ uid }} .cpdp__gallery {
+      overflow: hidden;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__stage {
+      position: relative;
+      inset: auto;
+
+      display: flex;
+
+      width: 100%;
+      height: 100%;
+
+      overflow-x: auto;
+
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+
+      -webkit-overflow-scrolling: touch;
+
+      scrollbar-width: none;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__stage::-webkit-scrollbar {
+      display: none;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__slide {
+      position: relative;
+      inset: auto;
+
+      flex: 0 0 100%;
+
+      width: 100%;
+      height: 100%;
+
+      opacity: 1 !important;
+
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Hide desktop navigation arrows */
+    #Cpdp-{{ uid }} .cpdp__nav {
+      {% comment %} display: none; {% endcomment %}
+    }
+    #Cpdp-{{ uid }} .cpdp__themebox-title span{display:inline;}
+    #Cpdp-{{ uid }} .jdgm-star{font-size: 10px;}
+
+    /* Hide thumbnails on mobile */
+    #Cpdp-{{ uid }} .cpdp__thumbs {
+      {% comment %} display: none; {% endcomment %}
+      margin: 10px 10px 0px 10px;
+      gap: 8px;
+    }
+
+    /* Dots */
+    #Cpdp-{{ uid }} .cpdp__dots {
+      position: absolute;
+
+      left: 50%;
+      bottom: 14px;
+
+      transform: translateX(-50%);
+
+      z-index: 5;
+
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__dot {
+      width: 7px;
+      height: 7px;
+
+      padding: 0;
+
+      border: none;
+      border-radius: 50%;
+
+      background: rgba(255, 255, 255, 0.65);
+
+      cursor: pointer;
+
+      transition: all 0.25s ease;
+    }
+
+    #Cpdp-{{ uid }} .cpdp__dot.is-active {
+      width: 22px;
+
+      border-radius: 10px;
+
+      background: #fff;
+    }
+    #Cpdp-{{ uid }} .cpdp__read-more{font-size: 10px;} 
+    #Cpdp-{{ uid }} .cpdp__desc {max-height: 54px;}
+    #Cpdp-{{ uid }} .cpdp__promo-img--desktop{display:none;}
+    #Cpdp-{{ uid }} .cpdp__promo-img--mobile{display:block;}
+    #Cpdp-{{ uid }} .cpdp__crumbs a{font-size: 10px;line-height: 150%;}
+    #Cpdp-{{ uid }} .cpdp__crumb-current{font-size: 10px;line-height: 150%;}
+    #Cpdp-{{ uid }} .cpdp__crumb-sep svg{
+      width: 6px;
+      height: 10px;
+    }
+    #Cpdp-{{ uid }} .cpdp__crumbs{padding: 10px 4px 10px;}
+    #Cpdp-{{ uid }} .cpdp__thumb{flex:0 0 52px;height:52px;border-radius: 8px;}
+    #Cpdp-{{ uid }} .cpdp__theme-ico{background: transparent; width: 32px; height: 32px;}
+    #Cpdp-{{ uid }} .cpdp__theme.is-selected{border: 1.6px solid #5FB85A;} 
+    #Cpdp-{{ uid }} .cpdp__theme{
+      border-radius: 50%;
+    }
+    #Cpdp-{{ uid }} .cpdp__theme-name{
+      display: none;
+    }
+    #Cpdp-{{ uid }} .cpdp__buybox{padding: 1rem;}
+    #Cpdp-{{ uid }} .cpdp__theme{height:44px; width: 44px;justify-content:center;border: 1.6px solid #EAE1D0;}
+    #Cpdp-{{ uid }} .cpdp__themegrid{gap:8px;justify-content:space-around;}
+    #Cpdp-{{ uid }} .cpdp__themebox-title{
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #3B2A1DCC;
+    }
+    #Cpdp-{{ uid }} .cpdp__selected-option{
+      color: #58AD6F;
+      font-weight: 700;
+    }
+    #Cpdp-{{ uid }} .jdgm-prev-badge__text{font-size:11.5px;}
+    #Cpdp-{{ uid }} .cpdp__rating-sold{font-size:11.5px;}
+    #Cpdp-{{ uid }} .cpdp__pill{font-size:10px;padding:5px 8px;}
+    #Cpdp-{{ uid }} .cpdp__desc{font-size:12px;}
+    #Cpdp-{{ uid }} .cpdp__po-card{min-height: 65px; padding: 5px;}
+    #Cpdp-{{ uid }} .cpdp__po-grid > .cpdp__po-card:nth-child(3){
+      height: 82px;
+    }
+    #Cpdp-{{ uid }} .cpdp__po-price{
+      font-size: 12px;
+    }
+    #Cpdp-{{ uid }} .cpdp__po-price s{
+      font-size: 9px;
+    }
+   
+  }
+</style>
+
+<script>
+  (function(){
+    var root = document.getElementById('Cpdp-{{ uid }}');
+    if(!root) return;
+    var data = (window.CPDP && window.CPDP["{{ uid }}"]) || { variants:{} };
+    var slides = root.querySelectorAll('.cpdp__slide');
+    var thumbs = root.querySelectorAll('.cpdp__thumb');
+    var cur = 0;
+    function show(i){
+      if(!slides.length) return;
+      cur = (i + slides.length) % slides.length;
+      slides.forEach(function(s,idx){ s.classList.toggle('is-active', idx===cur); });
+      thumbs.forEach(function(t,idx){ t.classList.toggle('is-active', idx===cur); });
+    }
+    thumbs.forEach(function(t){ t.addEventListener('click', function(){ show(parseInt(t.dataset.target,10)); }); });
+    var prev = root.querySelector('.cpdp__nav--prev');
+    var next = root.querySelector('.cpdp__nav--next');
+    if(prev) prev.addEventListener('click', function(){ show(cur-1); });
+    if(next) next.addEventListener('click', function(){ show(cur+1); });
+    var idInput = root.querySelector('.cpdp__var-id');
+    var priceEl = root.querySelector('[data-price]');
+    var compareEl = root.querySelector('[data-compare]');
+    var offEl = root.querySelector('[data-off]');
+    var sPrice = root.querySelector('[data-sticky-price]');
+    var sCompare = root.querySelector('[data-sticky-compare]');
+    var sOff = root.querySelector('[data-sticky-off]');
+    var atcLabels = root.querySelectorAll('[data-atc-label]');
+    var atcBtns = root.querySelectorAll('[data-atc]');
+    var qtyVal = root.querySelector('.cpdp__qty-val');
+    var bundleOff = root.querySelector('.cpdp__bundle-off');
+    function selectVariant(id){
+      var v = data.variants[id];
+      if(!v) return;
+      if(idInput) idInput.value = id;
+      if(priceEl) priceEl.textContent = v.price;
+      if(sPrice) sPrice.textContent = v.price;
+      if(compareEl){ if(v.compare){ compareEl.textContent = v.compare; compareEl.style.display=''; } else { compareEl.style.display='none'; } }
+      if(sCompare){ if(v.compare){ sCompare.textContent = v.compare; sCompare.style.display=''; } else { sCompare.style.display='none'; } }
+      if(offEl){ if(v.off){ offEl.textContent = v.off; offEl.style.display=''; } else { offEl.style.display='none'; } }
+      if(sOff){ if(v.off){ sOff.textContent = v.off; sOff.style.display=''; } else { sOff.style.display='none'; } }
+      atcLabels.forEach(function(l){ l.textContent = v.available ? 'Add to Cart' : 'Sold out'; });
+      atcBtns.forEach(function(b){ b.disabled = !v.available; });
+      if(v.mediaId){ var idx=-1; slides.forEach(function(s,i){ if(s.dataset.mediaId === String(v.mediaId)) idx=i; }); if(idx>=0) show(idx); }
+    }
+    root.querySelectorAll('.cpdp__theme').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        root.querySelectorAll('.cpdp__theme').forEach(function(b){ b.classList.remove('is-selected'); b.setAttribute('aria-checked','false'); });
+        btn.classList.add('is-selected'); btn.setAttribute('aria-checked','true');
+        selectVariant(btn.dataset.variantId);
+      });
+    });
+    root.querySelectorAll('.cpdp__qty-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var val = parseInt(qtyVal.value,10) || 1;
+        val += parseInt(btn.dataset.dir,10);
+        if(val < 1) val = 1;
+        qtyVal.value = val;
+      });
+    });
+    root.querySelectorAll('.cpdp__tab').forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var name = tab.dataset.tab;
+        root.querySelectorAll('.cpdp__tab').forEach(function(t){ var on=t===tab; t.classList.toggle('is-active',on); t.setAttribute('aria-selected', on?'true':'false'); });
+        root.querySelectorAll('.cpdp__panel').forEach(function(p){ p.classList.toggle('is-active', p.dataset.panel===name); });
+      });
+    });
+    root.querySelectorAll('.cpdp__offer-code').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var code = btn.dataset.code || '';
+        var done = function(){ var lbl = btn.querySelector('span'); var old = lbl.textContent; btn.classList.add('is-copied'); lbl.textContent='Copied!'; setTimeout(function(){ lbl.textContent=old; btn.classList.remove('is-copied'); },1400); };
+        if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(code).then(done).catch(done); } else { done(); }
+      });
+    });
+    root.querySelectorAll('.cpdp__po-card').forEach(function(c){
+      c.addEventListener('click', function(){
+        root.querySelectorAll('.cpdp__po-card').forEach(function(x){ x.classList.remove('is-selected'); });
+        c.classList.add('is-selected');
+        if(qtyVal){ qtyVal.value = c.dataset.qty || '1'; }
+        if(bundleOff){ bundleOff.value = c.dataset.off || '0'; }
+      });
+    });
+    var buynow = root.querySelector('[data-buynow]');
+    if(buynow){
+      buynow.addEventListener('click', function(){
+        var form = document.getElementById('cpdp-form-{{ uid }}');
+        if(!form) return;
+        var fd = new FormData(form);
+        fetch('/cart/add.js', { method:'POST', body:fd, headers:{ 'Accept':'application/json' } }).then(function(r){ return r.json(); }).then(function(){ window.location.href = '/checkout'; }).catch(function(){ form.submit(); });
+      });
+    }
+    {% comment %} var cpdpMainForm = document.getElementById('cpdp-form-{{ uid }}');
+    if(cpdpMainForm){
+    cpdpMainForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var submitBtn = cpdpMainForm.querySelector('[type="submit"]');
+    if(submitBtn){ submitBtn.disabled = true; }
+    var fd = new FormData(cpdpMainForm);
+    fd.append('sections', 'cart-drawer,cart-icon-bubble');
+    fetch('/cart/add.js', { method:'POST', body:fd, headers:{ 'Accept':'application/json' } })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+    if(data.status){
+    alert(data.description || 'Could not add this item to your cart.');
+    return;
+    }
+    var cartDrawerEl = document.querySelector('cart-drawer');
+    if(cartDrawerEl && typeof cartDrawerEl.renderContents === 'function'){
+    cartDrawerEl.renderContents(data);
+    } else {
+    window.location.href = '/cart';
+    }
+    })
+    .catch(function(){ cpdpMainForm.submit(); })
+    .finally(function(){ if(submitBtn){ submitBtn.disabled = false; } });
+    });
+    } {% endcomment %}
+    var cpdpMainForm = document.getElementById('cpdp-form-{{ uid }}');
+
+if (cpdpMainForm) {
+
+  cpdpMainForm.addEventListener('submit', function (e) {
+
+    e.preventDefault();
+
+    var submitBtn = cpdpMainForm.querySelector('[type="submit"]');
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+    }
+
+    var originalHTML = submitBtn
+      ? submitBtn.innerHTML
+      : '';
+
+    var fd = new FormData(cpdpMainForm);
+
+    /*
+     * IMPORTANT:
+     * cart-icon-bubble alag section nahi hai.
+     * Dawn header ke andar cart bubble hai.
+     */
+    fd.append(
+      'sections',
+      'cart-drawer,header'
+    );
+
+    fd.append(
+      'sections_url',
+      window.location.pathname
+    );
+
+    fetch(
+      window.routes && window.routes.cart_add_url
+        ? window.routes.cart_add_url
+        : '/cart/add.js',
+      {
+        method: 'POST',
+
+        headers: {
+          'Accept': 'application/json'
+        },
+
+        body: fd
+      }
+    )
+
+    .then(function (response) {
+
+      if (!response.ok) {
+
+        return response.json().then(function (data) {
+
+          throw new Error(
+            data.description ||
+            'Add to cart failed'
+          );
+
+        });
+
+      }
+
+      return response.json();
+
+    })
+
+    .then(function (data) {
+
+      /*
+       * =====================================
+       * CART DRAWER
+       * =====================================
+       */
+
+      var drawerHTML =
+        data.sections &&
+        data.sections['cart-drawer'];
+
+      if (drawerHTML) {
+
+        updatePdpCartDrawer(
+          drawerHTML,
+          submitBtn
+        );
+
+      }
+
+
+      /*
+       * =====================================
+       * HEADER CART BUBBLE
+       * =====================================
+       */
+
+      var headerHTML =
+        data.sections &&
+        data.sections['header'];
+
+      if (headerHTML) {
+
+        updatePdpHeaderBubble(
+          headerHTML
+        );
+
+      } else {
+
+        refreshPdpHeaderBubble();
+
+      }
+
+    })
+
+    .catch(function (error) {
+
+      console.error(
+        'PDP Cart AJAX Error:',
+        error
+      );
+
+    })
+
+    .finally(function () {
+
+      if (submitBtn) {
+
+        submitBtn.disabled = false;
+
+        submitBtn.innerHTML =
+          originalHTML;
+
+      }
+
+    });
+    
+
+  });
+
+}
+    var shareBtn = root.querySelector('[data-share]');
+    if(shareBtn){
+      shareBtn.addEventListener('click', function(){
+        var url = shareBtn.getAttribute('data-share-url') || location.href;
+        var title = shareBtn.getAttribute('data-share-title') || document.title;
+        if(navigator.share){ navigator.share({ title:title, url:url }).catch(function(){}); }
+        else if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(url); var t=shareBtn.getAttribute('aria-label'); shareBtn.setAttribute('aria-label','Link copied'); setTimeout(function(){ shareBtn.setAttribute('aria-label', t); },1400); }
+      });
+    }
+    var sticky = root.querySelector('.cpdp__sticky');
+    var anchor = root.querySelector('.cpdp__buy');
+    if(sticky && anchor && 'IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ sticky.classList.toggle('is-visible', !e.isIntersecting && e.boundingClientRect.top < 0); });
+      }, {threshold:0}).observe(anchor);
+    } else if(sticky){ sticky.classList.add('is-visible'); }
+    function updatePdpCartDrawer(drawerHTML, opener) {
+
+  if (!drawerHTML) {
+    console.warn(
+      'PDP: cart-drawer response missing'
+    );
+    return;
+  }
+
+  var currentDrawer =
+    document.querySelector('cart-drawer');
+
+  if (!currentDrawer) {
+    console.warn(
+      'PDP: current cart-drawer not found'
+    );
+    return;
+  }
+
+  var parser =
+    new DOMParser();
+
+  var drawerDoc =
+    parser.parseFromString(
+      drawerHTML,
+      'text/html'
+    );
+
+  var newDrawer =
+    drawerDoc.querySelector('cart-drawer');
+
+  if (!newDrawer) {
+    console.warn(
+      'PDP: new cart-drawer not found'
+    );
+    return;
+  }
+
+  /*
+   * Replace old drawer completely.
+   *
+   * Important for:
+   * EMPTY CART -> FIRST PRODUCT
+   */
+  currentDrawer.replaceWith(
+    newDrawer
+  );
+
+  var updatedDrawer =
+    document.querySelector('cart-drawer');
+
+  if (!updatedDrawer) {
+    return;
+  }
+
+  /*
+   * Dawn cart drawer open
+   */
+  if (
+    typeof updatedDrawer.open ===
+    'function'
+  ) {
+
+    updatedDrawer.open(
+      opener
+    );
+
+  } else {
+
+    updatedDrawer.classList.remove(
+      'is-empty'
+    );
+
+    updatedDrawer.classList.add(
+      'active'
+    );
+
+    updatedDrawer.setAttribute(
+      'open',
+      ''
+    );
+
+  }
+
+}
+
+
+function updatePdpHeaderBubble(headerHTML) {
+
+  if (!headerHTML) {
+    return;
+  }
+
+  var parser =
+    new DOMParser();
+
+  var headerDoc =
+    parser.parseFromString(
+      headerHTML,
+      'text/html'
+    );
+
+  /*
+   * Cart bubble header ke andar hai.
+   */
+  var newBubbles =
+    headerDoc.querySelectorAll(
+      '#cart-icon-bubble'
+    );
+
+  if (!newBubbles.length) {
+
+    console.warn(
+      'PDP: #cart-icon-bubble not found'
+    );
+
+    refreshPdpHeaderBubble();
+
+    return;
+  }
+
+  var oldBubbles =
+    document.querySelectorAll(
+      '#cart-icon-bubble'
+    );
+
+  oldBubbles.forEach(
+    function(oldBubble, index) {
+
+      var newBubble =
+        newBubbles[index] ||
+        newBubbles[0];
+
+      if (!newBubble) {
+        return;
+      }
+
+      /*
+       * Pura anchor replace nahi karna.
+       * Sirf inner HTML update karna hai.
+       */
+      oldBubble.innerHTML =
+        newBubble.innerHTML;
+
+    }
+  );
+
+  if (!oldBubbles.length) {
+
+    refreshPdpHeaderBubble();
+
+  }
+
+}
+
+
+function refreshPdpHeaderBubble() {
+
+  var currentPath =
+    window.location.pathname;
+
+  var url =
+    currentPath +
+    '?sections=header';
+
+  fetch(
+    url,
+    {
+      method: 'GET',
+
+      headers: {
+        'Accept': 'application/json'
+      }
+    }
+  )
+
+  .then(function(response) {
+
+    if (!response.ok) {
+
+      throw new Error(
+        'Header refresh failed'
+      );
+
+    }
+
+    return response.json();
+
+  })
+
+  .then(function(data) {
+
+    if (
+      data &&
+      data.header
+    ) {
+
+      updatePdpHeaderBubble(
+        data.header
+      );
+
+    }
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      'PDP Header Bubble Error:',
+      error
+    );
+
+  });
+
+}
+    var stage = root.querySelector('.cpdp__stage');
+    var slides = root.querySelectorAll('.cpdp__slide');
+    var thumbs = root.querySelectorAll('.cpdp__thumb');
+    var dots = root.querySelectorAll('.cpdp__dot');
+
+    var cur = 0;
+
+    function updateActive(i) {
+      cur = (i + slides.length) % slides.length;
+
+      slides.forEach(function(s, idx) {
+        s.classList.toggle('is-active', idx === cur);
+      });
+
+      thumbs.forEach(function(t, idx) {
+        t.classList.toggle('is-active', idx === cur);
+      });
+
+      dots.forEach(function(dot, idx) {
+        dot.classList.toggle('is-active', idx === cur);
+      });
+    }
+
+
+    function show(i) {
+
+      if (!slides.length) return;
+
+      i = (i + slides.length) % slides.length;
+
+      updateActive(i);
+
+      /* Mobile scroll */
+      if (window.innerWidth <= 749 && stage) {
+
+        stage.scrollTo({
+          left: stage.clientWidth * i,
+          behavior: 'smooth'
+        });
+
+      }
+    }
+  })();
+</script>
+<script>
+(function () {
+  var root = document.getElementById('Cpdp-{{ uid }}');
+
+  if (!root) return;
+
+  var stickyAtc = root.querySelector('.cpdp__atc--sticky');
+
+  if (!stickyAtc) return;
+
+  stickyAtc.addEventListener('click', function () {
+
+    var selectedPO = root.querySelector('.cpdp__po-card.is-selected');
+
+    /*
+     * If a purchase option is already selected,
+     * keep the existing behavior.
+     */
+    if (selectedPO) return;
+
+    /*
+     * If no purchase option is selected,
+     * use the first purchase option.
+     */
+    var firstPO = root.querySelector('.cpdp__po-card');
+
+    if (!firstPO) return;
+
+    /*
+     * Select the first purchase option.
+     */
+    root.querySelectorAll('.cpdp__po-card').forEach(function (card) {
+      card.classList.remove('is-selected');
+    });
+
+    firstPO.classList.add('is-selected');
+
+    /*
+     * Set the quantity from the first option.
+     */
+    var qtyInput = root.querySelector('.cpdp__qty-val');
+
+    if (qtyInput) {
+      qtyInput.value = firstPO.dataset.qty || '1';
+    }
+
+    /*
+     * Set the bundle discount from the first option.
+     */
+    var bundleOff = root.querySelector('.cpdp__bundle-off');
+
+    if (bundleOff) {
+      bundleOff.value = firstPO.dataset.off || '0';
+    }
+
+  }, true);
+
+})();
+</script>
+
+<script>
+  (function () {
+    var root = document.getElementById('Cpdp-{{ uid }}');
+
+    if (!root) return;
+
+    root.querySelectorAll('.cpdp__theme').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+
+        root.querySelectorAll('.cpdp__theme').forEach(function (b) {
+          b.classList.remove('is-selected');
+          b.setAttribute('aria-checked', 'false');
+        });
+
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-checked', 'true');
+
+        /* Update selected option value */
+        var selectedOption = root.querySelector('.cpdp__selected-option');
+
+        if (selectedOption) {
+          selectedOption.textContent = btn.dataset.optionValue || '';
+        }
+
+        /* Update variant */
+        if (typeof selectVariant === 'function') {
+          selectVariant(btn.dataset.variantId);
+        }
+
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Creste PDP",
+  "tag": "section",
+  "class": "creste-pdp-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Buy buttons"
+    },
+    {
+      "type": "text",
+      "id": "atc_label",
+      "label": "Add to cart label",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "text",
+      "id": "atc_soldout_label",
+      "label": "Sold out label",
+      "default": "Sold out"
+    },
+    {
+      "type": "text",
+      "id": "buynow_label",
+      "label": "Buy Now label",
+      "default": "Buy Now"
+    },
+    {
+      "type": "image_picker",
+      "id": "buynow_icon",
+      "label": "Buy Now icon (optional)",
+      "info": "Leave empty to keep the default arrow icon."
+    },
+    {
+      "type": "header",
+      "content": "Gift wrapping"
+    },
+    {
+      "type": "text",
+      "id": "gift_title",
+      "label": "Gift wrap title",
+      "default": "Add gift wrapping — free"
+    },
+    {
+      "type": "text",
+      "id": "gift_subtext",
+      "label": "Gift wrap subtext",
+      "default": "Kraft paper, ribbon and a handwritten note"
+    },
+    {
+      "type": "header",
+      "content": "Purchase options"
+    },
+    {
+      "type": "text",
+      "id": "po_title",
+      "label": "Purchase options title",
+      "default": "Choose Purchase Option"
+    },
+    {
+      "type": "text",
+      "id": "po_tiers",
+      "label": "Purchase tiers (quantity|discount%)",
+      "info": "Comma-separated list of quantity|discount. Example: 1|2,2|5,4|15 means Buy 1 = 2% off, Buy 2 = 5% off, Buy 4 = 15% off. Last tier gets the badge.",
+      "default": "1|0,2|5,4|15"
+    },
+    {
+      "type": "text",
+      "id": "po_buy_label",
+      "label": "Option label prefix",
+      "default": "Buy"
+    },
+    {
+      "type": "text",
+      "id": "po_off_suffix",
+      "label": "Discount suffix",
+      "default": "% off"
+    },
+    {
+      "type": "text",
+      "id": "po_emoji",
+      "label": "Option icon / emoji",
+      "default": "✊"
+    },
+    {
+      "type": "text",
+      "id": "po_badge_text",
+      "label": "Top-tier badge text",
+      "default": "Smart Saver"
+    },
+    { "type": "text", "id": "feature_pills", "label": "Feature pills (comma separated)", "default": "Ages 3-8, 45-60 min play, Screen-free, Mess-free" },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.9 · 2,148 reviews" },
+    { "type": "text", "id": "sold_text", "label": "Sold text", "default": "1,900+ bought this month" },
+    { "type": "textarea", "id": "short_desc", "label": "Short description (blank = product excerpt)", "default": "A ready-to-paint canvas tote, six non-toxic fabric paints and reusable stencils — everything a 3-8 year old needs to make a bag they'll actually carry to school." },
+    { "type": "text", "id": "ship_text", "label": "Shipping line", "default": "Order before 4 PM → ships today · COD available" },
+    { "type": "header", "content": "Badges" },
+    {
+      "type": "image_picker",
+      "id": "gift_icon",
+      "label": "Gift Icon"
+    },
+    {
+      "type": "text",
+      "id": "gift_heading",
+      "label": "Gift Wrapper Heading",
+      "default": "Add gift wrapping — free"
+    },
+    {
+      "type": "text",
+      "id": "gift_sub_heading",
+      "label": "Gift Wrapper Sub Heading",
+      "default": "Kraft paper, ribbon and a handwritten note"
+    },
+    { "type": "text", "id": "badge_1", "label": "Badge 1 (orange)", "default": "#1 Bestseller" },
+    { "type": "text", "id": "badge_2", "label": "Badge 2 (white)", "default": "Screen-free fun" },
+    { "type": "header", "content": "Safety" },
+    { "type": "text", "id": "safety_text", "label": "Safety notice", "default": "Small parts — choking hazard. Not for under 3s." },
+    { "type": "text", "id": "safety_link_text", "label": "Safety Notice Text", "default": "Safety details." },
+    { "type": "url", "id": "safety_link", "label": "Safety details link" },
+    { "type": "header", "content": "Offers (text|CODE ; separated)" },
+    { "type": "textarea", "id": "offers", "label": "Offers", "default": "Get EXTRA 5% Off on First Order|WELCOME5;Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10;Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20" },
+    { "type": "header", "content": "Tutorial" },
+    { "type": "image_picker", "id": "tutorial_thumb", "label": "Tutorial thumbnail" },
+    { "type": "url", "id": "tutorial_url", "label": "Tutorial video link" },
+    { "type": "header", "content": "Overview" },
+    { "type": "text", "id": "overview_heading", "label": "Overview heading", "default": "A blank canvas bag, waiting for their imagination" },
+    { "type": "richtext", "id": "overview_text", "label": "Overview text (blank = short product excerpt)", "default": "<p>Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>" },
+    { "type": "image_picker", "id": "overview_image", "label": "Overview photo (blank = product lifestyle image)" },
+    { "type": "header", "content": "FAQs (question|answer ; separated)" },
+    { "type": "textarea", "id": "faqs", "label": "FAQs", "default": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash." },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (country code, no +)", "default": "919999999999" },
+    { "type": "header", "content": "Promo Banner (optional)" },
+    { "type": "image_picker", "id": "promo_banner_desktop", "label": "Banner image — Desktop", "info": "Recommended 2000×500px" },
+    { "type": "image_picker", "id": "promo_banner_mobile", "label": "Banner image — Mobile", "info": "Recommended 1000×1300px" },
+    { "type": "url", "id": "promo_banner_link", "label": "Banner link (optional)" },
+    { "type": "text", "id": "promo_banner_alt", "label": "Banner alt text" },
+    { "type": "header", "content": "Trust icons (optional)" },
+    { "type": "paragraph", "content": "Upload a custom icon image for each trust badge. Leave blank to keep the default icon." },
+    { "type": "image_picker", "id": "trust_icon_1", "label": "Icon 1 — 100% Secure", "info": "Recommended 60×60px" },
+    { "type": "text", "id": "trust_heading_1", "label": "Trust Heading text" },
+    { "type": "text", "id": "trust_subheading_1", "label": "Trust Sub-heading text" },
+    { "type": "image_picker", "id": "trust_icon_2", "label": "Icon 2 — 7-day returns", "info": "Recommended 60×60px" },
+    { "type": "text", "id": "trust_heading_2", "label": "Trust Heading text 2" },
+    { "type": "text", "id": "trust_subheading_2", "label": "Trust Sub-heading text 2" },
+    { "type": "image_picker", "id": "trust_icon_3", "label": "Icon 3 — Made in India", "info": "Recommended 60×60px" },
+    { "type": "text", "id": "trust_heading_3", "label": "Trust Heading text 3" },
+    { "type": "text", "id": "trust_subheading_3", "label": "Trust Sub-heading text 3" },
+    { "type": "image_picker", "id": "trust_icon_4", "label": "Icon 4 — Gift wrap free", "info": "Recommended 60×60px" },
+    { "type": "text", "id": "trust_heading_4", "label": "Trust Heading text 4" },
+    { "type": "text", "id": "trust_subheading_4", "label": "Trust Sub-heading text 4" },
+
+  ],
+  "presets": [ { "name": "Creste PDP" } ]
+}
+{% endschema %}
+
+{% comment %} MOHIT YADAV= title should be same as product.......
+
+ { "type": "text", "id": "title_override", "label": "Title override (blank = product title)", "default": "DIY Color Your Bag Kit" }, {% endcomment %}
+
+
+{% comment %} { "type": "header", "content": "Green section background (optional)" },
+    { "type": "paragraph", "content": "Upload an image to use as the background of the Overview/FAQs tabbed area, behind the tabs and panel." },
+    { "type": "image_picker", "id": "green_banner_desktop", "label": "Green section background — Desktop", "info": "Recommended 2000×700px" },
+    { "type": "image_picker", "id": "green_banner_mobile", "label": "Green section background — Mobile", "info": "Recommended 1000×1400px" },
+    { "type": "text", "id": "green_banner_alt", "label": "Green section background alt text" }, {% endcomment %}

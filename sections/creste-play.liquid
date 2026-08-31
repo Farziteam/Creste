@@ -1,0 +1,926 @@
+{% render 'creste-tokens' %}
+{%- assign cats = section.blocks | where: 'type', 'category' -%}
+{%- assign first_url = '' -%}{% if cats.size > 0 and cats.first.settings.collection != blank %}{% assign first_url = cats.first.settings.collection.url %}{% endif %}
+<style>
+#creste-play-{{ section.id }}{position:relative;/*background-color:var(--creste-blue-bg);*/background-size:contain;background-position:center;background-repeat:no-repeat;padding:45px 12px 56px;overflow:hidden;text-align:center;}
+#creste-play-{{ section.id }} .cp-wtop,#creste-play-{{ section.id }} .cp-wbot{position:absolute;left:0;right:0;height:22px;z-index:1;}
+#creste-play-{{ section.id }} .cp-wtop{top:0;background:{{ section.settings.wave_top }};-webkit-mask:radial-gradient(11px at 11px 22px,#0000 99%,#000) 0 0/22px 22px repeat-x;mask:radial-gradient(11px at 11px 22px,#0000 99%,#000) 0 0/22px 22px repeat-x;}
+#creste-play-{{ section.id }} .cp-wbot{bottom:0;background:{{ section.settings.wave_bottom }};-webkit-mask:radial-gradient(11px at 11px 0,#0000 99%,#000) 0 0/22px 22px repeat-x;mask:radial-gradient(11px at 11px 0,#0000 99%,#000) 0 0/22px 22px repeat-x;}
+#creste-play-{{ section.id }} .cp-in{position:relative;z-index:2;max-width:1180px;margin:0 auto;}
+#creste-play-{{ section.id }} .cp-h{margin:0 0 8px;font-family:'Nunito',sans-serif;font-weight:900;font-size:30px;line-height:1.1;color:var(--creste-ink2);}
+#creste-play-{{ section.id }} .cp-h em{font-style:normal;color:var(--creste-cyan);}
+#creste-play-{{ section.id }} .cp-sub{font-family:'Poppins',sans-serif;font-size:18px;line-height:1.5;color:var(--creste-brown);margin:22px auto;max-width:520px;font-weight: 600;letter-spacing: 0px; }
+#creste-play-{{ section.id }} .cp-cats{display:flex;flex-wrap:nowrap;justify-content:flex-start;gap:10px;margin:0 0 26px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding-bottom:4px;}
+#creste-play-{{ section.id }} .cp-cats::-webkit-scrollbar{display:none;}
+#creste-play-{{ section.id }} .cp-cat{display:inline-flex;align-items:center;gap:16px;border-radius:9999px;padding:8px 30px 8px 8px;background:rgba(255,255,255,.85);border:1px solid rgba(0,0,0,.06);cursor:pointer;text-align:left;flex:0 0 auto;scroll-snap-align:start;}
+#creste-play-{{ section.id }} .cp-cat.on{background:var(--creste-teal2);border-color:var(--creste-teal2);}
+#creste-play-{{ section.id }} .cp-cat.on .cp-cn{color:#fff;}#creste-play-{{ section.id }} .cp-cat.on .cp-cs{color:rgba(255,255,255,.85);}
+#creste-play-{{ section.id }} .cp-cic{width:48px;height:48px;border-radius:50%;background:#fff !important;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;font-size:18px;border: 1px solid #0000001A;}
+#creste-play-{{ section.id }} .cp-cat.on .cp-cic{background:rgba(255,255,255,.22);}
+#creste-play-{{ section.id }} .cp-cic img{width:22px;height:22px;object-fit:contain;}
+#creste-play-{{ section.id }} .cp-cn{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:17px;letter-spacing:.3px;color:var(--creste-ink2);white-space:nowrap;}
+#creste-play-{{ section.id }} .cp-cs{display:block;font-family:'Poppins',sans-serif;font-weight:500;font-size:11px;color:#6b6258;white-space:nowrap;}
+#creste-play-{{ section.id }} .cp-stage{position:relative;padding:0 12px;}
+#creste-play-{{ section.id }} .cp-track{display:flex;align-items:stretch;gap:9px;overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;padding:6px 2px;scrollbar-width:none;}
+#creste-play-{{ section.id }} .cp-track::-webkit-scrollbar{display:none;}
+#creste-play-{{ section.id }} .cp-card{flex:0 0 49%;scroll-snap-align:start;background:#fff;border:2px solid #0000004D;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;text-align:left;}
+#creste-play-{{ section.id }} .cp-img{aspect-ratio:1/1;background:#f6efe3;overflow:hidden;display:block;}
+#creste-play-{{ section.id }} .cp-img img,#creste-play-{{ section.id }} .cp-img svg{width:100%;height:100%;object-fit:cover;display:block;}
+#creste-play-{{ section.id }} .cp-body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1;}
+#creste-play-{{ section.id }} .cp-ctop{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:24px;}
+#creste-play-{{ section.id }} .cp-rate{display:inline-flex;align-items:center;gap:4px;background:#FBE9C0;border-radius:9999px;padding:3px 9px;font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:13px;color:#2B1702;}
+#creste-play-{{ section.id }} .cp-rate em{font-style:normal;color:#111;}
+#creste-play-{{ section.id }} .cp-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(90deg,#ff90b2,#f4679a);color:#fff;border-radius:9999px;padding:4px 9px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:11px; text-transform: uppercase;}
+#creste-play-{{ section.id }} .cp-badge em{font-style:normal;color:#FFCE00;}
+#creste-play-{{ section.id }} .cp-title{margin:0;font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;line-height:1.15;color:var(--creste-brown2);text-decoration:none;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;min-height:1.3em;}
+#creste-play-{{ section.id }} .cp-meta{margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:11px;letter-spacing:.4px;color:rgba(87,66,57,.75);text-transform:uppercase;min-height:1.2em;}
+#creste-play-{{ section.id }} .cp-price{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+#creste-play-{{ section.id }} .cp-price b{font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:20px;color:var(--creste-orange);letter-spacing: 0px;}
+#creste-play-{{ section.id }} .cp-price s{font-family:'Poppins',sans-serif;font-size:14px;color:var(--creste-brown2);opacity:.4;font-weight: 500;}
+#creste-play-{{ section.id }} .cp-price i{font-family:'Poppins',sans-serif;font-weight:700;font-style:normal;font-size:14px;color:var(--creste-green2);letter-spacing: 0px;}
+#creste-play-{{ section.id }} .cp-cart{margin-top:auto;padding-top:4px;}
+#creste-play-{{ section.id }} .cp-cart button{width:100%;height:44px;border:none;border-radius:24px;background:var(--creste-orange);color:#fff;font-family:'Quicksand',sans-serif;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+#creste-play-{{ section.id }} .cp-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:none;box-shadow:0 6px 16px rgba(0,0,0,.18);color:#5b5b5b;font-size:22px;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;}
+#creste-play-{{ section.id }} .cp-arrow.prev{left:-8px;}#creste-play-{{ section.id }} .cp-arrow.next{right:-8px;}
+#creste-play-{{ section.id }} .cp-dots{display:none;justify-content:center;gap:8px;margin-top:14px;}
+#creste-play-{{ section.id }} .cp-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(0,0,0,.22);padding:0;cursor:pointer;transition:all .2s;}
+#creste-play-{{ section.id }} .cp-dots button.on{background:var(--creste-teal2);width:22px;border-radius:9999px;}
+#creste-play-{{ section.id }} .cp-allwrap{margin-top:22px;display: flex; justify-content: center;}
+#creste-play-{{ section.id }} .cp-all{display:inline-flex;align-items:center;gap:10px;background:var(--creste-blue);color:#fff;height:46px;border-radius:24px;padding:0 40px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:16px;box-shadow:0 12px 22px rgba(62,146,181,.35);text-decoration:none;justify-content: center;}
+#creste-play-{{ section.id }} .cp-arrow svg path{fill: #F4793A;}
+#creste-play-{{ section.id }} .cp-arrow svg{height: 18px;}
+@media(max-width:749px){#creste-play-{{ section.id }} .cp-arrow{display:none;}#creste-play-{{ section.id }} .cp-stage{padding:0;}#creste-play-{{ section.id }} .cp-dots{display:flex;}
+  #creste-play-{{ section.id }}{
+    padding: 45px 12px 20px;
+  }
+  #creste-play-{{ section.id }} .cp-sub{
+    font-size: 16px;
+    padding: 0px 28px;
+    font-weight: 400;
+    margin: 11px 0 16px;
+  }
+  #creste-play-{{ section.id }}{background-size:cover !important;}
+  #creste-play-{{ section.id }} .cp-cs{
+    display: none;
+  }
+  #creste-play-{{ section.id }} .cp-cn{
+    font-size: 14px !important;
+  }
+  #creste-play-{{ section.id }} .cp-cat{
+    gap: 10px;
+    padding: 6px 10px 6px 6px;
+  }
+  #creste-play-{{ section.id }} .cp-cic{
+    height: 32px;
+    width: 32px;
+  }
+  #creste-play-{{ section.id }} .cp-rate{
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+  #creste-play-{{ section.id }} .cp-badge{
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  #creste-play-{{ section.id }} .cp-title{
+    font-size: 13px;
+    letter-spacing: 0px;
+    line-height: 1.2;
+  }
+  #creste-play-{{ section.id }} .cp-price{
+    gap: 3px;
+  }
+   #creste-play-{{ section.id }} .cp-body{
+    padding: 8px;
+  } 
+  #creste-play-{{ section.id }} .cp-price b{
+    font-size: 14px;
+    letter-spacing: 0px;
+    margin-right: 2px;
+  }
+  #creste-play-{{ section.id }} .cp-price s{
+    font-size: 13px;
+  }
+  #creste-play-{{ section.id }} .cp-price i{
+    font-size: 10px;
+  }
+  #creste-play-{{ section.id }} .product-sub-heading{
+    gap: 4px !important;
+    {% comment %} font-size: 10px; {% endcomment %}
+    letter-spacing: 0px !important;
+    margin-top: -10px;
+  }
+  #creste-play-{{ section.id }} .product-sub-heading p{
+    font-weight: 500 !important;
+    letter-spacing: 0px !important;
+    font-size: 10px !important;
+  }
+  #creste-play-{{ section.id }} .cp-cats{
+    gap: 6px;
+    margin:0 0 6px;
+  }
+  #creste-play-{{ section.id }} .cp-dots{
+    margin-top: 10px;
+  }
+  #creste-play-{{ section.id }} .cp-allwrap{
+    margin-top: 10px;
+  }
+}
+@media(min-width:750px){#creste-play-{{ section.id }}{padding:90px 24px 68px;}{% if section.settings.bg_desktop != blank %}#creste-play-{{ section.id }}{background-image:url({{ section.settings.bg_desktop | image_url: width: 2600 }}) !important;background-size: cover !important;}{% endif %}#creste-play-{{ section.id }} .cp-h{font-size:48px;}#creste-play-{{ section.id }} .cp-cats{flex-wrap:wrap;overflow:visible;justify-content:center;gap:12px;}#creste-play-{{ section.id }} .cp-stage{padding:0 62px;}#creste-play-{{ section.id }} .cp-track{padding:6px 0;gap:20px;}#creste-play-{{ section.id }} .cp-card{flex:0 0 calc((100% - 60px)/4);border:3px solid #0000004D;}#creste-play-{{ section.id }} .cp-arrow.prev{left:6px;}#creste-play-{{ section.id }} .cp-arrow.next{right:6px;}
+  #creste-play-{{ section.id }} .cp-cat{
+    width: 22%;
+  }
+  #creste-play-{{ section.id }} .cp-cart button{
+    font-size: 18px;
+  }
+  #creste-play-{{ section.id }} .cp-all{
+    padding: 0px 20px;
+    height: 56px;
+    width: 265px;
+    text-align: center;
+    font-size: 18px;
+  }
+}
+#creste-play-{{ section.id }} .product-sub-heading{
+  display: flex;
+  gap: 7px;
+  margin-top: -5px;
+}
+#creste-play-{{ section.id }} .product-sub-heading p{
+  font-size: 13px;
+  line-height: 20px;
+  margin:0;
+  font-family: 'Poppins', sans-sarif;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+</style>
+<div id='creste-play-{{ section.id }}' class='creste-section' style='{% if section.settings.bg_mobile != blank %}background-image:url({{ section.settings.bg_mobile | image_url: width: 1200 }});{% elsif section.settings.bg_desktop != blank %}background-image:url({{ section.settings.bg_desktop | image_url: width: 2600 }});{% endif %}'>
+<div class='cp-wtop'></div>
+<div class='cp-in'>
+<h2 class='cp-h'>{{ section.settings.title_a }}<em> {{ section.settings.title_b }}</em></h2>
+<p class='cp-sub'>{{ section.settings.subtitle }}</p>
+<div class='cp-cats'>
+{% for block in cats %}<button type='button' class='cp-cat{% if forloop.first %} on{% endif %}' data-i='{{ forloop.index0 }}' data-url='{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% endif %}' {{ block.shopify_attributes }}><span class='cp-cic'>{% if block.settings.icon != blank %}<img src='{{ block.settings.icon | image_url: width: 60 }}' alt=''>{% else %}{{ block.settings.emoji }}{% endif %}</span><span><span class='cp-cn'>{{ block.settings.name }}</span><span class='cp-cs'>{{ block.settings.subtitle }}</span></span></button>{% endfor %}
+</div>
+<div class='cp-stage'>
+<button type='button' class='cp-arrow prev' aria-label='Previous'>{{ 'icon.left-arrow.svg' | inline_asset_content }}</button>
+{% for block in cats %}<div class='cp-panel' data-i='{{ forloop.index0 }}'{% unless forloop.first %} hidden{% endunless %}>
+<div class='cp-track'>
+{% if block.settings.collection != blank %}{% for product in block.settings.collection.products limit: 12 %}{% assign prating = product.metafields.reviews.rating.value  %}<div class='cp-card'><a class='cp-img' href='{{ product.url }}'>{% if product.featured_image %}<img src='{{ product.featured_image | image_url: width: 500 }}' alt='{{ product.title | escape }}' loading='lazy'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a><div class='cp-body'><div class='cp-ctop'>{% if prating != blank %}<span class='cp-rate'><em>&#9733;</em>{{ prating }}</span>{% endif %}{% if product.metafields.custom.product_tag != blank %}<span class='cp-badge'><em>&#9733;</em>{{ product.metafields.custom.product_tag }}</span>{% endif %}</div><a class='cp-title' href='{{ product.url }}'>{{ product.title }}</a><div class="product-sub-heading">{% if product.metafields.custom.age_group != blank %}<p>{{ product.metafields.custom.age_group }}</p>{% endif %}{% if product.metafields.custom.product_sub_description != blank %}<p>•&nbsp;&nbsp;{{ product.metafields.custom.product_sub_description }}</p>{% endif %}</div>{% if product.type != blank %}<p class='cp-meta'>{{ product.type }}</p>{% else %}<p class='cp-meta'></p>{% endif %}<div class='cp-price'><b>{{ product.price | money_without_trailing_zeros   }}</b>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money_without_currency | replace: '.00', '' }}</s>{% assign disc = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}<i>{{ disc }}% off</i>{% endif %}</div>
+{% comment %} <div class='cp-cart'>
+    <form method='post' action='/cart/add'><input type='hidden' name='id' value='{{ product.selected_or_first_available_variant.id }}'><button type='submit'>{{ 'icon-add-to-cart.svg' | inline_asset_content }} Add To Cart</button>
+    </form>
+</div> {% endcomment %}
+<div class='cp-cart'>
+  <form class='cp-atc-form' method='post' action='/cart/add' data-product-id='{{ product.selected_or_first_available_variant.id }}'>
+    <input type='hidden' name='id' value='{{ product.selected_or_first_available_variant.id }}'>
+    <input type='hidden' name='quantity' value='1'>
+    <button type='submit'>
+      {{ 'icon-add-to-cart.svg' | inline_asset_content }}
+      <span>Add To Cart</span>
+    </button>
+  </form>
+</div>
+</div></div>{% endfor %}{% else %}{% assign ph_titles = 'Bouquet Candle Kit,DIY Hand Casting Kit,Bouquet Candle Kit,DIY Hand Casting Kit' | split: ',' %}{% assign ph_meta = 'AGES 4-8 - SKILL BUILDER,AGES 7+ - STEAM KIT,AGES 4-8 - SKILL BUILDER,AGES 7+ - STEAM KIT' | split: ',' %}{% for i in (0..3) %}<div class='cp-card'><span class='cp-img'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='cp-body'><div class='cp-ctop'><span class='cp-rate'><em>&#9733;</em>4.9</span>{% assign md = i | modulo: 2 %}{% if md == 0 %}<span class='cp-badge'><em>&#9733;</em>TOP PICK</span>{% endif %}</div><span class='cp-title'>{{ ph_titles[i] }}</span><p class='cp-meta'>{{ ph_meta[i] }}</p><div class='cp-price'><b>Rs. 1,299</b><s>2,299</s><i>20% off</i></div><div class='cp-cart'><button type='button'>&#128722; Add To Cart</button></div></div></div>{% endfor %}{% endif %}
+</div>
+</div>{% endfor %}
+{% if cats.size == 0 %}<div class='cp-panel'><div class='cp-track'>{% for i in (1..4) %}<div class='cp-card'><span class='cp-img'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='cp-body'><span class='cp-title'>Sample Kit</span><p class='cp-meta'></p><div class='cp-price'><b>Rs. 1,299</b></div><div class='cp-cart'><button type='button'>Add To Cart</button></div></div></div>{% endfor %}</div></div>{% endif %}
+<button type='button' class='cp-arrow next' aria-label='Next'>{{ 'icon.right-arrow.svg' | inline_asset_content }}</button>
+</div>
+<div class='cp-dots' id='cpdots-{{ section.id }}'></div>
+<div class='cp-allwrap'><a class='cp-all' id='cpall-{{ section.id }}' href='{% if first_url != blank %}{{ first_url }}{% else %}{{ section.settings.view_all_fallback | default: '/collections/all' }}{% endif %}'>{{ section.settings.view_all_label }} {{ 'icon-arrow-right.svg' | inline_asset_content }}</a></div>
+</div>
+<div class='cp-wbot'></div>
+</div>
+<script>
+{% comment %} (function(){var r=document.getElementById('creste-play-{{ section.id }}');if(!r)return;var pills=r.querySelectorAll('.cp-cat'),panels=r.querySelectorAll('.cp-panel'),va=document.getElementById('cpall-{{ section.id }}'),dotsEl=document.getElementById('cpdots-{{ section.id }}');function at(){return r.querySelector('.cp-panel:not([hidden]) .cp-track');}function cw(t){var c=t.querySelector('.cp-card');if(!c)return 270;var g=parseInt(getComputedStyle(t).columnGap||getComputedStyle(t).gap)||16;return c.getBoundingClientRect().width+g;}function buildDots(){if(!dotsEl)return;var t=at();dotsEl.innerHTML='';if(!t)return;var cards=t.querySelectorAll('.cp-card');if(cards.length<2)return;cards.forEach(function(c,i){var d=document.createElement('button');d.type='button';if(i===0)d.className='on';d.addEventListener('click',function(){t.scrollTo({left:i*cw(t),behavior:'smooth'});});dotsEl.appendChild(d);});}function updateDots(){if(!dotsEl)return;var t=at();if(!t)return;var idx=Math.round(t.scrollLeft/cw(t));dotsEl.querySelectorAll('button').forEach(function(d,i){d.classList.toggle('on',i===idx);});}function act(k){pills.forEach(function(p,j){p.classList.toggle('on',j===k);});panels.forEach(function(pn,j){pn.hidden=(j!==k);});var u=pills[k].getAttribute('data-url');if(u&&va)va.setAttribute('href',u);buildDots();}pills.forEach(function(p,k){p.addEventListener('click',function(){act(k);});});panels.forEach(function(p){var t=p.querySelector('.cp-track');if(t)t.addEventListener('scroll',function(){if(!p.hidden)updateDots();});});function step(dir){var t=at();if(!t)return;t.scrollBy({left:dir*cw(t),behavior:'smooth'});}var pv=r.querySelector('.cp-arrow.prev'),nx=r.querySelector('.cp-arrow.next');if(pv)pv.addEventListener('click',function(){step(-1);});if(nx)nx.addEventListener('click',function(){step(1);});buildDots();})(); {% endcomment %}
+(function () {
+    var r = document.getElementById('creste-play-{{ section.id }}');
+    if (!r) return;
+
+    var pills = r.querySelectorAll('.cp-cat'),
+        panels = r.querySelectorAll('.cp-panel'),
+        va = document.getElementById('cpall-{{ section.id }}'),
+        dotsEl = document.getElementById('cpdots-{{ section.id }}');
+
+    function at() {
+        return r.querySelector('.cp-panel:not([hidden]) .cp-track');
+    }
+
+    function buildDots() {
+        if (!dotsEl) return;
+
+        var t = at();
+        dotsEl.innerHTML = '';
+
+        if (!t) return;
+
+        var cards = Array.from(t.querySelectorAll('.cp-card'));
+
+        if (cards.length < 2) return;
+
+        cards.forEach(function (card, i) {
+
+            var d = document.createElement('button');
+            d.type = 'button';
+
+            if (i === 0) d.className = 'on';
+
+            d.addEventListener('click', function () {
+                t.scrollTo({
+                    left: card.offsetLeft,
+                    behavior: 'smooth'
+                });
+            });
+
+            dotsEl.appendChild(d);
+        });
+    }
+
+    {% comment %} function updateDots() {
+
+        if (!dotsEl) return;
+
+        var t = at();
+        if (!t) return;
+
+        var cards = Array.from(t.querySelectorAll('.cp-card'));
+
+        var closest = 0;
+        var min = Infinity;
+
+        cards.forEach(function (card, i) {
+
+            var diff = Math.abs(card.offsetLeft - t.scrollLeft);
+
+            if (diff < min) {
+                min = diff;
+                closest = i;
+            }
+
+        });
+
+        dotsEl.querySelectorAll('button').forEach(function (dot, i) {
+            dot.classList.toggle('on', i === closest);
+        });
+
+    } {% endcomment %}
+
+    function updateDots() {
+
+        if (!dotsEl) return;
+
+        var t = at();
+        if (!t) return;
+
+        var cards = Array.from(t.querySelectorAll('.cp-card'));
+
+        var viewportCenter = t.scrollLeft + t.clientWidth / 2;
+
+        var closest = 0;
+        var min = Infinity;
+
+        cards.forEach(function(card, i){
+
+            var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+
+            var diff = Math.abs(cardCenter - viewportCenter);
+
+            if(diff < min){
+                min = diff;
+                closest = i;
+            }
+
+        });
+
+        dotsEl.querySelectorAll('button').forEach(function(dot,i){
+            dot.classList.toggle('on', i === closest);
+        });
+
+    }
+
+    function act(k) {
+
+        pills.forEach(function (p, j) {
+            p.classList.toggle('on', j === k);
+        });
+
+        panels.forEach(function (pn, j) {
+            pn.hidden = (j !== k);
+        });
+
+        var u = pills[k].getAttribute('data-url');
+
+        if (u && va) {
+            va.setAttribute('href', u);
+        }
+
+        buildDots();
+        updateDots();
+    }
+
+    pills.forEach(function (p, k) {
+        p.addEventListener('click', function () {
+            act(k);
+        });
+    });
+
+    panels.forEach(function (panel) {
+
+        var t = panel.querySelector('.cp-track');
+
+        if (!t) return;
+
+        t.addEventListener('scroll', function () {
+
+            if (!panel.hidden) {
+                updateDots();
+            }
+
+        });
+
+    });
+
+    function step(dir) {
+
+        var t = at();
+        if (!t) return;
+
+        var cards = Array.from(t.querySelectorAll('.cp-card'));
+
+        if (!cards.length) return;
+
+        var closest = 0;
+        var min = Infinity;
+
+        cards.forEach(function (card, i) {
+
+            var diff = Math.abs(card.offsetLeft - t.scrollLeft);
+
+            if (diff < min) {
+                min = diff;
+                closest = i;
+            }
+
+        });
+
+        var next = Math.max(
+            0,
+            Math.min(cards.length - 1, closest + dir)
+        );
+
+        t.scrollTo({
+            left: cards[next].offsetLeft,
+            behavior: 'smooth'
+        });
+
+    }
+
+    var pv = r.querySelector('.cp-arrow.prev'),
+        nx = r.querySelector('.cp-arrow.next');
+
+    if (pv) {
+        pv.addEventListener('click', function () {
+            step(-1);
+        });
+    }
+
+    if (nx) {
+        nx.addEventListener('click', function () {
+            step(1);
+        });
+    }
+
+    buildDots();
+    updateDots();
+
+})();
+</script>
+<script>
+/* =========================================
+   CRESTE PLAY
+   AJAX ATC + DAWN 15.5.0 CART DRAWER
+   + REALTIME HEADER CART BUBBLE
+   ========================================= */
+
+(function () {
+
+    var r = document.getElementById('creste-play-{{ section.id }}');
+
+    if (!r) return;
+
+
+    /* =========================================
+       ATC FORMS
+       ========================================= */
+
+    var atcForms = r.querySelectorAll('.cp-atc-form');
+
+    {% comment %} console.log("Creste Play Atc : ", atcForms); {% endcomment %}
+    atcForms.forEach(function (form) {
+
+        form.addEventListener('submit', function (e) {
+
+            e.preventDefault();
+
+
+            var button = form.querySelector('button');
+
+            if (!button) return;
+
+
+            if (button.classList.contains('loading')) {
+                return;
+            }
+
+
+            var originalHTML = button.innerHTML;
+
+
+            button.classList.add('loading');
+            button.disabled = true;
+
+
+            var formData = new FormData(form);
+
+
+            formData.append(
+                'sections',
+                'cart-drawer,header'
+            );
+
+
+            formData.append(
+                'sections_url',
+                window.location.pathname
+            );
+
+
+            /*
+             * =========================================
+             * ADD TO CART
+             * =========================================
+             */
+
+            fetch(
+                window.routes && window.routes.cart_add_url
+                    ? window.routes.cart_add_url
+                    : '/cart/add.js',
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+
+                    body: formData
+                }
+            )
+
+
+            .then(function (response) {
+
+                if (!response.ok) {
+
+                    return response.json().then(function (data) {
+
+                        throw new Error(
+                            data.description ||
+                            'Add to cart failed'
+                        );
+
+                    });
+
+                }
+
+                return response.json();
+
+            })
+
+
+            .then(function (response) {
+
+
+                /*
+                 * =========================================
+                 * 1. UPDATE CART DRAWER
+                 * =========================================
+                 */
+
+                var drawerHTML =
+                    response.sections &&
+                    response.sections['cart-drawer'];
+
+
+                updateCartDrawer(
+                    drawerHTML,
+                    button
+                );
+
+
+                /*
+                 * =========================================
+                 * 2. UPDATE HEADER BUBBLE
+                 * =========================================
+                 *
+                 */
+
+                var headerHTML =
+                    response.sections &&
+                    response.sections['header'];
+
+
+                if (headerHTML) {
+
+                    updateHeaderBubble(
+                        headerHTML
+                    );
+
+                }
+
+
+                /*
+                 * =========================================
+                 * 3. FALLBACK
+                 * =========================================
+                 *
+                 */
+
+                else {
+
+                    refreshHeaderBubble();
+
+                }
+
+            })
+
+
+            .catch(function (error) {
+
+                console.error(
+                    'CRESTE PLAY Cart AJAX Error:',
+                    error
+                );
+
+            })
+
+
+            .finally(function () {
+
+                button.classList.remove(
+                    'loading'
+                );
+
+                button.disabled = false;
+
+                button.innerHTML =
+                    originalHTML;
+
+            });
+
+        });
+
+    });
+
+
+    /* =========================================
+       UPDATE CART DRAWER
+       ========================================= */
+
+    function updateCartDrawer(
+        drawerHTML,
+        opener
+    ) {
+
+        if (!drawerHTML) {
+
+            console.warn(
+                'CRESTE PLAY: cart-drawer response missing'
+            );
+
+            return;
+
+        }
+
+
+        var currentDrawer =
+            document.querySelector(
+                'cart-drawer'
+            );
+
+
+        if (!currentDrawer) {
+
+            console.warn(
+                'CRESTE PLAY: current cart-drawer not found'
+            );
+
+            return;
+
+        }
+
+
+        var parser =
+            new DOMParser();
+
+
+        var drawerDoc =
+            parser.parseFromString(
+                drawerHTML,
+                'text/html'
+            );
+
+
+        var newDrawer =
+            drawerDoc.querySelector(
+                'cart-drawer'
+            );
+
+
+        if (!newDrawer) {
+
+            console.warn(
+                'CRESTE PLAY: new cart-drawer not found'
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * OLD DRAWER REMOVE
+         */
+
+        currentDrawer.replaceWith(
+            newDrawer
+        );
+
+
+        /*
+         * NEW DRAWER
+         */
+
+        var updatedDrawer =
+            document.querySelector(
+                'cart-drawer'
+            );
+
+
+        if (!updatedDrawer) return;
+
+
+        /*
+         * Dawn 15.5.0
+         *
+         * open(triggeredBy)
+         */
+
+        if (
+            typeof updatedDrawer.open ===
+            'function'
+        ) {
+
+            updatedDrawer.open(
+                opener
+            );
+
+        }
+
+        else {
+
+            /*
+             * Fallback
+             */
+
+            updatedDrawer.classList.remove(
+                'is-empty'
+            );
+
+            updatedDrawer.classList.add(
+                'active'
+            );
+
+            updatedDrawer.setAttribute(
+                'open',
+                ''
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       UPDATE HEADER CART BUBBLE
+       ========================================= */
+
+    function updateHeaderBubble(
+        headerHTML
+    ) {
+
+        if (!headerHTML) return;
+
+
+        var parser =
+            new DOMParser();
+
+
+        var headerDoc =
+            parser.parseFromString(
+                headerHTML,
+                'text/html'
+            );
+
+
+        /*
+         * Shopify ke returned HEADER HTML ke
+         * andar actual cart element:
+         *
+         * #cart-icon-bubble
+         */
+
+        var newBubbles =
+            headerDoc.querySelectorAll(
+                '#cart-icon-bubble'
+            );
+
+
+        if (!newBubbles.length) {
+
+            console.warn(
+                'CRESTE PLAY: #cart-icon-bubble not found in header response'
+            );
+
+            /*
+             * Extra fallback
+             */
+
+            refreshHeaderBubble();
+
+            return;
+
+        }
+
+
+        /*
+         * Current page ke bubbles.
+         *
+         * Sticky/mobile header ki wajah se
+         * ek se zyada ho sakte hain.
+         */
+
+        var oldBubbles =
+            document.querySelectorAll(
+                '#cart-icon-bubble'
+            );
+
+
+        /*
+         * Normally 1 hota hai.
+         */
+
+        oldBubbles.forEach(function (
+            oldBubble,
+            index
+        ) {
+
+            var newBubble =
+                newBubbles[
+                    index
+                ] || newBubbles[0];
+
+
+            if (!newBubble) return;
+
+
+            /*
+             * IMPORTANT:
+             *
+             * Pura <a> replace nahi kar rahe.
+             *
+             * Sirf andar ka HTML replace kar rahe hain.
+             *
+             * Isse Dawn ke existing event/listeners
+             * safe rahenge.
+             */
+
+            oldBubble.innerHTML =
+                newBubble.innerHTML;
+
+        });
+
+
+        /*
+         * Agar current page par bubble mila hi nahi
+         * to fallback.
+         */
+
+        if (!oldBubbles.length) {
+
+            console.warn(
+                'CRESTE PLAY: existing cart bubble not found'
+            );
+
+            refreshHeaderBubble();
+
+        }
+
+    }
+
+
+    /* =========================================
+       HARD FALLBACK:
+       FETCH HEADER SECTION SEPARATELY
+       ========================================= */
+
+    function refreshHeaderBubble() {
+
+
+        /*
+         * Current page ka URL.
+         */
+
+        var currentPath =
+            window.location.pathname;
+
+
+        /*
+         * Shopify Section Rendering API
+         *
+         * Sirf HEADER section maang rahe hain.
+         */
+
+        var url =
+            currentPath +
+            '?sections=header';
+
+
+        fetch(
+            url,
+            {
+                method: 'GET',
+
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }
+        )
+
+
+        .then(function (response) {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    'Header refresh failed'
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+
+        .then(function (data) {
+
+            if (
+                data &&
+                data.header
+            ) {
+
+                updateHeaderBubble(
+                    data.header
+                );
+
+            }
+
+        })
+
+
+        .catch(function (error) {
+
+            console.error(
+                'CRESTE PLAY Header Bubble Error:',
+                error
+            );
+
+        });
+
+    }
+
+})();
+</script>
+{% schema %}
+{
+  "name": "Creste Play w/ Purpose",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"}, {"type":"text","id":"title_a","label":"Title","default":"Play with "}, {"type":"text","id":"title_b","label":"Title accent","default":"Purpose"}, {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Creativity builds confidence, curiosity opens doors, and hands-on making sparks joy."}, {"type":"text","id":"view_all_label","label":"View all label","default":"View All"}, {"type":"url","id":"view_all_fallback","label":"View all fallback link"}, {"type":"color","id":"wave_top","label":"Top wave color","default":"#62A66B"}, {"type":"color","id":"wave_bottom","label":"Bottom wave color","default":"#C9B8E8"} ],
+  "blocks": [ {"type":"category","name":"Category","settings":[ {"type":"image_picker","id":"icon","label":"Icon"}, {"type":"text","id":"emoji","label":"Emoji fallback","default":"🎨"}, {"type":"text","id":"name","label":"Name","default":"CRAFTY CREW"}, {"type":"text","id":"subtitle","label":"Subtitle","default":"Cognitive Development"}, {"type":"collection","id":"collection","label":"Collection"} ]} ],
+  "max_blocks": 12,
+  "presets": [ {"name":"Creste Play w/ Purpose"} ]
+}
+{% endschema %}

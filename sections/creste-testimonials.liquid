@@ -1,0 +1,741 @@
+{% render 'creste-tokens' %}
+{%- assign reviews = section.blocks | where: 'type', 'review' -%}
+{%- assign has_bg = false -%}{%- if section.settings.bg_desktop != blank or section.settings.bg_mobile != blank -%}{%- assign has_bg = true -%}{%- endif -%}
+{%- assign ovt = section.settings.overlap_top | default: 0 -%}
+{%- assign ovb = section.settings.overlap_bottom | default: 0 -%}
+<style>
+#creste-tst-{{ section.id }}{position:relative;z-index:1;padding:40px 16px 0px;{% if has_bg %}background-size:100% 100%;background-repeat:no-repeat;background-position:center top;margin-top:-{{ ovt }}px;margin-bottom:-{{ ovb }}px;{% else %}background:{{ section.settings.section_bg }};background-size:cover;background-position:center;overflow:hidden;{% endif %}}
+{%- if has_bg -%}
+@media(min-width:750px){#creste-tst-{{ section.id }}{background-image:url({{ section.settings.bg_desktop | default: section.settings.bg_mobile | image_url: width: 2400 }};); background-size: cover;overflow: hidden;}
+}
+@media(max-width:749px){#creste-tst-{{ section.id }}{background-image:url({{ section.settings.bg_mobile | default: section.settings.bg_desktop | image_url: width: 1200 }});}
+#creste-tst-{{ section.id }}{
+    background-size: cover !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+#creste-tst-{{ section.id }} .ct-list{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    overflow:hidden;
+    position:relative;
+    padding-bottom:80px;
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+#creste-tst-{{ section.id }}.is-ready .ct-list {
+    opacity: 1;
+}
+#creste-tst-{{ section.id }} .ct-h b,.ct-h span{
+    text-align: left !important;
+}
+#creste-tst-{{ section.id }} .ct-h span{
+    font-size: 32px !important;
+    letter-spacing: 0px !important;
+}
+
+#creste-tst-{{ section.id }} .ct-card{
+    flex:none;
+    width:100%;
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:18px;
+    border-radius:18px;
+    background:#F3F3F3;
+    position:relative;
+}
+
+#creste-tst-{{ section.id }} .ct-card:nth-child(even){
+    flex-direction:row-reverse;
+}
+
+#creste-tst-{{ section.id }} .ct-thumb{
+    width:80px;
+    height:110px;
+    flex:0 0 80px;
+    border-radius:12px;
+}
+
+#creste-tst-{{ section.id }} .ct-body{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+#creste-tst-{{ section.id }} .ct-title{
+    font-size:18px;
+    line-height:1.15;
+    margin-bottom:8px;
+}
+
+#creste-tst-{{ section.id }} .ct-quote{
+    font-size:14px;
+    line-height:1.5;
+    min-height: 60px;
+    margin-bottom:14px;
+}
+
+#creste-tst-{{ section.id }} .ct-thumb{
+  width: 65px !important;
+  height: 100px !important;
+}
+
+#creste-tst-{{ section.id }} .ct-name{
+    font-size:16px;
+}
+
+#creste-tst-{{ section.id }} .ct-role{
+    font-size:12px;
+}
+
+#creste-tst-{{ section.id }} .ct-rate{
+    position:absolute;
+    right:18px;
+    bottom:18px;
+}
+
+#creste-tst-{{ section.id }} .ct-morewrap{
+    position:absolute;
+    left:50%;
+    bottom:18px;
+    transform:translateX(-50%);
+    z-index:5;
+}
+
+#creste-tst-{{ section.id }} .ct-list::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:140px;
+    pointer-events:none;
+    background:linear-gradient(
+        to bottom,
+        rgba(220,201,245,0),
+        {{ section.settings.section_bg }}
+    );
+}
+#creste-tst-{{ section.id }} .ct-morewrap{
+    width: 70%;
+}
+}
+{%- endif -%}
+#creste-tst-{{ section.id }} .ct-wtop{position:absolute;top:0;left:0;right:0;height:20px;background:{{ section.settings.wave_color }};-webkit-mask:radial-gradient(10px at 10px 0,#0000 99%,#000) 0 0/20px 20px repeat-x;mask:radial-gradient(10px at 10px 0,#0000 99%,#000) 0 0/20px 20px repeat-x;}
+#creste-tst-{{ section.id }} .ct-in{position:relative;z-index:1;max-width:1200px;margin:0 auto;}
+#creste-tst-{{ section.id }} .ct-h{text-align:center;margin:20px 0 24px;}
+#creste-tst-{{ section.id }} .ct-h b{display:block;font-family:'Nunito',sans-serif;font-weight:900;font-size:26px;color:#2B1702;}
+#creste-tst-{{ section.id }} .ct-h span{display:block;font-family:'Fredoka One',cursive;font-size:44px;line-height:1.1;color:#7E57C2;}
+#creste-tst-{{ section.id }} .ct-list{display:flex;gap:14px;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none;position: relative;}
+#creste-tst-{{ section.id }} .ct-list::-webkit-scrollbar{display:none;}
+#creste-tst-{{ section.id }} .ct-card{flex:0 0 86%;scroll-snap-align:center;background:#F3F3F3;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 6px 16px rgba(0,0,0,.05);}
+#creste-tst-{{ section.id }} .ct-thumb{width:133px;height:207px;border-radius:10px;overflow:hidden;flex:0 0 auto;box-shadow:0 2px 8px rgba(0,0,0,.12);background:#fff;}
+#creste-tst-{{ section.id }} .ct-thumb img,#creste-tst-{{ section.id }} .ct-thumb svg{width:100%;height:100%;object-fit:cover;display:block;}
+#creste-tst-{{ section.id }} .ct-body{flex:1;min-width:0;}
+#creste-tst-{{ section.id }} .ct-title{margin:0 0 6px;font-family:'Fredoka One',cursive;font-size:18px;line-height:1.1;letter-spacing:.2px;color:var(--creste-brown);}
+#creste-tst-{{ section.id }} .ct-quote{margin:0 0 10px;font-family:'Poppins',sans-serif;font-size:12px;line-height:1.5;color:rgba(0,0,0,.6);}
+#creste-tst-{{ section.id }} .ct-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+#creste-tst-{{ section.id }} .ct-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:13px;color:#333;}
+#creste-tst-{{ section.id }} .ct-role{font-family:'Poppins',sans-serif;font-weight:500;font-size:11px;color:var(--creste-green2);}
+#creste-tst-{{ section.id }} .ct-rate{background:#fff;border-radius:99px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;font-family:'Poppins',sans-serif;font-weight:500;font-size:14px;color:#333;flex:0 0 auto;}
+#creste-tst-{{ section.id }} .ct-rate em{font-style:normal;color:var(--creste-yellow);}
+#creste-tst-{{ section.id }} .ct-morewrap{text-align:center;margin-top:24px; left: 50%;position:absolute; bottom: 0rem;transform: translate(-50%, -50%);}
+#creste-tst-{{ section.id }} .ct-more{display:inline-flex;align-items:center;gap:10px;background:var(--creste-orange);color:#fff;height:46px;border-radius:9999px;padding:0 34px;border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 12px 22px rgba(244,121,58,.32);}
+#creste-tst-{{ section.id }} .ct-list::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:180px; /* Adjust as needed */
+    pointer-events:none;
+    background:linear-gradient(
+        to bottom,
+        rgba(249, 247, 251, 0) 0%,
+        rgba(255, 254, 255, 0.45) 45%,
+        {{ section.settings.section_bg }} 100%
+    );
+    opacity:1;
+    transition:opacity .3s ease;
+}
+/* Hide the gradient after expanding */
+#creste-tst-{{ section.id }} .ct-list.is-expanded::after{
+    opacity:0;
+}
+
+@media(min-width:750px){#creste-tst-{{ section.id }} .ct-h b{font-size:48px;}#creste-tst-{{ section.id }} .ct-h span{font-size:80px;}#creste-tst-{{ section.id }} /*.ct-list{display:grid;  grid-template-columns:repeat({{ section.settings.columns }},1fr);gap:20px;overflow:hidden;  transition:max-height .4s ease;}*/#creste-tst-{{ section.id }} .ct-card{ margin:0; width:100%;display:flex;}#creste-tst-{{ section.id }} /*.ct-card.is-hidden{display:none;} */
+#creste-tst-{{ section.id }} .ct-list{
+    position:relative;
+    overflow:hidden;
+    transition:height .35s ease;
+}
+
+#creste-tst-{{ section.id }} .ct-card{
+    position:absolute;
+    width:calc((100% - ({{ section.settings.columns | minus:1 }} * 20px))/{{ section.settings.columns }});
+    margin:0;
+    display:flex;
+    transition:all .3s ease;
+}
+#creste-tst-{{ section.id }} .ct-quote{
+    font-size: 16px;
+    line-height: 30px;
+}
+#creste-tst-{{ section.id }} .ct-title{
+  font-size: 24px;
+}
+#creste-tst-{{ section.id }} .ct-logo{
+    display:none;
+}
+
+}
+@media(max-width: 749px){
+   #creste-tst-{{ section.id }} .ct-logo{
+        position: absolute;
+        right: -15px;
+        top: -8px;
+   }
+   #creste-tst-{{ section.id }} .ct-h{
+       margin: 0 0 24px;
+   }
+}
+
+</style>
+<div id='creste-tst-{{ section.id }}' class='creste-section'>
+{% unless has_bg %}<div class='ct-wtop'></div>{% endunless %}
+<div class='ct-in'>
+<div class='ct-logo'>
+  <img
+    src="{{ section.settings.mobile_logo | image_url: width: 80 }}"
+    alt="icon"
+    class="ct-icon-mobile"
+  >
+</div>
+<h2 class='ct-h'><b>{{ section.settings.heading_a }}</b><span>{{ section.settings.heading_b }}</span></h2>
+<div class='ct-list'>
+{% for block in reviews %}<div class='ct-card{% if forloop.index0 >= section.settings.visible %} is-hidden{% endif %}' {{ block.shopify_attributes }}><div class='ct-thumb'>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 200 }}' alt='{{ block.settings.name | escape }}'>{% else %}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</div><div class='ct-body'><p class='ct-title'>{{ block.settings.title }}</p><p class='ct-quote'>{{ block.settings.quote }}</p><div class='ct-foot'><div><div class='ct-name'>{{ block.settings.name }}</div><div class='ct-role'>{{ block.settings.role }}</div></div><span class='ct-rate'><em>&#9733;</em> {{ block.settings.rating }}</span></div></div></div>{% endfor %}
+</div>
+{% if reviews.size > section.settings.visible %}<div class='ct-morewrap'><button type='button' class='ct-more' id='ctmore-{{ section.id }}'>{{ section.settings.button_label }} {{ 'icon-arrow-right.svg' | inline_asset_content }}</button></div>{% endif %}
+</div>
+</div>
+<script>
+    (function () {
+
+    const root = document.getElementById("creste-tst-{{ section.id }}");
+
+    if (!root) return;
+
+    const list = root.querySelector(".ct-list");
+
+    if (!list) return;
+
+    const cards = [...list.querySelectorAll(".ct-card")];
+
+    const btn = document.getElementById("ctmore-{{ section.id }}");
+
+    const cols = {{ section.settings.columns }};
+    const gap = 20;
+
+    let expanded = false;
+    let resizeTimer;
+
+
+    /* =========================
+       MASONRY
+    ========================= */
+
+    function masonry(expand = false) {
+
+        if (window.innerWidth < 750) return;
+
+        const listWidth = list.clientWidth;
+
+        if (!listWidth) return;
+
+        const cardWidth =
+            (listWidth - gap * (cols - 1)) / cols;
+
+        const heights = new Array(cols).fill(0);
+
+
+        cards.forEach(card => {
+
+            card.style.position = "absolute";
+
+            card.style.width = cardWidth + "px";
+
+
+            let col = 0;
+
+
+            for (let i = 1; i < cols; i++) {
+
+                if (heights[i] < heights[col]) {
+
+                    col = i;
+
+                }
+
+            }
+
+
+            card.style.left =
+                (col * (cardWidth + gap)) + "px";
+
+            card.style.top =
+                heights[col] + "px";
+
+
+            heights[col] +=
+                card.offsetHeight + gap;
+
+        });
+
+
+        const maxHeight = Math.max(...heights);
+
+
+        if (expand) {
+
+            list.style.height = maxHeight + "px";
+
+        } else {
+
+            const rows = [
+                ...new Set(
+                    cards.map(card =>
+                        parseFloat(card.style.top)
+                    )
+                )
+            ].sort((a, b) => a - b);
+
+
+            if (rows.length > 2) {
+
+                list.style.height =
+                    (rows[2] + cards[0].offsetHeight / 2) + "px";
+
+            } else {
+
+                list.style.height = maxHeight + "px";
+
+            }
+
+        }
+
+    }
+
+
+    /* =========================
+       UPDATE LAYOUT
+    ========================= */
+
+    function updateLayout() {
+
+        if (window.innerWidth < 750) {
+
+
+            list.style.height = "";
+            list.style.minHeight = "";
+            list.style.maxHeight =
+                expanded ? "none" : "980px";
+
+            list.style.overflow = "hidden";
+
+
+            cards.forEach(card => {
+
+                card.style.position = "";
+                card.style.width = "";
+                card.style.left = "";
+                card.style.top = "";
+
+            });
+
+
+        } else {
+
+
+            list.style.maxHeight = "";
+            list.style.overflow = "hidden";
+
+
+            masonry(expanded);
+
+        }
+
+    }
+
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    if (btn) {
+
+        btn.addEventListener("click", function () {
+
+            expanded = true;
+
+            list.classList.add("is-expanded");
+
+
+            if (window.innerWidth < 750) {
+
+                list.style.maxHeight = "none";
+
+            } else {
+
+                masonry(true);
+
+            }
+
+
+            btn.parentElement.style.display = "none";
+
+        });
+
+    }
+
+
+    /* =========================
+       INITIALIZE IMMEDIATELY
+    ========================= */
+
+    function init() {
+
+        updateLayout();
+
+
+        requestAnimationFrame(function () {
+
+            updateLayout();
+
+            root.classList.add("is-ready");
+
+        });
+
+    }
+
+
+    init();
+
+
+    /* =========================
+       IMAGE LOAD RECALCULATION
+    ========================= */
+
+    cards.forEach(card => {
+
+        const images = card.querySelectorAll("img");
+
+
+        images.forEach(img => {
+
+            if (!img.complete) {
+
+                img.addEventListener("load", function () {
+
+                    updateLayout();
+
+                }, { once: true });
+
+            }
+
+        });
+
+    });
+
+
+    /* =========================
+       RESIZE
+    ========================= */
+
+    window.addEventListener("resize", function () {
+
+        clearTimeout(resizeTimer);
+
+
+        resizeTimer = setTimeout(function () {
+
+            updateLayout();
+
+        }, 150);
+
+    });
+
+
+})();
+</script>
+{% comment %} <script>
+(function () {
+
+    const root = document.getElementById("creste-tst-{{ section.id }}");
+    if (!root) return;
+
+    const list = root.querySelector(".ct-list");
+    const cards = [...list.querySelectorAll(".ct-card")];
+    const btn = document.getElementById("ctmore-{{ section.id }}");
+
+    const cols = {{ section.settings.columns }};
+    const gap = 20;
+
+    let expanded = false;
+
+    /* ---------------- DESKTOP MASONRY ---------------- */
+
+    function masonry(expand = false) {
+
+        const listWidth = list.clientWidth;
+        if (!listWidth) return;
+
+        const cardWidth = (listWidth - gap * (cols - 1)) / cols;
+        const heights = new Array(cols).fill(0);
+
+        cards.forEach(card => {
+
+            card.style.position = "absolute";
+            card.style.width = cardWidth + "px";
+
+            let col = 0;
+
+            for (let i = 1; i < cols; i++) {
+                if (heights[i] < heights[col]) col = i;
+            }
+
+            card.style.left = (col * (cardWidth + gap)) + "px";
+            card.style.top = heights[col] + "px";
+
+            heights[col] += card.offsetHeight + gap;
+
+        });
+
+        const maxHeight = Math.max(...heights);
+
+        if (expand) {
+
+            list.style.height = maxHeight + "px";
+
+        } else {
+
+            const rows = [...new Set(
+                cards.map(card => parseFloat(card.style.top))
+            )].sort((a, b) => a - b);
+
+            if (rows.length > 2) {
+                list.style.height = (rows[2] + cards[0].offsetHeight / 2) + "px";
+            } else {
+                list.style.height = maxHeight + "px";
+            }
+
+        }
+
+    }
+
+    /* ---------------- UPDATE LAYOUT ---------------- */
+
+    function updateLayout() {
+
+        if (window.innerWidth < 750) {
+
+            // Reset desktop styles
+            list.style.height = "";
+            list.style.minHeight = "";
+            list.style.maxHeight = expanded ? "none" : "980px";
+            list.style.overflow = "hidden";
+
+            cards.forEach(card => {
+                card.style.position = "";
+                card.style.width = "";
+                card.style.left = "";
+                card.style.top = "";
+            });
+
+        } else {
+
+            // Reset mobile styles
+            list.style.maxHeight = "";
+            list.style.overflow = "";
+            list.style.minHeight = "600px";
+
+            masonry(expanded);
+
+        }
+
+    }
+
+    /* ---------------- BUTTON ---------------- */
+
+    if (btn) {
+
+        btn.addEventListener("click", function () {
+
+            expanded = true;
+
+            list.classList.add("is-expanded");
+
+            if (window.innerWidth < 750) {
+
+                list.style.maxHeight = "none";
+
+            } else {
+
+                masonry(true);
+
+            }
+
+            btn.parentElement.style.display = "none";
+
+        });
+
+    }
+
+    /* ---------------- INIT ---------------- */
+
+    function init() {
+        requestAnimationFrame(updateLayout);
+    }
+
+    window.addEventListener("load", init);
+
+    // Recalculate after images finish loading
+    window.addEventListener("load", function () {
+        cards.forEach(card => {
+            card.querySelectorAll("img").forEach(img => {
+                if (!img.complete) {
+                    img.addEventListener("load", updateLayout);
+                }
+            });
+        });
+    });
+
+    // Debounced resize
+    let resizeTimer;
+
+    window.addEventListener("resize", function () {
+
+        clearTimeout(resizeTimer);
+
+        resizeTimer = setTimeout(function () {
+            updateLayout();
+        }, 150);
+
+    });
+
+})();
+</script> {% endcomment %}
+{% comment %} <script>
+(function(){
+
+const root=document.getElementById("creste-tst-{{ section.id }}");
+if(!root) return;
+
+const list=root.querySelector(".ct-list");
+const cards=[...list.querySelectorAll(".ct-card")];
+const btn=document.getElementById("ctmore-{{ section.id }}");
+
+/* ---------------- MOBILE ---------------- */
+if(window.innerWidth < 750){
+
+    list.style.maxHeight = "980px"; // Adjust as needed
+    list.style.overflow = "hidden";
+
+    if(btn){
+
+        btn.addEventListener("click",function(){
+
+            list.style.maxHeight = "none";
+            list.classList.add("is-expanded");
+
+            btn.parentElement.style.display = "none";
+
+        });
+
+    }
+
+    return;
+}
+
+/* ---------------- DESKTOP ---------------- */
+
+const cols={{ section.settings.columns }};
+const gap=20;
+
+list.style.minHeight = "600px";
+
+function masonry(expand=false){
+
+    const listWidth=list.clientWidth;
+    const cardWidth=(listWidth-gap*(cols-1))/cols;
+
+    const heights=new Array(cols).fill(0);
+
+    cards.forEach(card=>{
+
+        card.style.width=cardWidth+"px";
+
+        let col=0;
+
+        for(let i=1;i<cols;i++){
+            if(heights[i]<heights[col]){
+                col=i;
+            }
+        }
+
+        card.style.left=(col*(cardWidth+gap))+"px";
+        card.style.top=heights[col]+"px";
+
+        heights[col]+=card.offsetHeight+gap;
+
+    });
+
+    const max=Math.max(...heights);
+
+    list.style.height=max+"px";
+
+    if(!expand){
+
+        const sorted=[...new Set(cards.map(c=>parseFloat(c.style.top)))]
+            .sort((a,b)=>a-b);
+
+        if(sorted.length>2){
+            list.style.height=(sorted[2]+cards[0].offsetHeight/2)+"px";
+        }
+
+    }
+
+}
+
+window.addEventListener("load",()=>masonry(false));
+
+window.addEventListener("resize",()=>masonry(btn && btn.parentElement.style.display==="none"));
+
+if(btn){
+
+    btn.addEventListener("click",()=>{
+
+        masonry(true);
+
+        list.classList.add("is-expanded");
+
+        btn.parentElement.style.display="none";
+
+    });
+
+}
+
+})();
+</script> {% endcomment %}
+{% schema %}
+{
+  "name": "Creste Testimonials",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"},{"type":"image_picker","id":"mobile_logo","label":"Mobile Logo"}, {"type":"range","id":"overlap_top","label":"Overlap section above (top zigzag)","min":0,"max":80,"step":2,"unit":"px","default":0}, {"type":"range","id":"overlap_bottom","label":"Overlap section below (bottom zigzag)","min":0,"max":80,"step":2,"unit":"px","default":0}, {"type":"color","id":"section_bg","label":"Background color (no image)","default":"#DCC9F5"}, {"type":"color","id":"wave_color","label":"Top wave color (no image)","default":"#EDE4FB"}, {"type":"text","id":"heading_a","label":"Heading line 1","default":"Loved By"}, {"type":"text","id":"heading_b","label":"Heading line 2","default":"50k+ Little Makers"}, {"type":"select","id":"columns","label":"Columns (desktop)","default":"3","options":[{"value":"2","label":"2"},{"value":"3","label":"3"}]}, {"type":"range","id":"visible","min":1,"max":12,"step":1,"label":"Reviews shown before Load More","default":5}, {"type":"text","id":"button_label","label":"Button label","default":"View More Reviews"} ],
+  "blocks": [ {"type":"review","name":"Review","settings":[ {"type":"image_picker","id":"image","label":"Photo"}, {"type":"text","id":"title","label":"Title","default":"Super YouTube alternative!"}, {"type":"textarea","id":"quote","label":"Quote","default":"How to get a 5yo from wanting to watch YouTube to wanting to learn by playing."}, {"type":"text","id":"name","label":"Name","default":"Sarah Johnson"}, {"type":"text","id":"role","label":"Role","default":"Mother of a 5 year old"}, {"type":"text","id":"rating","label":"Rating","default":"5"} ]} ],
+  "max_blocks": 30,
+  "presets": [ {"name":"Creste Testimonials","blocks":[ {"type":"review"}, {"type":"review","settings":{"title":"My 2yo cant get enough!","quote":"It helps my guilt about screen time because I feel she is actually learning.","name":"Priya Sharma","role":"Mother of a 2 year old"}}, {"type":"review","settings":{"name":"Aisha Khan","role":"Mother of a 6 year old"}} ]} ]
+}
+{% endschema %}

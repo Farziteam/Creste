@@ -1,1 +1,413 @@
-{"sections":{"main":{"type":"main-product","blocks":{"vendor":{"type":"text","settings":{"text":"{{ product.vendor }}","text_style":"uppercase"}},"title":{"type":"title","settings":{}},"price":{"type":"price","settings":{}},"variant_picker":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"quantity_selector":{"type":"quantity_selector","settings":{}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"description":{"type":"description","settings":{}},"share":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["vendor","title","price","variant_picker","quantity_selector","buy_buttons","description","share"],"settings":{"enable_sticky_info":true,"color_scheme":"scheme-1","media_size":"large","constrain_to_viewport":true,"media_fit":"contain","gallery_layout":"stacked","mobile_thumbnails":"hide","media_position":"left","image_zoom":"lightbox","hide_variants":true,"enable_video_looping":false,"padding_top":36,"padding_bottom":12}},"disclosures":{"type":"disclosures","settings":{"padding_top":36,"padding_bottom":0}},"related-products":{"type":"related-products","settings":{"heading":"You may also like","heading_size":"h2","products_to_show":4,"columns_desktop":4,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":28}}},"order":["main","disclosures","related-products"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "creste_pdp": {
+      "type": "creste-pdp",
+      "settings": {
+        "atc_label": "Add to Cart",
+        "atc_soldout_label": "Sold out",
+        "buynow_label": "Buy Now",
+        "gift_title": "Add gift wrapping — free",
+        "gift_subtext": "Kraft paper, ribbon and a handwritten note",
+        "po_title": "Choose Purchase Option",
+        "po_tiers": "1|0|https://cdn.shopify.com/s/files/1/0673/0114/6782/files/div_2_4f60140d-3700-4b1e-8f95-fd5882105fb7.png?v=1787318695,2|5|https://cdn.shopify.com/s/files/1/0673/0114/6782/files/div_3.png?v=1787318719,4|15|https://cdn.shopify.com/s/files/1/0673/0114/6782/files/3hand_1.png?v=1787318750",
+        "po_buy_label": "Buy",
+        "po_off_suffix": "% off",
+        "po_emoji": "✊",
+        "po_badge_text": "Smart Saver",
+        "feature_pills": "",
+        "rating_text": "",
+        "sold_text": "Creating Memories in Thousands of Homes",
+        "short_desc": "A ready-to-paint canvas tote, six non-toxic fabric paints and reusable stencils — everything a 3-8 year old needs to make a bag they'll actually carry to school.",
+        "ship_text": "Order before 4 PM  → ships today · COD available",
+        "gift_icon": "shopify://shop_images/0800a1d771b62006a968ad7770bf4e8f67e6a2d1.png",
+        "gift_heading": "Add gift wrapping — free",
+        "gift_sub_heading": "Kraft paper, ribbon and a handwritten note",
+        "badge_1": "#1 Bestseller",
+        "badge_2": "Screen-free fun",
+        "safety_text": "Small parts — choking hazard. Not for under 3s.",
+        "safety_link_text": "Safety details.",
+        "safety_link": "#",
+        "offers": "Get EXTRA 5% Off on First Order|WELCOME5;Get a EXTRA 10% Off on a Cart value of Rs1499|SUMMER10;Get a EXTRA 25% Off on a Cart value of Rs2199|SUMMER20",
+        "tutorial_thumb": "shopify://shop_images/Button.png",
+        "tutorial_url": "https://youtu.be/4SPY8y2QgOw?si=M6x4sRuHgpBb05CJ",
+        "overview_heading": "A blank canvas bag, waiting for their imagination",
+        "overview_text": "<p>Let your little ones express their artistic flair with the DIY Color Your Bag Activity Kit for Kids! This fun and engaging kit is designed to spark creativity while providing hours of entertainment. Perfect for children who love to color, craft, and personalize their belongings, this kit allows them to create a one-of-a-kind bag that's as unique as they are!</p>",
+        "overview_image": "shopify://shop_images/Group_1321314709.png",
+        "faqs": "What age is this kit for?|Designed for kids aged 3–8 with adult supervision for the youngest crafters.;Are the paints safe?|Yes — all paints are non-toxic and washable off skin and clothes.;How long does one bag take?|Most kids finish in 45–60 minutes of happy focused play.;Can the bag be washed after painting?|Absolutely — let it cure for 24 hours then gently hand-wash.",
+        "whatsapp_number": "919999999999",
+        "promo_banner_link": "",
+        "promo_banner_alt": "",
+        "trust_icon_1": "shopify://shop_images/image_906.png",
+        "trust_heading_1": "100% Secure",
+        "trust_subheading_1": "secure payment",
+        "trust_icon_2": "shopify://shop_images/image_908.png",
+        "trust_heading_2": "7-day returns",
+        "trust_subheading_2": "No questions asked",
+        "trust_icon_3": "shopify://shop_images/image_907.png",
+        "trust_heading_3": "Made in India",
+        "trust_subheading_3": "By a small team",
+        "trust_icon_4": "shopify://shop_images/image_909.png",
+        "trust_heading_4": "Gift wrap free",
+        "trust_subheading_4": "Add a note at checkout"
+      }
+    },
+    "product_overview_and_faq_bheLUc": {
+      "type": "product-overview-and-faq",
+      "blocks": {
+        "faq_e3bHJX": {
+          "type": "faq",
+          "settings": {
+            "question": "What age is this product for?",
+            "answer": "<p><strong>Lorem Ipsum </strong>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets.</p>"
+          }
+        },
+        "faq_byzPHX": {
+          "type": "faq",
+          "settings": {
+            "question": "What age is this product for?",
+            "answer": "<p><strong>Lorem Ipsum </strong>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets.</p>"
+          }
+        },
+        "faq_Lb7gtQ": {
+          "type": "faq",
+          "settings": {
+            "question": "What age is this product for?",
+            "answer": "<p><strong>Lorem Ipsum </strong>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets.</p>"
+          }
+        },
+        "faq_mYGgtC": {
+          "type": "faq",
+          "settings": {
+            "question": "What age is this product for?",
+            "answer": "<p><strong>Lorem Ipsum </strong>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets.</p>"
+          }
+        },
+        "faq_xc8NHm": {
+          "type": "faq",
+          "settings": {
+            "question": "What age is this product for?",
+            "answer": "<p><strong>Lorem Ipsum </strong>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_e3bHJX",
+        "faq_byzPHX",
+        "faq_Lb7gtQ",
+        "faq_mYGgtC",
+        "faq_xc8NHm"
+      ],
+      "name": "Product Overview & FAQ",
+      "settings": {
+        "desktop_background": "shopify://shop_images/Frame_2147228366_3a19247e-5aeb-422c-86f4-504a091ab395.png",
+        "mobile_background": "shopify://shop_images/bg_q.png",
+        "background_alt": "",
+        "overview_tab_label": "Overview",
+        "faq_tab_label": "FAQs",
+        "overview_heading": "A blank canvas bag, waiting for their imagination",
+        "overview_text": "",
+        "overview_image": "shopify://shop_images/Aqua_fridge_magnet.jpg",
+        "overview_image_alt": "",
+        "mascot_left": "shopify://shop_images/Group.png",
+        "mascot_right": "shopify://shop_images/attachment-large_5d4ba906-7304-42ae-9198-47f074f50794.png"
+      }
+    },
+    "creste_artists": {
+      "type": "creste-artists",
+      "blocks": {
+        "item_QbEQA6": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/36-CK-DIY Gardening Kit-VK-V1 (1).mp4"
+          }
+        },
+        "item_7HatHX": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/2fea659e-abde-4f0b-bae8-c9d6dc3ad800.png"
+          }
+        },
+        "item_DzqJJE": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/e1c568f4-8cfe-4e9a-9f2b-310f6fe88606.png"
+          }
+        },
+        "item_4NEb6H": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/Fruit candle .mp4"
+          }
+        },
+        "item_xxXDiE": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/6712bc94-6d99-4932-8afb-e5e315c3d911.png"
+          }
+        },
+        "item_aNaqem": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/WhatsApp Video 2026-08-25 at 16.35.00.mp4"
+          }
+        },
+        "item_KfcQKQ": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/bcc7da42-05f0-4944-bcb3-455ae4855192_1.png",
+            "video": "shopify://files/videos/handcasting video by gaurav.MP4"
+          }
+        }
+      },
+      "block_order": [
+        "item_QbEQA6",
+        "item_7HatHX",
+        "item_DzqJJE",
+        "item_4NEb6H",
+        "item_xxXDiE",
+        "item_aNaqem",
+        "item_KfcQKQ"
+      ],
+      "settings": {
+        "heading_prefix": "Made by",
+        "heading_highlight": "Little Artists",
+        "subheading": "Real creations from happy kids around the world—every bag is wonderfully unique.",
+        "padding_top": 52,
+        "padding_bottom": 56
+      }
+    },
+    "creste_skills": {
+      "type": "creste-skills",
+      "settings": {
+        "bg_color": "#7c5ce0",
+        "padding_top": 64,
+        "padding_bottom": 72,
+        "promo_banner_desktop": "shopify://shop_images/Container_1_57fbfdb3-a519-49d1-bc04-d3a3495ffaf7.png",
+        "promo_banner_mobile": "shopify://shop_images/happy.png",
+        "promo_banner_alt": ""
+      }
+    },
+    "creste_recommend": {
+      "type": "creste-recommend",
+      "disabled": true,
+      "settings": {
+        "heading_prefix": "You may Also",
+        "heading_highlight": "Like",
+        "subheading": "Grab 'em before they disappear!",
+        "collection": "",
+        "bg_color": "#f6b41d",
+        "padding_top": 56,
+        "padding_bottom": 60,
+        "promo_banner_desktop": "shopify://shop_images/Section_-_Best_Sellers_e4f84787-d839-4b9c-857d-1a976371defc.png",
+        "promo_banner_mobile": "shopify://shop_images/Play_with_Purpose_Section.png",
+        "promo_banner_alt": ""
+      }
+    },
+    "creste_favourites_DJKLRz": {
+      "type": "creste-favourites",
+      "name": "Creste Favourites",
+      "settings": {
+        "fallback_bg": "#f5c518",
+        "overlay": 0,
+        "heading": "You may Also",
+        "heading_italic": "Like",
+        "subtitle": "Grab 'em before they disappear!",
+        "heading_color": "#2b1702",
+        "collection": "demo",
+        "count": 10,
+        "card_width": 220,
+        "default_rating": "4.9",
+        "badge_tag": "",
+        "badge_text": "",
+        "button_label": "Add To Cart"
+      }
+    },
+    "creste_love": {
+      "type": "creste-love",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "text": "One hour of genuine quiet — no screens, no negotiating, no reward chart."
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "text": "Everything is in the box and pre-portioned. Nothing to buy, nothing to prep."
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "text": "Spill-resistant paint pots and a wipe-clean mat. Cleanup is two minutes."
+          }
+        },
+        "p4": {
+          "type": "point",
+          "settings": {
+            "text": "The outcome is useful. A bag for library day, not another thing to store."
+          }
+        },
+        "t1": {
+          "type": "stat",
+          "settings": {
+            "number": "6",
+            "label": "squeezy paint pots to mix",
+            "color": "white"
+          }
+        },
+        "t2": {
+          "type": "stat",
+          "settings": {
+            "number": "12",
+            "label": "stencils to stamp again and again",
+            "color": "teal"
+          }
+        },
+        "t3": {
+          "type": "stat",
+          "settings": {
+            "number": "∞",
+            "label": "designs, because it is their bag",
+            "color": "white"
+          }
+        },
+        "t4": {
+          "type": "stat",
+          "settings": {
+            "number": "1",
+            "label": "sticker badge when it is done",
+            "color": "teal"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "heading_prefix": "Why Parents",
+        "heading_highlight": "Love it",
+        "subheading": "See why thousands of families choose this creative activity again and again.",
+        "bg_color": "#dcebf3",
+        "padding_top": 60,
+        "padding_bottom": 64
+      }
+    },
+    "1787213314fee83c99": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_DxQqg4": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_DxQqg4"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "creste_reviews": {
+      "type": "creste-reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "name": "Priya Mehta",
+            "date": "12/19/2024",
+            "title": "Keeps Kids Engaged",
+            "body": "My kids were fully engaged while working on these magnets. They loved the tiny aquatic decorations and can't wait to show them off to their friends!"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "name": "Tanvi Gupta",
+            "date": "11/29/2024",
+            "title": "Excellent Value for Money",
+            "body": "This kit is worth every penny. It comes with plenty of decorations and materials to make beautiful, high-quality fridge magnets."
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2"
+      ],
+      "disabled": true,
+      "settings": {
+        "average": "4.56",
+        "count": "9",
+        "distribution": "5,4,0,0,0",
+        "write_url": "",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "creste_birthday": {
+      "type": "creste-birthday",
+      "disabled": true,
+      "settings": {
+        "heading": "Birthday coming up?",
+        "text": "Return gifts from Rs. 375 · DIY Party Box Kits for the whole gang!",
+        "button_label": "EXPLORE NOW",
+        "button_url": "",
+        "bg_color": "#7c5ce0"
+      }
+    },
+    "promo_cta_banner_tQH7nP": {
+      "type": "Promo-cta-banner",
+      "name": "Promo CTA Banner",
+      "settings": {
+        "show_promo": true,
+        "promo_title": "Creative fun delivered to your door",
+        "promo_text": "Everything you need for hours of creative fun.",
+        "promo_image": "shopify://shop_images/ic_0a9b886f-f006-43be-913a-711b92df0b0f.png",
+        "promo_button_label": "Explore Now",
+        "promo_button_link": "",
+        "button_bg": "#ffffff",
+        "button_text_color": "#3d2817",
+        "promo_bg": "#bd6ce1",
+        "bg_desktop": "shopify://shop_images/111.png",
+        "bg_mobile": "shopify://shop_images/22.png"
+      }
+    }
+  },
+  "order": [
+    "creste_pdp",
+    "product_overview_and_faq_bheLUc",
+    "creste_artists",
+    "creste_skills",
+    "creste_recommend",
+    "creste_favourites_DJKLRz",
+    "creste_love",
+    "1787213314fee83c99",
+    "creste_reviews",
+    "creste_birthday",
+    "promo_cta_banner_tQH7nP"
+  ]
+}

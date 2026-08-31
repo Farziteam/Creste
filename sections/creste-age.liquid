@@ -1,0 +1,81 @@
+{% render 'creste-tokens' %}
+{%- assign ov = section.settings.overlap | default: 30 -%}
+<style>
+#creste-age-{{ section.id }}{position:relative;z-index:2;background-size:100% 100%;background-repeat:no-repeat;background-position:center top;padding:36px 16px;margin-bottom:-{{ ov }}px;}
+#creste-age-{{ section.id }} .ca-wrap{max-width:1270px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:20px;align-items:center;position:relative;z-index:1;}
+#creste-age-{{ section.id }} .ca-left{position:relative;}
+#creste-age-{{ section.id }} .ca-h{text-align:left;display:flex;gap:8px;margin:0 0 6px;font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;line-height:0.9;color:#fff;}
+#creste-age-{{ section.id }} .ca-h em{font-style:normal;font-family:'Fredoka One',cursive;color:var(--creste-brown);display:block;}
+#creste-age-{{ section.id }} .ca-sub{font-family:'Poppins',sans-serif;font-size:15px;line-height:1.5;color:#fff;margin:0 0 14px;font-weight: 500;width: 60%;}
+#creste-age-{{ section.id }} .ca-char img,#creste-age-{{ section.id }} .ca-char .ph svg{max-width:240px;width:100%;height:auto;display:block;}
+#creste-age-{{ section.id }} .ca-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;}
+#creste-age-{{ section.id }} .ca-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform .2s ease;}
+#creste-age-{{ section.id }} a.ca-card{cursor:pointer;}
+#creste-age-{{ section.id }} a.ca-card:hover{transform:translateY(-4px);}
+#creste-age-{{ section.id }} .ca-frame{background:#fff;border-radius:28px;padding:8px;box-shadow:0 10px 18px rgba(0,0,0,.14);position: relative}
+#creste-age-{{ section.id }} .ca-frame img,#creste-age-{{ section.id }} .ca-frame .ca-ph svg{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px;background:#eef;}
+#creste-age-{{ section.id }} .ca-chip{margin-top:8px;background:#E0F7FF;border:1.6px solid var(--creste-ink);border-radius:28px;box-shadow:2px 2px 0 var(--creste-ink);padding:8px 12px;text-align:center; position: relative;margin-top:15px;transition: transform .5s ease;}
+#creste-age-{{ section.id }} .ca-chip:hover {transform: rotate(3deg);}
+#creste-age-{{ section.id }} .ca-chip b{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;line-height:1.2;color:var(--creste-ink);}
+#creste-age-{{ section.id }} .ca-chip small{display:block;font-family:'Poppins',sans-serif;font-weight:500;font-size:10px;line-height:1.3;color:var(--creste-brown);opacity:.9;}
+.ca-image-wrapper img{
+  border-radius: 24px !important;
+}
+.ca-image-wrapper::before,
+.ca-image-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  height: 40px;
+  border-left: 1px dashed #2b160e;
+  z-index: -1;
+}
+
+.ca-image-wrapper::before {
+  left: 18%;
+}
+
+.ca-image-wrapper::after {
+  right: 18%;
+}
+@media(max-width:749px){#creste-age-{{ section.id }} .ca-char{position:absolute;top:-6px;right:-4px;width:130px;}#creste-age-{{ section.id }} .ca-char img,#creste-age-{{ section.id }} .ca-char .ph svg{max-width:100px;}#creste-age-{{ section.id }} .ca-h{padding-right:96px;}#creste-age-{{ section.id }} .ca-chip small{display:none;}
+ #creste-age-{{ section.id }} .ca-char img{
+  max-width: 125px;
+}
+}
+@media(min-width:750px){#creste-age-{{ section.id }}{padding:70px 24px;}#creste-age-{{ section.id }} .ca-wrap{grid-template-columns:1fr 1.58fr;gap:36px;}#creste-age-{{ section.id }} .ca-h{font-size:80px;flex-direction:column;}#creste-age-{{ section.id }} .ca-sub{font-size:24px;padding-top: 3rem; width: 100%; font-weight: 600;}#creste-age-{{ section.id }} .ca-char img,#creste-age-{{ section.id }} .ca-char .ph svg{max-width:300px;}#creste-age-{{ section.id }} .ca-grid{grid-template-columns:repeat(3,1fr);gap:36px;}#creste-age-{{ section.id }} .ca-chip{padding:12px 10px;border-radius:28px;margin-top:20px;}#creste-age-{{ section.id }} .ca-chip b{font-size:18px;}
+#creste-age-{{ section.id }} .ca-char img{
+  max-width: 350px;
+}
+.ca-image-wrapper::after {
+    right: 30%;
+}
+.ca-image-wrapper::before {
+    left: 30%;
+}
+}
+</style>
+<div id='creste-age-{{ section.id }}' class='creste-section' {% if section.settings.background != blank %}style='background-image:url({{ section.settings.background | image_url: width: 2200 }});'{% else %}style='background-color:var(--creste-green);'{% endif %}>
+<div class='ca-wrap'>
+<div class='ca-left'>
+<h2 class='ca-h'>{{ section.settings.title_a }}<em>{{ section.settings.title_b }}</em></h2>
+<p class='ca-sub'>{{ section.settings.subtitle }}</p>
+<div class='ca-char'>{% if section.settings.character != blank %}<img src='{{ section.settings.character | image_url: width: 600 }}' alt='Creste character'>{% else %}<span class='ph'>{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</span>{% endif %}</div>
+</div>
+<div class='ca-right'>
+<div class='ca-grid'>
+{% for block in section.blocks %}{% if block.type == 'age' %}{% assign href = '' %}{% if block.settings.collection != blank %}{% assign href = block.settings.collection.url %}{% elsif block.settings.link != blank %}{% assign href = block.settings.link %}{% endif %}{% if href != blank %}<a class='ca-card' href='{{ href }}' {{ block.shopify_attributes }}>{% else %}<div class='ca-card' {{ block.shopify_attributes }}>{% endif %}<div class='ca-frame ca-image-wrapper'>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 500 }}' alt='{{ block.settings.label | escape }}'>{% else %}<div class='ca-ph'>{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>{% endif %}</div><div class='ca-chip' style='background:{{ block.settings.tint }};'><b>{{ block.settings.label }}</b>{% if block.settings.desc != blank %}<small>{{ block.settings.desc }}</small>{% endif %}</div>{% if href != blank %}</a>{% else %}</div>{% endif %}{% endif %}{% endfor %}
+</div>
+</div>
+</div>
+</div>
+{% schema %}
+{
+  "name": "Creste Shop by Age",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"background","label":"Background image (green waves)"}, {"type":"range","id":"overlap","label":"Overlap next section (hide bottom gap)","min":0,"max":80,"step":2,"unit":"px","default":30}, {"type":"image_picker","id":"character","label":"Left character image"}, {"type":"text","id":"title_a","label":"Title (white)","default":"Shop by "}, {"type":"text","id":"title_b","label":"Title accent","default":"Age"}, {"type":"text","id":"subtitle","label":"Subtitle","default":"Perfectly leveled fun for every stage!"} ],
+  "blocks": [ {"type":"age","name":"Age card","settings":[ {"type":"image_picker","id":"image","label":"Photo"}, {"type":"text","id":"label","label":"Age label","default":"0 - 3 yrs"}, {"type":"text","id":"desc","label":"Descriptor (desktop only)","default":"Little hands, big fun"}, {"type":"color","id":"tint","label":"Chip color","default":"#E0F7FF"}, {"type":"collection","id":"collection","label":"Links to collection"}, {"type":"url","id":"link","label":"Or custom link"} ]} ],
+  "max_blocks": 12,
+  "presets": [ {"name":"Creste Shop by Age","blocks":[ {"type":"age","settings":{"label":"0 - 3 yrs","desc":"Little hands, big fun","tint":"#E0F7FF"}}, {"type":"age","settings":{"label":"4-6 yrs","desc":"Creative adventures","tint":"#FFEEA8"}}, {"type":"age","settings":{"label":"7-10 yrs","desc":"First real projects","tint":"#EAF7D8"}}, {"type":"age","settings":{"label":"11-15 yrs","desc":"Level-up skills","tint":"#F3EEFF"}}, {"type":"age","settings":{"label":"16 yrs +","desc":"Craft for the soul","tint":"#FFFAE5"}}, {"type":"age","settings":{"label":"Adult","desc":"Craft for the soul","tint":"#E0F7FF"}} ]} ]
+}
+{% endschema %}

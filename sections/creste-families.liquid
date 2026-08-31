@@ -1,0 +1,393 @@
+{% render 'creste-tokens' %}
+{%- assign _bgid = 'creste-fam-' | append: section.id -%}
+<style>
+#creste-fam-{{ section.id }}{padding:32px 8px;background:{{ section.settings.section_bg }};background-size:cover;background-position:center;}
+#creste-fam-{{ section.id }} .fam-inner{max-width:1240px;margin:0 auto;}
+#creste-fam-{{ section.id }} .fam-h{text-align:center;margin:0 6px 6px;font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;line-height:1.1;color:#2B1702;}
+#creste-fam-{{ section.id }} .fam-h span{ font-style: italic;}
+#creste-fam-{{ section.id }} .fam-h em{font-style:normal;color:var(--creste-orange);}
+#creste-fam-{{ section.id }} .fam-sub{text-align:center;margin:0 0 22px;font-family:'Poppins',sans-serif;font-size:15px;color:var(--creste-brown);}
+#creste-fam-{{ section.id }} .fam-carousel{position:relative;padding:0 8px;}
+#creste-fam-{{ section.id }} .fam-track{display:flex;gap:24px;overflow-x:auto;overflow-y:hidden;scroll-behavior:smooth;scroll-snap-type:x mandatory;padding:4px 40px;scrollbar-width:none;}
+#creste-fam-{{ section.id }} .fam-track::-webkit-scrollbar{display:none;}
+#creste-fam-{{ section.id }} .fam-card{flex:0 0 240px;scroll-snap-align:start;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;}
+#creste-fam-{{ section.id }} .fam-vid{position:relative;aspect-ratio:9/16;background:#fff;overflow:hidden;}
+#creste-fam-{{ section.id }} .fam-vid video,#creste-fam-{{ section.id }} .fam-vid iframe,#creste-fam-{{ section.id }} .fam-vid img,#creste-fam-{{ section.id }} .fam-vid svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;}
+#creste-fam-{{ section.id }} .fam-cap{padding:10px 12px 0;font-family:'Poppins',sans-serif;font-weight:600;font-size:12px;color:#2B1702;}
+#creste-fam-{{ section.id }} .fam-prod{display:flex;align-items:center;gap:10px;padding:10px 12px 12px;}
+#creste-fam-{{ section.id }} .fam-pthumb{width:48px;height:48px;border-radius:10px;overflow:hidden;flex:0 0 auto;background:#f2f2f2;}
+#creste-fam-{{ section.id }} .fam-pthumb img,#creste-fam-{{ section.id }} .fam-pthumb svg{width:100%;height:100%;object-fit:cover;}
+#creste-fam-{{ section.id }} .fam-pinfo{flex:1;min-width:0;}
+#creste-fam-{{ section.id }} .fam-pt{margin:0;font-family:'Nunito',sans-serif;font-weight:500;font-size:13px;line-height:1.2;color:#2B1702;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-decoration:none;}
+#creste-fam-{{ section.id }} .fam-pp{display:none;font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:13px;color:var(--creste-orange);}
+#creste-fam-{{ section.id }} .fam-add button{background:var(--creste-orange);color:#fff;border:none;border-radius:9999px;height:40px;padding:0 18px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;}
+#creste-fam-{{ section.id }} .fam-add button:disabled{opacity:.6;cursor:default;}
+#creste-fam-{{ section.id }} .fam-nav{position:absolute;top:38%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:none;box-shadow:0 6px 16px rgba(0,0,0,.2);color:var(--creste-orange);font-size:24px;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;}
+#creste-fam-{{ section.id }} .fam-nav.prev{left:0;}
+#creste-fam-{{ section.id }} .fam-nav.next{right:0;}
+#creste-fam-{{ section.id }} .fam-dots{display:none;justify-content:center;gap:8px;margin-top:16px;}
+#creste-fam-{{ section.id }} .fam-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(0,0,0,.25);padding:0;cursor:pointer;transition:all .2s;}
+#creste-fam-{{ section.id }} .fam-dots button.on{background:var(--creste-orange);width:22px;border-radius:9999px;}
+#creste-fam-{{ section.id }} .fam-vid video{
+  border-radius: 12px;
+}
+.fam-vid {
+  position: relative;
+  overflow: hidden;
+}
+
+.fam-vid video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+.video-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  color: #ff7a2f;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: .25s;
+}
+
+.video-play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+@media(max-width:749px){#creste-fam-{{ section.id }} .fam-nav{display:none;}#creste-fam-{{ section.id }} .fam-dots{display:flex;}#creste-fam-{{ section.id }} .fam-carousel{padding:0;}#creste-fam-{{ section.id }} .fam-track{padding:4px 8px;}
+#creste-fam-{{ section.id }} .fam-card{
+  flex: 0 0 258px;
+}
+#creste-fam-{{ section.id }}{
+  padding: 24px 16px;
+}
+#creste-fam-{{ section.id }} .fam-sub{display: none;}
+
+}
+@media(min-width:750px){#creste-fam-{{ section.id }}{padding:56px 16px;}#creste-fam-{{ section.id }} .fam-h{font-size:40px;}#creste-fam-{{ section.id }} .fam-carousel{padding:0 50px;}#creste-fam-{{ section.id }} .fam-track{padding:4px 8px;}#creste-fam-{{ section.id }} .fam-card{flex-basis:266px;}}
+</style>
+{% render 'creste-bg', id: _bgid, d: section.settings.bg_desktop, m: section.settings.bg_mobile %}
+<div id='creste-fam-{{ section.id }}' class='creste-section'>
+<div class='fam-inner'>
+{% if section.settings.heading != blank %}<h2 class='fam-h'>{{ section.settings.heading }}<span style="color: {{ section.settings.heading_italic_color }};"">  {{ section.settings.heading_italic }}</span></h2>{% endif %}
+{% if section.settings.subtitle != blank %}<p class='fam-sub'>{{ section.settings.subtitle }}</p>{% endif %}
+<div class='fam-carousel'>
+<button type='button' class='fam-nav prev' aria-label='Previous' onclick="document.getElementById('famtrack-{{ section.id }}').scrollBy({left:-300,behavior:'smooth'});">&#8249;</button>
+<div class='fam-track' id='famtrack-{{ section.id }}'>
+{% for block in section.blocks %}{% if block.type == 'reel' %}<div class='fam-card' {{ block.shopify_attributes }}>
+<div class='fam-vid'>{% if block.settings.video != blank %}{{ block.settings.video | video_tag: loop: true, controls: false, muted: true, playsinline: true, image_size: '400x' }} <button class="video-play-btn" aria-label="Play video">
+      ▶
+    </button>{% elsif block.settings.video_url != blank %}{{ block.settings.video_url | external_video_tag }}{% elsif block.settings.poster != blank %}<img src='{{ block.settings.poster | image_url: width: 500 }}' alt='{{ block.settings.caption | escape }}'>{% else %}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</div>
+{% if block.settings.caption != blank %}<p class='fam-cap'>{{ block.settings.caption }}</p>{% endif %}
+{% assign prod = block.settings.product %}{% if prod != blank %}<div class='fam-prod'><a class='fam-pthumb' href='{{ prod.url }}'>{% if prod.featured_image %}<img src='{{ prod.featured_image | image_url: width: 120 }}' alt='{{ prod.title | escape }}'>{% endif %}</a><div class='fam-pinfo'><a class='fam-pt' href='{{ prod.url }}'>{{ prod.title }}</a><span class='fam-pp'>{{ prod.price | money }}</span></div><div class='fam-add'>
+  <form class='fam-addform' method='post' action='{{ routes.cart_add_url }}'><input type='hidden' name='id' value='{{ prod.selected_or_first_available_variant.id }}'><input type='hidden' name='quantity' value='1'><button type='submit'{% unless prod.available %} disabled{% endunless %}>{% if prod.available %}Add{% else %}Sold out{% endif %}</button></form></div></div>{% endif %}
+</div>{% endif %}{% endfor %}
+{% if section.blocks.size == 0 %}{% for i in (1..4) %}<div class='fam-card'><div class='fam-vid'>{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div><div class='fam-prod'><span class='fam-pthumb'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='fam-pinfo'><span class='fam-pt'>Linked product</span><span class='fam-pp'>Rs. 0</span></div><div class='fam-add'><button type='button'>Add</button></div></div></div>{% endfor %}{% endif %}
+</div>
+<button type='button' class='fam-nav next' aria-label='Next' onclick="document.getElementById('famtrack-{{ section.id }}').scrollBy({left:300,behavior:'smooth'});">&#8250;</button>
+</div>
+<div class='fam-dots' id='famdots-{{ section.id }}'></div>
+</div>
+</div>
+{% comment %} <script>
+(function(){var r=document.getElementById('creste-fam-{{ section.id }}');if(!r)return;
+r.querySelectorAll('.fam-addform').forEach(function(f){f.addEventListener('submit',function(e){e.preventDefault();var inp=f.querySelector('input[name="id"]');if(!inp||!inp.value){f.submit();return;}var b=f.querySelector('button');var orig=b?b.textContent:'';if(b){b.disabled=true;b.textContent='Adding...';}fetch('{{ routes.cart_add_url }}.js',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({items:[{id:inp.value,quantity:1}]})}).then(function(res){if(!res.ok)throw 0;return res.json();}).then(function(){window.location.href='{{ routes.cart_url }}';}).catch(function(){f.submit();});});});
+var t=document.getElementById('famtrack-{{ section.id }}'),dotsEl=document.getElementById('famdots-{{ section.id }}');if(t&&dotsEl){function cw(){var c=t.querySelector('.fam-card');if(!c)return 280;var g=parseInt(getComputedStyle(t).gap)||24;return c.getBoundingClientRect().width+g;}var cards=t.querySelectorAll('.fam-card');if(cards.length>1){cards.forEach(function(c,i){var d=document.createElement('button');d.type='button';if(i===0)d.className='on';d.addEventListener('click',function(){t.scrollTo({left:i*cw(),behavior:'smooth'});});dotsEl.appendChild(d);});t.addEventListener('scroll',function(){var idx=Math.round(t.scrollLeft/cw());dotsEl.querySelectorAll('button').forEach(function(d,i){d.classList.toggle('on',i===idx);});});}}
+})();
+</script> {% endcomment %}
+<script>
+document.querySelectorAll(".fam-vid").forEach((wrapper) => {
+  const video = wrapper.querySelector("video");
+  const playBtn = wrapper.querySelector(".video-play-btn");
+
+  if (!video || !playBtn) return;
+
+  playBtn.addEventListener("click", () => {
+
+    // Pause all other videos
+    document.querySelectorAll(".fam-vid video").forEach((v) => {
+      if (v !== video) {
+        v.pause();
+        v.currentTime = 0; // Optional: restart from beginning
+
+        const otherBtn = v.closest(".fam-vid").querySelector(".video-play-btn");
+        if (otherBtn) {
+          otherBtn.style.display = "flex";
+        }
+      }
+    });
+
+    // Play current video
+    video.play();
+    playBtn.style.display = "none";
+  });
+
+  video.addEventListener("pause", () => {
+    playBtn.style.display = "flex";
+  });
+
+  video.addEventListener("ended", () => {
+    playBtn.style.display = "flex";
+  });
+});
+</script>
+<script>
+(function () {
+
+  var famForms = document.querySelectorAll('.fam-addform');
+
+  famForms.forEach(function (form) {
+
+    form.addEventListener('submit', function (e) {
+
+      e.preventDefault();
+
+      var button = form.querySelector('button');
+
+      if (!button || button.disabled) return;
+
+      if (button.classList.contains('loading')) return;
+
+      var originalHTML = button.innerHTML;
+
+      button.classList.add('loading');
+      button.disabled = true;
+
+      var formData = new FormData(form);
+
+      formData.append(
+        'sections',
+        'cart-drawer,header'
+      );
+
+      formData.append(
+        'sections_url',
+        window.location.pathname
+      );
+
+      fetch(
+        window.routes && window.routes.cart_add_url
+          ? window.routes.cart_add_url
+          : '/cart/add.js',
+        {
+          method: 'POST',
+
+          headers: {
+            'Accept': 'application/json'
+          },
+
+          body: formData
+        }
+      )
+      .then(function (response) {
+
+        if (!response.ok) {
+          return response.json().then(function (data) {
+            throw new Error(
+              data.description || 'Add to cart failed'
+            );
+          });
+        }
+
+        return response.json();
+      })
+      .then(function (response) {
+
+        /* =========================
+           UPDATE CART DRAWER
+        ========================== */
+
+        var drawerHTML =
+          response.sections &&
+          response.sections['cart-drawer'];
+
+        updateCartDrawer(drawerHTML, button);
+
+
+        /* =========================
+           UPDATE HEADER BUBBLE
+        ========================== */
+
+        var headerHTML =
+          response.sections &&
+          response.sections['header'];
+
+        if (headerHTML) {
+          updateHeaderBubble(headerHTML);
+        } else {
+          refreshHeaderBubble();
+        }
+
+      })
+      .catch(function (error) {
+
+        console.error(
+          'FAM Add To Cart Error:',
+          error
+        );
+
+      })
+      .finally(function () {
+
+        button.classList.remove('loading');
+        button.disabled = false;
+        button.innerHTML = originalHTML;
+
+      });
+
+    });
+
+  });
+
+
+  /* =========================
+     UPDATE CART DRAWER
+  ========================== */
+
+  function updateCartDrawer(drawerHTML, opener) {
+
+    if (!drawerHTML) return;
+
+    var currentDrawer =
+      document.querySelector('cart-drawer');
+
+    if (!currentDrawer) return;
+
+    var parser = new DOMParser();
+
+    var drawerDoc =
+      parser.parseFromString(
+        drawerHTML,
+        'text/html'
+      );
+
+    var newDrawer =
+      drawerDoc.querySelector('cart-drawer');
+
+    if (!newDrawer) return;
+
+    currentDrawer.replaceWith(newDrawer);
+
+    var updatedDrawer =
+      document.querySelector('cart-drawer');
+
+    if (!updatedDrawer) return;
+
+    if (typeof updatedDrawer.open === 'function') {
+
+      updatedDrawer.open(opener);
+
+    } else {
+
+      updatedDrawer.classList.remove('is-empty');
+      updatedDrawer.classList.add('active');
+      updatedDrawer.setAttribute('open', '');
+
+    }
+
+  }
+
+
+  /* =========================
+     UPDATE HEADER BUBBLE
+  ========================== */
+
+  function updateHeaderBubble(headerHTML) {
+
+    if (!headerHTML) return;
+
+    var parser = new DOMParser();
+
+    var headerDoc =
+      parser.parseFromString(
+        headerHTML,
+        'text/html'
+      );
+
+    var newBubbles =
+      headerDoc.querySelectorAll(
+        '#cart-icon-bubble'
+      );
+
+    var oldBubbles =
+      document.querySelectorAll(
+        '#cart-icon-bubble'
+      );
+
+    oldBubbles.forEach(function (
+      oldBubble,
+      index
+    ) {
+
+      var newBubble =
+        newBubbles[index] ||
+        newBubbles[0];
+
+      if (newBubble) {
+        oldBubble.innerHTML =
+          newBubble.innerHTML;
+      }
+
+    });
+
+  }
+
+
+  /* =========================
+     HEADER FALLBACK
+  ========================== */
+
+  function refreshHeaderBubble() {
+
+    fetch(
+      window.location.pathname +
+      '?sections=header',
+      {
+        headers: {
+          'Accept': 'application/json'
+        }
+      }
+    )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+
+      if (data && data.header) {
+        updateHeaderBubble(data.header);
+      }
+
+    })
+    .catch(function (error) {
+      console.error(
+        'Header refresh error:',
+        error
+      );
+    });
+
+  }
+
+})();
+</script>
+{% schema %}
+{
+  "name": "From Our Families",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"bg_desktop","label":"Background banner (desktop)"}, {"type":"image_picker","id":"bg_mobile","label":"Background banner (mobile)"}, {"type":"color","id":"section_bg","label":"Background color","default":"#FFF3F7"}, {"type":"text","id":"heading","label":"Heading","default":"From Our Families to "},{"type":"text","id":"heading_italic","label":"Heading Italic","default":"Yours"}, {"type":"color","id":"heading_italic_color","label":"Heading Italic color","default":"#8B5CF6"}, {"type":"text","id":"subtitle","label":"Subtitle"} ],
+  "blocks": [ {"type":"reel","name":"Video + product","settings":[ {"type":"video","id":"video","label":"Video (upload)"}, {"type":"video_url","id":"video_url","label":"Or video URL (YouTube/Vimeo)","accept":["youtube","vimeo"]}, {"type":"image_picker","id":"poster","label":"Poster (fallback)"}, {"type":"text","id":"caption","label":"Caption"}, {"type":"product","id":"product","label":"Linked product"} ]} ],
+  "max_blocks": 20,
+  "presets": [ {"name":"From Our Families","blocks":[ {"type":"reel"}, {"type":"reel"}, {"type":"reel"}, {"type":"reel"} ]} ]
+}
+{% endschema %}

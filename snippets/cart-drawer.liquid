@@ -1,21 +1,635 @@
+{% comment %} file name = cart.drawer.liquid {% endcomment %}
 {% comment %}
   Renders cart drawer
-
   Usage:
   {% render 'cart-drawer' %}
 {% endcomment %}
-
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
-
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
-
 <style>
   .drawer {
     visibility: hidden;
   }
+
+  /* ==========================================================================
+     Creste Cart Drawer — Figma rebuild
+     Single consolidated stylesheet. All rules scoped under .cart-drawer.
+     ========================================================================== */
+
+  .cart-drawer,
+  .cart-drawer * {
+    box-sizing: border-box;
+  }
+ 
+  /* ---------- Shell ---------- */
+  .cart-drawer .drawer__inner {
+  background: #ffffff;
+  border-radius: 24px 0 0 24px;
+  font-family: 'Nunito Sans', sans-serif;
+  color: #2e2418;
+
+  max-height: 100vh;
+  min-height: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+  @media screen and (min-width: 750px) {
+    .cart-drawer .drawer__inner {
+      width: 550px;
+      max-width: 550px;
+      {% comment %} overflow: hidden; {% endcomment %}
+    }
+  }
+  @media screen and (max-width: 749px) {
+    .cart-drawer .drawer__inner {
+      border-radius: 0;
+      width: 100vw;
+      max-width: 100vw;
+    }
+  }
+
+  /* ---------- Header ---------- */
+  .cart-drawer .drawer__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    padding: 20px 20px 16px;
+    border-bottom: 2px solid #ffce00;
+    flex-shrink: 0;
+  }
+  .cart-drawer .drawer__heading {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.2;
+    color: #2e2418;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    flex: 1 1 auto;
+  }
+  .cart-drawer .creste-cart-badge {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    background: #fff2be;
+    color: #5c4b38;
+    padding: 5px 13px;
+    border-radius: 999px;
+  }
+  .cart-drawer .drawer__close {
+    background: #fff3c4;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cart-drawer .creste-cart-tagline {
+    width: 100%;
+    margin: 0;
+    font-family: 'Fredoka One', cursive;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #3aaccc;
+  }
+
+  /* ---------- Free shipping / gift progress card ---------- */
+  .creste-cart-progress {
+    margin: 16px 4px;
+    padding: 18px;
+    border-radius: 16px;
+    background: #eaf6ec;
+  }
+  .creste-cart-progress__pills {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 2px;
+  }
+  .creste-cart-progress__pill {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 8px;
+    line-height: 1.15;
+    max-width: 43%;
+    min-width: 43%;
+    display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align:center;
+  }
+     .creste-cart-progress__pill{
+    max-width: 24%;
+    min-width: 36%;
+    padding: 4px 11px;
+  }
+  .creste-cart-progress__pill--ship {
+    background: #62a66b;
+    color: #fff;
+  }
+  .creste-cart-progress__pill--gift {
+    background: #fff7e0;
+    color: #8a6d1a;
+    border: 1px solid #e8b84b;
+  }
+  .creste-cart-progress__pill--gift.is-on {
+    background: #62a66b;
+    color: #fff;
+    border-color: #62a66b;
+  }
+  .creste-cart-progress__track {
+    position: relative;
+    height: 46px;
+    margin-top: 20px;
+  }
+  .creste-cart-progress__bar {
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    top: 4px;
+    height: 12px;
+    background: #cde7d4;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .creste-cart-progress__fill {
+    height: 100%;
+    background: #62a66b;
+    border-radius: 999px;
+    transition: width 0.45s ease;
+  }
+  .creste-cart-progress__icon {
+    position: absolute;
+    top: 10px;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #b9c9b9;
+    color: #b9c9b9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+  }
+  .creste-cart-progress__icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  .creste-cart-progress__icon.is-on {
+    border-color: #62a66b;
+    color: #62a66b;
+  }
+  .creste-cart-progress__mark {
+    position: absolute;
+    top: 30px;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid #e7a867;
+    color: #d4711f;
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .creste-cart-progress__message {
+    margin: 16px 0 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #3f6b45;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .creste-cart-progress__message strong {
+    color: #2F6B41;
+    font-weight: 700;
+  }
+
+  /* ---------- Cart items list ----------
+     Per-item card layout lives in component-card.css (.creste-cart-item*).
+     Quantity pill wrapper lives in quantity-popover.css (.quantity-popover-wrapper). */
+  .cart-drawer-items {
+    display: block;
+  }
+  .creste-cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    {% comment %} padding: 4px 7px 8px; {% endcomment %}
+  }
+
+  /* ---------- Footer / View Summary / Totals ---------- */
+  .cart-drawer .drawer__footer {
+    background: #ffffff;
+    padding: 16px 20px 20px;
+    border-top: 2px solid #ffce00;
+    margin-top:10px;
+     flex-shrink: 0;
+  }
+  .creste-view-summary {
+    margin-bottom: 2px;
+  }
+  .creste-view-summary__body {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 12px 2px 14px;
+  }
+  .creste-view-summary__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #5a5a5a;
+  }
+  .creste-view-summary__row--discount span:last-child {
+    color: #2e7d46;
+    font-weight: 700;
+  }
+  .creste-view-summary__row--free span:last-child {
+    color: #2e7d46;
+    font-weight: 700;
+  }
+  .creste-view-summary__row--total {
+    border-bottom: 1px solid #e3d5be;
+    {% comment %} padding-top: 9px;
+    margin-top: 2px; {% endcomment %}
+    font-weight: 700;
+    font-size: 15px;
+    color: #1f1f1f;
+  }
+
+  .creste-cart-summary {
+    display: flex;
+    flex-direction: column;
+    {% comment %} gap: 4px;
+    padding-top: 12px; {% endcomment %}
+  }
+  .creste-cart-summary__row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .creste-cart-summary__subtotal-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #5c4b38;
+  }
+  .creste-cart-summary__toggle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #f4793a;
+    text-decoration: underline;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  .creste-cart-summary__total {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #2e2418;
+  }
+  .creste-cart-summary__note {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    color: #a08b76;
+  }
+  .creste-cart-summary__savings {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    color: #3e8a54;
+    white-space: nowrap;
+    margin-top:-5px;
+  }
+
+  .cart-drawer .totals {
+    display: none;
+  }
+  .cart-drawer .tax-note {
+    display: block;
+  }
+
+  .cart__checkout-button {
+    background: #f4793a !important;
+    border-radius: 999px !important;
+    width: 100%;
+    min-height: 56px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #ffffff;
+    padding: 14px 48px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    {% comment %} margin-top: 14px; {% endcomment %}
+  }
+
+  .creste-trust-badges {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .creste-trust-badges span {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    color: #7a5c3e;
+  }
+  .wrap{
+    overflow: scroll;
+    scrollbar-width: 0px;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: none;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+
+  }
+  @media screen and (max-width: 749px) {
+    .creste-view-summary__body{
+              padding: 3px 0px 7px 0px;
+        gap: 3px;
+    }
+    .creste-view-summary__row--total span {
+      font-size:11px;
+    }
+    .cart-item__price-wrapper{
+      max-width: 163px;
+    }
+    {% comment %} .wrap{
+      min-height:255px;
+    } {% endcomment %}
+  .creste-cart-progress__pill{
+     font-size: 11px;
+  }
+  .creste-cart-progress__message{
+    font-size: 12px;
+  }
+  .creste-cart-progress{
+    margin: 12px 1px;
+  }
+  .creste-cart-summary__subtotal-label{
+    font-size:15px;
+  }
+  .creste-cart-summary__toggle{
+    font-size:14px;
+  }
+  .creste-cart-summary__total{
+    font-size:15px;
+  }
+  .cart-drawer .drawer__footer{
+      padding: 2px 9px 1px
+  }
+  .creste-cart-summary__savings{
+    font-size:9px;
+    margin-top:0px;
+  }
+  .cart__checkout-button{
+      padding: 10px 21px !important;
+      min-height: 44px;
+  }
+  .creste-trust-badges{
+    column-gap: 12px;
+    row-gap: 0px;
+  }
+  .creste-trust-badges span{
+    font-size:10px;
+  }
+  .cart-drawer .tax-note{
+    margin: -5px 0 10px auto;
+    text-align: left;
+  }
+  .creste-cart-summary__note{
+    font-size:13px;
+  }
+  .cart-drawer .drawer__close{
+    width: 41px;
+    height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 9px;
+    top: 17px;
+    position: absolute;
+    cursor: pointer;
+  }
+  .creste-cart-progress__pill{
+    max-width: 42%;
+    min-width: 42%;
+    padding: 4px 11px;
+  }
+}
+
+/* ===== Add Handwritten Note ===== */
+
+.creste-cart-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FCF0F6;
+  border-radius: 22px;
+  padding: 17px 14px;
+  margin: 14px 1px 0;
+}
+
+.creste-cart-note__icon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.creste-cart-note__icon svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.creste-cart-note__body {
+  flex: 1;
+  min-width: 0;
+  line-height:1;
+}
+
+.creste-cart-note__title {
+  font-family: Nunito Sans, Nunito, sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #1E1108;
+  margin: 0 0 2px;
+}
+
+.creste-cart-note__sub {
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #7A5C3E;
+  margin: 0;
+}
+
+
+/* ===== Custom Checkbox ===== */
+
+.creste-cart-note__checkbox {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  margin: 0;
+  padding: 0;
+  border-radius: 8px;
+  border: 1.5px solid var(--creste-orange, #F4793A);
+  background: #fff;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.creste-cart-note__checkbox:checked {
+  {% comment %} background: var(--creste-orange, #F4793A); {% endcomment %}
+  border-color: var(--creste-orange, #F4793A);
+}
+
+{% comment %} .creste-cart-note__checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 11px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+} {% endcomment %}
+.creste-cart-note__checkbox:checked::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("{{ 'face.png' | asset_url }}");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 17px 17px;
+}
+
+
+
+/* ===== Handwritten Note Text Field ===== */
+
+.creste-cart-note__field {
+  margin: 0 16px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-15px);
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    transform 0.4s ease,
+    margin-top 0.4s ease;
+}
+
+
+/* ===== Field Open Animation ===== */
+
+.creste-cart-note__field.is-open {
+  max-height: 180px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 8px;
+}
+
+
+/* ===== Label ===== */
+
+.creste-cart-note__label {
+  font-family: Nunito Sans, Nunito, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #1E1108;
+  display: block;
+  margin: 0 0 6px;
+}
+
+
+/* ===== Textarea ===== */
+
+.creste-cart-note__textarea {
+  width: 100%;
+  min-height: 70px;
+  border: 1px solid #E5DCEA;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-family: Poppins, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #1E1108;
+  background: #fff;
+  resize: vertical;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.creste-cart-note__textarea:focus {
+  border-color: var(--creste-orange, #F4793A);
+  box-shadow: 0 0 0 2px rgba(244, 121, 58, 0.1);
+}
+
+/* ===== Picked for ages recommendation ===== */
+.creste-cart-picks{background:#D8EEF5;border-radius:20px;padding:10px;margin:12px 4px 0;}
+.creste-cart-picks__title{font-family:Nunito Sans,Nunito,sans-serif;font-weight:800;font-size:16px;color:#00677E;margin:2px 4px 8px;line-height:1.2;}
+.creste-cart-picks__row{display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;}
+.creste-cart-picks__row::-webkit-scrollbar{display:none;}
+.creste-cart-pick{flex:0 0 auto;width:240px;display:flex;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:10px;align-items:flex-start;}
+.creste-cart-pick__image{width:64px;height:64px;flex:0 0 64px;border-radius:10px;overflow:hidden;background:#F5F1EB;} .creste-cart-pick__image img{width:100%;height:100%;object-fit:cover;display:block;}
+ .creste-cart-pick__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;} .creste-cart-pick__name{font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:12px;line-height:1.3;color:#1E1108;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .creste-cart-pick__price{font-family:Nunito Sans,Nunito,sans-serif;font-weight:800;font-size:13px;color:#F4793A;margin:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap; min-height:47px;} 
+  .creste-cart-pick__compare{font-weight:500;font-size:11px;color:#9b9b9b;text-decoration:line-through;} .creste-cart-pick__off{font-weight:700;font-size:11px;color:#58AD6F;} .creste-cart-pick__btn{display:flex;align-items:center;justify-content:center;width:100%;background:#F4793A;color:#fff;border:none;border-radius:16px;padding:6px 8px;font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:11px;cursor:pointer;white-space:nowrap;margin-top:2px;} .creste-cart-pick__btn[disabled]{opacity:.6;cursor:default;}
+
+@media screen and (max-width: 749px){
+  .creste-cart-note__title{
+    font-size:13px;
+  }
+}
 </style>
+
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
@@ -26,7 +640,7 @@
       aria-modal="true"
       aria-label="{{ 'sections.cart.title' | t }}"
       tabindex="-1"
-    >
+     >
       {%- if cart == empty -%}
         <div class="drawer__inner-empty">
           <div class="cart-drawer__warnings center{% if settings.cart_drawer_collection != blank %} cart-drawer__warnings--has-collection{% endif %}">
@@ -39,13 +653,13 @@
                 aria-label="{{ 'accessibility.close' | t }}"
               >
                 <span class="svg-wrapper">
-                  {{- 'icon-close.svg' | inline_asset_content -}}
+             
+{{- 'icon-close.svg' | inline_asset_content -}}
                 </span>
               </button>
               <a href="{{ routes.all_products_collection_url }}" class="button">
                 {{ 'general.continue_shopping' | t }}
               </a>
-
               {%- if shop.customer_accounts_enabled and customer == null -%}
                 <p class="cart__login-title h3">{{ 'sections.cart.login.title' | t }}</p>
                 <p class="cart__login-paragraph">
@@ -60,9 +674,16 @@
             </div>
           {%- endif -%}
         </div>
-      {%- endif -%}
-      <div class="drawer__header">
-        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
+       {%- endif -%}
+       <div class="drawer__header">
+        <h2 class="drawer__heading">
+          {{ 'sections.cart.title' | t }}
+          {%- if cart != empty %}
+            <span class="creste-cart-badge">
+              {{- cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif -%}
+            </span>
+          {%- endif %}
+        </h2>
         <button
           class="drawer__close"
           type="button"
@@ -73,8 +694,102 @@
             {{- 'icon-close.svg' | inline_asset_content -}}
           </span>
         </button>
-      </div>
-      <cart-drawer-items
+        {% if cart != empty %}<p class="creste-cart-tagline">Packed with giggles!</p>{% endif %}
+       </div>
+
+       {%- if cart != empty %}
+        {%- liquid
+          assign creste_shipping_threshold = 99900
+          assign creste_gift_threshold = 580000
+          assign creste_gift_name = 'Make Your Own Bracelet Kit'
+          assign creste_shipping_unlocked = false
+          assign creste_gift_unlocked = false
+          if cart.total_price >= creste_shipping_threshold
+            assign creste_shipping_unlocked = true
+          endif
+          if cart.total_price >= creste_gift_threshold
+            assign creste_gift_unlocked = true
+          endif
+          assign creste_remaining = creste_gift_threshold | minus: cart.total_price
+          if creste_remaining < 0
+            assign creste_remaining = 0
+          endif
+
+          assign creste_progress_percent = cart.total_price | times: 100.0 | divided_by: creste_gift_threshold
+          if creste_progress_percent > 100
+            assign creste_progress_percent = 100
+          endif
+          assign creste_ship_mark_percent = creste_shipping_threshold | times: 100.0 | divided_by: creste_gift_threshold
+        -%}
+       <div class="wrap"> 
+        <div class="creste-cart-progress">
+          <div class="creste-cart-progress__pills">
+            <span class="creste-cart-progress__pill creste-cart-progress__pill--ship{% if creste_shipping_unlocked %} is-on{% endif %}">
+              {%- if creste_shipping_unlocked -%}
+                FREE shipping unlocked!
+              {%- else -%}
+                FREE shipping at {{ creste_shipping_threshold | money_without_trailing_zeros }}
+              {%- endif -%}
+            </span>
+            <span class="creste-cart-progress__pill creste-cart-progress__pill--gift{% if creste_gift_unlocked %} is-on{% endif %}">
+              {%- if creste_gift_unlocked -%}
+                FREE {{ creste_gift_name }} unlocked!
+              {%- else -%}
+                FREE {{ creste_gift_name }} worth &#8377;800!
+              {%- endif -%}
+            </span>
+          </div>
+          <div class="creste-cart-progress__track">
+            <div class="creste-cart-progress__bar">
+              <div class="creste-cart-progress__fill" style=" width: {{ creste_progress_percent }}%; display:block; "></div>
+            </div>
+            <span
+              class="creste-cart-progress__icon{% if creste_shipping_unlocked %} is-on{% endif %}"
+              style="left: {{ creste_ship_mark_percent }}%;"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h13v10H1z"/><path d="M14 7h4l3 3v4h-7z"/><circle cx="5" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg>
+            </span>
+            <span
+              class="creste-cart-progress__icon{% if creste_gift_unlocked %} is-on{% endif %}"
+              style="left: 83%;"
+            >
+              {% comment %} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8S11 3 8 3 6 4.5 6 5.5 8 8 12 8zM12 8s1-5 4-5 2 1.5 2 2.5S16 8 12 8z"/></svg> {% endcomment %}
+                <img
+                src="{{ 'bracelet.png' | asset_url }}"
+                alt="Gift"
+                width="24"
+                height="24"
+              >
+            </span>
+            <span class="creste-cart-progress__mark" style="left: {{ creste_ship_mark_percent }}%;">
+              <svg style="    position: absolute;
+    top: -8px;
+    right: 21px;" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.19629 0L10.3924 6.75H0.000136852L5.19629 0Z" fill="#d4711f"/>
+</svg>
+
+              {{ creste_shipping_threshold | money_without_trailing_zeros  | replace: "Rs. ", "₹" }}
+            </span>
+            <span class="creste-cart-progress__mark" style="left: 83%;">
+                  <svg style="    position: absolute;
+    top: -8px;
+    right: 27px;" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.19629 0L10.3924 6.75H0.000136852L5.19629 0Z" fill="#d4711f"/>
+</svg>
+              {{ creste_gift_threshold | money_without_trailing_zeros | replace: "Rs. ", "₹"  }}
+            </span>
+          </div>
+          <p class="creste-cart-progress__message">
+            {%- if creste_gift_unlocked -%}
+              You&rsquo;ve unlocked a free {{ creste_gift_name }}!
+            {%- else -%}
+              Add <strong>{{ creste_remaining | money }}</strong> more to unlock a <strong>{{ creste_gift_name }}</strong>
+            {%- endif -%}
+          </p>
+        </div>
+       {%- endif %}
+
+       <cart-drawer-items
         view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
         view-event-trigger="manual"
         {% if cart == empty %}
@@ -89,394 +804,375 @@
         >
           <div id="CartDrawer-CartItems" class="drawer__contents js-contents">
             {%- if cart != empty -%}
-              <div class="drawer__cart-items-wrapper">
-                <table class="cart-items" role="table">
-                  <thead role="rowgroup">
-                    <tr role="row">
-                      <th id="CartDrawer-ColumnProductImage" role="columnheader">
-                        <span class="visually-hidden">{{ 'sections.cart.headings.image' | t }}</span>
-                      </th>
-                      <th
-                        id="CartDrawer-ColumnProduct"
-                        class="caption-with-letter-spacing"
-                        scope="col"
-                        role="columnheader"
-                      >
-                        {{ 'sections.cart.headings.product' | t }}
-                      </th>
-                      <th
-                        id="CartDrawer-ColumnTotal"
-                        class="right caption-with-letter-spacing"
-                        scope="col"
-                        role="columnheader"
-                      >
-                        {{ 'sections.cart.headings.total' | t }}
-                      </th>
-                      <th id="CartDrawer-ColumnQuantity" role="columnheader">
-                        <span class="visually-hidden">{{ 'sections.cart.headings.quantity' | t }}</span>
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody role="rowgroup">
-                    {%- for item in cart.items -%}
-                      <tr
-                        id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-                        class="cart-item{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}"
-                        role="row"
-                        {% if item.parent_relationship.parent != null %}
-                          aria-label="{{- 'products.product.nested_label' | t: title: item.product.title, parent_title: item.parent_relationship.parent.title | escape -}}"
-                        {% endif %}
-                      >
-                        <td
-                          class="cart-item__media"
-                          role="cell"
-                          headers="CartDrawer-ColumnProductImage"
+              <div class="creste-cart-items" role="list">
+                {%- for item in cart.items -%}
+                  {%- liquid
+                    assign creste_compare = item.variant.compare_at_price | default: 0
+                    assign has_qty_rules = false
+                    if item.variant.quantity_rule.increment > 1 or item.variant.quantity_rule.min > 1 or item.variant.quantity_rule.max != null
+                      assign has_qty_rules = true
+                    endif
+                    assign has_vol_pricing = false
+                    if item.variant.quantity_price_breaks.size > 0
+                      assign has_vol_pricing = true
+                    endif
+                  -%}
+                  <div
+                    id="CartDrawer-Item-{{ item.index | plus: 1 }}"
+                    class="creste-cart-item{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}"
+                    role="listitem"
+                    {% if item.parent_relationship.parent != null %}
+                      aria-label="{{- 'products.product.nested_label' | t: title: item.product.title, parent_title: item.parent_relationship.parent.title | escape -}}"
+                    {% endif %}
+                  >
+                    <div class="creste-cart-item__media">
+                      {% if item.image %}
+                        <a href="{{ item.url }}" class="cart-item__link" tabindex="-1" aria-hidden="true"> </a>
+                        <img
+                          class="creste-cart-item__image"
+                          src="{{ item.image | image_url: width: 300 }}"
+                          alt="{{ item.image.alt | escape }}"
+                          loading="lazy"
+                          width="150"
+                          height="{{ 150 | divided_by: item.image.aspect_ratio | ceil }}"
                         >
-                          {% if item.image %}
-                            {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
-                            <a href="{{ item.url }}" class="cart-item__link" tabindex="-1" aria-hidden="true"> </a>
-                            <img
-                              class="cart-item__image"
-                              src="{{ item.image | image_url: width: 300 }}"
-                              alt="{{ item.image.alt | escape }}"
-                              loading="lazy"
-                              width="150"
-                              height="{{ 150 | divided_by: item.image.aspect_ratio | ceil }}"
-                            >
-                          {% endif %}
-                        </td>
+                      {% endif %}
+                    </div>
 
-                        <td class="cart-item__details" role="cell" headers="CartDrawer-ColumnProduct">
-                          {%- if settings.show_vendor -%}
-                            <p class="caption-with-letter-spacing light">{{ item.product.vendor }}</p>
-                          {%- endif -%}
+                    <div class="creste-cart-item__body">
+                      {%- if settings.show_vendor -%}
+                        <p class="caption-with-letter-spacing light">{{ item.product.vendor }}</p>
+                      {%- endif -%}
 
-                          <div class="cart-item__title">
-                            <a href="{{ item.url }}" class="cart-item__name h4 break">
-                              {{- item.product.title | escape -}}
-                            </a>
-                            {%- assign cart_disclosure_modal_id = 'CartDisclosureModal-drawer-' | append: item.key | replace: ':', '-' -%}
-                            {%- render 'cart-disclosure-indicator',
-                              product: item.product,
-                              modal_id: cart_disclosure_modal_id
-                            -%}
-                          </div>
-
-                          {%- if item.original_price != item.final_price -%}
-                            <div class="cart-item__discounted-prices">
-                              <span class="visually-hidden">
-                                {{ 'products.product.price.regular_price' | t }}
-                              </span>
-                              <s class="cart-item__old-price product-option">
-                                {{- item.original_price | money -}}
-                              </s>
-                              <span class="visually-hidden">
-                                {{ 'products.product.price.sale_price' | t }}
-                              </span>
-                              <strong class="cart-item__final-price product-option">
-                                {{ item.final_price | money }}
-                              </strong>
-                            </div>
-                          {%- else -%}
-                            <div class="product-option">
-                              {{ item.original_price | money }}
-                            </div>
-                          {%- endif -%}
-
-                          {%- if item.product.has_only_default_variant == false
-                            or item.properties.size != 0
-                            or item.selling_plan_allocation != null
-                          -%}
-                            <dl>
-                              {%- if item.product.has_only_default_variant == false -%}
-                                {%- for option in item.options_with_values -%}
-                                  <div class="product-option">
-                                    <dt>{{ option.name }}:</dt>
-                                    <dd>
-                                      {{ option.value -}}
-                                      {%- unless forloop.last %}, {% endunless %}
-                                    </dd>
-                                  </div>
-                                {%- endfor -%}
-                              {%- endif -%}
-
-                              {%- for property in item.properties -%}
-                                {%- assign property_first_char = property.first | slice: 0 -%}
-                                {%- if property.last != blank and property_first_char != '_' -%}
-                                  <div class="product-option">
-                                    <dt>{{ property.first }}:</dt>
-                                    <dd>
-                                      {%- if property.last contains '/uploads/' -%}
-                                        <a
-                                          href="{{ property.last }}"
-                                          class="link"
-                                          target="_blank"
-                                          aria-describedby="a11y-new-window-message"
-                                        >
-                                          {{ property.last | split: '/' | last }}
-                                        </a>
-                                      {%- else -%}
-                                        {{ property.last }}
-                                      {%- endif -%}
-                                    </dd>
-                                  </div>
-                                {%- endif -%}
-                              {%- endfor -%}
-                            </dl>
-
-                            <p class="product-option">{{ item.selling_plan_allocation.selling_plan.name }}</p>
-                          {%- endif -%}
-
-                          <ul
-                            class="discounts list-unstyled"
-                            role="list"
-                            aria-label="{{ 'customer.order.discount' | t }}"
+                      <div class="creste-cart-item__title-row">
+                        <a href="{{ item.url }}" class="creste-cart-item__name break">
+                          {{- item.product.title | escape -}}
+                        </a>
+                        {%- assign cart_disclosure_modal_id = 'CartDisclosureModal-drawer-' | append: item.key | replace: ':', '-' -%}
+                        {%- render 'cart-disclosure-indicator', product: item.product, modal_id: cart_disclosure_modal_id -%}
+                        {% comment %} {%- if item.properties['Gift wrapping'] == 'Yes' -%}
+                          <button
+                            type="button"
+                            class="creste-giftwrap-added"
+                            data-gw-toggle
+                            data-line="{{ forloop.index }}"
+                            data-qty="{{ item.quantity }}"
+                            data-add="0"
                           >
-                            {%- for discount in item.line_level_discount_allocations -%}
-                              <li class="discounts__discount">
-                                {{- 'icon-discount.svg' | inline_asset_content -}}
-                                {{ discount.discount_application.title }}
-                              </li>
-                            {%- endfor -%}
-                          </ul>
-                        </td>
+                            &#127873; Gift wrap Added <span class="creste-giftwrap-remove-x">&times;</span>
+                          </button>
+                        {%- else -%}
+                          <button
+                            type="button"
+                            class="creste-giftwrap-add"
+                            data-gw-toggle
+                            data-line="{{ forloop.index }}"
+                            data-qty="{{ item.quantity }}"
+                            data-add="1"
+                          >
+                            &#127873; Add gift wrap &mdash; free
+                          </button>
+                        {%- endif -%} {% endcomment %}
+                      </div>
 
-                        <td class="cart-item__totals right" role="cell" headers="CartDrawer-ColumnTotal">
-                          {%- render 'loading-spinner' -%}
-                          <div class="cart-item__price-wrapper">
-                            {%- if item.original_line_price != item.final_line_price -%}
-                              <div class="cart-item__discounted-prices">
-                                <span class="visually-hidden">
-                                  {{ 'products.product.price.regular_price' | t }}
-                                </span>
-                                <s class="cart-item__old-price price price--end">
-                                  {{ item.original_line_price | money }}
-                                </s>
-                                <span class="visually-hidden">
-                                  {{ 'products.product.price.sale_price' | t }}
-                                </span>
-                                <span class="price price--end">
-                                  {{ item.final_line_price | money }}
-                                </span>
-                              </div>
-                            {%- else -%}
-                              <span class="price price--end">
-                                {{ item.original_line_price | money }}
-                              </span>
-                            {%- endif -%}
-
-                            {%- if item.variant.available and item.unit_price_measurement -%}
-                              {% render 'unit-price',
-                                price: item.unit_price,
-                                measurement: item.unit_price_measurement
-                              %}
-                            {%- endif -%}
+                      {%- if item.product.metafields.custom.subtitle != blank -%}
+                        <p class="creste-cart-item__subtitle">{{ item.product.metafields.custom.subtitle }}</p>
+                      {%- elsif item.product.type != blank -%}
+                        <p class="creste-cart-item__subtitle">{{ item.product.type }}</p>
+                      {%- endif -%}
+                      <div class="cart-item__price-wrapper">
+                        {%- render 'loading-spinner' -%}
+                        {%- if item.original_price != item.final_price -%}
+                          <div class="creste-item-prices">
+                            <span class="creste-item-price">{{ item.final_price | money | replace: "Rs. ", "₹" }}</span>
+                            <span class="creste-item-compare">{{ item.original_price | money | replace: "Rs. ", "₹" }}</span>
+                            <ul
+                                class="discounts list-unstyled"
+                                role="list"
+                                aria-label="{{ 'customer.order.discount' | t }}"
+                              >
+                                {%- for discount in item.line_level_discount_allocations -%}
+                                  <li class="discounts__discount">
+                                    {% comment %} {{ discount.discount_application.title }}
+                                    {{ discount.amount | money }} {% endcomment %}
+                                    {% if discount.discount_application.value_type == 'percentage' %}
+                                    {{ discount.discount_application.value | floor }}% OFF
+                                        {% endif %}
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
                           </div>
-                        </td>
-                        {%- liquid
-                          assign has_qty_rules = false
-                          if item.variant.quantity_rule.increment > 1 or item.variant.quantity_rule.min > 1 or item.variant.quantity_rule.max != null
-                            assign has_qty_rules = true
-                          endif
-
-                          assign has_vol_pricing = false
-                          if item.variant.quantity_price_breaks.size > 0
-                            assign has_vol_pricing = true
-                          endif
-                        -%}
-                        <td
-                          class="cart-item__quantity {% if has_qty_rules or has_vol_pricing %} cart-item__quantity--info{% endif %}"
-                          role="cell"
-                          headers="CartDrawer-ColumnQuantity"
-                        >
-                          <quantity-popover>
-                            <div class="cart-item__quantity-wrapper quantity-popover-wrapper">
-                              <div class="quantity-popover-container{% if has_qty_rules or has_vol_pricing %} quantity-popover-container--hover{% endif %}">
-                                <quantity-input class="quantity cart-quantity">
-                                  <button
-                                    class="quantity__button"
-                                    name="minus"
-                                    type="button"
-                                    {% if item.instructions and item.instructions.can_update_quantity == false %}
-                                      disabled
-                                    {% endif %}
-                                  >
-                                    <span class="visually-hidden">
-                                      {{-
-                                        'products.product.quantity.decrease'
-                                        | t: product: item.product.title
-                                        | escape
-                                      -}}
-                                    </span>
-                                    <span class="svg-wrapper">
-                                      {{- 'icon-minus.svg' | inline_asset_content -}}
-                                    </span>
-                                  </button>
-                                  <input
-                                    class="quantity__input"
-                                    type="number"
-                                    data-quantity-variant-id="{{ item.variant.id }}"
-                                    data-quantity-line-key="{{ item.key }}"
-                                    name="updates[]"
-                                    value="{{ item.quantity }}"
-                                    {% # theme-check-disable %}
-                                    data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
-                                    min="0"
-                                    data-min="{{ item.variant.quantity_rule.min }}"
-                                    {% if item.variant.quantity_rule.max != null %}
-                                      max="{{ item.variant.quantity_rule.max }}"
-                                    {% endif %}
-                                    step="{{ item.variant.quantity_rule.increment }}"
-                                    {% # theme-check-enable %}
-                                    aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
-                                    id="Drawer-quantity-{{ item.index | plus: 1 }}"
-                                    data-index="{{ item.index | plus: 1 }}"
-                                    {% if item.instructions and item.instructions.can_update_quantity == false %}
-                                      disabled
-                                    {% endif %}
-                                  >
-                                  <button
-                                    class="quantity__button"
-                                    name="plus"
-                                    type="button"
-                                    {% if item.instructions and item.instructions.can_update_quantity == false %}
-                                      disabled
-                                    {% endif %}
-                                  >
-                                    <span class="visually-hidden">
-                                      {{-
-                                        'products.product.quantity.increase'
-                                        | t: product: item.product.title
-                                        | escape
-                                      -}}
-                                    </span>
-                                    <span class="svg-wrapper">
-                                      {{- 'icon-plus.svg' | inline_asset_content -}}
-                                    </span>
-                                  </button>
-                                </quantity-input>
+                        {%- elsif creste_compare > item.price -%}
+                          {%- assign creste_off = creste_compare | minus: item.price | times: 100 | divided_by: creste_compare -%}
+                          <div class="creste-item-prices">
+                            <span class="creste-item-price">{{ item.price | money | replace: "Rs. ", "₹" }}</span>
+                            <s class="creste-item-compare">{{ creste_compare | money | replace: "Rs. ", "₹" }}</s>
+                            <span class="creste-item-discount">{{ creste_off }}% off</span>
+                          </div>
+                        {%- else -%}
+                          <div class="creste-item-prices">
+                            <span class="creste-item-price">{{ item.price | money }}</span>
+                          </div>
+                        {%- endif -%}
+                      </div>
+ {%- if item.properties['Gift wrapping'] == 'Yes' -%}
+                          <button
+                            type="button"
+                            class="creste-giftwrap-added"
+                            data-gw-toggle
+                            data-line="{{ forloop.index }}"
+                            data-qty="{{ item.quantity }}"
+                            data-add="0"
+                          >
+                            &#127873; Gift wrap Added <span class="creste-giftwrap-remove-x">&times;</span>
+                          </button>
+                        {% comment %} {%- else -%}
+                          <button
+                            type="button"
+                            class="creste-giftwrap-add"
+                            data-gw-toggle
+                            data-line="{{ forloop.index }}"
+                            data-qty="{{ item.quantity }}"
+                            data-add="1"
+                          >
+                            &#127873; Add gift wrap &mdash; free
+                          </button> {% endcomment %}
+                        {%- endif -%}
+                      {%- if item.product.has_only_default_variant == false
+                        or item.properties.size != 0
+                        or item.selling_plan_allocation != null
+                      -%}
+                        <dl class="creste-cart-item__options">
+                          {%- if item.product.has_only_default_variant == false -%}
+                            {%- for option in item.options_with_values -%}
+                              <div class="product-option">
+                                <dt>{{ option.name }}:</dt>
+                                <dd>
+                                  {{ option.value -}}
+                                  {%- unless forloop.last %}, {% endunless %}
+                                </dd>
                               </div>
-                              <cart-remove-button
-                                id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
-                                data-index="{{ item.index | plus: 1 }}"
-                              >
-                                <button
-                                  type="button"
-                                  class="button button--tertiary cart-remove-button"
-                                  aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
-                                  data-variant-id="{{ item.variant.id }}"
-                                  {% if item.instructions and item.instructions.can_remove == false %}
-                                    class="hidden"
-                                  {% endif %}
-                                >
-                                  <span class="svg-wrapper">
-                                    {{- 'icon-remove.svg' | inline_asset_content -}}
-                                  </span>
-                                </button>
-                              </cart-remove-button>
-                            </div>
-                            {%- if has_qty_rules or has_vol_pricing -%}
-                              <button
-                                type="button"
-                                class="quantity-popover__info-button quantity-popover__info-button--icon-with-label button button--tertiary"
-                                aria-expanded="false"
-                              >
-                                <span class="svg-wrapper">
-                                  {{- 'icon-info.svg' | inline_asset_content -}}
-                                </span>
-                                <span>
-                                  {%- if has_vol_pricing -%}
-                                    {{ 'products.product.volume_pricing.note' | t }}
-                                  {%- elsif has_qty_rules -%}
-                                    {{ 'products.product.quantity.note' | t }}
+                            {%- endfor -%}
+                          {%- endif -%}
+                          {%- for property in item.properties -%}
+                            {%- assign property_first_char = property.first | slice: 0 -%}
+                            {%- if property.last != blank and property_first_char != '_' and property.first != 'Gift wrapping' -%}
+                              <div class="product-option">
+                                <dt>{{ property.first }}:</dt>
+                                <dd>
+                                  {%- if property.last contains '/uploads/' -%}
+                                    
+                                      href="{{ property.last }}"
+                                      class="link"
+                                      target="_blank"
+                                      aria-describedby="a11y-new-window-message"
+                                    >
+                                      {{ property.last | split: '/' | last }}
+                                    </a>
+                                  {%- else -%}
+                                    {{ property.last }}
                                   {%- endif -%}
+                                </dd>
+                              </div>
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </dl>
+                        <p class="product-option">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                      {%- endif -%}
+
+                      <div
+                        id="CartDrawer-LineItemError-{{ item.index | plus: 1 }}"
+                        class="cart-item__error creste-cart-item__error"
+                        role="alert"
+                      >
+                        <small class="cart-item__error-text"></small>
+                        <span class="svg-wrapper">
+                          {{- 'icon-error.svg' | inline_asset_content -}}
+                        </span>
+                      </div>
+                       
+                    </div>
+
+                    <div class="creste-cart-item__side">
+                      <cart-remove-button
+                        id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
+                        data-index="{{ item.index | plus: 1 }}"
+                      >
+                        <button
+                          type="button"
+                          class="button button--tertiary cart-remove-button creste-cart-item__remove"
+                          aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
+                          data-variant-id="{{ item.variant.id }}"
+                          {% if item.instructions and item.instructions.can_remove == false %}
+                            class="hidden"
+                          {% endif %}
+                        >
+                          <span class="svg-wrapper">
+                            
+                                <svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.4174 5.71516L11.1597 13.5151C11.1378 14.1831 10.8564 14.8163 10.3752 15.2802C9.89408 15.7442 9.25109 16.0024 8.58271 16H3.6864C3.01846 16.0024 2.37584 15.7446 1.89477 15.2812C1.4137 14.8178 1.13201 14.1853 1.1094 13.5177L0.8517 5.71516C0.846061 5.54429 0.90853 5.37818 1.02536 5.25338C1.1422 5.12857 1.30382 5.05529 1.47469 5.04965C1.64556 5.04401 1.81166 5.10648 1.93647 5.22331C2.06128 5.34014 2.13456 5.50177 2.1402 5.67264L2.3979 13.4745C2.41073 13.8076 2.55213 14.1227 2.7924 14.3537C3.03266 14.5847 3.3531 14.7137 3.6864 14.7134H8.58271C8.91645 14.7136 9.23726 14.5844 9.47759 14.3528C9.71792 14.1212 9.85903 13.8055 9.87122 13.4719L10.1289 5.67264C10.1346 5.50177 10.2078 5.34014 10.3326 5.22331C10.4575 5.10648 10.6236 5.04401 10.7944 5.04965C10.9653 5.05529 11.1269 5.12857 11.2438 5.25338C11.3606 5.37818 11.4231 5.54429 11.4174 5.71516ZM12.2698 3.11947C12.2698 3.29034 12.2019 3.4542 12.0811 3.57503C11.9602 3.69585 11.7964 3.76372 11.6255 3.76372H0.644251C0.473385 3.76372 0.309517 3.69585 0.188697 3.57503C0.0678761 3.4542 0 3.29034 0 3.11947C0 2.9486 0.0678761 2.78474 0.188697 2.66392C0.309517 2.5431 0.473385 2.47522 0.644251 2.47522H2.64143C2.84556 2.47577 3.04259 2.40035 3.19418 2.26364C3.34578 2.12694 3.44109 1.93872 3.46156 1.73562C3.5091 1.25919 3.73232 0.817517 4.08771 0.496665C4.4431 0.175812 4.90521 -0.0012391 5.38401 6.52812e-06H6.88511C7.36391 -0.0012391 7.82602 0.175812 8.18141 0.496665C8.5368 0.817517 8.76002 1.25919 8.80756 1.73562C8.82803 1.93872 8.92334 2.12694 9.07493 2.26364C9.22653 2.40035 9.42356 2.47577 9.62769 2.47522H11.6249C11.7957 2.47522 11.9596 2.5431 12.0804 2.66392C12.2012 2.78474 12.2691 2.9486 12.2691 3.11947H12.2698ZM4.57998 2.47522H7.69043C7.60577 2.28178 7.5504 2.0768 7.52614 1.86705C7.51018 1.70824 7.43584 1.56102 7.31753 1.4539C7.19922 1.34677 7.04536 1.28738 6.88576 1.28722H5.38465C5.22505 1.28738 5.07119 1.34677 4.95287 1.4539C4.83456 1.56102 4.76023 1.70824 4.74427 1.86705C4.7198 2.07684 4.66486 2.28181 4.57998 2.47522ZM5.22874 12.2363V6.75047C5.22874 6.5796 5.16087 6.41574 5.04005 6.29492C4.91922 6.1741 4.75536 6.10622 4.58449 6.10622C4.41363 6.10622 4.24976 6.1741 4.12894 6.29492C4.00812 6.41574 3.94024 6.5796 3.94024 6.75047V12.2388C3.94024 12.4097 4.00812 12.5736 4.12894 12.6944C4.24976 12.8152 4.41363 12.8831 4.58449 12.8831C4.75536 12.8831 4.91922 12.8152 5.04005 12.6944C5.16087 12.5736 5.22874 12.4097 5.22874 12.2388V12.2363ZM8.33017 12.2363V6.75047C8.33017 6.5796 8.26229 6.41574 8.14147 6.29492C8.02065 6.1741 7.85678 6.10622 7.68592 6.10622C7.51505 6.10622 7.35118 6.1741 7.23036 6.29492C7.10954 6.41574 7.04167 6.5796 7.04167 6.75047V12.2388C7.04167 12.4097 7.10954 12.5736 7.23036 12.6944C7.35118 12.8152 7.51505 12.8831 7.68592 12.8831C7.85678 12.8831 8.02065 12.8152 8.14147 12.6944C8.26229 12.5736 8.33017 12.4097 8.33017 12.2388V12.2363Z" fill="#BA1A1A"/>
+</svg>
+                          </span>
+                        </button>
+                      </cart-remove-button>
+
+                      <quantity-popover>
+                        <div class="cart-item__quantity-wrapper quantity-popover-wrapper">
+                          <div class="quantity-popover-container{% if has_qty_rules or has_vol_pricing %} quantity-popover-container--hover{% endif %}">
+                            <quantity-input class="quantity cart-quantity">
+                              <button
+                                class="quantity__button"
+                                name="minus"
+                                type="button"
+                                {% if item.instructions and item.instructions.can_update_quantity == false %}
+                                  disabled
+                                {% endif %}
+                              >
+                                <span class="visually-hidden">
+                                  {{-
+                                    'products.product.quantity.decrease'
+                                    | t: product: item.product.title
+                                    | escape
+                                  -}}
+                                </span>
+                                <span class="svg-wrapper">
+                                  {{- 'icon-minus.svg' | inline_asset_content -}}
                                 </span>
                               </button>
-                            {%- endif -%}
-                            {%- if has_vol_pricing or has_qty_rules -%}
-                              <div
-                                class="cart-items__info global-settings-popup quantity-popover__info"
-                                tabindex="-1"
-                                hidden
+                              <input
+                                class="quantity__input"
+                                type="number"
+                                data-quantity-variant-id="{{ item.variant.id }}"
+                                data-quantity-line-key="{{ item.key }}"
+                                name="updates[]"
+                                value="{{ item.quantity }}"
+                                {% # theme-check-disable %}
+                                data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
+                                min="0"
+                                data-min="{{ item.variant.quantity_rule.min }}"
+                                {% if item.variant.quantity_rule.max != null %}
+                                  max="{{ item.variant.quantity_rule.max }}"
+                                {% endif %}
+                                step="{{ item.variant.quantity_rule.increment }}"
+                                {% # theme-check-enable %}
+                                aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                                id="Drawer-quantity-{{ item.index | plus: 1 }}"
+                                data-index="{{ item.index | plus: 1 }}"
+                                {% if item.instructions and item.instructions.can_update_quantity == false %}
+                                  disabled
+                                {% endif %}
                               >
-                                {%- if has_qty_rules == false -%}
-                                  <span class="volume-pricing-label caption">
-                                    {{- 'products.product.volume_pricing.title' | t -}}
-                                  </span>
-                                {%- endif -%}
-                                <div class="quantity__rules caption">
-                                  {%- if item.variant.quantity_rule.increment > 1 -%}
-                                    <span class="divider">
-                                      {{-
-                                        'products.product.quantity.multiples_of'
-                                        | t: quantity: item.variant.quantity_rule.increment
-                                      -}}
-                                    </span>
-                                  {%- endif -%}
-                                  {%- if item.variant.quantity_rule.min > 1 -%}
-                                    <span class="divider">
-                                      {{-
-                                        'products.product.quantity.min_of'
-                                        | t: quantity: item.variant.quantity_rule.min
-                                      -}}
-                                    </span>
-                                  {%- endif -%}
-                                  {%- if item.variant.quantity_rule.max != null -%}
-                                    <span class="divider">
-                                      {{-
-                                        'products.product.quantity.max_of'
-                                        | t: quantity: item.variant.quantity_rule.max
-                                      -}}
-                                    </span>
-                                  {%- endif -%}
-                                </div>
-                                <button
-                                  class="button-close button button--tertiary"
-                                  type="button"
-                                  aria-label="{{ 'accessibility.close' | t }}"
-                                >
-                                  <span class="svg-wrapper">
-                                    {{- 'icon-close.svg' | inline_asset_content -}}
-                                  </span>
-                                </button>
-                                {%- if item.variant.quantity_price_breaks.size > 0 -%}
-                                  <volume-pricing class="parent-display">
-                                    <ul class="list-unstyled">
-                                      <li>
-                                        <span>{{ item.variant.quantity_rule.min }}+</span>
-                                        <span>{{ item.variant.price | money_with_currency }}/ea</span>
-                                      </li>
-                                      {%- for price_break in item.variant.quantity_price_breaks -%}
-                                        <li>
-                                          <span>
-                                            {{- price_break.minimum_quantity -}}
-                                            <span aria-hidden="true">+</span></span
-                                          >
-                                          <span>{{ price_break.price | money_with_currency }}/ea</span>
-                                        </li>
-                                      {%- endfor -%}
-                                    </ul>
-                                  </volume-pricing>
-                                {%- endif -%}
-                              </div>
-                            {%- endif -%}
-                            <div
-                              id="CartDrawer-LineItemError-{{ item.index | plus: 1 }}"
-                              class="cart-item__error"
-                              role="alert"
-                            >
-                              <small class="cart-item__error-text"></small>
-                              <span class="svg-wrapper">
-                                {{- 'icon-error.svg' | inline_asset_content -}}
+                              <button
+                                class="quantity__button"
+                                name="plus"
+                                type="button"
+                                {% if item.instructions and item.instructions.can_update_quantity == false %}
+                                  disabled
+                                {% endif %}
+                              >
+                                <span class="visually-hidden">
+                                  {{-
+                                    'products.product.quantity.increase'
+                                    | t: product: item.product.title
+                                    | escape
+                                  -}}
+                                </span>
+                                <span class="svg-wrapper">
+                                  {{- 'icon-plus.svg' | inline_asset_content -}}
+                                </span>
+                              </button>
+                            </quantity-input>
+                          </div>
+                        </div>
+                        {%- if has_qty_rules or has_vol_pricing -%}
+                          <button
+                            type="button"
+                            class="quantity-popover__info-button quantity-popover__info-button--icon-with-label button button--tertiary"
+                            aria-expanded="false"
+                          >
+                            <span class="svg-wrapper">
+                              {{- 'icon-info.svg' | inline_asset_content -}}
+                            </span>
+                            <span>
+                              {%- if has_vol_pricing -%}
+                                {{ 'products.product.volume_pricing.note' | t }}
+                              {%- elsif has_qty_rules -%}
+                                {{ 'products.product.quantity.note' | t }}
+                              {%- endif -%}
+                            </span>
+                          </button>
+                        {%- endif -%}
+                        {%- if has_vol_pricing or has_qty_rules -%}
+                          <div
+                            class="cart-items__info global-settings-popup quantity-popover__info"
+                            tabindex="-1"
+                            hidden
+                          >
+                            {%- if has_qty_rules == false -%}
+                              <span class="volume-pricing-label caption">
+                                {{- 'products.product.volume_pricing.title' | t -}}
                               </span>
+                            {%- endif -%}
+                            <div class="quantity__rules caption">
+                              {%- if item.variant.quantity_rule.increment > 1 -%}
+                                <span class="divider">
+                                  {{-
+                                    'products.product.quantity.multiples_of'
+                                    | t: quantity: item.variant.quantity_rule.increment
+                                  -}}
+                                </span>
+                              {%- endif -%}
+                              {%- if item.variant.quantity_rule.min > 1 -%}
+                                <span class="divider">
+                                  {{-
+                                    'products.product.quantity.min_of'
+                                    | t: quantity: item.variant.quantity_rule.min
+                                  -}}
+                                </span>
+                              {%- endif -%}
+                              {%- if item.variant.quantity_rule.max != null -%}
+                                <span class="divider">
+                                  {{-
+                                    'products.product.quantity.max_of'
+                                    | t: quantity: item.variant.quantity_rule.max
+                                  -}}
+                                </span>
+                              {%- endif -%}
                             </div>
-                          </quantity-popover>
-                        </td>
-                      </tr>
-                    {%- endfor -%}
-                  </tbody>
-                </table>
+                            <button
+                              class="button-close button button--tertiary"
+                              type="button"
+                              aria-label="{{ 'accessibility.close' | t }}"
+                            >
+                              <span class="svg-wrapper">
+                                {{- 'icon-close.svg' | inline_asset_content -}}
+                              </span>
+                            </button>
+                            {%- if item.variant.quantity_price_breaks.size > 0 -%}
+                              <volume-pricing class="parent-display">
+                                <ul class="list-unstyled">
+                                  <li>
+                                    <span>{{ item.variant.quantity_rule.min }}+</span>
+                                    <span>{{ item.variant.price | money_with_currency }}/ea</span>
+                                  </li>
+                                  {%- for price_break in item.variant.quantity_price_breaks -%}
+                                    <li>
+                                      <span>
+                                        {{- price_break.minimum_quantity -}}
+                                        <span aria-hidden="true">+</span></span
+                                      >
+                                      <span>{{ price_break.price | money_with_currency }}/ea</span>
+                                    </li>
+                                  {%- endfor -%}
+                                </ul>
+                              </volume-pricing>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      </quantity-popover>
+                    </div>
+                  </div>
+                {%- endfor -%}
               </div>
             {%- endif -%}
             <p id="CartDrawer-LiveRegionText" class="visually-hidden" role="status"></p>
@@ -487,11 +1183,169 @@
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
       </cart-drawer-items>
-      <div class="drawer__footer">
+      {%- if cart != empty -%}
+{%- assign creste_note_price = 50 -%}
+{%- assign creste_note_variant_id = 48203361779870 -%}
+{%- assign creste_note_active = false -%}
+
+{%- for item in cart.items -%}
+  {%- if item.variant.id == creste_note_variant_id -%}
+    {%- assign creste_note_active = true -%}
+  {%- endif -%}
+{%- endfor -%}
+
+
+            <div
+              class="creste-cart-note"
+              id="CartDrawer-Note-Banner"
+            >
+              {% comment %} &#128221; {% endcomment %}
+              <span class="creste-cart-note__icon">
+
+                 <span class="creste-cart-note__icon">
+  <img
+    src="https://cdn.shopify.com/s/files/1/0673/0114/6782/files/52db2e7ef254d8193e49405b79dd7646563b6b8c.jpg?v=1787814819"
+    alt="Note"
+    width="24"
+    height="24"
+    loading="lazy"
+  >
+</span>
+
+            </span>
+
+              <span class="creste-cart-note__body">
+                <span class="creste-cart-note__title">
+                  Add Handwritten Note - Rs. {{ creste_note_price }}
+                </span>
+
+                <span class="creste-cart-note__sub">
+                  <br>
+                  Kraft paper, ribbon and a handwritten note
+                </span>
+              </span>
+
+              <input
+                type="checkbox"
+                class="creste-cart-note__checkbox"
+                id="CartDrawer-NoteToggle"
+                data-note-toggle
+                data-note-price="{{ creste_note_price }}"
+                {% if creste_note_active %}checked{% endif %}
+              >
+            </div>
+
+            <div
+              class="creste-cart-note__field{% if creste_note_active %} is-open{% endif %}"
+              id="CartDrawer-NoteField"
+            >
+              <label
+                class="creste-cart-note__label"
+                for="CartDrawer-NoteText"
+              >
+                Note (Max 100 Words)
+              </label>
+
+                <textarea
+                  class="creste-cart-note__textarea"
+                  id="CartDrawer-NoteText"
+                  maxlength="600"
+                  placeholder="Write your message here..."
+                >{%- for item in cart.items -%}
+                  {%- if item.variant.id == creste_note_variant_id -%}
+                    {{ item.properties['Handwritten Note'] | escape }}
+                  {%- endif -%}
+                {%- endfor -%}</textarea>
+
+            </div>
+{%- if collections['age-group-up-to-3years']
+  and collections['age-group-up-to-3years'].products.size > 0
+-%}
+
+  <div class="creste-cart-picks">
+
+    <p class="creste-cart-picks__title">
+      Picked for ages 0&ndash;3
+    </p>
+
+    <div class="creste-cart-picks__row">
+
+      {%- for product in collections['age-group-up-to-3years'].products limit: 8 -%}
+
+        {%- assign pv = product.selected_or_first_available_variant -%}
+
+        <div class="creste-cart-pick">
+
+          <div class="creste-cart-pick__image">
+            {%- if product.featured_image -%}
+              {{
+                product.featured_image
+                | image_url: width: 160
+                | image_tag: alt: product.title, loading: 'lazy'
+              }}
+            {%- endif -%}
+          </div>
+
+          <div class="creste-cart-pick__body">
+
+            <p class="creste-cart-pick__name">
+              {{ product.title }}
+            </p>
+
+            <p class="creste-cart-pick__price">
+              {{ pv.price | money }}
+
+              {%- if pv.compare_at_price > pv.price -%}
+
+                <span class="creste-cart-pick__compare">
+                  {{ pv.compare_at_price | money }}
+                </span>
+
+                {%- assign pick_off = pv.compare_at_price
+                  | minus: pv.price
+                  | times: 100
+                  | divided_by: pv.compare_at_price
+                -%}
+
+                <span class="creste-cart-pick__off">
+                  {{ pick_off }}% off
+                </span>
+
+              {%- endif -%}
+            </p>
+
+            <button
+              type="button"
+              class="creste-cart-pick__btn"
+              data-pick-add
+              data-variant-id="{{ pv.id }}"
+              {% unless pv.available %}disabled{% endunless %}
+            >
+              {%- if pv.available -%}
+                Add To Cart
+              {%- else -%}
+                Sold out
+              {%- endif -%}
+            </button>
+
+          </div>
+
+        </div>
+
+      {%- endfor -%}
+
+    </div>
+
+  </div>
+
+{%- endif -%}
+{%- endif -%}
+    </div>
+    <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
             <summary>
-              <span class="summary__title">
+             <span class="summary__title">
                 {{ 'sections.cart.note' | t }}
                 {{- 'icon-caret.svg' | inline_asset_content -}}
               </span>
@@ -508,87 +1362,691 @@
           </details>
         {%- endif -%}
 
-        <!-- Start blocks -->
-        <!-- Subtotals -->
-
+  
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
-          <div>
-            {%- if cart.cart_level_discount_applications.size > 0 -%}
-              <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
-                {%- for discount in cart.cart_level_discount_applications -%}
-                  <li class="discounts__discount discounts__discount--end">
-                    {{- 'icon-discount.svg' | inline_asset_content -}}
-                    {{ discount.title | escape }}
-                    (-{{ discount.total_allocated_amount | money }})
-                  </li>
-                {%- endfor -%}
-              </ul>
-            {%- endif -%}
-          </div>
+          {%- if cart.cart_level_discount_applications.size > 0 -%}
+            <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+              {%- for discount in cart.cart_level_discount_applications -%}
+                <li class="discounts__discount discounts__discount--end">
+                  {{- 'icon-discount.svg' | inline_asset_content -}}
+                  {{ discount.title | escape }}
+                  (-{{ discount.total_allocated_amount | money }})
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
 
-          <div class="totals" role="status">
-            <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
-          </div>
+          {%- liquid
+            assign creste_mrp = 0
+            assign creste_gift_count = 0
+            for line in cart.items
+              assign creste_line_compare = line.variant.compare_at_price | default: 0
+              if creste_line_compare < line.original_price
+                assign creste_line_compare = line.original_price
+              endif
+              assign creste_mrp = creste_line_compare | times: line.quantity | plus: creste_mrp
+              if line.properties['Gift wrapping'] == 'Yes'
+                assign creste_gift_count = creste_gift_count | plus: 1
+              endif
+            endfor
+            assign creste_items_subtotal = cart.items_subtotal_price
+            assign creste_item_discount = creste_mrp | minus: creste_items_subtotal
+            assign creste_cart_discount = creste_items_subtotal | minus: cart.total_price
+            assign creste_total_savings = creste_mrp | minus: cart.total_price
+            assign creste_grand_total = cart.total_price
+          -%}
 
-          <small class="tax-note caption-large rte">
-            {%- if cart.duties_included and cart.taxes_included -%}
-              {%- if shop.shipping_policy.body == blank -%}
-                {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
+          <details class="creste-view-summary" id="CartDrawer-ViewSummary">
+            <summary class="visually-hidden">View Summary</summary>
+            <div class="creste-view-summary__body">
+              <div class="creste-view-summary__row">
+                <span>MRP</span>
+                <span>{{ creste_mrp | money  | replace: "Rs. ", "₹ " }}</span>
+              </div>
+              {%- if creste_cart_discount > 0 -%}
+                <div class="creste-view-summary__row creste-view-summary__row--discount">
+                  <span>Card Price</span>
+                  <span>-{{ creste_cart_discount | money  | replace: "Rs. ", "₹ " }}</span>
+                </div>
               {%- endif -%}
-            {%- elsif cart.duties_included == false and cart.taxes_included -%}
-              {%- if shop.shipping_policy.body == blank -%}
-                {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.taxes_included_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
+              {%- if creste_item_discount > 0 -%}
+                <div class="creste-view-summary__row creste-view-summary__row--discount">
+                  <span>Item Discount</span>
+                  <span>-{{ creste_item_discount | money | replace: "Rs. ", "₹ " }}</span>
+                </div>
               {%- endif -%}
-            {%- elsif cart.duties_included and cart.taxes_included == false -%}
-              {%- if shop.shipping_policy.body == blank -%}
-                {{ 'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
+              {%- if creste_gift_count > 0 -%}
+                <div class="creste-view-summary__row creste-view-summary__row--free">
+                  <span>Gift wrapping ({{ creste_gift_count }})</span>
+                  <span>Free</span>
+                </div>
               {%- endif -%}
-            {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
-              {%- if shop.shipping_policy.body == blank -%}
+              {%- if creste_note_active -%}
+                <div class="creste-view-summary__row" id="CartDrawer-NoteFeeRow">
+                  <span>Handwritten Note</span>
+                  <span>{{ creste_note_price | times:100 | money | replace: "Rs. ", "₹ " }}</span>
+                </div>
+              {%- endif -%}
+              <div class="creste-view-summary__row creste-view-summary__row--total">
+                <span>Sub Total</span>
+                <span>{{ cart.total_price | money | replace: "Rs. ", "₹ " }}</span>
+              </div>
+            </div>
+          </details>
+
+          <div class="creste-cart-summary">
+            <div class="creste-cart-summary__row">
+              <span class="creste-cart-summary__subtotal-label">
+                Subtotal &middot; {{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}
+                &nbsp;<button type="button" class="creste-cart-summary__toggle" data-view-summary-toggle aria-expanded="false" aria-controls="CartDrawer-ViewSummary">View Summary</button>
+              </span>
+              <span class="creste-cart-summary__total totals__total-value" role="status">
+                {{ creste_grand_total | money_with_currency | replace: "Rs. " , "₹ " }}
+              </span>
+            </div>
+            <div class="creste-cart-summary__row">
+              <small class="creste-cart-summary__note tax-note caption-large rte">
                 {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
+              </small>
+              {%- if creste_total_savings > 0 -%}
+                <span class="creste-cart-summary__savings">You saved {{ creste_total_savings | money | replace: "Rs. ", "₹ " }}</span>
               {%- endif -%}
-            {%- endif -%}
-          </small>
+            </div>
+          </div>
         </div>
 
-        <!-- CTAs -->
+          <div class="cart__ctas" {{ block.shopify_attributes }}>
+            <button
+              type="submit"
+              id="CartDrawer-Checkout"
+              class="cart__checkout-button button"
+              name="checkout"
+              form="CartDrawer-Form"
+              {% if cart == empty %}
+                disabled
+              {% endif %}
+            >
+              {{ 'sections.cart.checkout' | t }}
+                  <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.6 6L0 1.4L1.4 0L7.4 6L1.4 12L0 10.6L4.6 6Z" fill="white"/>
+            </svg>
+        </button>
+        
 
-        <div class="cart__ctas" {{ block.shopify_attributes }}>
-          <button
-            type="submit"
-            id="CartDrawer-Checkout"
-            class="cart__checkout-button button"
-            name="checkout"
-            form="CartDrawer-Form"
-            {% if cart == empty %}
-              disabled
-            {% endif %}
-          >
-            {{ 'sections.cart.checkout' | t }}
-          </button>
-        </div>
+          </div>
+
+          <div class="creste-trust-badges">
+            <span>COD available</span>
+            <span>7-day easy returns</span>
+            <span>Child-safe materials</span>
+          </div>
       </div>
     </div>
   </div>
+  
 </cart-drawer>
+
+<script>
+(function () {
+  if (window.__cresteCartDrawerBound) return;
+  window.__cresteCartDrawerBound = true;
+
+  function refreshDrawer(sectionsHtml) {
+    if (!sectionsHtml) return;
+
+    var doc = new DOMParser().parseFromString(sectionsHtml, 'text/html');
+    var fresh = doc.querySelector('cart-drawer');
+    var current = document.querySelector('cart-drawer');
+
+    if (fresh && current) {
+      current.innerHTML = fresh.innerHTML;
+    }
+  }
+
+  async function refreshCartDrawer() {
+    try {
+      var res = await fetch('/?sections=cart-drawer', {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error('Drawer refresh failed');
+      }
+
+      var data = await res.json();
+
+      if (data['cart-drawer']) {
+        refreshDrawer(data['cart-drawer']);
+      }
+    } catch (err) {
+      console.error('cart-drawer-refresh', err);
+    }
+  }
+
+
+  /* =========================
+     VIEW SUMMARY
+  ========================= */
+
+  document.addEventListener('click', function (e) {
+    var toggle = e.target.closest('[data-view-summary-toggle]');
+
+    if (!toggle) return;
+
+    var details = document.getElementById('CartDrawer-ViewSummary');
+
+    if (details) {
+      var willOpen = !details.open;
+
+      details.open = willOpen;
+
+      toggle.setAttribute(
+        'aria-expanded',
+        String(willOpen)
+      );
+
+      toggle.textContent = willOpen
+        ? 'Hide Summary'
+        : 'View Summary';
+    }
+  });
+
+
+  /* =========================
+     GIFT WRAPPING
+  ========================= */
+
+  document.addEventListener('click', async function (e) {
+    var gwBtn = e.target.closest('[data-gw-toggle]');
+
+    if (!gwBtn) return;
+
+    e.preventDefault();
+
+    if (gwBtn.__busy) return;
+
+    gwBtn.__busy = true;
+    gwBtn.style.opacity = '0.6';
+
+    var line =
+      Number(gwBtn.getAttribute('data-line')) || 1;
+
+    var qty =
+      Number(gwBtn.getAttribute('data-qty')) || 1;
+
+    var add =
+      gwBtn.getAttribute('data-add') === '1';
+
+    try {
+      var res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          line: line,
+          quantity: qty,
+          properties: add
+            ? { 'Gift wrapping': 'Yes' }
+            : { 'Gift wrapping': '' },
+          sections: 'cart-drawer',
+          sections_url: location.pathname
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error('Gift wrap update failed');
+      }
+
+      var data = await res.json();
+
+      if (
+        data.sections &&
+        data.sections['cart-drawer']
+      ) {
+        refreshDrawer(
+          data.sections['cart-drawer']
+        );
+      }
+
+    } catch (err) {
+      console.error('gw', err);
+
+    } finally {
+      gwBtn.__busy = false;
+      gwBtn.style.opacity = '';
+    }
+  });
+
+
+  /* =========================
+     HANDWRITTEN NOTE
+  ========================= */
+
+  var HANDWRITTEN_NOTE_VARIANT_ID = 48203361779870;
+
+  async function getCart() {
+    var res = await fetch('/cart.js', {
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error('Could not get cart');
+    }
+
+    return await res.json();
+  }
+
+
+  async function addHandwrittenNote(noteText) {
+    var cart = await getCart();
+
+    var existingNoteItem = cart.items.find(function (item) {
+      return Number(item.variant_id) === HANDWRITTEN_NOTE_VARIANT_ID;
+    });
+
+    /* Already added - just update the message */
+    if (existingNoteItem) {
+      return updateHandwrittenNote(
+        existingNoteItem.key,
+        noteText
+      );
+
+    }
+
+    var res = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            id: HANDWRITTEN_NOTE_VARIANT_ID,
+            quantity: 1,
+            properties: {
+              'Handwritten Note': noteText || ''
+            }
+          }
+        ],
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    });
+
+    if (!res.ok) {
+      var errorData = await res.json().catch(function () {
+        return {};
+      });
+
+      throw new Error(
+        errorData.description ||
+        'Could not add handwritten note'
+      );
+    }
+
+    return await res.json();
+  }
+
+
+  async function updateHandwrittenNote(lineKey, noteText) {
+    var res = await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: lineKey,
+        quantity: 1,
+        properties: {
+          'Handwritten Note': noteText || ''
+        },
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error('Could not update handwritten note');
+    }
+
+    return await res.json();
+  }
+
+      async function saveCurrentHandwrittenNote() {
+  var toggle =
+    document.getElementById('CartDrawer-NoteToggle');
+
+  var noteText =
+    document.getElementById('CartDrawer-NoteText');
+
+  if (!toggle || !toggle.checked || !noteText) {
+    return;
+  }
+
+  var cart = await getCart();
+
+  var noteItem = cart.items.find(function (item) {
+    return Number(item.variant_id) ===
+      HANDWRITTEN_NOTE_VARIANT_ID;
+  });
+
+  if (!noteItem) {
+    return;
+  }
+
+  await updateHandwrittenNote(
+    noteItem.key,
+    noteText.value.trim()
+  );
+}
+
+
+  async function removeHandwrittenNote() {
+    var cart = await getCart();
+
+    var noteItem = cart.items.find(function (item) {
+      return Number(item.variant_id) === HANDWRITTEN_NOTE_VARIANT_ID;
+    });
+
+    if (!noteItem) {
+      return;
+    }
+
+    var res = await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: noteItem.key,
+        quantity: 0,
+        sections: 'cart-drawer',
+        sections_url: location.pathname
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error('Could not remove handwritten note');
+    }
+
+    return await res.json();
+  }
+
+
+  document.addEventListener('change', async function (e) {
+    var toggle = e.target.closest('#CartDrawer-NoteToggle');
+
+    if (!toggle) return;
+
+    var field = document.getElementById('CartDrawer-NoteField');
+
+    if (field) {
+      field.classList.toggle(
+        'is-open',
+        toggle.checked
+      );
+    }
+
+    if (toggle.__busy) return;
+
+    toggle.__busy = true;
+    toggle.disabled = true;
+
+    try {
+
+      if (toggle.checked) {
+
+        var noteTextElement =
+          document.getElementById('CartDrawer-NoteText');
+
+        var noteText =
+          noteTextElement
+            ? noteTextElement.value.trim()
+            : '';
+
+        var data =
+          await addHandwrittenNote(noteText);
+
+        if (
+          data.sections &&
+          data.sections['cart-drawer']
+        ) {
+          refreshDrawer(
+            data.sections['cart-drawer']
+          );
+        } else {
+          await refreshCartDrawer();
+        }
+
+      } else {
+
+        var data =
+          await removeHandwrittenNote();
+
+        if (
+          data &&
+          data.sections &&
+          data.sections['cart-drawer']
+        ) {
+          refreshDrawer(
+            data.sections['cart-drawer']
+          );
+        } else {
+          await refreshCartDrawer();
+        }
+
+      }
+
+    } catch (err) {
+
+      console.error(
+        'handwritten-note-toggle',
+        err
+      );
+
+      /*
+       * If something failed, restore checkbox state.
+       */
+      toggle.checked = !toggle.checked;
+
+      if (field) {
+        field.classList.toggle(
+          'is-open',
+          toggle.checked
+        );
+      }
+
+    } finally {
+
+      toggle.__busy = false;
+      toggle.disabled = false;
+
+    }
+  });
+
+
+  /*
+   * Save handwritten message to the ₹50 product
+   * line-item property.
+   */
+  document.addEventListener('blur', async function (e) {
+
+    var noteText =
+      e.target.closest('#CartDrawer-NoteText');
+
+    if (!noteText) return;
+
+    var toggle =
+      document.getElementById('CartDrawer-NoteToggle');
+
+    if (!toggle || !toggle.checked) return;
+
+    var text =
+      noteText.value.trim();
+
+    try {
+
+      var cart = await getCart();
+
+      var noteItem = cart.items.find(function (item) {
+        return Number(item.variant_id) ===
+          HANDWRITTEN_NOTE_VARIANT_ID;
+      });
+
+      if (!noteItem) return;
+
+      await updateHandwrittenNote(
+        noteItem.key,
+        text
+      );
+
+    } catch (err) {
+
+      console.error(
+        'handwritten-note-text',
+        err
+      );
+
+    }
+
+  }, true);
+  /* =========================
+   CHECKOUT - SAVE NOTE FIRST
+========================= */
+
+document.addEventListener('click', async function (e) {
+
+  var checkoutButton =
+    e.target.closest('#CartDrawer-Checkout');
+
+  if (!checkoutButton) return;
+
+  if (checkoutButton.__noteSaving) return;
+
+  var toggle =
+    document.getElementById('CartDrawer-NoteToggle');
+
+  if (!toggle || !toggle.checked) {
+    return;
+  }
+
+  e.preventDefault();
+
+  checkoutButton.__noteSaving = true;
+  checkoutButton.disabled = true;
+
+  try {
+
+    await saveCurrentHandwrittenNote();
+
+    /*
+     * Now allow checkout to continue.
+     */
+    window.location.href = '/checkout';
+
+  } catch (err) {
+
+    console.error(
+      'checkout-note-save',
+      err
+    );
+
+    checkoutButton.__noteSaving = false;
+    checkoutButton.disabled = false;
+
+    alert(
+      'Please wait a moment and try checkout again.'
+    );
+  }
+
+});
+
+
+  /* =========================
+     ADD CART PICK
+  ========================= */
+
+  document.addEventListener('click', async function (e) {
+    var btn = e.target.closest('[data-pick-add]');
+
+    if (!btn) return;
+
+    e.preventDefault();
+
+    if (btn.disabled) return;
+
+    var variantId =
+      btn.getAttribute('data-variant-id');
+
+    var originalText =
+      btn.textContent.trim();
+
+    btn.disabled = true;
+    btn.textContent = 'Adding...';
+
+    try {
+      var res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              id: Number(variantId),
+              quantity: 1
+            }
+          ]
+        })
+      });
+
+      if (!res.ok) {
+        var errorData = await res.json().catch(function () {
+          return {};
+        });
+
+        throw new Error(
+          errorData.description ||
+          'Product could not be added'
+        );
+      }
+
+      /* Get the latest cart drawer */
+      await refreshCartDrawer();
+
+      btn.textContent = 'Added!';
+
+      /* Restore the button after a short delay */
+      setTimeout(function () {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }, 1500);
+
+    } catch (err) {
+      console.error('pick-add', err);
+
+      btn.textContent = 'Try Again';
+
+      setTimeout(function () {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }, 1500);
+    }
+  });
+
+})();
+</script>
+
+
+
+

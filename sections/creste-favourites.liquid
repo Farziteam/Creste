@@ -1,0 +1,812 @@
+{% render 'creste-tokens' %}
+<style>
+#creste-fav-{{ section.id }}{position:relative;padding:32px 12px;background-color:{{ section.settings.fallback_bg }};background-size: cover;background-position:center;background-repeat:no-repeat;}
+#creste-fav-{{ section.id }}::before{content:'';position:absolute;inset:0;background:#000;opacity:{{ section.settings.overlay | divided_by: 100.0 }};pointer-events:none;}
+#creste-fav-{{ section.id }} .fav-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;}
+
+#creste-fav-{{ section.id }} .fav-h{margin:0 0 6px;font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;line-height:1.1;color:{{ section.settings.heading_color }};padding-left:0.5rem;}
+#creste-fav-{{ section.id }} .fav-h span{font-style: italic; color: #fff;}
+#creste-fav-{{ section.id }} .fav-sub{margin:0 0 20px;font-family:'Poppins',sans-serif;font-size:15px;color:{{ section.settings.heading_color }};opacity:.9;}
+#creste-fav-{{ section.id }} .fav-carousel{position:relative;}
+#creste-fav-{{ section.id }} .fav-track{display:flex;gap:28px;overflow-x:auto;overflow-y:hidden;scroll-behavior:smooth;scroll-snap-type:x mandatory;padding:4px 8px;scrollbar-width:none;}
+#creste-fav-{{ section.id }} .fav-track::-webkit-scrollbar{display:none;}
+#creste-fav-{{ section.id }} .fav-card{flex:0 0 {{ section.settings.card_width }}px;scroll-snap-align:start;background:#fff;border-radius:24px;overflow:hidden;display:flex;flex-direction:column; border: 4px solid #b7a23a;}
+#creste-fav-{{ section.id }} .fav-img{aspect-ratio:1/1;background:#f6efe3;overflow:hidden;display:block;}
+#creste-fav-{{ section.id }} .fav-img img,#creste-fav-{{ section.id }} .fav-img svg{width:100%;height:100%;object-fit:cover;display:block;}
+#creste-fav-{{ section.id }} .fav-body{padding:12px;display:flex;flex-direction:column;gap:8px; flex: 1;}
+#creste-fav-{{ section.id }} .fav-top{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:24px;}
+#creste-fav-{{ section.id }} .fav-rate{display:inline-flex;align-items:center;gap:4px;background:#FBE9C0;border-radius:9999px;padding:3px 9px;font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:14px;color:#2B1702;}
+#creste-fav-{{ section.id }} .fav-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(90deg,#ff90b2,#f4679a);color:#fff;border-radius:9999px;padding:4px 9px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:11px;}
+#creste-fav-{{ section.id }} .fav-rate em{font-style:normal;color:#111;}
+#creste-fav-{{ section.id }} .fav-badge em{font-style:normal;color:#FFCE00;}
+#creste-fav-{{ section.id }} .fav-title{margin:0;font-family:'Nunito',sans-serif;font-weight:800;font-size:17px;line-height:1.15;color:var(--creste-brown2);text-decoration:none;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+#creste-fav-{{ section.id }} .fav-meta{margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:11px;letter-spacing:.4px;color:rgba(87,66,57,.75);text-transform:uppercase;}
+#creste-fav-{{ section.id }} .fav-price{display:flex;align-items:center;gap:2px;flex-wrap:wrap;}
+#creste-fav-{{ section.id }} .fav-price b{font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:19px;color:var(--creste-orange);}
+#creste-fav-{{ section.id }} .fav-price s{font-family:'Poppins',sans-serif;font-size:14px;color:var(--creste-brown2);opacity:.4;}
+#creste-fav-{{ section.id }} .fav-price i{font-family:'Poppins',sans-serif;font-weight:700;font-style:normal;font-size:12px;color:var(--creste-green2);}
+#creste-fav-{{ section.id }} .fav-cart button{width:100%;height:46px;border:none;border-radius:24px;background:var(--creste-orange);color:#fff;font-family:'Quicksand',sans-serif;font-weight:700;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+#creste-fav-{{ section.id }} .fav-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:none;box-shadow:0 6px 16px rgba(0,0,0,.2);color:var(--creste-orange);font-size:24px;line-height:1;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;}
+#creste-fav-{{ section.id }} .fav-nav.prev{left:0;}
+#creste-fav-{{ section.id }} .fav-nav.next{right:0;}
+#creste-fav-{{ section.id }} .fav-dots{display:none;justify-content:center;gap:8px;margin-top:16px;}
+#creste-fav-{{ section.id }} .fav-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(0,0,0,.25);padding:0;cursor:pointer;transition:all .2s;}
+#creste-fav-{{ section.id }} .fav-dots button.on{background:var(--creste-orange);width:22px;border-radius:9999px;}
+#creste-fav-{{ section.id }} .fav-top .cp-badge{   
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(90deg, #ff90b2, #f4679a);
+    color: #fff;
+    border-radius: 9999px;
+    padding: 4px 9px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+#creste-fav-{{ section.id }} .fav-top .cp-badge em{ 
+   font-style: normal;
+   color: #FFCE00;
+}
+#creste-fav-{{ section.id }} .product-sub-heading p{
+    text-transform: uppercase;
+}
+@media(max-width:749px){#creste-fav-{{ section.id }} .fav-nav{display:none;}#creste-fav-{{ section.id }} .fav-dots{display:flex;}
+   #creste-fav-{{ section.id }}  .fav-track{
+    gap: 9px !important;
+    padding: 4px 2px;
+  }
+  #creste-fav-{{ section.id }} .fav-card{flex:0 0 49%;border: 2px solid #b7a23a;}
+  #creste-fav-{{ section.id }} .fav-rate{ font-size: 11px; padding: 2px 6px;}
+  #creste-fav-{{ section.id }} .fav-body{
+    padding: 8px;
+  }
+  #creste-fav-{{ section.id }} .fav-top .cp-badge{
+    padding: 2px 6px;
+    font-size: 10px;
+  }
+  #creste-fav-{{ section.id }} .fav-title{
+    font-size: 13px;
+    letter-spacing: 0px;
+    line-height: 1.2;
+  }
+  #creste-fav-{{ section.id }} .fav-price b{
+    font-size: 14px;
+    letter-spacing: 0px;
+    margin-right: 2px;
+  }
+  #creste-fav-{{ section.id }} .fav-price s{
+    font-size: 13px;
+    margin-right: 5px;
+  }
+  #creste-fav-{{ section.id }} .fav-price i{font-size: 10px;}
+  #creste-fav-{{ section.id }} .product-sub-heading{
+    gap: 4px !important;
+    {% comment %} font-size: 10px; {% endcomment %}
+    letter-spacing: 0px !important;
+   
+  }
+  #creste-fav-{{ section.id }} .product-sub-heading p{
+    font-weight: 500 !important;
+    letter-spacing: 0px !important;
+    font-size: 10px !important;
+  }
+  .fav-inner{margin-left:4px;}
+  
+}
+@media(min-width:750px){#creste-fav-{{ section.id }}{padding:56px 16px;}#creste-fav-{{ section.id }} .fav-h{font-size:48px;}  #creste-fav-{{ section.id }} .fav-carousel{padding:0 50px;}#creste-fav-{{ section.id }} .fav-card{flex-basis:{{ section.settings.card_width | plus: 40 }}px;}
+ #creste-fav-{{ section.id }} .fav-price i{font-size: 14px;}
+ #creste-fav-{{ section.id }} .fav-sub{font-size: 20px; text-align: left;font-weight: 700; font-family: 'Nunito Sans', sans-serif; letter-spacing: 0px;}
+  {% if section.settings.background != blank %}
+    #creste-fav-{{ section.id }} {
+       background-image: url({{ section.settings.background | image_url: width: 2600 }}) !important;
+       background-size: cover !important;
+    }
+  {% endif %}
+  #creste-fav-{{ section.id }} .fav-price{
+    gap: 7px !important;
+  }
+}
+
+#creste-fav-{{ section.id }} .product-sub-heading{
+  display: flex;
+  gap: 7px;
+  margin-top: -5px;
+}
+#creste-fav-{{ section.id }} .product-sub-heading p{
+  font-size: 13px;
+  line-height: 20px;
+  margin:0;
+  font-family: 'Poppins', sans-sarif;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+}
+#creste-fav-{{ section.id }} .fav-cart{
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+</style>
+<div id='creste-fav-{{ section.id }}' class='creste-section'{%  if section.settings.bg_mobile != blank %}style="background-image:url({{ section.settings.bg_mobile | image_url: width: 1200 }});"{% elsif section.settings.background != blank %} style='background-image:url({{ section.settings.background | image_url: width: 2400 }});'{% endif %}>
+<div class='fav-inner'>
+{% if section.settings.heading != blank %}<h2 class='fav-h'>{{ section.settings.heading }} <span>{{ section.settings.heading_italic }}</span></h2>{% endif %}
+{% if section.settings.subtitle != blank %}<p class='fav-sub'>{{ section.settings.subtitle }}</p>{% endif %}
+<div class='fav-carousel'>
+<button type='button' class='fav-nav prev' aria-label='Previous' onclick="document.getElementById('favtrack-{{ section.id }}').scrollBy({left:-{{ section.settings.card_width | plus: 56 }},behavior:'smooth'});"><svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 18L0 9L9 0L11.1 2.1L4.2 9L11.1 15.9L9 18Z" fill="#F4793A"/>
+</svg>
+</button>
+<div class='fav-track' id='favtrack-{{ section.id }}'>
+{% if section.settings.collection != blank %}
+{% assign coll = collections[section.settings.collection] %}
+{% for product in coll.products limit: section.settings.count %}
+{% assign prating = product.metafields.reviews.rating.value | default: section.settings.default_rating %}
+{% assign pmeta = product.type %}
+<div class='fav-card'>
+<a class='fav-img' href='{{ product.url }}'>{% if product.featured_image %}<img src='{{ product.featured_image | image_url: width: 600 }}' alt='{{ product.title | escape }}' loading='lazy'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a>
+<div class='fav-body'>
+<div class='fav-top'><span class='fav-rate'><em>&#9733;</em>{{ prating }}</span>{% comment %}{% if product.tags contains section.settings.badge_tag %}<span class='fav-badge'><em>&#9733;</em>{{ section.settings.badge_text }}</span>{% endif %} {% endcomment %} {% if product.metafields.custom.product_tag != blank %}<span class='cp-badge'><em>&#9733;</em>{{ product.metafields.custom.product_tag }}</span>{% endif %}</div>
+<a class='fav-title' href='{{ product.url }}'>{{ product.title }}</a>
+<div class="product-sub-heading">{% if product.metafields.custom.age_group != blank %}<p>{{ product.metafields.custom.age_group }}</p>{% endif %}{% if product.metafields.custom.product_sub_description != blank %}<p>•&nbsp;&nbsp;{{ product.metafields.custom.product_sub_description }}</p>{% endif %}</div>
+{% if pmeta != blank %}<p class='fav-meta'>{{ pmeta }}</p>{% endif %}
+<div class='fav-price'><b>{{ product.price | money_without_trailing_zeros }}</b>{% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money_without_currency | replace: '.00', '' }}</s>{% assign disc = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}<i>{{ disc }}% off</i>{% endif %}</div>
+{% comment %} <div class='fav-cart'>
+  <form method='post' action='/cart/add' enctype='multipart/form-data'><input type='hidden' name='id' value='{{ product.selected_or_first_available_variant.id }}'><button type='submit'{% unless product.available %} disabled{% endunless %}>{{ 'icon-add-to-cart.svg' | inline_asset_content }} {% if product.available %}{{ section.settings.button_label }}{% else %}Sold out{% endif %}</button>
+</form>
+</div> {% endcomment %}
+<div class='fav-cart'>
+  <form
+    class='fav-atc-form'
+    method='post'
+    action='/cart/add'
+    enctype='multipart/form-data'
+    data-product-id='{{ product.selected_or_first_available_variant.id }}'
+  >
+    <input
+      type='hidden'
+      name='id'
+      value='{{ product.selected_or_first_available_variant.id }}'
+    >
+
+    <input
+      type='hidden'
+      name='quantity'
+      value='1'
+    >
+
+    <button
+      type='submit'
+      {% unless product.available %}disabled{% endunless %}
+    >
+      {{ 'icon-add-to-cart.svg' | inline_asset_content }}
+
+      {% if product.available %}
+        {{ section.settings.button_label }}
+      {% else %}
+        Sold out
+      {% endif %}
+    </button>
+  </form>
+</div>
+</div>
+</div>
+{% endfor %}
+{% else %}
+{% assign ph_titles = 'Bouquet Candle Kit,DIY Hand Casting Kit,Botanical Framing Kit,Tie-Dye Kit,Slime Lab Kit,Candle Making Kit' | split: ',' %}
+{% assign ph_meta = 'AGES 4-8 - SKILL BUILDER,AGES 7+ - STEAM KIT,AGES 8+ - CRAFT,AGES 5+ - CREATIVE,AGES 6+ - SCIENCE,AGES 4+ - SKILL BUILDER' | split: ',' %}
+{% for i in (0..5) %}<div class='fav-card'><span class='fav-img'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='fav-body'><div class='fav-top'><span class='fav-rate'><em>&#9733;</em>4.9</span>{% assign md = i | modulo: 2 %}{% if md == 0 %}<span class='fav-badge'><em>&#9733;</em>{{ section.settings.badge_text }}</span>{% endif %}</div><span class='fav-title'>{{ ph_titles[i] }}</span><p class='fav-meta'>{{ ph_meta[i] }}</p><div class='fav-price'><b>Rs. 1,299</b><s>2,299</s><i>20% off</i></div><div class='fav-cart'><button type='button'>&#128722; {{ section.settings.button_label }}</button></div></div></div>{% endfor %}
+{% endif %}
+</div>
+<button type='button' class='fav-nav next' aria-label='Next' onclick="document.getElementById('favtrack-{{ section.id }}').scrollBy({left:{{ section.settings.card_width | plus: 56 }},behavior:'smooth'});">
+  <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.09961 18L11.0996 9L2.09961 0L-0.000391006 2.1L6.89961 9L-0.000391006 15.9L2.09961 18Z" fill="#F4793A"/>
+</svg>
+
+</button>
+</div>
+<div class='fav-dots' id='favdots-{{ section.id }}'></div>
+</div>
+</div>
+<script>
+(function(){var t=document.getElementById('favtrack-{{ section.id }}'),dotsEl=document.getElementById('favdots-{{ section.id }}');if(!t||!dotsEl)return;function cw(){var c=t.querySelector('.fav-card');if(!c)return 260;var g=parseInt(getComputedStyle(t).gap)||16;return c.getBoundingClientRect().width+g;}var cards=t.querySelectorAll('.fav-card');if(cards.length<2)return;cards.forEach(function(c,i){var d=document.createElement('button');d.type='button';if(i===0)d.className='on';d.addEventListener('click',function(){t.scrollTo({left:i*cw(),behavior:'smooth'});});dotsEl.appendChild(d);});
+  {% comment %} t.addEventListener('scroll',function(){var idx=Math.round(t.scrollLeft/cw());
+    dotsEl.querySelectorAll('button').forEach(function(d,i){d.classList.toggle('on',i===idx);});}); {% endcomment %}
+    t.addEventListener('scroll', function () {
+
+      var maxScroll = t.scrollWidth - t.clientWidth;
+
+      var idx = Math.round(
+        (t.scrollLeft / maxScroll) * (cards.length - 1)
+      );
+
+      dotsEl.querySelectorAll('button').forEach(function (d, i) {
+        d.classList.toggle('on', i === idx);
+      });
+
+    });
+  })();
+</script>
+<script>
+/* =========================================
+   CRESTE FAVOURITES
+   AJAX ADD TO CART
+   + DAWN 15.5.0 CART DRAWER
+   + REAL-TIME CART BUBBLE
+   ========================================= */
+
+(function () {
+
+  var section = document.getElementById(
+    'creste-fav-{{ section.id }}'
+  );
+
+  if (!section) return;
+
+
+  /* =========================================
+     ATC FORMS
+     ========================================= */
+
+  var forms = section.querySelectorAll(
+    '.fav-atc-form'
+  );
+
+
+  forms.forEach(function (form) {
+
+    form.addEventListener('submit', function (event) {
+
+      event.preventDefault();
+
+
+      var button = form.querySelector('button');
+
+      if (!button) return;
+
+
+      /* Prevent double click */
+
+      if (button.classList.contains('loading')) {
+        return;
+      }
+
+
+      var originalHTML = button.innerHTML;
+
+
+      button.classList.add('loading');
+      button.disabled = true;
+
+
+      var formData = new FormData(form);
+
+
+      /* =========================================
+         ASK SHOPIFY FOR UPDATED SECTIONS
+         ========================================= */
+
+      formData.append(
+        'sections',
+        'cart-drawer,cart-icon-bubble'
+      );
+
+      formData.append(
+        'sections_url',
+        window.location.pathname
+      );
+
+
+      /* =========================================
+         AJAX ADD TO CART
+         ========================================= */
+
+      fetch(
+        window.routes && window.routes.cart_add_url
+          ? window.routes.cart_add_url
+          : '/cart/add.js',
+        {
+          method: 'POST',
+
+          headers: {
+            'Accept': 'application/json'
+          },
+
+          body: formData
+        }
+      )
+
+
+      /* =========================================
+         RESPONSE
+         ========================================= */
+
+      .then(function (response) {
+
+        if (!response.ok) {
+
+          return response.json().then(function (data) {
+
+            throw new Error(
+              data.description ||
+              'Add to cart failed'
+            );
+
+          });
+
+        }
+
+        return response.json();
+
+      })
+
+
+      .then(function (response) {
+
+        console.log(
+          'CRESTE FAVOURITES: Cart AJAX response',
+          response
+        );
+
+
+        /* =========================================
+           1. UPDATE CART DRAWER
+           ========================================= */
+
+        var drawerHTML =
+          response.sections &&
+          response.sections['cart-drawer'];
+
+
+        var currentDrawer =
+          document.querySelector('cart-drawer');
+
+
+        if (
+          drawerHTML &&
+          currentDrawer
+        ) {
+
+          var parser =
+            new DOMParser();
+
+
+          var drawerDoc =
+            parser.parseFromString(
+              drawerHTML,
+              'text/html'
+            );
+
+
+          var newDrawer =
+            drawerDoc.querySelector(
+              'cart-drawer'
+            );
+
+
+          if (newDrawer) {
+
+            /*
+             * Save ATC button.
+             * Dawn focus management ke liye.
+             */
+
+            var opener = button;
+
+
+            /*
+             * Replace old drawer
+             * with freshly rendered drawer.
+             */
+
+            currentDrawer.replaceWith(
+              newDrawer
+            );
+
+
+            /*
+             * Get new drawer.
+             */
+
+            var updatedDrawer =
+              document.querySelector(
+                'cart-drawer'
+              );
+
+
+            /*
+             * Open NEW drawer.
+             */
+
+            if (
+              updatedDrawer &&
+              typeof updatedDrawer.open === 'function'
+            ) {
+
+              updatedDrawer.open(
+                opener
+              );
+
+            }
+
+            else if (updatedDrawer) {
+
+              /*
+               * Fallback
+               */
+
+              updatedDrawer.classList.remove(
+                'is-empty'
+              );
+
+              updatedDrawer.classList.add(
+                'active'
+              );
+
+              updatedDrawer.setAttribute(
+                'open',
+                ''
+              );
+
+            }
+
+          }
+
+        }
+
+
+        /* =========================================
+           2. UPDATE HEADER CART BUBBLE
+           ========================================= */
+
+        updateFavCartBubble(
+          response.sections &&
+          response.sections['cart-icon-bubble']
+        );
+
+
+        /* =========================================
+           3. ALSO SYNC CART COUNT FROM CART.JS
+           =========================================
+           
+           Ye extra safety hai.
+           
+           Agar kisi reason se Shopify ka
+           cart-icon-bubble section markup
+           different aaye, to actual cart
+           quantity se bubble ko sync kar denge.
+           ========================================= */
+
+        syncFavCartBubbleFromCart();
+
+      })
+
+
+      /* =========================================
+         ERROR
+         ========================================= */
+
+      .catch(function (error) {
+
+        console.error(
+          'CRESTE FAVOURITES Cart AJAX Error:',
+          error
+        );
+
+      })
+
+
+      /* =========================================
+         FINALLY
+         ========================================= */
+
+      .finally(function () {
+
+        button.classList.remove(
+          'loading'
+        );
+
+        button.disabled = false;
+
+        button.innerHTML =
+          originalHTML;
+
+      });
+
+    });
+
+  });
+
+
+  /* =========================================
+     UPDATE DAWN HEADER CART BUBBLE
+     ========================================= */
+
+  function updateFavCartBubble(
+    bubbleHTML
+  ) {
+
+    if (!bubbleHTML) {
+
+      console.warn(
+        'CRESTE FAVOURITES: cart-icon-bubble section missing'
+      );
+
+      return;
+
+    }
+
+
+    var oldBubble =
+      document.querySelector(
+        '#cart-icon-bubble'
+      );
+
+
+    if (!oldBubble) {
+
+      console.warn(
+        'CRESTE FAVOURITES: #cart-icon-bubble not found'
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Dawn 15.5.0 me
+     *
+     * #cart-icon-bubble
+     *
+     * actual <a> element hota hai.
+     *
+     * Shopify ka cart-icon-bubble section
+     * uske andar ka rendered HTML deta hai.
+     *
+     * Isliye poora <a> replace nahi karna.
+     *
+     * Sirf INNER HTML replace karna hai.
+     */
+
+
+    var parser =
+      new DOMParser();
+
+
+    var bubbleDoc =
+      parser.parseFromString(
+        bubbleHTML,
+        'text/html'
+      );
+
+
+    /*
+     * Response me section wrapper ho sakta hai.
+     */
+
+    var sectionWrapper =
+      bubbleDoc.querySelector(
+        '[id^="shopify-section"]'
+      );
+
+
+    var newContent;
+
+
+    if (sectionWrapper) {
+
+      newContent =
+        sectionWrapper.innerHTML;
+
+    }
+
+    else {
+
+      newContent =
+        bubbleDoc.body.innerHTML;
+
+    }
+
+
+    if (!newContent) {
+
+      console.warn(
+        'CRESTE FAVOURITES: Cart bubble HTML empty'
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * Keep existing #cart-icon-bubble
+     * and only update its contents.
+     */
+
+    oldBubble.innerHTML =
+      newContent;
+
+
+    /*
+     * Remove stale aria state if necessary.
+     */
+
+    oldBubble.removeAttribute(
+      'aria-disabled'
+    );
+
+  }
+
+
+  /* =========================================
+     EXTRA CART COUNT SYNC
+     ========================================= */
+
+  function syncFavCartBubbleFromCart() {
+
+    fetch(
+      (window.routes && window.routes.cart_url)
+        ? window.routes.cart_url + '.js'
+        : '/cart.js',
+      {
+        method: 'GET',
+
+        headers: {
+          'Accept': 'application/json'
+        },
+
+        cache: 'no-store'
+      }
+    )
+
+    .then(function (response) {
+
+      if (!response.ok) {
+        throw new Error(
+          'Cart sync failed'
+        );
+      }
+
+      return response.json();
+
+    })
+
+    .then(function (cart) {
+
+      var bubble =
+        document.querySelector(
+          '#cart-icon-bubble'
+        );
+
+      if (!bubble) return;
+
+
+      var quantity =
+        Number(cart.item_count || 0);
+
+
+      /*
+       * Dawn cart count element.
+       */
+
+      var countBubble =
+        bubble.querySelector(
+          '.cart-count-bubble'
+        );
+
+
+      /*
+       * Cart empty hai.
+       */
+
+      if (quantity <= 0) {
+
+        if (countBubble) {
+          countBubble.remove();
+        }
+
+        return;
+
+      }
+
+
+      /*
+       * Existing count bubble hai.
+       */
+
+      if (countBubble) {
+
+        var countSpans =
+          countBubble.querySelectorAll(
+            'span'
+          );
+
+
+        if (countSpans.length) {
+
+          /*
+           * Dawn me usually:
+           *
+           * first span = visible count
+           * second span = visually hidden
+           */
+
+          countSpans[0].textContent =
+            quantity;
+
+          if (countSpans[1]) {
+
+            countSpans[1].textContent =
+              quantity + ' items';
+
+          }
+
+        }
+
+        else {
+
+          countBubble.textContent =
+            quantity;
+
+        }
+
+        return;
+
+      }
+
+
+      /*
+       * Bubble missing hai.
+       *
+       * Create new Dawn-style bubble.
+       */
+
+      var newCountBubble =
+        document.createElement('div');
+
+
+      newCountBubble.className =
+        'cart-count-bubble';
+
+
+      newCountBubble.innerHTML =
+        '<span aria-hidden="true">' +
+        quantity +
+        '</span>' +
+        '<span class="visually-hidden">' +
+        quantity +
+        ' items' +
+        '</span>';
+
+
+      bubble.appendChild(
+        newCountBubble
+      );
+
+    })
+
+    .catch(function (error) {
+
+      console.warn(
+        'CRESTE FAVOURITES: Cart bubble sync failed',
+        error
+      );
+
+    });
+
+  }
+
+})();
+</script>
+{% schema %}
+{
+  "name": "Creste Favourites",
+  "tag": "section",
+  "settings": [ {"type":"image_picker","id":"background","label":"Background image"},{"type":"image_picker","id":"bg_mobile","label":"Mobile Background image"}, {"type":"color","id":"fallback_bg","label":"Fallback background","default":"#F5C518"}, {"type":"range","id":"overlay","min":0,"max":70,"step":5,"unit":"%","label":"Background overlay","default":0}, {"type":"text","id":"heading","label":"Heading","default":"The"},{"type":"text","id":"heading_italic","label":"Heading Italic","default":"Favorites"}, {"type":"text","id":"subtitle","label":"Subtitle"}, {"type":"color","id":"heading_color","label":"Heading color","default":"#2B1702"}, {"type":"collection","id":"collection","label":"Collection"}, {"type":"range","id":"count","min":2,"max":20,"step":1,"label":"Products to show","default":10}, {"type":"range","id":"card_width","min":180,"max":320,"step":10,"unit":"px","label":"Card width","default":250}, {"type":"text","id":"default_rating","label":"Default rating","default":"4.9"}, {"type":"text","id":"badge_tag","label":"Badge product tag","default":"top pick"}, {"type":"text","id":"badge_text","label":"Badge text","default":"TOP PICK"}, {"type":"text","id":"button_label","label":"Button label","default":"Add To Cart"} ],
+  "presets": [ {"name":"Creste Favourites"} ]
+}
+{% endschema %}

@@ -1,0 +1,940 @@
+{% render 'creste-tokens' %}
+{%- assign ages = section.blocks | where: 'type', 'age' -%}
+{%- assign cats = section.blocks | where: 'type', 'category' -%}
+{%- assign navs = section.blocks | where: 'type', 'nav' -%}
+<style>
+#creste-hd-{{ section.id }}{background:{{ section.settings.bg }};padding:18px 12px 0px 12px;{% if section.settings.sticky %}position:sticky;top:0;{% else %}position:fixed;{% endif %}z-index:9999; width: 100%;}
+#creste-hd-{{ section.id }} .hd-bar{background:{{ section.settings.bar_bg }};border-radius:24px;border-bottom:4px solid {{ section.settings.accent }};display:flex;flex-wrap:nowrap;align-items:center;gap:12px;padding:8px 14px;max-width:1440px;margin:0 auto;box-shadow:0 6px 16px rgba(0,0,0,.12);height:70px; opacity: 0.99;}
+#creste-hd-{{ section.id }} .hd-burger{display:none;background:none;border:none;cursor:pointer;color:#2B1702;padding:6px;flex:0 0 auto;align-items:center;}
+#creste-hd-{{ section.id }} .hd-logo{display:flex;align-items:center;text-decoration:none;flex:0 0 auto;}
+#creste-hd-{{ section.id }} .hd-logo img{height:auto;width:130px;display:block;}
+#creste-hd-{{ section.id }} .hd-name{font-family:'Fredoka One',cursive;font-size:24px;color:#2B1702;white-space:nowrap;}
+#creste-hd-{{ section.id }} .hd-nav{display:flex;flex-wrap:nowrap;align-items:center;gap:22px;flex:1 1 auto;justify-content:center;}
+#creste-hd-{{ section.id }} .hd-nav a{color:#00000099;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:18px;white-space:nowrap;}
+#creste-hd-{{ section.id }} .hd-shoptrigger{cursor:pointer;display:inline-flex;align-items:center;gap:4px;}
+#creste-hd-{{ section.id }} .hd-quizw{position:relative;display:inline-block;flex:0 0 auto;}
+#creste-hd-{{ section.id }} .hd-rec{position:absolute;top:-21px;left:27%;transform: rotate(-3deg) translateX(-50%);background:{{ section.settings.rec_bg }};color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:9px;padding:2px 8px;border-radius:9999px;white-space:nowrap;}
+#creste-hd-{{ section.id }} .hd-quiz{background:{{ section.settings.accent }};color:#2B1702;border-radius:9999px;padding:9px 16px;font-family:'Quicksand',sans-serif;font-weight:800;font-size:14px !important;text-decoration:none;white-space:nowrap;}
+#creste-hd-{{ section.id }} .hd-right{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
+#creste-hd-{{ section.id }} .hd-ic{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;position:relative;flex:0 0 auto;}
+#creste-hd-{{ section.id }} .hd-ic svg{width:18px;height:18px;}
+#creste-hd-{{ section.id }} .hd-badge{position:absolute;top:-4px;right:-4px;background:var(--creste-teal);color:#fff;border:2px solid {{ section.settings.bar_bg }};border-radius:9999px;min-width:20px;height:20px;font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+#creste-hd-{{ section.id }} .hd-mega{display:none;position:absolute;left:0;right:0;top:100%;z-index:40;padding:0px 12px 16px;}
+#creste-hd-{{ section.id }} .hd-mega.open{display:block;}
+#creste-hd-{{ section.id }} .hd-mega-in{max-width:1440px;margin:0 auto;background:#fff;border-radius:22px;box-shadow:0 24px 50px rgba(0,0,0,.2);display:grid;grid-template-columns:0.5fr 1fr 1fr;overflow:hidden;}
+#creste-hd-{{ section.id }} .hd-mcol{padding: 26px 28px 26px 36px;}
+{% comment %} #creste-hd-{{ section.id }} .hd-mcol+.hd-mcol{border-left:1px solid #f0ece3;} {% endcomment %}
+#creste-hd-{{ section.id }} .hd-mtitle{margin:0 0 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:18px;color:#2B1702;}
+#creste-hd-{{ section.id }} .hd-agelist{display:flex;flex-direction:column;gap:16px;}
+#creste-hd-{{ section.id }} .hd-agepill{display:inline-flex;align-items:center;gap:6px;border-radius:24px;padding:12px 16px;text-decoration:none;}
+#creste-hd-{{ section.id }} .hd-agepill b{font-family:'Nunito',sans-serif;font-weight:700;font-size:24px;color:#2B1702;line-height: 32px;}
+#creste-hd-{{ section.id }} .hd-agepill span{font-family:'Poppins',sans-serif;font-size:12px;color:#6b6258;}
+#creste-hd-{{ section.id }} .hd-catgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+#creste-hd-{{ section.id }} .hd-catitem{display:flex;gap:11px;align-items:center;text-decoration:none;padding: 1rem;}
+#creste-hd-{{ section.id }} .hd-catthumb{width:54px;height:54px;border-radius:14px;overflow:hidden;flex:0 0 auto;background:#f2ede4;}
+#creste-hd-{{ section.id }} .hd-catthumb img,#creste-hd-{{ section.id }} .hd-catthumb svg{width:100%;height:100%;object-fit:cover;}
+#creste-hd-{{ section.id }} .hd-catname{display:block;font-family:'Quicksand',sans-serif;font-weight:700;font-size:14px;color:#2B1702;}
+#creste-hd-{{ section.id }} .hd-catsub{display:block;font-family:'Poppins',sans-serif;font-size:11px;color:#6b6258;}
+#creste-hd-{{ section.id }} .hd-na{position:relative;overflow:hidden;background:url('{{ section.settings.bg_image | image_url: width: 1200 }}') no-repeat,{{ section.settings.na_bg }};padding:12%;color:#fff;display:flex;flex-direction:column;justify-content:center;background-size:cover;}
+{% comment %} #creste-hd-{{ section.id }} .hd-na::before{content:'';position:absolute;top:-70px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none;} {% endcomment %}
+{% comment %} #creste-hd-{{ section.id }} .hd-na::after{content:'';position:absolute;bottom:-80px;left:-60px;width:220px;height:220px;border-radius:50%;background:rgba(0,0,0,.05);pointer-events:none;} {% endcomment %}
+#creste-hd-{{ section.id }} .hd-na>*{position:relative;z-index:1;}
+#creste-hd-{{ section.id }} .hd-na h4{margin:0 0 18px;font-weight:400;font-family: 'Fredoka One', sans-serif;font-size:32px;color: #fff;}
+#creste-hd-{{ section.id }} .hd-nacard{background:#fff;border-radius:16px;color:#2B1702;display:flex;gap:12px;}
+#creste-hd-{{ section.id }} .hd-naimg{width:44%;flex:0 0 auto;border-radius:12px;overflow:hidden;background:#f6efe3;aspect-ratio:1/1;}
+#creste-hd-{{ section.id }} .hd-naimg img,#creste-hd-{{ section.id }} .hd-naimg svg{width:100%;height:100%;object-fit:cover;}
+#creste-hd-{{ section.id }} .hd-nabody{flex:1;min-width:0;display:flex;flex-direction:column;gap:0px;padding: 10px;}
+#creste-hd-{{ section.id }} .hd-narate{display:inline-flex;align-items:center;gap:4px;background:#FBE9C0;border-radius:9999px;padding:2px 9px;font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:12px;color:#2B1702;align-self:flex-start;}
+#creste-hd-{{ section.id }} .hd-nat{margin:2px 0 0;font-family:'Nunito',sans-serif;font-weight:800;font-size:20px;color:#2B1702;line-height: 120%;}
+#creste-hd-{{ section.id }} .hd-nap{display: flex !important; gap: 5px !important; align-items: center;}
+#creste-hd-{{ section.id }} .hd-nap b{font-family:'Nunito Sans',sans-serif;font-weight:900;font-size:16px;color:var(--creste-orange);}
+#creste-hd-{{ section.id }} .hd-nabody .hd-card-header{
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+#creste-hd-{{ section.id }} .hd-nabody .hd-product-tag{
+  text-transform: uppercase;
+  background: #ff6279;
+  border-radius: 999px;
+  font-size: 10px;
+  color: #fff;
+  font-weight: 700;
+  padding: 5px 12px;
+}
+#creste-hd-{{ section.id }} .hd-nabody .hd-product-tag em{
+  font-style: normal;
+  color: #FFCE00;
+}
+#creste-hd-{{ section.id }} .hd-nap s{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: #9c9997;
+    font-weight: 500;
+    text-decoration: line-through;
+}
+#creste-hd-{{ section.id }} .hd-nap i {
+  font-size: 14px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0px;
+  color: #5BAD6F;
+}
+#creste-hd-{{ section.id }} .hd-nacart{margin-top:8px;background:var(--creste-orange);color:#fff;border:none;border-radius:9999px;height:38px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;}
+
+/* ===== Mobile drawer (Figma node 782:1559) ===== */
+#creste-hd-{{ section.id }} .hd-drawer{position:fixed;inset:0;z-index:10000;display:none;}
+#creste-hd-{{ section.id }} .hd-drawer.open{display:block;}
+#creste-hd-{{ section.id }} .hd-drawer__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45);}
+#creste-hd-{{ section.id }} .hd-drawer__panel{position:absolute;top:0;left:0;bottom:0;width:86%;max-width:340px;background:#fff;overflow-y:auto;font-family:'Poppins',sans-serif;transform:translateX(-100%);transition:transform .28s ease;display:flex;flex-direction:column;padding-bottom:24px;}
+#creste-hd-{{ section.id }} .hd-drawer.open .hd-drawer__panel{transform:translateX(0);}
+#creste-hd-{{ section.id }} .hd-d-top{display:flex;align-items:center;justify-content:space-between;padding:16px;}
+#creste-hd-{{ section.id }} .hd-d-top img{max-height:56px;width:auto;}
+#creste-hd-{{ section.id }} .hd-d-close{width:34px;height:34px;border-radius:50%;border:0;background:#f1efee;color:#2B1702;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+#creste-hd-{{ section.id }} .hd-d-gift{display:flex;align-items:center;gap:8px;margin:12px 10px 12px;padding:10px;background:rgba(125,74,199,.10);border-radius:14px;text-decoration:none;}
+#creste-hd-{{ section.id }} .hd-d-gift .ic img{ border-radius: 50%;width: 100%;}
+#creste-hd-{{ section.id }} .hd-d-gift .tx{flex:1;min-width:0;display:flex;flex-direction:column;}
+#creste-hd-{{ section.id }} .hd-d-gift .t1{font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;color:#2B1702;letter-spacing: 0px;line-height: 120%;}
+#creste-hd-{{ section.id }} .hd-d-gift .t2{font-size:11px;color:#8B72BE;letter-spacing: 0px;line-height: 120%;}
+#creste-hd-{{ section.id }} .hd-d-gift .qb{background:{{ section.settings.na_bg | default: '#7d4ac7' }};background:#7d4ac7;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;padding:8px;border-radius:10px;text-align:center;line-height:1.2;max-width:74px;}
+#creste-hd-{{ section.id }} .hd-d-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:16px;color:#2B1702;text-decoration:none;border-top:1px solid #f0ece8;}
+#creste-hd-{{ section.id }} .hd-d-acc{/*border-top:1px solid #f0ece8;*/}
+#creste-hd-{{ section.id }} .hd-d-acc>summary{list-style:none;cursor:pointer;border-top:0;}
+#creste-hd-{{ section.id }} .hd-d-acc>summary::-webkit-details-marker{display:none;}
+#creste-hd-{{ section.id }} .hd-d-acc .cv{transition:transform .2s ease;}
+#creste-hd-{{ section.id }} .hd-d-acc[open] .cv{transform:rotate(180deg);}
+#creste-hd-{{ section.id }} .hd-d-body{padding:0 16px 12px;}
+#creste-hd-{{ section.id }} .hd-d-label{margin:8px 0 10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7a6a60;}
+#creste-hd-{{ section.id }} .hd-d-ages{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px;}
+#creste-hd-{{ section.id }} .hd-d-age{display:flex;align-items:center;justify-content:center;padding:13px 6px;border-radius:12px;font-weight:600;font-size:13px;color:#2B1702;text-decoration:none;text-align:center;}
+#creste-hd-{{ section.id }} .hd-d-acts{display:flex;flex-wrap:wrap;gap:10px;}
+#creste-hd-{{ section.id }} .hd-d-act{padding:7px 15px;border-radius:9999px;font-weight:600;font-size:13px;color:#2B1702;text-decoration:none;}
+#creste-hd-{{ section.id }} .hd-d-na{position:relative;margin:16px 16px 0;background:{{ section.settings.na_bg }};border-radius:18px;padding:16px 12px 14px;overflow:hidden;}
+{% comment %} #creste-hd-{{ section.id }} .hd-d-na::before{content:'';position:absolute;top:-46px;right:-34px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none;} {% endcomment %}
+{% comment %} #creste-hd-{{ section.id }} .hd-d-na::after{content:'';position:absolute;bottom:-54px;left:-40px;width:150px;height:150px;border-radius:50%;background:rgba(0,0,0,.05);pointer-events:none;} {% endcomment %}
+#creste-hd-{{ section.id }} .hd-d-na>*{position:relative;z-index:1;}
+#creste-hd-{{ section.id }} .hd-d-na h4{text-align:center;font-family:'Nunito',sans-serif;font-weight:800;font-size:18px;color:#fff;margin:0 0 10px;}
+#creste-hd-{{ section.id }} .hd-d-nacard{display:flex;gap:10px;background:#fff;border-radius:12px;padding:8px;}
+#creste-hd-{{ section.id }} .hd-d-namedia{flex:0 0 64px;height:64px;border-radius:8px;overflow:hidden;background:#f6f3ef;display:block;}
+#creste-hd-{{ section.id }} .hd-d-namedia img,#creste-hd-{{ section.id }} .hd-d-namedia svg{width:100%;height:100%;object-fit:cover;}
+#creste-hd-{{ section.id }} .hd-d-nainfo{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;}
+#creste-hd-{{ section.id }} .hd-d-naname{font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;color:#2B1702;text-decoration:none;line-height:1.2;}
+#creste-hd-{{ section.id }} .hd-d-naprice{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px;}
+#creste-hd-{{ section.id }} .hd-d-naprice b{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:var(--creste-orange);}
+#creste-hd-{{ section.id }} .hd-d-nasub{font-family:'Poppins',sans-serif;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:#8a7c70;margin-top:1px;}
+#creste-hd-{{ section.id }} .hd-d-naprice s{font-family:'Nunito',sans-serif;font-size:12px;color:#9a8d80;}
+#creste-hd-{{ section.id }} .hd-d-nadisc{font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;color:#2e9e5b;}
+#creste-hd-{{ section.id }} .hd-d-nabtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--creste-orange);color:#fff;border-radius:9999px;padding:12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:15px;text-decoration:none;margin-top:10px;}
+#creste-hd-{{ section.id }} .cp-cart{
+    display: flex;
+    {% comment %} justify-content: center; {% endcomment %}
+}
+#creste-hd-{{ section.id }} .cp-cart button{
+  padding: 12px 32px;
+    background: #F4793A;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+}
+@media(max-width:1340px){
+  #creste-hd-{{ section.id }} .hd-na{
+    padding: 8%;
+  }
+}
+@media(max-width:1024px){#creste-hd-{{ section.id }} .hd-nav{display:none;}#creste-hd-{{ section.id }} .hd-burger{display:flex;}#creste-hd-{{ section.id }} .hd-logo{flex:1 1 auto;justify-content:left;}#creste-hd-{{ section.id }} .hd-logo img{width: 121px;}#creste-hd-{{ section.id }} .hd-mega{display:none !important;}
+ #creste-hd-{{ section.id }} .hd-d-top{
+  border-bottom: 1px solid #0000001A;
+ }
+ #creste-hd-{{ section.id }}{
+  padding: 10px 12px 0px 12px;
+ }
+ #creste-hd-{{ section.id }} .ic{
+   width: 34px;
+   height: 34px;
+ }
+ #creste-hd-{{ section.id }} .hd-d-row{
+  font-size: 15px;
+ }
+ #creste-hd-{{ section.id }} .hd-d-row span{
+    font-size: 15px;
+    font-family: 'Nunito', sans-sarif;
+ }
+ #creste-hd-{{ section.id }} .hd-d-body > div{
+    border-bottom: 1px solid #2B17021A;
+    border-left: 1px solid #2B17021A;
+    padding: 1rem;
+ }
+ #creste-hd-{{ section.id }} .hd-d-act{
+  font-size: 11px;
+ }
+ #creste-hd-{{ section.id }} .hd-d-label{
+  margin-top: 0px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  font-family: 'Nunito', sans-sarif;
+ }
+
+  #creste-hd-{{ section.id }} .fav-cart{
+    margin-top: auto;
+    padding-top: 4px;
+  }
+  #creste-hd-{{ section.id }} .cp-cart button{
+    margin-top: 0px;
+    font-size: 16px;
+    letter-spacing: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  #creste-hd-{{ section.id }} .cp-cart{
+    width: 100%;
+  }
+  #creste-hd-{{ section.id }} .cp-cart form{
+    width: 100%;
+  }
+  #creste-hd-{{ section.id }}  .hd-mob-bottom{
+    position:relative;
+    {% comment %} overflow:hidden; {% endcomment %}
+    background:url('{{ section.settings.bg_image_mob | image_url: width: 600 }}') no-repeat,{{ section.settings.na_bg }};
+    padding:5%;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    background-size:cover;
+  }
+  #creste-hd-{{ section.id }}  .hd-mob-bottom h4{
+    text-align: center;
+    font-family: 'Fredoka One';
+    font-size: 20px;
+    line-height: 120%;
+    color: #fff;
+    margin: 0;
+  }
+  #creste-hd-{{ section.id }} .hd-d-na{
+    margin: 16px 0px;
+    padding: 16px 6px 14px ;
+  }
+  #creste-hd-{{ section.id }} .product-sub-heading{
+  display: flex;
+  gap: 7px;
+  color: #574239;
+}
+#creste-hd-{{ section.id }} .product-sub-heading p{
+  font-size: 11px !important;
+  line-height: 20px;
+  margin:0;
+  font-family: 'Poppins', sans-sarif;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+}
+#creste-hd-{{ section.id }} .hd-bar{
+  height: 70px !important;
+  border-bottom: 2px solid #ffce00;
+}
+ 
+}
+ #creste-hd-{{ section.id }} .product-sub-heading{
+    display: flex !important;
+    gap: 7px !important;
+  }
+  #creste-hd-{{ section.id }} .product-sub-heading p{
+    font-size: 13px;
+    line-height: 20px;
+    margin:0;
+    font-family: 'Poppins', sans-sarif;
+    font-weight: 500;
+    letter-spacing: 1.4px;
+  }
+#creste-hd-{{ section.id }} .hd-mob-product-card{
+  display: flex;
+  flex-direction: column;
+  justify-content:
+}
+#creste-hd-{{ section.id }} .mob-product-card-details{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+}
+</style>
+<div id='creste-hd-{{ section.id }}' class='creste-section'>
+<div class='hd-bar'>
+<button type='button' class='hd-burger' aria-label='Menu' onclick="document.getElementById('hdm-{{ section.id }}').classList.add('open');document.body.style.overflow='hidden';"><svg viewBox='0 0 24 24' width='26' height='26' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><path d='M3 6h18M3 12h18M3 18h18'/></svg></button>
+<a href='{{ routes.root_url }}' class='hd-logo'>{% if section.settings.logo != blank %}<img src='{{ section.settings.logo | image_url: width: 280 }}' alt='{{ shop.name | escape }}'>{% else %}<span class='hd-name'>Creste</span>{% endif %}</a>
+<nav class='hd-nav'>
+<span class='hd-shop'><a class='hd-shoptrigger' href='{{ section.settings.shop_link | default: '/collections/all' }}'>{{ section.settings.shop_label }}&nbsp {{ 'icon-arrow-down.svg' | inline_asset_content }}</a></span>
+{% for block in navs %}<a href='{{ block.settings.link | default: '#' }}' {{ block.shopify_attributes }}>{{ block.settings.label }}</a>{% endfor %}
+{% if section.settings.quiz_label != blank %}<span class='hd-quizw'>{% if section.settings.rec_label != blank %}<span class='hd-rec'>{{ section.settings.rec_label }}</span>{% endif %}<a class='hd-quiz' href='{{ section.settings.quiz_link | default: '#' }}'>{{ section.settings.quiz_label }}</a></span>{% endif %}
+</nav>
+<div class='hd-right'>
+<a class='hd-ic' style='background:rgba(255,206,0,.2);color:#B8860B;' href='{{ routes.search_url }}' aria-label='Search'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M21 21l-4.3-4.3'/></svg></a>
+<a class='hd-ic' id="cart-icon-bubble" style='background:rgba(244,121,58,.2);color:#F4793A;' href='{{ routes.cart_url }}' aria-label='Cart'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='20' r='1.4'/><circle cx='18' cy='20' r='1.4'/><path d='M2 3h3l2.4 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6'/></svg>{% if cart.item_count > 0 %}<span class='hd-badge'>{{ cart.item_count }}</span>{% endif %}</a>
+<a class='hd-ic' style='background:rgba(0,103,126,.2);color:#00677E;' href='{% if shop.customer_accounts_enabled %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}' aria-label='Account'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='8' r='4'/><path d='M4 21c0-4 4-6.5 8-6.5s8 2.5 8 6.5'/></svg></a>
+</div>
+</div>
+<div class='hd-mega'>
+<div class='hd-mega-in'>
+<div class='hd-mcol'><h4 class='hd-mtitle'>{{ section.settings.age_heading }}</h4><div class='hd-agelist'>{% for block in ages %}<a class='hd-agepill' href='{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}' style='background:{{ block.settings.tint }};' {{ block.shopify_attributes }}><b style='color:{{ block.settings.text-color }};'>{{ block.settings.label }}</b><span style='color:{{ block.settings.text-color }};'>{{ block.settings.suffix }}</span></a>{% endfor %}</div></div>
+<div class='hd-mcol'><h4 class='hd-mtitle'>{{ section.settings.cat_heading }}</h4><div class='hd-catgrid'>{% for block in cats %}<a class='hd-catitem' href='{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}' {{ block.shopify_attributes }}><span class='hd-catthumb'>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 100 }}' alt=''>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</span><span><span class='hd-catname'>{{ block.settings.name }}</span><span class='hd-catsub'>{{ block.settings.subtitle }}</span></span></a>{% endfor %}</div></div>
+<div class='hd-na'><h4>{{ section.settings.na_heading }}</h4> {% assign p = all_products[section.settings.na_product] %}<div class='hd-nacard'>{% if p != blank %}<a class='hd-naimg' href='{{ p.url }}'>{% if p.featured_image %}<img src='{{ p.featured_image | image_url: width: 300 }}' alt='{{ p.title | escape }}'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a><div class='hd-nabody'><div class="hd-card-header"><span class='hd-narate'>&#9733; {{ p.metafields.reviews.rating.value | default: '4.9' }}</span>{% if p.metafields.custom.product_sub_description != blank %}<span class='hd-product-tag'><em>&#9733;</em> {{ p.metafields.custom.product_sub_description }}</span>{% endif %}</div><p class='hd-nat'>{{ p.title }}</p>
+<div class="product-sub-heading">{% if p.metafields.custom.age_group != blank %}<p>{{ p.metafields.custom.age_group }}</p>{% endif %}{% if p.metafields.custom.product_sub_description != blank %}<p>•&nbsp;&nbsp;{{ p.metafields.custom.product_sub_description }}</p>{% endif %}</div>
+<div class='hd-nap'><b>{{ p.price | money_without_trailing_zeros }}</b>{% if p.compare_at_price > p.price %}<s>{{ p.compare_at_price | money_without_currency | replace: '.00', '' }}</s>{% assign disc = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price %}<i>{{ disc }}% off</i>{% endif %}</div>
+{% comment %} <div class='cp-cart'><form method='post' action='/cart/add'><input type='hidden' name='id' value='{{ p.selected_or_first_available_variant.id }}'><button type='submit'>{{ 'icon-add-to-cart.svg' | inline_asset_content }} Add To Cart</button></form></div> {% endcomment %}
+ <div class="cp-cart">
+  <form
+    class="cp-atc-form"
+    method="post"
+    action="/cart/add"
+    data-product-id="{{ p.selected_or_first_available_variant.id }}"
+  >
+    <input
+      type="hidden"
+      name="id"
+      value="{{ p.selected_or_first_available_variant.id }}"
+    >
+
+    <input
+      type="hidden"
+      name="quantity"
+      value="1"
+    >
+
+    <button type="submit">
+      {{ 'icon-add-to-cart.svg' | inline_asset_content }}
+      <span>Add To Cart</span>
+    </button>
+  </form>
+</div>
+{% comment %} <a class='hd-nacart' href='{{ p.url }}'>&#128722; View</a> {% endcomment %}
+</div>{% else %}<span class='hd-naimg'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span><div class='hd-nabody'><span class='hd-narate'>&#9733; 4.9</span><p class='hd-nat'>Bouquet Candle Kit</p><div class='hd-nap'><b>Rs. 1,299</b></div><a class='hd-nacart' href='#'>&#128722; View</a></div>{% endif %}</div></div>
+</div>
+</div>
+
+{%- comment -%} ===== Mobile drawer (redesigned to match Figma 782:1559) ===== {%- endcomment -%}
+<div class='hd-drawer' id='hdm-{{ section.id }}' aria-hidden='true'>
+<div class='hd-drawer__backdrop js-hd-close'></div>
+<aside class='hd-drawer__panel' role='dialog' aria-label='Menu'>
+<div class='hd-d-top'>
+<a href='{{ routes.root_url }}' class='hd-logo'>{% if section.settings.logo != blank %}<img src='{{ section.settings.logo | image_url: width: 240 }}' alt='{{ shop.name | escape }}'>{% else %}<span class='hd-name'>Creste</span>{% endif %}</a>
+<button type='button' class='hd-d-close js-hd-close' aria-label='Close menu'><svg width='16' height='16' viewBox='0 0 24 24' fill='none'><path d='M6 6l12 12M18 6L6 18' stroke='currentColor' stroke-width='2' stroke-linecap='round'/></svg></button>
+</div>
+{% if section.settings.quiz_label != blank %}
+  <a href='{{ section.settings.quiz_link | default: '#' }}' class='hd-d-gift'>
+    <span class='ic'><img src='{{ section.settings.quiz_logo | image_url: width: 50  }}'></span>
+    <span class='tx'>
+      <span class='t1'>Not sure what to pick?</span>
+      <span class='t2'>1-min Gift Finder, perfect kit</span>
+    </span>
+    <span class='qb'>{{ section.settings.quiz_label }}</span>
+  </a>
+{% endif %}
+<details class='hd-d-acc' open>
+<summary class='hd-d-row'><span>{{ section.settings.shop_label | default: 'Shop' }}</span><svg class='cv' width='18' height='18' viewBox='0 0 24 24' fill='none'><path d='M6 9l6 6 6-6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></summary>
+<div class='hd-d-body'>
+<div>
+<p class='hd-d-label'>{{ section.settings.age_heading | default: 'By Age' }}</p>
+<div class='hd-d-ages'>{% for block in ages %}<a class='hd-d-age' href='{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}' style='background:{{ block.settings.tint | default: '#f2ede4' }};'>{{ block.settings.label }}</a>{% endfor %}</div>
+</div>
+<div>
+<p class='hd-d-label'>{{ section.settings.cat_heading | default: 'By Activity' }}</p>
+<div class='hd-d-acts'>{% assign tints = 'e3f0fb,fdece0,ece7fb,e3f5e9,fde4ee,fbf3df' | split: ',' %}{% for block in cats %}{% assign ci = forloop.index0 | modulo: 6 %}<a class='hd-d-act' href='{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}' style='background:#{{ tints[ci] }};'>{{ block.settings.name }}</a>{% endfor %}</div>
+</div>
+</div>
+</details>
+<nav>{% for block in navs %}<a class='hd-d-row' href='{{ block.settings.link | default: '#' }}'>{{ block.settings.label }}</a>{% endfor %}</nav>
+{% assign dp = all_products[section.settings.na_product] %}
+<div class='hd-mob-bottom'>
+<h4>{{ section.settings.na_heading | default: 'New Arrivals' }}</h4>
+<div class='hd-d-na'>
+
+<div class='hd-mob-product-card'>
+<div class='mob-product-card-details'>
+<div class='hd-d-nacard'>
+{% if dp != blank %}
+
+<a href='{{ dp.url }}' class='hd-d-namedia'>{% if dp.featured_image %}<img src='{{ dp.featured_image | image_url: width: 180 }}' alt='{{ dp.title | escape }}'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a>
+<div class='hd-d-nainfo'>
+<a href='{{ dp.url }}' class='hd-d-naname'>{{ dp.title }}</a>
+<div class="product-sub-heading">{% if dp.metafields.custom.age_group != blank %}<p>{{ dp.metafields.custom.age_group }}</p>{% endif %}{% if dp.metafields.custom.product_sub_description != blank %}<p>•&nbsp;&nbsp;{{ dp.metafields.custom.product_sub_description }}</p>{% endif %}</div>
+
+
+{% if dp.type != blank %}<span class='hd-d-nasub'>{{ dp.type }}</span>{% endif %}
+<div class='hd-d-naprice'><b>{{ dp.price | money_without_trailing_zeros }}</b>{% if dp.compare_at_price > dp.price %}<s>{{ dp.compare_at_price | money | remove: '.00' }}</s>{% assign pct = dp.compare_at_price | minus: dp.price | times: 100 | divided_by: dp.compare_at_price %}<span class='hd-d-nadisc'>{{ pct }}% off</span>{% endif %}</div>
+
+</div>
+
+</div>
+{% comment %} <div class='cp-cart'><form method='post' action='/cart/add'><input type='hidden' name='id' value='{{ dp.selected_or_first_available_variant.id }}'><button type='submit'>{{ 'icon-add-to-cart.svg' | inline_asset_content }} Add To Cart</button></form></div> {% endcomment %}
+<div class="cp-cart">
+  <form
+    class="cp-atc-form"
+    method="post"
+    action="/cart/add"
+    data-product-id="{{ dp.selected_or_first_available_variant.id }}"
+  >
+    <input
+      type="hidden"
+      name="id"
+      value="{{ dp.selected_or_first_available_variant.id }}"
+    >
+
+    <input
+      type="hidden"
+      name="quantity"
+      value="1"
+    >
+
+    <button type="submit">
+      {{ 'icon-add-to-cart.svg' | inline_asset_content }}
+      <span>Add To Cart</span>
+    </button>
+  </form>
+</div>
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+{% comment %} {% else %}
+<span class='hd-d-namedia'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span>
+<div class='hd-d-nainfo'>
+<span class='hd-d-naname'>DIY Hand Casting Kit</span>
+<span class='hd-d-nasub'>AGES 7+ &bull; STEAM KIT</span>
+<div class='hd-d-naprice'><b>Rs.&nbsp;1,299</b><s>Rs.&nbsp;2,299</s><span class='hd-d-nadisc'>20% off</span></div>
+</div>
+{% endif %}
+</div>
+<a class='hd-d-nabtn' href='{% if dp != blank %}{{ dp.url }}{% else %}#{% endif %}'>&#128722; Add to Cart</a>
+</div> {% endcomment %}
+
+</div>
+</div>
+<script>
+(function(){var r=document.getElementById('creste-hd-{{ section.id }}');if(!r)return;
+var trig=r.querySelector('.hd-shoptrigger'),mega=r.querySelector('.hd-mega');if(trig&&mega){var t;function sh(){clearTimeout(t);mega.classList.add('open');}function hd(){t=setTimeout(function(){mega.classList.remove('open');},160);}[trig,mega].forEach(function(el){el.addEventListener('mouseenter',sh);el.addEventListener('mouseleave',hd);});}
+var drawer=document.getElementById('hdm-{{ section.id }}');if(drawer){drawer.querySelectorAll('.js-hd-close').forEach(function(el){el.addEventListener('click',function(){drawer.classList.remove('open');document.body.style.overflow='';});});}
+})();
+</script>
+<script>
+
+/* =========================================
+   CRESTE PLAY
+   AJAX ATC + DAWN 15.5.0 CART DRAWER
+   + REALTIME HEADER CART BUBBLE
+   ========================================= */
+
+(function () {
+
+    var r = document.getElementById('creste-hd-{{ section.id }}');
+    {% comment %} console.log("Inside script"); {% endcomment %}
+    if (!r) return;
+      {% comment %} console.log("Inside script 2",r); {% endcomment %}
+
+
+
+    /* =========================================
+       ATC FORMS
+       ========================================= */
+
+    var atcForms = r.querySelectorAll('.cp-atc-form');
+
+       {% comment %} console.log("Inside script 3", atcForms); {% endcomment %}
+
+    atcForms.forEach(function (form) {
+
+        form.addEventListener('submit', function (e) {
+
+            e.preventDefault();
+
+
+            var button = form.querySelector('button');
+
+            if (!button) return;
+
+
+            if (button.classList.contains('loading')) {
+                return;
+            }
+
+
+            var originalHTML = button.innerHTML;
+
+
+            button.classList.add('loading');
+            button.disabled = true;
+
+
+            var formData = new FormData(form);
+
+
+            
+
+            formData.append(
+                'sections',
+                'cart-drawer,header'
+            );
+
+
+            formData.append(
+                'sections_url',
+                window.location.pathname
+            );
+
+
+            /*
+             * =========================================
+             * ADD TO CART
+             * =========================================
+             */
+
+            fetch(
+                window.routes && window.routes.cart_add_url
+                    ? window.routes.cart_add_url
+                    : '/cart/add.js',
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+
+                    body: formData
+                }
+            )
+
+
+            .then(function (response) {
+
+                if (!response.ok) {
+
+                    return response.json().then(function (data) {
+
+                        throw new Error(
+                            data.description ||
+                            'Add to cart failed'
+                        );
+
+                    });
+
+                }
+
+                return response.json();
+
+            })
+
+
+            .then(function (response) {
+
+
+                /*
+                 * =========================================
+                 * 1. UPDATE CART DRAWER
+                 * =========================================
+                 */
+
+                var drawerHTML =
+                    response.sections &&
+                    response.sections['cart-drawer'];
+
+
+                updateCartDrawer(
+                    drawerHTML,
+                    button
+                );
+
+
+                /*
+                 * =========================================
+                 * 2. UPDATE HEADER BUBBLE
+                 * =========================================
+                 *
+                 * 
+                 */
+
+                var headerHTML =
+                    response.sections &&
+                    response.sections['header'];
+
+
+                if (headerHTML) {
+
+                    updateHeaderBubble(
+                        headerHTML
+                    );
+
+                }
+
+
+                /*
+                 * =========================================
+                 * 3. FALLBACK
+                 * =========================================
+                 *
+                 */
+
+                else {
+
+                    refreshHeaderBubble();
+
+                }
+
+            })
+
+
+            .catch(function (error) {
+
+                console.error(
+                    'CRESTE PLAY Cart AJAX Error:',
+                    error
+                );
+
+            })
+
+
+            .finally(function () {
+
+                button.classList.remove(
+                    'loading'
+                );
+
+                button.disabled = false;
+
+                button.innerHTML =
+                    originalHTML;
+
+            });
+
+        });
+
+    });
+
+
+    /* =========================================
+       UPDATE CART DRAWER
+       ========================================= */
+
+    function updateCartDrawer(
+        drawerHTML,
+        opener
+    ) {
+
+        if (!drawerHTML) {
+
+            console.warn(
+                'CRESTE PLAY: cart-drawer response missing'
+            );
+
+            return;
+
+        }
+
+
+        var currentDrawer =
+            document.querySelector(
+                'cart-drawer'
+            );
+
+
+        if (!currentDrawer) {
+
+            console.warn(
+                'CRESTE PLAY: current cart-drawer not found'
+            );
+
+            return;
+
+        }
+
+
+        var parser =
+            new DOMParser();
+
+
+        var drawerDoc =
+            parser.parseFromString(
+                drawerHTML,
+                'text/html'
+            );
+
+
+        var newDrawer =
+            drawerDoc.querySelector(
+                'cart-drawer'
+            );
+
+
+        if (!newDrawer) {
+
+            console.warn(
+                'CRESTE PLAY: new cart-drawer not found'
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * OLD DRAWER REMOVE
+         */
+
+        currentDrawer.replaceWith(
+            newDrawer
+        );
+
+
+        /*
+         * NEW DRAWER
+         */
+
+        var updatedDrawer =
+            document.querySelector(
+                'cart-drawer'
+            );
+
+
+        if (!updatedDrawer) return;
+
+
+        /*
+         * Dawn 15.5.0
+         *
+         * open(triggeredBy)
+         */
+
+        if (
+            typeof updatedDrawer.open ===
+            'function'
+        ) {
+
+            updatedDrawer.open(
+                opener
+            );
+
+        }
+
+        else {
+
+            /*
+             * Fallback
+             */
+
+            updatedDrawer.classList.remove(
+                'is-empty'
+            );
+
+            updatedDrawer.classList.add(
+                'active'
+            );
+
+            updatedDrawer.setAttribute(
+                'open',
+                ''
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       UPDATE HEADER CART BUBBLE
+       ========================================= */
+
+    function updateHeaderBubble(
+        headerHTML
+    ) {
+
+        if (!headerHTML) return;
+
+
+        var parser =
+            new DOMParser();
+
+
+        var headerDoc =
+            parser.parseFromString(
+                headerHTML,
+                'text/html'
+            );
+
+
+        /*
+         *
+         * #cart-icon-bubble
+         */
+
+        var newBubbles =
+            headerDoc.querySelectorAll(
+                '#cart-icon-bubble'
+            );
+
+
+        if (!newBubbles.length) {
+
+            console.warn(
+                'CRESTE PLAY: #cart-icon-bubble not found in header response'
+            );
+
+            /*
+             * Extra fallback
+             */
+
+            refreshHeaderBubble();
+
+            return;
+
+        }
+
+
+        /*
+         * Current page ke bubbles.
+         */
+
+        var oldBubbles =
+            document.querySelectorAll(
+                '#cart-icon-bubble'
+            );
+
+
+        /*
+         * Normally 1 hota hai.
+         */
+
+        oldBubbles.forEach(function (
+            oldBubble,
+            index
+        ) {
+
+            var newBubble =
+                newBubbles[
+                    index
+                ] || newBubbles[0];
+
+
+            if (!newBubble) return;
+
+            oldBubble.innerHTML =
+                newBubble.innerHTML;
+
+        });
+
+
+        if (!oldBubbles.length) {
+
+            console.warn(
+                'CRESTE PLAY: existing cart bubble not found'
+            );
+
+            refreshHeaderBubble();
+
+        }
+
+    }
+
+
+    /* =========================================
+       HARD FALLBACK:
+       FETCH HEADER SECTION SEPARATELY
+       ========================================= */
+
+    function refreshHeaderBubble() {
+
+
+        /*
+         * Current page ka URL.
+         */
+
+        var currentPath =
+            window.location.pathname;
+
+        var url =
+            currentPath +
+            '?sections=header';
+
+
+        fetch(
+            url,
+            {
+                method: 'GET',
+
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }
+        )
+
+
+        .then(function (response) {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    'Header refresh failed'
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+
+        .then(function (data) {
+
+            if (
+                data &&
+                data.header
+            ) {
+
+                updateHeaderBubble(
+                    data.header
+                );
+
+            }
+
+        })
+
+
+        .catch(function (error) {
+
+            console.error(
+                'CRESTE PLAY Header Bubble Error:',
+                error
+            );
+
+        });
+
+    }
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Creste Header",
+  "tag": "header",
+  "settings": [ {"type":"image_picker","id":"logo","label":"Logo"},{"type":"image_picker","id":"quiz_logo","label":"Quiz Logo"}, {"type":"text","id":"shop_label","label":"Shop menu label","default":"Shop"}, {"type":"url","id":"shop_link","label":"Shop link"}, {"type":"color","id":"bg","label":"Bar background band","default":"#F4793A"}, {"type":"color","id":"bar_bg","label":"Nav pill background","default":"#FBF1E3"}, {"type":"color","id":"accent","label":"Accent (border + quiz)","default":"#FFCE00"}, {"type":"checkbox","id":"sticky","label":"Sticky header","default":false}, {"type":"text","id":"quiz_label","label":"Quiz button label","default":"TAKE THE QUIZ"}, {"type":"url","id":"quiz_link","label":"Quiz link"}, {"type":"text","id":"rec_label","label":"Recommended badge","default":"Recommended"}, {"type":"color","id":"rec_bg","label":"Badge color","default":"#5BAD6F"}, {"type":"header","content":"Mega menu"}, {"type":"text","id":"age_heading","label":"Age column heading","default":"Shop by Age"}, {"type":"text","id":"cat_heading","label":"Category column heading","default":"Shop by Category"}, {"type":"text","id":"na_heading","label":"Featured heading","default":"New Arrivals"}, {"type":"color","id":"na_bg","label":"Featured panel color","default":"#62A66B"}, {"type":"image_picker","id": "bg_image","label": "Background Image"},{"type":"image_picker","id": "bg_image_mob","label": "Mobile Background Image "}, {
+  "type": "product",
+  "id": "na_product",
+  "label": "Select Product"
+} ],
+  "blocks": [ {"type":"nav","name":"Nav link","settings":[ {"type":"text","id":"label","label":"Label","default":"Our Tribe"}, {"type":"url","id":"link","label":"Link"} ]}, {"type":"age","name":"Age link","settings":[ {"type":"text","id":"label","label":"Age","default":"0-3"}, {"type":"text","id":"suffix","label":"Suffix","default":"years"}, {"type":"color","id":"tint","label":"Pill color","default":"#FDE7D6"},{"type":"color","id":"text-color","label":"Text color","default":"#040404"}, {"type":"url","id":"link","label":"Link"} ]}, {"type":"category","name":"Category link","settings":[ {"type":"image_picker","id":"image","label":"Thumbnail"}, {"type":"text","id":"name","label":"Name","default":"Arts & Crafts"}, {"type":"text","id":"subtitle","label":"Subtitle","default":"Paint, create & imagine"}, {"type":"url","id":"link","label":"Link"} ]} ],
+  "max_blocks": 30,
+  "presets": [ {"name":"Creste Header"} ]
+}
+{% endschema %}

@@ -1,1 +1,234 @@
-{"name":"t:sections.header.name","type":"header","sections":{"announcement-bar":{"type":"announcement-bar","blocks":{"announcement-bar-0":{"type":"announcement","settings":{"text":"Welcome to our store","link":""}}},"block_order":["announcement-bar-0"],"settings":{"auto_rotate":false,"change_slides_speed":5,"color_scheme":"scheme-1","show_line_separator":true,"show_social":false,"enable_country_selector":false,"enable_language_selector":false}},"header":{"type":"header","settings":{"logo_position":"middle-left","mobile_logo_position":"center","menu":"main-menu","menu_type_desktop":"dropdown","sticky_header_type":"on-scroll-up","show_line_separator":true,"color_scheme":"scheme-1","menu_color_scheme":"scheme-1","enable_country_selector":true,"enable_language_selector":true,"enable_customer_avatar":true,"margin_bottom":0,"padding_top":20,"padding_bottom":20}}},"order":["announcement-bar","header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "creste_header": {
+      "type": "creste-header",
+      "blocks": {
+        "nv1": {
+          "type": "nav",
+          "disabled": true,
+          "settings": {
+            "label": "Our Tribe",
+            "link": "/pages/our-tribe"
+          }
+        },
+        "nv2": {
+          "type": "nav",
+          "disabled": true,
+          "settings": {
+            "label": "Our Story",
+            "link": "shopify://pages/about-us"
+          }
+        },
+        "nv3": {
+          "type": "nav",
+          "disabled": true,
+          "settings": {
+            "label": "Contact us",
+            "link": "/pages/contact"
+          }
+        },
+        "ag1": {
+          "type": "age",
+          "settings": {
+            "label": "0-3",
+            "suffix": "years",
+            "tint": "#fde7d6",
+            "text-color": "#9c4a16",
+            "link": "shopify://collections/age-group-up-to-3years"
+          }
+        },
+        "ag2": {
+          "type": "age",
+          "settings": {
+            "label": "4-6",
+            "suffix": "years",
+            "tint": "#fce0ec",
+            "text-color": "#b94a75",
+            "link": "shopify://collections/age-group-2-6years"
+          }
+        },
+        "ag3": {
+          "type": "age",
+          "settings": {
+            "label": "7-10",
+            "suffix": "years",
+            "tint": "#dcebf5",
+            "text-color": "#1e7d99",
+            "link": "shopify://collections/age-group-7-10years"
+          }
+        },
+        "ag4": {
+          "type": "age",
+          "settings": {
+            "label": "11-16",
+            "suffix": "years",
+            "tint": "#ece4f7",
+            "text-color": "#6b4fa8",
+            "link": "shopify://collections/age-group-11years-and-above"
+          }
+        },
+        "ag5": {
+          "type": "age",
+          "disabled": true,
+          "settings": {
+            "label": "16+",
+            "suffix": "years",
+            "tint": "#fbe9d6",
+            "text-color": "#9c4a16",
+            "link": ""
+          }
+        },
+        "ag6": {
+          "type": "age",
+          "settings": {
+            "label": "Adults",
+            "suffix": "",
+            "tint": "#fce0ec",
+            "text-color": "#b94a75",
+            "link": "shopify://collections/age-group-16years"
+          }
+        },
+        "c1": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ic_1_be671587-21af-4a9d-af6e-7a96d1df4021.png",
+            "name": "CRAFTY CREW",
+            "subtitle": "Cognitive Development",
+            "link": "shopify://collections/craft-kits-collection"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ic_2_86876d23-57ab-433a-85b8-9255a9808ee3.png",
+            "name": "SCIENCE LABS",
+            "subtitle": "Brain Development",
+            "link": "shopify://collections/science-collection"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "name": "ART STUDIO",
+            "subtitle": "Social Development",
+            "link": "shopify://collections/art-and-craft-collection"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "name": "STORY WORLDS",
+            "subtitle": "Language & Literacy",
+            "link": "shopify://collections/story-boxes"
+          }
+        },
+        "c5": {
+          "type": "category",
+          "settings": {
+            "name": "THREAD CRAFTS",
+            "subtitle": "Fine Motor Skills & Creativity",
+            "link": "shopify://collections/craft-kits-collection"
+          }
+        },
+        "c6": {
+          "type": "category",
+          "settings": {
+            "name": "PARTY",
+            "subtitle": "Group Play & Social Development",
+            "link": "shopify://collections/diy-party-box-kits"
+          }
+        },
+        "c7": {
+          "type": "category",
+          "settings": {
+            "name": "FESTIVAL KITS",
+            "subtitle": "Culture, Creativity & Celebration",
+            "link": ""
+          }
+        },
+        "c8": {
+          "type": "category",
+          "settings": {
+            "name": "GROWN-UP DIY",
+            "subtitle": "Calmness and Focus",
+            "link": ""
+          }
+        },
+        "c9": {
+          "type": "category",
+          "disabled": true,
+          "settings": {
+            "name": "Best seller",
+            "subtitle": "Top loved kits",
+            "link": ""
+          }
+        },
+        "c10": {
+          "type": "category",
+          "disabled": true,
+          "settings": {
+            "name": "New Arrival",
+            "subtitle": "Fresh & new",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "nv1",
+        "nv2",
+        "nv3",
+        "ag1",
+        "ag2",
+        "ag3",
+        "ag4",
+        "ag5",
+        "ag6",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/logo_web_1.png",
+        "quiz_logo": "shopify://shop_images/b4e9d92dd7aff201d26a33aad5c55033d60eefe6_1.png",
+        "shop_label": "Shop",
+        "shop_link": "",
+        "bg": "rgba(0,0,0,0)",
+        "bar_bg": "#fbf1e3",
+        "accent": "#ffce00",
+        "sticky": false,
+        "quiz_label": "TAKE THE QUIZ",
+        "quiz_link": "https://crestekids.com/#quiz",
+        "rec_label": "Recommended",
+        "rec_bg": "#5bad6f",
+        "age_heading": "Shop by Age",
+        "cat_heading": "Shop by Category",
+        "na_heading": "New Arrivals",
+        "na_bg": "#ffffff",
+        "bg_image": "shopify://shop_images/green_1.png",
+        "bg_image_mob": "shopify://shop_images/Frame_2147228316.png",
+        "na_product": "bouquet-candle-kit"
+      }
+    }
+  },
+  "order": [
+    "creste_header"
+  ]
+}
