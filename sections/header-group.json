@@ -120,9 +120,10 @@
         "c3": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-08-30_at_13.45.22.jpg",
             "name": "ART STUDIO",
             "subtitle": "Social Development",
-            "link": "shopify://collections/art-and-craft-collection"
+            "link": "shopify://collections/art-studio"
           }
         },
         "c4": {
