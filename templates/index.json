@@ -305,7 +305,6 @@
         "cat7": {
           "type": "category",
           "settings": {
-            "icon": "shopify://shop_images/760e109c-758d-4d29-9e22-18f93c763394.png",
             "emoji": "👟",
             "name": "GROWN-UP",
             "subtitle": "Calmness and Focus",
@@ -852,7 +851,7 @@
         "ac8": {
           "type": "activity",
           "settings": {
-            "image": "shopify://shop_images/ic_7.png",
+            "image": "shopify://shop_images/ic_cc38f290-c941-4938-83bc-a5e7ae64327e.png",
             "label": "Bookmark DIY"
           }
         },
