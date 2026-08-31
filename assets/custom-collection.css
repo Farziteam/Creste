@@ -167,11 +167,13 @@
 .cr-grid,.cr-layout[data-filters="open"] .cr-grid{--cr-cols:3!important;}
 }
 @media (max-width:749px){.cr-grid,.cr-layout[data-filters="open"] .cr-grid{--cr-cols:2!important;gap:12px;}
+.cr-wrap{padding: 12px;}
 /* .cr-card-body{padding:10px 12px 14px;} */
+.cr-card{border: 2px solid #0000004D;}
 .cr-price-row{gap: 4px;}
 .cr-promo-text{font-size: 12px;}
 .cr-promo-title{font-size: 18px;}
-.cr-promo-btn{padding: 8px 15px;}
+.cr-promo-btn{padding: 8px 15px;border-radius: 16px;}
 .cr-promo-left{flex-direction:row-reverse;}
 .cr-layout{gap: 0px !important;}
 .cr-card-title{font-size:13px;}
@@ -201,19 +203,19 @@
 .cr-price-off{font-size:12px;}
 .cr-atc{padding:11px 14px;font-size:18px;border-radius:999px;}
 .cr-rating{font-size:12px;padding:3px 9px;}
-.cr-badge{font-size:9px;padding:5px 9px;}
 .cr-promo{flex-direction:column;align-items:flex-start;gap:16px;padding:22px 20px;margin-top:32px;}
 .cr-promo-btn{width:100%;text-align:center;}
 .cr-promo::after{width:150px;height:150px;right:-34px;border-radius:24px;}
 .cr-sort-panel{min-width:180px;}
 .cr-rating{font-size: 11px;}
-.cr-badge{padding: 4px 6px;}
+.cr-badge{padding: 4px 2px;font-size:9px;gap: 2px;}
 .cr-price-was{font-size: 13px;}
 .cr-price-off{font-size: 10px;}
 .cr-card-sub-headings p{font-size: 10px; letter-spacing: 0px;}
 .cr-rating{padding: 4px 6px;}
 .cr-atc {padding: 12px 8px;}
 .cr-card-body{padding: 10px 6px 8px !important;}
+.cr-grid{gap: 8px;}
 }
 /* ===== Mobile filter/sort bar + sheets ===== */
 .cr-noscroll{overflow:hidden;}
@@ -231,7 +233,7 @@
     font-size: 16px;
 }
 .cr-mbar{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:900;background:#fff;box-shadow:0 -2px 16px rgba(0,0,0,0.10);}
-.cr-mbar-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;border:0;font-family:'Quicksand',sans-serif;font-weight:700;font-size:14px;color:#5C4B38;cursor:pointer;}
+.cr-mbar-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 12px;border:0;font-family:'Quicksand',sans-serif;font-weight:700;font-size:14px;color:#5C4B38;cursor:pointer;}
 .cr-mbar-filter{background:#ece7f7;}
 .cr-mbar-filter svg{color:#7c5cbf;}
 .cr-mbar-sort{background:#e6f4ec;}

@@ -151,17 +151,90 @@
        {% if product.metafields.custom.product_tutorial_thumbnail.value != blank and product.metafields.custom.product_tutorial_video_link.value != blank %}
         <div class="cpdp__tutorial  cpdp__tutorial_desktop ">
           <h3 class="cpdp__tutorial-title">Watch Tutorial</h3>
-          {%- if product.metafields.custom.product_tutorial_video_link != blank -%}<a href="{{ product.metafields.custom.product_tutorial_video_link }}" target="_blank" rel="noopener" class="cpdp__video-link">{%- endif -%}
-          <div class="cpdp__video">
-            {%- if product.metafields.custom.product_tutorial_thumbnail != blank -%}
-              {% comment %} {{ product.metafields.custom.product_tutorial_thumbnail | image_url: width: 900 | image_tag: loading: 'lazy', class: 'cpdp__video-thumb', alt: 'Tutorial' }} {% endcomment %}
-               <img src="{{ product.metafields.custom.product_tutorial_thumbnail }}" alt="product.metafields.custom.product_tutorial_thumbnail">
-            {%- else -%}
-              <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
-            {%- endif -%}
-            <span class="cpdp__play" aria-label="Play tutorial"><svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
-          </div>
-          {%- if product.metafields.custom.product_tutorial_video_link != blank -%}</a>{%- endif -%}
+         {%- assign video_url = product.metafields.custom.product_tutorial_video_link.value -%}
+
+{%- if video_url != blank -%}
+  <a
+    href="{{ video_url }}"
+    target="_blank"
+    rel="noopener"
+    class="cpdp__video-link"
+  >
+{%- endif -%}
+
+<div class="cpdp__video">
+
+  {%- comment -%}
+    First priority: Custom thumbnail
+  {%- endcomment -%}
+
+  {% comment %} {%- if product.metafields.custom.product_tutorial_thumbnail != blank -%}
+
+    <img
+      src="{{ product.metafields.custom.product_tutorial_thumbnail }}"
+      class="cpdp__video-thumb"
+      alt="Product tutorial"
+      loading="lazy"
+    > {% endcomment %}
+
+  {%- if video_url != blank -%}
+
+    {%- comment -%}
+      Extract YouTube video ID
+    {%- endcomment -%}
+
+    {%- assign video_id = '' -%}
+
+          {%- if video_url contains 'youtube.com/watch' -%}
+
+            {%- assign video_id = video_url | split: 'v=' | last | split: '&' | first -%}
+
+          {%- elsif video_url contains 'youtu.be/' -%}
+
+            {%- assign video_id = video_url | split: 'youtu.be/' | last | split: '?' | first -%}
+
+          {%- elsif video_url contains '/shorts/' -%}
+
+            {%- assign video_id = video_url | split: '/shorts/' | last | split: '?' | first -%}
+
+          {%- elsif video_url contains '/embed/' -%}
+
+            {%- assign video_id = video_url | split: '/embed/' | last | split: '?' | first -%}
+
+          {%- endif -%}
+
+          {%- if video_id != blank -%}
+
+            <img
+              src="https://img.youtube.com/vi/{{ video_id }}/hqdefault.jpg"
+              class="cpdp__video-thumb"
+              alt="Product tutorial"
+              loading="lazy"
+            >
+
+          {%- else -%}
+
+            <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+
+          {%- endif -%}
+
+        {%- else -%}
+
+          <div class="cpdp__video-thumb cpdp__video-thumb--ph"></div>
+
+        {%- endif -%}
+
+        <span class="cpdp__play" aria-label="Play tutorial">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </span>
+
+      </div>
+
+      {%- if video_url != blank -%}
+        </a>
+      {%- endif -%}
         </div>
         {% endif %}
       </div>
@@ -186,7 +259,12 @@
               <!-- End of Judge.me code -->
           <span class="cpdp__rating-sold">{{ section.settings.sold_text | default: '1,900+ bought this month' }}</span>
         </div>
-        {%- if product.description != blank -%}<p class="cpdp__desc">{{ product.description | strip_html | truncatewords: 40 }}</p>{%- endif -%}
+        {%- if product.description != blank -%}
+          <p class="cpdp__desc">{{ product.description | strip_html }}</p>
+          <button type="button" class="cpdp__read-more">
+            Read more
+          </button>
+        {%- endif -%}
         {% comment %} {%- if section.settings.short_desc != blank -%}<p class="cpdp__desc">{{ section.settings.short_desc }}</p> {% endcomment %}
 
         <div class="cpdp__buybox">
@@ -455,6 +533,19 @@
       {%- endfor -%}
     }
   };
+  document.querySelectorAll('#Cpdp-{{ uid }} .cpdp__read-more').forEach((button) => {
+  button.addEventListener('click', function () {
+    const description = this.previousElementSibling;
+
+    description.classList.toggle('is-expanded');
+
+    if (description.classList.contains('is-expanded')) {
+      this.textContent = 'Read less';
+    } else {
+      this.textContent = 'Read more';
+    }
+  });
+});
 </script>
 
 <style>
@@ -576,7 +667,56 @@
   #Cpdp-{{ uid }} .cpdp__stars{color:#F5B301;font-size:20px;letter-spacing:2px;}
   #Cpdp-{{ uid }} .cpdp__rating-link{color:var(--cpdp-brown);font-weight:700;text-decoration:underline;}
   #Cpdp-{{ uid }} .cpdp__rating-sold{color:#16A34A;font-weight:700;}
-  #Cpdp-{{ uid }} .cpdp__desc{font-size:15px;font-family: 'Poppins', sans-serif;line-height:1.55;/*color:var(--cpdp-ink);*/color: #6E5A4A;margin:0 0 22px;-webkit-line-clamp: 2;-webkit-box-orient: vertical; overflow: hidden; display: -webkit-box;}
+  {% comment %} #Cpdp-{{ uid }} .cpdp__desc{font-size:15px;font-family: 'Poppins', sans-serif;line-height:1.55;/*color:var(--cpdp-ink);*/color: #6E5A4A;margin:0 0 22px;-webkit-line-clamp: 2;-webkit-box-orient: vertical; overflow: hidden; display: -webkit-box;} {% endcomment %}
+  #Cpdp-{{ uid }} .cpdp__desc {
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.55;
+  color: #6E5A4A;
+  margin: 0 0;
+
+  /* Initially show approximately 2 lines */
+  max-height: 46px;
+  overflow: hidden;
+
+  transition: max-height 0.5s ease;
+}
+
+#Cpdp-{{ uid }} .cpdp__desc.is-expanded {
+  max-height: 1000px;
+}
+
+#Cpdp-{{ uid }} .cpdp__read-more {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0px 0px 10px 0;
+
+  color: #6E5A4A;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+#Cpdp-{{ uid }} .cpdp__description-wrapper {
+  position: relative;
+}
+#Cpdp-{{ uid }} .cpdp__description-wrapper:not(.expanded)::after {
+  content: "...";
+  position: absolute;
+  right: 0;
+  top: 23px;
+  background: #fff; /* match your section background */
+  padding-left: 3px;
+}
+
+/* Mobile */
+{% comment %} @media (max-width: 749px) {
+  #Cpdp-{{ uid }} .cpdp__desc {
+    font-size: 12px;
+  }
+} {% endcomment %}
   #Cpdp-{{ uid }} .cpdp__buybox{background: #FFFBEB;border-radius:22px;padding:24px;margin-bottom:18px;}
   #Cpdp-{{ uid }} .cpdp__buybox .cpdp__themebox{background:transparent;padding:0;margin-bottom:0;}
   #Cpdp-{{ uid }} .cpdp__themebox-title{font-family:var(--cpdp-body);font-size:18px;font-weight:700;color:var(--cpdp-brown);margin:0 0 14px;}
@@ -641,7 +781,7 @@
     width: 100%;
     flex-basis:100%;margin:8px 0 0;background:#4CA36A;color:#fff;text-align:center;font-size:10px;font-weight:700;padding:3px 10px;}
   #Cpdp-{{ uid }} .cpdp__ship{
-    text-align:center;color:#574239;margin:10px 0 16px;
+    text-align:center;color:#574239;margin:10px 0 10px;
     font-size: 12.5px;
     font-weight: 500;
     font-family: 'Poppins', sans-serif;
@@ -1004,6 +1144,8 @@
 
       background: #fff;
     }
+    #Cpdp-{{ uid }} .cpdp__read-more{font-size: 10px;} 
+    #Cpdp-{{ uid }} .cpdp__desc {max-height: 54px;}
     #Cpdp-{{ uid }} .cpdp__promo-img--desktop{display:none;}
     #Cpdp-{{ uid }} .cpdp__promo-img--mobile{display:block;}
     #Cpdp-{{ uid }} .cpdp__crumbs a{font-size: 10px;line-height: 150%;}

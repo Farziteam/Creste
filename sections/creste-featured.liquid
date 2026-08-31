@@ -22,7 +22,7 @@
   #creste-fi-{{ section.id }} .fi-logo {height: 80px; width: 120px;min-width: unset;}
   #creste-fi-{{ section.id }} .fi-row+.fi-row{margin-top: unset;}
   #creste-fi-{{ section.id }} .fi-h { margin: 0 0 15px;}
-  #creste-fi-{{ section.id }} .fi-row.r1 .fi-track{animation:fi-left calc(var(--sp,32s) * 0.9) linear infinite;}
+  #creste-fi-{{ section.id }} .fi-row.r1 .fi-track{animation:fi-left calc(var(--sp,32s)*1.2) linear infinite;}
   #creste-fi-{{ section.id }} .fi-row.r2 .fi-track{animation:fi-right calc(var(--sp,32s) * 0.6) linear infinite;}
 }
 </style>
@@ -30,7 +30,7 @@
 <div id='creste-fi-{{ section.id }}' class='creste-section' style='--sp:{{ section.settings.speed }}s;'>
 {% if section.settings.heading != blank %}<h2 class='fi-h'>{{ section.settings.heading }}</h2>{% endif %}
 <div class='fi-row r1'><div class='fi-track'>{% for n in (1..2) %}{% for block in section.blocks %}{% if block.type == 'logo' and block.settings.row == 'top' %}<div class='fi-logo' {{ block.shopify_attributes }}>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 400 }}' alt='{{ block.settings.name | escape }}'>{% else %}<span class='fi-ph'>{{ block.settings.name | default: 'LOGO' }}</span>{% endif %}</div>{% endif %}{% endfor %}{% endfor %}</div></div>
-<div class='fi-row r2'><div class='fi-track'>{% for n in (1..3) %}{% for block in section.blocks %}{% if block.type == 'logo' and block.settings.row == 'bottom' %}<div class='fi-logo' {{ block.shopify_attributes }}>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 400 }}' alt='{{ block.settings.name | escape }}'>{% else %}<span class='fi-ph'>{{ block.settings.name | default: 'LOGO' }}</span>{% endif %}</div>{% endif %}{% endfor %}{% endfor %}</div></div>
+<div class='fi-row r2'><div class='fi-track'>{% for n in (1..2) %}{% for block in section.blocks %}{% if block.type == 'logo' and block.settings.row == 'bottom' %}<div class='fi-logo' {{ block.shopify_attributes }}>{% if block.settings.image != blank %}<img src='{{ block.settings.image | image_url: width: 400 }}' alt='{{ block.settings.name | escape }}'>{% else %}<span class='fi-ph'>{{ block.settings.name | default: 'LOGO' }}</span>{% endif %}</div>{% endif %}{% endfor %}{% endfor %}</div></div>
 </div>
 {% schema %}
 {
