@@ -162,7 +162,7 @@
             "desc": "Stories and first touches",
             "tint": "#e0f7ff",
             "collection": "age-group-up-to-3years",
-            "link": "shopify://collections/age-group-up-to-3years"
+            "link": ""
           }
         },
         "a2": {
@@ -927,6 +927,7 @@
     },
     "creste_buildbox": {
       "type": "creste-buildbox",
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/577686a6-a5f0-4ba0-9dcc-2e816cfd753f_1.png",
         "image_mobile": "shopify://shop_images/4aa748b0-69c1-4354-98f7-cc8cdf0e6ddd_1.png",
