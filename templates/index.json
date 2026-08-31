@@ -183,7 +183,7 @@
             "label": "7-10 yrs",
             "desc": "First real projects",
             "tint": "#eaf7d8",
-            "collection": "",
+            "collection": "age-group-7-10years",
             "link": ""
           }
         },
@@ -194,7 +194,7 @@
             "label": "11-16 yrs",
             "desc": "Level-up skills",
             "tint": "#f3eeff",
-            "collection": "",
+            "collection": "age-group-11years-and-above",
             "link": ""
           }
         },
@@ -217,7 +217,7 @@
             "label": "Adult",
             "desc": "Craft for the soul",
             "tint": "#1c7291",
-            "collection": "",
+            "collection": "grown-up-diy",
             "link": ""
           }
         }
