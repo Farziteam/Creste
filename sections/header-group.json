@@ -147,6 +147,7 @@
         "c6": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/party.png",
             "name": "PARTY",
             "subtitle": "Group Play & Social Development",
             "link": "shopify://collections/diy-party-box-kits"
