@@ -165,9 +165,10 @@
         "c8": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/crafty.png",
             "name": "GROWN-UP DIY",
             "subtitle": "Calmness and Focus",
-            "link": ""
+            "link": "shopify://collections/grown-up-diy"
           }
         },
         "c9": {
