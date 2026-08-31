@@ -154,9 +154,10 @@
         "c7": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/38e7b276-3621-41c5-9d63-f5ba4fca3f6c.png",
             "name": "FESTIVAL KITS",
             "subtitle": "Culture, Creativity & Celebration",
-            "link": ""
+            "link": "shopify://collections/festive-kits"
           }
         },
         "c8": {
