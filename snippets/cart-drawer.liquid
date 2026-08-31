@@ -1503,6 +1503,79 @@
     }
   }
 
+function refreshDrawerKeepScroll(sectionsHtml) {
+  if (!sectionsHtml) return;
+
+  var wrap = document.querySelector('.wrap');
+
+  if (!wrap) {
+    refreshDrawer(sectionsHtml);
+    return;
+  }
+
+  /*
+   * Save the current scroll position
+   */
+  var savedScrollTop = wrap.scrollTop;
+
+  /*
+   * Find the first cart item visible in the viewport
+   */
+  var items = wrap.querySelectorAll('.creste-cart-item');
+
+  var anchorItem = null;
+  var anchorOffset = 0;
+
+  items.forEach(function (item) {
+    var rect = item.getBoundingClientRect();
+    var wrapRect = wrap.getBoundingClientRect();
+
+    if (
+      !anchorItem &&
+      rect.bottom > wrapRect.top
+    ) {
+      anchorItem = item;
+      anchorOffset = rect.top - wrapRect.top;
+    }
+  });
+
+  /*
+   * Re-render the drawer
+   */
+  refreshDrawer(sectionsHtml);
+
+  requestAnimationFrame(function () {
+    var newWrap = document.querySelector('.wrap');
+
+    if (!newWrap) return;
+
+    /*
+     * Find the same item in the new drawer
+     */
+    if (anchorItem) {
+      var anchorId = anchorItem.id;
+      var newAnchor = document.getElementById(anchorId);
+
+      if (newAnchor) {
+        var newWrapRect = newWrap.getBoundingClientRect();
+        var newAnchorRect = newAnchor.getBoundingClientRect();
+
+        /*
+         * Keep the item at the same screen position
+         */
+        newWrap.scrollTop +=
+          (newAnchorRect.top - newWrapRect.top) -
+          anchorOffset;
+      } else {
+        newWrap.scrollTop = savedScrollTop;
+      }
+    } else {
+      newWrap.scrollTop = savedScrollTop;
+    }
+  });
+}
+
+
   async function refreshCartDrawer() {
     try {
       var res = await fetch('/?sections=cart-drawer', {
@@ -1816,16 +1889,27 @@
         var data =
           await addHandwrittenNote(noteText);
 
-        if (
-          data.sections &&
-          data.sections['cart-drawer']
-        ) {
-          refreshDrawer(
-            data.sections['cart-drawer']
-          );
-        } else {
-          await refreshCartDrawer();
-        }
+ if (
+  data.sections &&
+  data.sections['cart-drawer']
+) {
+  refreshDrawerKeepScroll(
+    data.sections['cart-drawer']
+  );
+} else {
+  var wrap = document.querySelector('.wrap');
+  var savedScrollTop = wrap ? wrap.scrollTop : 0;
+
+  await refreshCartDrawer();
+
+  requestAnimationFrame(function () {
+    var newWrap = document.querySelector('.wrap');
+
+    if (newWrap) {
+      newWrap.scrollTop = savedScrollTop;
+    }
+  });
+}
 
       } else {
 
@@ -2046,7 +2130,5 @@ document.addEventListener('click', async function (e) {
 
 })();
 </script>
-
-
 
 
