@@ -305,6 +305,7 @@
         "cat7": {
           "type": "category",
           "settings": {
+            "icon": "shopify://shop_images/760e109c-758d-4d29-9e22-18f93c763394.png",
             "emoji": "👟",
             "name": "GROWN-UP",
             "subtitle": "Calmness and Focus",
