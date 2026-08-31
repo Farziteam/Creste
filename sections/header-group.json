@@ -129,6 +129,7 @@
         "c4": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/fc8e7d2b-b94b-45a0-aa57-2dc28277e515.png",
             "name": "STORY WORLDS",
             "subtitle": "Language & Literacy",
             "link": "shopify://collections/story-boxes"
