@@ -398,20 +398,21 @@
     margin: 12px 1px;
   }
   .creste-cart-summary__subtotal-label{
-    font-size:15px;
+    font-size:12px;
   }
   .creste-cart-summary__toggle{
-    font-size:14px;
+    font-size:12px;
   }
   .creste-cart-summary__total{
-    font-size:15px;
+    font-size:14px;
+    letter-spacing: 0px;
   }
   .cart-drawer .drawer__footer{
       padding: 2px 9px 1px
   }
   .creste-cart-summary__savings{
     font-size:9px;
-    margin-top:0px;
+    {% comment %} margin-top:0px; {% endcomment %}
   }
   .cart__checkout-button{
       padding: 10px 21px !important;
@@ -425,11 +426,11 @@
     font-size:10px;
   }
   .cart-drawer .tax-note{
-    margin: -5px 0 10px auto;
+    margin: -5px 0 10px 0;
     text-align: left;
   }
   .creste-cart-summary__note{
-    font-size:13px;
+    font-size:10px;
   }
   .cart-drawer .drawer__close{
     width: 41px;
@@ -619,13 +620,16 @@
 .creste-cart-picks__row::-webkit-scrollbar{display:none;}
 .creste-cart-pick{flex:0 0 auto;width:240px;display:flex;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:10px;align-items:flex-start;}
 .creste-cart-pick__image{width:64px;height:64px;flex:0 0 64px;border-radius:10px;overflow:hidden;background:#F5F1EB;} .creste-cart-pick__image img{width:100%;height:100%;object-fit:cover;display:block;}
- .creste-cart-pick__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;} .creste-cart-pick__name{font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:12px;line-height:1.3;color:#1E1108;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-  .creste-cart-pick__price{font-family:Nunito Sans,Nunito,sans-serif;font-weight:800;font-size:13px;color:#F4793A;margin:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap; min-height:47px;} 
+ .creste-cart-pick__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;} .creste-cart-pick__name{min-height: 30px;font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:12px;line-height:1.3;color:#1E1108;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .creste-cart-pick__price{font-family:Nunito Sans,Nunito,sans-serif;font-weight:800;font-size:13px;color:#F4793A;margin:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap; min-height:47px; letter-spacing: 0px;} 
   .creste-cart-pick__compare{font-weight:500;font-size:11px;color:#9b9b9b;text-decoration:line-through;} .creste-cart-pick__off{font-weight:700;font-size:11px;color:#58AD6F;} .creste-cart-pick__btn{display:flex;align-items:center;justify-content:center;width:100%;background:#F4793A;color:#fff;border:none;border-radius:16px;padding:6px 8px;font-family:Nunito Sans,Nunito,sans-serif;font-weight:700;font-size:11px;cursor:pointer;white-space:nowrap;margin-top:2px;} .creste-cart-pick__btn[disabled]{opacity:.6;cursor:default;}
 
 @media screen and (max-width: 749px){
   .creste-cart-note__title{
     font-size:13px;
+  }
+  .creste-cart-pick__name{
+    min-height: 30px;
   }
 }
 </style>
@@ -783,7 +787,7 @@
             {%- if creste_gift_unlocked -%}
               You&rsquo;ve unlocked a free {{ creste_gift_name }}!
             {%- else -%}
-              Add <strong>{{ creste_remaining | money }}</strong> more to unlock a <strong>{{ creste_gift_name }}</strong>
+              Add <strong>{{ creste_remaining | money | replace: ".00", "" | replace: "Rs. ", "₹ "}}</strong> more to unlock a <strong>{{ creste_gift_name }}</strong>
             {%- endif -%}
           </p>
         </div>
@@ -884,8 +888,8 @@
                         {%- render 'loading-spinner' -%}
                         {%- if item.original_price != item.final_price -%}
                           <div class="creste-item-prices">
-                            <span class="creste-item-price">{{ item.final_price | money | replace: "Rs. ", "₹" }}</span>
-                            <span class="creste-item-compare">{{ item.original_price | money | replace: "Rs. ", "₹" }}</span>
+                            <span class="creste-item-price">{{ item.final_price | money | replace: "Rs. ", "₹" | replace: ".00", ""}}</span>
+                            <span class="creste-item-compare">{{ item.original_price | money_without_currency | replace: ".00", "" }}</span>
                             <ul
                                 class="discounts list-unstyled"
                                 role="list"
@@ -905,13 +909,13 @@
                         {%- elsif creste_compare > item.price -%}
                           {%- assign creste_off = creste_compare | minus: item.price | times: 100 | divided_by: creste_compare -%}
                           <div class="creste-item-prices">
-                            <span class="creste-item-price">{{ item.price | money | replace: "Rs. ", "₹" }}</span>
-                            <s class="creste-item-compare">{{ creste_compare | money | replace: "Rs. ", "₹" }}</s>
+                            <span class="creste-item-price">{{ item.price | money | replace: "Rs. ", "₹" | replace: ".00", "" }}</span>
+                            <s class="creste-item-compare">{{ creste_compare | money | replace: "Rs. ", "₹" | replace: ".00", ""}}</s>
                             <span class="creste-item-discount">{{ creste_off }}% off</span>
                           </div>
                         {%- else -%}
                           <div class="creste-item-prices">
-                            <span class="creste-item-price">{{ item.price | money }}</span>
+                            <span class="creste-item-price">{{ item.price | money | replace: ".00", "" | replace: "Rs. ", "₹" }}</span>
                           </div>
                         {%- endif -%}
                       </div>
@@ -1061,6 +1065,7 @@
                                 {% if item.instructions and item.instructions.can_update_quantity == false %}
                                   disabled
                                 {% endif %}
+                                readonly
                               >
                               <button
                                 class="quantity__button"
@@ -1293,12 +1298,12 @@
             </p>
 
             <p class="creste-cart-pick__price">
-              {{ pv.price | money }}
+              {{ pv.price | money | replace: ".00", "" | replace: "Rs. ", "₹ " }}
 
               {%- if pv.compare_at_price > pv.price -%}
 
                 <span class="creste-cart-pick__compare">
-                  {{ pv.compare_at_price | money }}
+                  {{ pv.compare_at_price | money_without_currency | replace: ".00", "" | replace: "Rs. ", "₹ " }}
                 </span>
 
                 {%- assign pick_off = pv.compare_at_price
@@ -1441,7 +1446,7 @@
                 &nbsp;<button type="button" class="creste-cart-summary__toggle" data-view-summary-toggle aria-expanded="false" aria-controls="CartDrawer-ViewSummary">View Summary</button>
               </span>
               <span class="creste-cart-summary__total totals__total-value" role="status">
-                {{ creste_grand_total | money_with_currency | replace: "Rs. " , "₹ " }}
+                {{ creste_grand_total | money_with_currency | replace: "Rs. " , "₹ " | replace: ".00", "" }}
               </span>
             </div>
             <div class="creste-cart-summary__row">
@@ -1449,7 +1454,7 @@
                 {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
               </small>
               {%- if creste_total_savings > 0 -%}
-                <span class="creste-cart-summary__savings">You saved {{ creste_total_savings | money | replace: "Rs. ", "₹ " }}</span>
+                <span class="creste-cart-summary__savings">You saved {{ creste_total_savings | money | replace: "Rs. ", "₹ " | replace: ".00", ""}}</span>
               {%- endif -%}
             </div>
           </div>

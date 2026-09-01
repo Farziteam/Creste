@@ -147,4 +147,5 @@ quantity-popover .quantity__input:not(:focus-visible):not(.focused) {
   border: 1px solid #f0e0b8;
   border-radius: 999px;
   padding: 2px 4px;
+  margin-top: 0.8rem;
 }

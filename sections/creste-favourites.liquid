@@ -146,7 +146,7 @@
 <div class='fav-card'>
 <a class='fav-img' href='{{ product.url }}'>{% if product.featured_image %}<img src='{{ product.featured_image | image_url: width: 600 }}' alt='{{ product.title | escape }}' loading='lazy'>{% else %}{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}{% endif %}</a>
 <div class='fav-body'>
-<div class='fav-top'><span class='fav-rate'><em>&#9733;</em>{{ prating }}</span>{% comment %}{% if product.tags contains section.settings.badge_tag %}<span class='fav-badge'><em>&#9733;</em>{{ section.settings.badge_text }}</span>{% endif %} {% endcomment %} {% if product.metafields.custom.product_tag != blank %}<span class='cp-badge'><em>&#9733;</em>{{ product.metafields.custom.product_tag }}</span>{% endif %}</div>
+<div class='fav-top'>{% if prating != blank %}<span class='fav-rate'><em>&#9733;</em>{{ prating }}</span>{% endif %}{% comment %}{% if product.tags contains section.settings.badge_tag %}<span class='fav-badge'><em>&#9733;</em>{{ section.settings.badge_text }}</span>{% endif %} {% endcomment %} {% if product.metafields.custom.product_tag != blank %}<span class='cp-badge'><em>&#9733;</em>{{ product.metafields.custom.product_tag }}</span>{% endif %}</div>
 <a class='fav-title' href='{{ product.url }}'>{{ product.title }}</a>
 <div class="product-sub-heading">{% if product.metafields.custom.age_group != blank %}<p>{{ product.metafields.custom.age_group }}</p>{% endif %}{% if product.metafields.custom.product_sub_description != blank %}<p>•&nbsp;&nbsp;{{ product.metafields.custom.product_sub_description }}</p>{% endif %}</div>
 {% if pmeta != blank %}<p class='fav-meta'>{{ pmeta }}</p>{% endif %}

@@ -341,8 +341,8 @@
         {%- endif -%}
         <div class="cpdp__hr"></div>
         <div class="cpdp__price">
-          <span class="cpdp__price-now" data-price>{{ cur.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
-          {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹'  }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
+          <span class="cpdp__price-now" data-price>{{ cur.price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' | replace: ".00", "" }}</span>
+          {%- if cur.compare_at_price > cur.price -%}<span class="cpdp__price-was" data-compare>{{ cur.compare_at_price | money | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' | replace: ".00", "" }}</span><span class="cpdp__price-off" data-off>{{ cur.compare_at_price | minus: cur.price | times: 100 | divided_by: cur.compare_at_price | round }}% off</span>{%- else -%}<span class="cpdp__price-was" data-compare style="display:none"></span><span class="cpdp__price-off" data-off style="display:none"></span>{%- endif -%}
         </div>
         <label class="cpdp__giftwrap">
           
