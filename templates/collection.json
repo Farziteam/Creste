@@ -12,7 +12,7 @@
     "creste-collection": {
       "type": "custom-collection",
       "settings": {
-        "show_hero": true,
+        "show_hero": false,
         "hero_title": "Ages 7–10 years",
         "text_color": "#574239",
         "background_image": "shopify://shop_images/tie-dye_desktop_1440x480_ea5a1eb9-9430-4e41-96d3-de63b9278ab9.png",
