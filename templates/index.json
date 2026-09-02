@@ -12,12 +12,12 @@
     "creste_hero": {
       "type": "creste-hero",
       "blocks": {
-        "slide_EH4BV7": {
+        "slide_Hk4xrA": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Banner-2-Candle-Kit-Desktop-r1-1.jpg",
-            "image_mobile": "shopify://shop_images/Banner-2-Candle-Kit-Mobile-r1-1.jpg",
-            "link": "shopify://collections/candles-kits",
+            "image": "shopify://shop_images/Banner-3-Dussehra-Kit-Desktop-r1-1.jpg",
+            "image_mobile": "shopify://shop_images/Banner-3-Dussehra-Kit-Mobile-r1-1.jpg",
+            "link": "shopify://products/diy-dussehra-kit",
             "alt": "Creste banner"
           }
         },
@@ -39,21 +39,21 @@
             "alt": "Creste banner"
           }
         },
-        "slide_Hk4xrA": {
+        "slide_EH4BV7": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Banner-3-Dussehra-Kit-Desktop-r1-1.jpg",
-            "image_mobile": "shopify://shop_images/Banner-3-Dussehra-Kit-Mobile-r1-1.jpg",
-            "link": "shopify://products/diy-dussehra-kit",
+            "image": "shopify://shop_images/Banner-2-Candle-Kit-Desktop-r1-1.jpg",
+            "image_mobile": "shopify://shop_images/Banner-2-Candle-Kit-Mobile-r1-1.jpg",
+            "link": "shopify://collections/candles-kits",
             "alt": "Creste banner"
           }
         }
       },
       "block_order": [
-        "slide_EH4BV7",
+        "slide_Hk4xrA",
         "slide_3jWpxH",
         "slide_AYawCN",
-        "slide_Hk4xrA"
+        "slide_EH4BV7"
       ],
       "settings": {
         "bg": "rgba(0,0,0,0)",
@@ -429,7 +429,7 @@
         "mobile_logo": "shopify://shop_images/png_creste.png",
         "overlap_top": 24,
         "overlap_bottom": 0,
-        "section_bg": "#FFFFFF",
+        "section_bg": "#ffffff",
         "wave_color": "#ede4fb",
         "heading_a": "Loved By",
         "heading_b": "50k+ Little Makers",
