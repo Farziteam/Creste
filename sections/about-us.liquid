@@ -11,10 +11,6 @@
   elsif youtube_url contains 'youtube.com/shorts/'
     assign youtube_id = youtube_url | split: 'youtube.com/shorts/' | last | split: '?' | first | split: '&' | first
   endif
-
-  assign pill_colors = 'fce9de,ddf0f4,e2f0e6,ece5f8' | split: ','
-  assign promise_bg = 'fce9de,ddf0f4,e2f0e6,ece5f8' | split: ','
-  assign promise_fg = 'f4793a,3aaccc,5bad6f,9b7fd4' | split: ','
 %}
 
 <section
@@ -22,377 +18,1199 @@
   class="about-us-section"
 >
 
-  <!-- HERO -->
+  <!-- =========================================
+       MAIN BANNER
+  ========================================== -->
 
-  {% if section.settings.hero_heading != blank or section.settings.hero_eyebrow != blank %}
-    <div class="about-us__container">
-      <div class="about-us__hero">
-        {% if section.settings.hero_eyebrow != blank %}
-          <p class="about-us__eyebrow about-us__eyebrow--orange">{{ section.settings.hero_eyebrow }}</p>
-        {% endif %}
-        {% if section.settings.hero_heading != blank %}
-          <h1 class="about-us__hero-heading">{{ section.settings.hero_heading }}</h1>
-        {% endif %}
-        {% if section.settings.hero_subheading != blank %}
-          <p class="about-us__hero-subheading">{{ section.settings.hero_subheading }}</p>
-        {% endif %}
-      </div>
+  <div
+    class="about-us__banner"
+    {% if section.settings.banner_image != blank %}
+      style="background-image: url('{{ section.settings.banner_image | image_url: width: 2400 }}');"
+    {% endif %}
+  >
+    <div class="about-us__banner-overlay"></div>
 
-  <!-- PHOTO -->
-
-  {% if section.settings.photo_image != blank %}
-    <div class="about-us__container">
-      <div class="about-us__photo">
-        {{
-          section.settings.photo_image
-          | image_url: width: 2000
-          | image_tag:
-            loading: 'lazy',
-            widths: '750, 1100, 1500, 2000',
-            class: 'about-us__photo-image'
-        }}
-
-        {% if section.settings.photo_badge_text != blank %}
-          <div class="about-us__photo-badge">
-            <span class="about-us__photo-badge-dot"></span>
-            {{ section.settings.photo_badge_text }}
-          </div>
-        {% endif %}
-      </div>
+    <div class="about-us__banner-content">
+      {% if section.settings.banner_heading != blank %}
+        <h1 class="about-us__banner-heading">
+          {{ section.settings.banner_heading }}
+        </h1>
+      {% endif %}
     </div>
-  {% endif %}
+  </div>
 
 
-  <!-- INTRO CONTENT -->
+  <!-- =========================================
+       INTRO CONTENT
+  ========================================== -->
 
   <div class="about-us__container">
 
     <div class="about-us__intro">
 
       {% if section.settings.intro_heading != blank %}
-        <h2 class="about-us__heading">{{ section.settings.intro_heading }}</h2>
+        <h2 class="about-us__heading">
+          {{ section.settings.intro_heading }}
+        </h2>
       {% endif %}
 
       {% if section.settings.intro_text != blank %}
-        <div class="about-us__text">{{ section.settings.intro_text }}</div>
+        <div class="about-us__text">
+          {{ section.settings.intro_text }}
+        </div>
       {% endif %}
 
       {% if section.settings.intro_link_text != blank %}
-        <a href="{{ section.settings.intro_link_url }}" class="about-us__link">{{ section.settings.intro_link_text }}</a>
+        <a
+          href="{{ section.settings.intro_link_url }}"
+          class="about-us__link"
+        >
+          {{ section.settings.intro_link_text }}
+        </a>
       {% endif %}
 
     </div>
+
+
+    <!-- =========================================
+         YOUTUBE VIDEO
+    ========================================== -->
+
     {% if youtube_id != blank %}
+
       <div class="about-us__video-wrapper">
-        <button type="button" class="about-us__video" data-video-id="{{ youtube_id }}" aria-label="Play video">
-          <img src="https://img.youtube.com/vi/{{ youtube_id }}/maxresdefault.jpg" alt="{{ section.settings.video_alt_text | escape }}" loading="lazy" class="about-us__video-thumbnail" width="1280" height="720">
+
+        <button
+          type="button"
+          class="about-us__video"
+          data-video-id="{{ youtube_id }}"
+          aria-label="Play video"
+        >
+
+          <img
+            src="https://img.youtube.com/vi/{{ youtube_id }}/maxresdefault.jpg"
+            alt="{{ section.settings.video_alt_text | escape }}"
+            loading="lazy"
+            class="about-us__video-thumbnail"
+            width="1280"
+            height="720"
+          >
+
           <span class="about-us__video-play">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5.5V18.5L18 12L8 5.5Z" fill="currentColor"/></svg>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 5.5V18.5L18 12L8 5.5Z"
+                fill="currentColor"
+              />
+            </svg>
           </span>
+
         </button>
+
       </div>
+
     {% endif %}
 
+
+    <!-- =========================================
+         OUR BRAND
+    ========================================== -->
+
+    <div class="about-us__brand">
+
+      {% if section.settings.brand_heading != blank %}
+        <h2 class="about-us__heading">
+          {{ section.settings.brand_heading }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.brand_text != blank %}
+        <div class="about-us__text">
+          {{ section.settings.brand_text }}
+        </div>
+      {% endif %}
+
+    </div>
+
+
+    <!-- =========================================
+         FOUNDER
+    ========================================== -->
+
+    <div class="about-us__founder">
+
+      {% if section.settings.founder_image != blank %}
+        <div class="about-us__founder-image-wrapper">
+
+          {{
+            section.settings.founder_image
+            | image_url: width: 1000
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1000',
+              class: 'about-us__founder-image'
+          }}
+
+        </div>
+      {% endif %}
+
+
+      <div class="about-us__founder-info">
+
+        {% if section.settings.founder_name != blank %}
+          <h2 class="about-us__founder-name">
+            {{ section.settings.founder_name }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.founder_designation != blank %}
+          <p class="about-us__founder-designation">
+            {{ section.settings.founder_designation }}
+          </p>
+        {% endif %}
+
+      </div>
+
+    </div>
+
   </div>
 
 
-  <!-- WHAT WE MAKE -->
+  <!-- =========================================
+       YOUTUBE MODAL
+  ========================================== -->
 
-  {% if section.settings.categories_list != blank %}
-    <div class="about-us__categories">
-      <div class="about-us__container">
-
-        {% if section.settings.categories_eyebrow != blank %}
-          <p class="about-us__eyebrow about-us__eyebrow--teal about-us__eyebrow--center">{{ section.settings.categories_eyebrow }}</p>
-        {% endif %}
-
-        <div class="about-us__pills">
-          {% assign categories = section.settings.categories_list | newline_to_br | split: '<br />' %}
-          {% for category in categories %}
-            {% assign category = category | strip %}
-            {% if category != blank %}
-              {% assign color_index = forloop.index0 | modulo: 4 %}
-              <span class="about-us__pill" style="background-color: #{{ pill_colors[color_index] }}; border-color: #{{ pill_colors[color_index] }};">{{ category }}</span>
-            {% endif %}
-          {% endfor %}
-        </div>
-
-      </div>
-    </div>
-  {% endif %}
-
-
-
-
-    </div>
-  {% endif %}
-
-
-  <!-- THE CRESTE PROMISE -->
-
-  {% if section.blocks.size > 0 %}
-    <div class="about-us__promise">
-      <div class="about-us__container">
-
-        {% if section.settings.promise_eyebrow != blank %}
-          <p class="about-us__eyebrow about-us__eyebrow--orange about-us__eyebrow--center">{{ section.settings.promise_eyebrow }}</p>
-        {% endif %}
-
-        {% if section.settings.promise_heading != blank %}
-          <h2 class="about-us__promise-heading">{{ section.settings.promise_heading }}</h2>
-        {% endif %}
-
-        <div class="about-us__promise-grid">
-          {% for block in section.blocks %}
-            {% if block.type == 'promise_item' %}
-              {% assign color_index = forloop.index0 | modulo: 4 %}
-              <div class="about-us__promise-card" {{ block.shopify_attributes }}>
-                <div class="about-us__promise-icon" style="background-color: #{{ promise_bg[color_index] }}; border-color: #{{ promise_bg[color_index] }};">
-                  <span class="about-us__promise-icon-shape" style="border-color: #{{ promise_fg[color_index] }};"></span>
-                </div>
-                {% if block.settings.title != blank %}
-                  <h3 class="about-us__promise-title">{{ block.settings.title }}</h3>
-                {% endif %}
-                {% if block.settings.text != blank %}
-                  <p class="about-us__promise-text">{{ block.settings.text }}</p>
-                {% endif %}
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-
-      </div>
-  <!-- OUR STORY -->
-
-  <div class="about-us__story">
-    <div class="about-us__container">
-      <div class="about-us__story-card">
-
-        {% if section.settings.brand_eyebrow != blank %}
-          <p class="about-us__eyebrow about-us__eyebrow--purple">{{ section.settings.brand_eyebrow }}</p>
-        {% endif %}
-
-        {% if section.settings.brand_heading != blank %}
-          <h2 class="about-us__heading about-us__heading--left">{{ section.settings.brand_heading }}</h2>
-        {% endif %}
-
-        {% if section.settings.brand_text != blank %}
-          <div class="about-us__text about-us__text--left">{{ section.settings.brand_text }}</div>
-        {% endif %}
-
-        {% if section.settings.founder_name != blank or section.settings.founder_image != blank %}
-          <div class="about-us__founder">
-            {% if section.settings.founder_image != blank %}
-              <div class="about-us__founder-image-wrapper">
-                {{ section.settings.founder_image | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100, 150, 200', class: 'about-us__founder-image' }}
-              </div>
-            {% endif %}
-            <div class="about-us__founder-info">
-              {% if section.settings.founder_name != blank %}
-                <p class="about-us__founder-name">{{ section.settings.founder_name }}</p>
-              {% endif %}
-              {% if section.settings.founder_designation != blank %}
-                <p class="about-us__founder-designation">{{ section.settings.founder_designation }}</p>
-              {% endif %}
-            </div>
-          </div>
-        {% endif %}
-
-      </div>
-    </div>
-  </div>
-
-
-    </div>
-  {% endif %}
-
-
-  <!-- YOUTUBE MODAL -->
   {% if youtube_id != blank %}
-    <div class="about-us__modal" data-video-modal aria-hidden="true">
+
+    <div
+      class="about-us__modal"
+      data-video-modal
+      aria-hidden="true"
+    >
+
       <div class="about-us__modal-backdrop" data-video-close></div>
-      <div class="about-us__modal-content" role="dialog" aria-modal="true" aria-label="Video">
-        <button type="button" class="about-us__modal-close" data-video-close aria-label="Close video">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 5L19 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+
+      <div
+        class="about-us__modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Video"
+      >
+
+        <button
+          type="button"
+          class="about-us__modal-close"
+          data-video-close
+          aria-label="Close video"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5 5L19 19"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M19 5L5 19"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
         </button>
+
         <div class="about-us__modal-video">
-          <iframe data-video-iframe src="" title="YouTube video" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+          <iframe
+            data-video-iframe
+            src=""
+            title="YouTube video"
+            frameborder="0"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen
+          ></iframe>
         </div>
+
       </div>
+
     </div>
+
   {% endif %}
+
 </section>
 
+
 <style>
-  #about-us-{{ section.id }} { --about-bg: {{ section.settings.background_color }}; --about-text: {{ section.settings.text_color }}; --about-heading: {{ section.settings.heading_color }}; --about-link: {{ section.settings.link_color }}; background: var(--about-bg); color: var(--about-text); }
-  #about-us-{{ section.id }} .about-us__container { width: min(calc(100% - 40px), {{ section.settings.content_width }}px); margin: 0 auto; }
-  #about-us-{{ section.id }} .about-us__eyebrow { margin: 0 0 14px; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-  #about-us-{{ section.id }} .about-us__eyebrow--center { text-align: center; }
-  #about-us-{{ section.id }} .about-us__eyebrow--orange { color: #f4793a; }
-  #about-us-{{ section.id }} .about-us__eyebrow--teal { color: #3aaccc; }
-  #about-us-{{ section.id }} .about-us__eyebrow--purple { color: #9b7fd4; }
-  #about-us-{{ section.id }} .about-us__hero { max-width: 840px; margin: {{ section.settings.section_spacing }}px auto 0; text-align: center; }
-  #about-us-{{ section.id }} .about-us__hero-heading { margin: 0 0 18px; color: var(--about-heading); font-size: clamp(30px, 4.5vw, 44px); line-height: 1.18; font-weight: 800; letter-spacing: -0.6px; }
-  #about-us-{{ section.id }} .about-us__hero-subheading { margin: 0 auto; max-width: 680px; color: var(--about-text); font-size: 16px; line-height: 1.6; }
-  #about-us-{{ section.id }} .about-us__photo { position: relative; margin-top: {{ section.settings.section_spacing }}px; border-radius: 18px; overflow: hidden; background: #ede7de; }
-  #about-us-{{ section.id }} .about-us__photo-image { display: block; width: 100%; height: auto; max-height: 440px; object-fit: cover; }
-  #about-us-{{ section.id }} .about-us__photo-badge { position: absolute; left: 24px; bottom: 24px; display: flex; align-items: center; gap: 8px; padding: 10px 18px 10px 14px; background: #fff; border-radius: 20px; color: #2c2a27; font-size: 13px; font-weight: 600; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); }
-  #about-us-{{ section.id }} .about-us__photo-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #f4793a; flex: 0 0 auto; }
-  #about-us-{{ section.id }} .about-us__banner { position: relative; min-height: {{ section.settings.banner_height }}px; background-color: #eeeeee; background-position: center; background-size: cover; background-repeat: no-repeat; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  #about-us-{{ section.id }} .about-us__intro { max-width: {{ section.settings.text_max_width }}px; margin: {{ section.settings.section_spacing }}px auto 0; text-align: {{ section.settings.content_alignment }}; }
-  #about-us-{{ section.id }} .about-us__heading { margin: 0 0 20px; color: var(--about-heading); font-size: {{ section.settings.heading_size }}px; line-height: 1.2; font-weight: 700; }
-  #about-us-{{ section.id }} .about-us__heading--left { text-align: left; }
-  #about-us-{{ section.id }} .about-us__text { color: var(--about-text); font-size: {{ section.settings.body_size }}px; line-height: 1.7; }
-  #about-us-{{ section.id }} .about-us__text--left { text-align: left; }
-  #about-us-{{ section.id }} .about-us__text p { margin: 0 0 16px; }
-  #about-us-{{ section.id }} .about-us__text p:last-child { margin-bottom: 0; }
-  #about-us-{{ section.id }} .about-us__link { display: inline-block; margin-top: 24px; color: var(--about-link); font-size: 16px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; transition: opacity 0.2s ease; }
-  #about-us-{{ section.id }} .about-us__link:hover { opacity: 0.7; }
-  #about-us-{{ section.id }} .about-us__video-wrapper { margin-top: {{ section.settings.section_spacing }}px; }
-  #about-us-{{ section.id }} .about-us__video { position: relative; display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; overflow: hidden; border-radius: {{ section.settings.video_radius }}px; }
-  #about-us-{{ section.id }} .about-us__video-thumbnail { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; transition: transform 0.4s ease; }
-  #about-us-{{ section.id }} .about-us__video:hover .about-us__video-thumbnail { transform: scale(1.03); }
-  #about-us-{{ section.id }} .about-us__video-play { position: absolute; top: 50%; left: 50%; width: 76px; height: 76px; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(0, 0, 0, 0.75); border-radius: 50%; transition: transform 0.25s ease, background 0.25s ease; }
-  #about-us-{{ section.id }} .about-us__video:hover .about-us__video-play { transform: translate(-50%, -50%) scale(1.08); background: rgba(0, 0, 0, 0.9); }
-  #about-us-{{ section.id }} .about-us__categories { margin-top: {{ section.settings.section_spacing }}px; padding: 0 0 8px; }
-  #about-us-{{ section.id }} .about-us__pills { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
-  #about-us-{{ section.id }} .about-us__pill { display: inline-flex; align-items: center; padding: 11px 20px; border: 1px solid transparent; border-radius: 24px; color: #2c2a27; font-size: 14px; font-weight: 600; }
-  #about-us-{{ section.id }} .about-us__promise { margin-top: {{ section.settings.section_spacing }}px; padding: 56px 0 64px; background: #f7f4ef; }
-  #about-us-{{ section.id }} .about-us__promise-heading { margin: 0 0 32px; color: var(--about-heading); font-size: 32px; line-height: 1.2; font-weight: 800; letter-spacing: -0.4px; text-align: center; }
-  #about-us-{{ section.id }} .about-us__promise-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  #about-us-{{ section.id }} .about-us__promise-card { padding: 26px 24px; background: #fff; border: 1px solid #e6e1d8; border-radius: 16px; }
-  #about-us-{{ section.id }} .about-us__promise-icon { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 14px; }
-  #about-us-{{ section.id }} .about-us__promise-icon-shape { width: 20px; height: 20px; border: 1.5px solid; border-radius: 5px; }
-  #about-us-{{ section.id }} .about-us__promise-title { margin: 0 0 10px; color: var(--about-heading); font-size: 18px; line-height: 1.3; font-weight: 800; }
-  #about-us-{{ section.id }} .about-us__promise-text { margin: 0; color: var(--about-text); font-size: 13.5px; line-height: 1.55; }
-  #about-us-{{ section.id }} .about-us__story { margin-top: {{ section.settings.section_spacing }}px; padding: 56px 0 64px; background: #f7f4ef; }
-  #about-us-{{ section.id }} .about-us__story-card { max-width: 760px; margin: 0 auto; padding: 40px; background: #fff; border-radius: 18px; }
-  #about-us-{{ section.id }} .about-us__founder { margin-top: 24px; display: flex; align-items: center; gap: 12px; }
-  #about-us-{{ section.id }} .about-us__founder-image-wrapper { flex: 0 0 48px; width: 48px; height: 48px; overflow: hidden; border-radius: 50%; }
-  #about-us-{{ section.id }} .about-us__founder-image { display: block; width: 100%; height: 100%; object-fit: cover; }
-  #about-us-{{ section.id }} .about-us__founder-info { display: flex; flex-direction: column; gap: 1px; }
-  #about-us-{{ section.id }} .about-us__founder-name { margin: 0; color: var(--about-heading); font-size: 15px; line-height: 1.3; font-weight: 800; }
-  #about-us-{{ section.id }} .about-us__founder-designation { margin: 0; color: #9c968d; font-size: 12.5px; line-height: 1.4; }
-  #about-us-{{ section.id }} .about-us__modal { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; padding: 30px; }
-  #about-us-{{ section.id }} .about-us__modal.is-open { display: flex; }
-  #about-us-{{ section.id }} .about-us__modal-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85); cursor: pointer; }
-  #about-us-{{ section.id }} .about-us__modal-content { position: relative; z-index: 2; width: min(1100px, 100%); background: #000; border-radius: 8px; overflow: visible; }
-  #about-us-{{ section.id }} .about-us__modal-video { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 8px; }
-  #about-us-{{ section.id }} .about-us__modal-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  #about-us-{{ section.id }} .about-us__modal-close { position: absolute; top: -45px; right: 0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; padding: 0; border: 0; color: #fff; background: transparent; cursor: pointer; }
+
+  #about-us-{{ section.id }} {
+    --about-bg: {{ section.settings.background_color }};
+    --about-text: {{ section.settings.text_color }};
+    --about-heading: {{ section.settings.heading_color }};
+    --about-link: {{ section.settings.link_color }};
+    --about-overlay: {{ section.settings.banner_overlay_opacity | divided_by: 100.0 }};
+  }
+
+  #about-us-{{ section.id }} {
+    background: var(--about-bg);
+    color: var(--about-text);
+  }
+
+
+  /* =========================================
+     CONTAINER
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__container {
+    width: min(
+      calc(100% - 40px),
+      {{ section.settings.content_width }}px
+    );
+
+    margin: 0 auto;
+  }
+
+
+  /* =========================================
+     BANNER
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__banner {
+    position: relative;
+    min-height: {{ section.settings.banner_height }}px;
+
+    background-color: #eeeeee;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+  }
+
+  #about-us-{{ section.id }} .about-us__banner-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: #000;
+    opacity: var(--about-overlay);
+  }
+
+  #about-us-{{ section.id }} .about-us__banner-content {
+    position: relative;
+    z-index: 2;
+
+    width: min(
+      calc(100% - 40px),
+      {{ section.settings.content_width }}px
+    );
+
+    text-align: {{ section.settings.banner_text_alignment }};
+  }
+
+  #about-us-{{ section.id }} .about-us__banner-heading {
+    margin: 0;
+
+    color: {{ section.settings.banner_heading_color }};
+
+    font-size: clamp(
+      36px,
+      5vw,
+      {{ section.settings.banner_heading_size }}px
+    );
+
+    line-height: 1.1;
+    font-weight: 600;
+  }
+
+
+  /* =========================================
+     INTRO
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__intro {
+    max-width: {{ section.settings.text_max_width }}px;
+    margin: {{ section.settings.section_spacing }}px auto 0;
+    text-align: {{ section.settings.content_alignment }};
+  }
+
+
+  /* =========================================
+     COMMON HEADING
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__heading {
+    margin: 0 0 20px;
+
+    color: var(--about-heading);
+
+    font-size: {{ section.settings.heading_size }}px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+
+  /* =========================================
+     COMMON TEXT
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__text {
+    color: var(--about-text);
+
+    font-size: {{ section.settings.body_size }}px;
+    line-height: 1.7;
+  }
+
+  #about-us-{{ section.id }} .about-us__text p {
+    margin: 0 0 16px;
+  }
+
+  #about-us-{{ section.id }} .about-us__text p:last-child {
+    margin-bottom: 0;
+  }
+
+
+  /* =========================================
+     LINK
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__link {
+    display: inline-block;
+
+    margin-top: 24px;
+
+    color: var(--about-link);
+
+    font-size: 16px;
+    font-weight: 600;
+
+    text-decoration: underline;
+    text-underline-offset: 4px;
+
+    transition: opacity 0.2s ease;
+  }
+
+  #about-us-{{ section.id }} .about-us__link:hover {
+    opacity: 0.7;
+  }
+
+
+  /* =========================================
+     VIDEO
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__video-wrapper {
+    margin-top: {{ section.settings.section_spacing }}px;
+  }
+
+  #about-us-{{ section.id }} .about-us__video {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    padding: 0;
+
+    border: 0;
+    background: transparent;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    border-radius: {{ section.settings.video_radius }}px;
+  }
+
+  #about-us-{{ section.id }} .about-us__video-thumbnail {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 16 / 9;
+
+    object-fit: cover;
+
+    transition: transform 0.4s ease;
+  }
+
+  #about-us-{{ section.id }} .about-us__video:hover
+  .about-us__video-thumbnail {
+    transform: scale(1.03);
+  }
+
+  #about-us-{{ section.id }} .about-us__video-play {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 76px;
+    height: 76px;
+
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    border-radius: 50%;
+
+    transition:
+      transform 0.25s ease,
+      background 0.25s ease;
+  }
+
+  #about-us-{{ section.id }} .about-us__video:hover
+  .about-us__video-play {
+    transform: translate(-50%, -50%) scale(1.08);
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+
+  /* =========================================
+     BRAND
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__brand {
+    max-width: {{ section.settings.text_max_width }}px;
+
+    margin:
+      {{ section.settings.section_spacing }}px
+      auto 0;
+
+    text-align: {{ section.settings.content_alignment }};
+  }
+
+
+  /* =========================================
+     FOUNDER
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__founder {
+    margin:
+      {{ section.settings.section_spacing }}px
+      auto
+      {{ section.settings.section_spacing }}px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 50px;
+
+    max-width: {{ section.settings.founder_max_width }}px;
+  }
+
+  #about-us-{{ section.id }} .about-us__founder-image-wrapper {
+    flex: 0 0 {{ section.settings.founder_image_width }}px;
+
+    overflow: hidden;
+
+    border-radius: {{ section.settings.founder_image_radius }}px;
+  }
+
+  #about-us-{{ section.id }} .about-us__founder-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+  }
+
+  #about-us-{{ section.id }} .about-us__founder-info {
+    {% comment %} flex: 1; {% endcomment %}
+  }
+
+  #about-us-{{ section.id }} .about-us__founder-name {
+    margin: 0 0 8px;
+
+    color: var(--about-heading);
+
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  #about-us-{{ section.id }} .about-us__founder-designation {
+    margin: 0;
+
+    color: var(--about-text);
+
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+
+  /* =========================================
+     VIDEO MODAL
+  ========================================== */
+
+  #about-us-{{ section.id }} .about-us__modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+  }
+
+  #about-us-{{ section.id }} .about-us__modal.is-open {
+    display: flex;
+  }
+
+  #about-us-{{ section.id }} .about-us__modal-backdrop {
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.85);
+
+    cursor: pointer;
+  }
+
+  #about-us-{{ section.id }} .about-us__modal-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(1100px, 100%);
+
+    background: #000;
+
+    border-radius: 8px;
+
+    overflow: visible;
+  }
+
+  #about-us-{{ section.id }} .about-us__modal-video {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    overflow: hidden;
+
+    border-radius: 8px;
+  }
+
+  #about-us-{{ section.id }} .about-us__modal-video iframe {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+  }
+
+  #about-us-{{ section.id }} .about-us__modal-close {
+    position: absolute;
+
+    top: -45px;
+    right: 0;
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+
+    color: #fff;
+    background: transparent;
+
+    cursor: pointer;
+  }
+
+
+  /* =========================================
+     MOBILE
+  ========================================== */
 
   @media screen and (max-width: 749px) {
-    #about-us-{{ section.id }} .about-us__container { width: calc(100% - 30px); }
-    #about-us-{{ section.id }} .about-us__hero-heading { font-size: {{ section.settings.mobile_heading_size }}px; }
-    #about-us-{{ section.id }} .about-us__photo-image { max-height: 280px; }
-    #about-us-{{ section.id }} .about-us__photo-badge { left: 14px; right: 14px; bottom: 14px; font-size: 12px; }
-    #about-us-{{ section.id }} .about-us__heading { font-size: {{ section.settings.mobile_heading_size }}px; }
-    #about-us-{{ section.id }} .about-us__text { font-size: {{ section.settings.mobile_body_size }}px; }
-    #about-us-{{ section.id }} .about-us__video-play { width: 60px; height: 60px; }
-    #about-us-{{ section.id }} .about-us__promise-grid { grid-template-columns: repeat(2, 1fr); }
-    #about-us-{{ section.id }} .about-us__story-card { padding: 26px; }
-    #about-us-{{ section.id }} .about-us__modal { padding: 15px; }
-    #about-us-{{ section.id }} .about-us__modal-close { top: -42px; }
+
+    #about-us-{{ section.id }} .about-us__container {
+      width: calc(100% - 30px);
+    }
+
+    #about-us-{{ section.id }} .about-us__banner {
+      min-height: {{ section.settings.mobile_banner_height }}px;
+    }
+
+    #about-us-{{ section.id }} .about-us__banner-heading {
+      font-size: {{ section.settings.mobile_banner_heading_size }}px;
+    }
+
+    #about-us-{{ section.id }} .about-us__heading {
+      font-size: {{ section.settings.mobile_heading_size }}px;
+    }
+
+    #about-us-{{ section.id }} .about-us__text {
+      font-size: {{ section.settings.mobile_body_size }}px;
+    }
+
+    #about-us-{{ section.id }} .about-us__video-play {
+      width: 60px;
+      height: 60px;
+    }
+
+    #about-us-{{ section.id }} .about-us__founder {
+      flex-direction: column;
+
+      gap: 25px;
+
+      text-align: center;
+    }
+
+    #about-us-{{ section.id }} .about-us__founder-image-wrapper {
+      flex: none;
+
+      width: min(
+        {{ section.settings.founder_image_width }}px,
+        100%
+      );
+    }
+
+    #about-us-{{ section.id }} .about-us__founder-name {
+      font-size: 26px;
+    }
+
+    #about-us-{{ section.id }} .about-us__modal {
+      padding: 15px;
+    }
+
+    #about-us-{{ section.id }} .about-us__modal-close {
+      top: -42px;
+    }
+
   }
+
 </style>
+
 
 <script>
   (function() {
-    const section = document.querySelector('#about-us-{{ section.id }}');
+
+    const section = document.querySelector(
+      '#about-us-{{ section.id }}'
+    );
+
     if (!section) return;
-    const videoButton = section.querySelector('[data-video-id]');
-    const modal = section.querySelector('[data-video-modal]');
-    const iframe = section.querySelector('[data-video-iframe]');
-    const closeButtons = section.querySelectorAll('[data-video-close]');
+
+    const videoButton = section.querySelector(
+      '[data-video-id]'
+    );
+
+    const modal = section.querySelector(
+      '[data-video-modal]'
+    );
+
+    const iframe = section.querySelector(
+      '[data-video-iframe]'
+    );
+
+    const closeButtons = section.querySelectorAll(
+      '[data-video-close]'
+    );
+
     if (!videoButton || !modal || !iframe) return;
 
+
     function openVideo() {
-      const videoId = videoButton.getAttribute('data-video-id');
+
+      const videoId =
+        videoButton.getAttribute('data-video-id');
+
       if (!videoId) return;
-      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+
+      iframe.src =
+        'https://www.youtube.com/embed/' +
+        videoId +
+        '?autoplay=1&rel=0';
+
       modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
+
+      modal.setAttribute(
+        'aria-hidden',
+        'false'
+      );
+
       document.body.style.overflow = 'hidden';
     }
 
+
     function closeVideo() {
+
       iframe.src = '';
+
       modal.classList.remove('is-open');
-      modal.setAttribute('aria-hidden', 'true');
+
+      modal.setAttribute(
+        'aria-hidden',
+        'true'
+      );
+
       document.body.style.overflow = '';
     }
 
-    videoButton.addEventListener('click', openVideo);
+
+    videoButton.addEventListener(
+      'click',
+      openVideo
+    );
+
+
     closeButtons.forEach(function(button) {
-      button.addEventListener('click', closeVideo);
+
+      button.addEventListener(
+        'click',
+        closeVideo
+      );
+
     });
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape' && modal.classList.contains('is-open')) {
-        closeVideo();
+
+
+    document.addEventListener(
+      'keydown',
+      function(event) {
+
+        if (
+          event.key === 'Escape' &&
+          modal.classList.contains('is-open')
+        ) {
+          closeVideo();
+        }
+
       }
-    });
+    );
+
   })();
 </script>
 
+
 {% schema %}
+
 {
   "name": "About Us",
   "tag": "section",
   "class": "section-about-us",
   "settings": [
-    { "type": "header", "content": "Hero" },
-    { "type": "text", "id": "hero_eyebrow", "label": "Eyebrow", "default": "ABOUT CRESTE" },
-    { "type": "text", "id": "hero_heading", "label": "Heading", "default": "Creativity you can hold in your hands" },
-    { "type": "textarea", "id": "hero_subheading", "label": "Subheading", "default": "Screen-free DIY kits and creative events that bring children and adults together to make, learn and play." },
-    { "type": "header", "content": "Photo" },
-    { "type": "image_picker", "id": "photo_image", "label": "Photo" },
-    { "type": "text", "id": "photo_badge_text", "label": "Badge text", "default": "Hands-on workshops at our Lucknow studio" },
-    { "type": "header", "content": "Intro Content" },
-    { "type": "text", "id": "intro_heading", "label": "Heading" },
-    { "type": "richtext", "id": "intro_text", "label": "Text", "default": "<p>Tell your customers about your brand, your story and what makes you different.</p>" },
-    { "type": "text", "id": "intro_link_text", "label": "Link text" },
-    { "type": "url", "id": "intro_link_url", "label": "Link URL" },
-    { "type": "header", "content": "YouTube Video" },
-    { "type": "url", "id": "youtube_url", "label": "YouTube video URL", "info": "Paste a YouTube video URL." },
-    { "type": "text", "id": "video_alt_text", "label": "Video image alt text", "default": "Watch our story" },
-    { "type": "range", "id": "video_radius", "label": "Video corner radius", "min": 0, "max": 40, "step": 2, "default": 8, "unit": "px" },
-    { "type": "header", "content": "What We Make" },
-    { "type": "text", "id": "categories_eyebrow", "label": "Eyebrow", "default": "WHAT WE MAKE" },
-    { "type": "textarea", "id": "categories_list", "label": "Categories", "info": "One category per line.", "default": "Art Kits\nCraft Kits\nScience Kits\nStory Boxes\nDIY Party Boxes\nReturn Gifts" },
-    { "type": "header", "content": "The Creste Promise" },
-    { "type": "text", "id": "promise_eyebrow", "label": "Eyebrow", "default": "THE CRESTE PROMISE" },
-    
-    { "type": "header", "content": "Our Story" },
-    { "type": "text", "id": "brand_eyebrow", "label": "Eyebrow", "default": "OUR STORY" },
-    { "type": "text", "id": "brand_heading", "label": "Heading", "default": "Our Brand" },
-    { "type": "richtext", "id": "brand_text", "label": "Text", "default": "<p>Share the story, values and vision behind your brand.</p>" },
-    { "type": "header", "content": "Founder" },
-    { "type": "image_picker", "id": "founder_image", "label": "Founder image" },
-    { "type": "text", "id": "founder_name", "label": "Founder name", "default": "Founder Name" },
-    { "type": "text", "id": "founder_designation", "label": "Founder designation", "default": "Founder & Creative Director" },
-    { "type": "header", "content": "Legacy Banner (unused in new layout)" },
-    { "type": "image_picker", "id": "banner_image", "label": "Banner image" },
-    { "type": "text", "id": "banner_heading", "label": "Banner heading" },
-    { "type": "range", "id": "banner_height", "label": "Banner height", "min": 300, "max": 800, "step": 10, "default": 550, "unit": "px" },
-    { "type": "header", "content": "General Styling" },
-    { "type": "color", "id": "background_color", "label": "Background color", "default": "#FFFFFF" },
-    { "type": "color", "id": "text_color", "label": "Text color", "default": "#6E6A64" },
-    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#2C2A27" },
-    { "type": "color", "id": "link_color", "label": "Link color", "default": "#2C2A27" },
-    { "type": "range", "id": "content_width", "label": "Content width", "min": 800, "max": 1600, "step": 50, "default": 1200, "unit": "px" },
-    { "type": "range", "id": "text_max_width", "label": "Text maximum width", "min": 500, "max": 1000, "step": 25, "default": 900, "unit": "px" },
-    { "type": "range", "id": "section_spacing", "label": "Section spacing", "min": 30, "max": 150, "step": 10, "default": 80, "unit": "px" },
-    { "type": "select", "id": "content_alignment", "label": "Content alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "center" },
-    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 60, "step": 2, "default": 40, "unit": "px" },
-    { "type": "range", "id": "mobile_heading_size", "label": "Mobile heading size", "min": 20, "max": 45, "step": 1, "default": 30, "unit": "px" },
-    { "type": "range", "id": "body_size", "label": "Body text size", "min": 14, "max": 24, "step": 1, "default": 17, "unit": "px" },
-    { "type": "range", "id": "mobile_body_size", "label": "Mobile body text size", "min": 13, "max": 20, "step": 1, "default": 15, "unit": "px" }
+
+    {
+      "type": "header",
+      "content": "Main Banner"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    },
+
+    {
+      "type": "text",
+      "id": "banner_heading",
+      "label": "Banner heading",
+      "default": "About Us"
+    },
+
+    {
+      "type": "range",
+      "id": "banner_height",
+      "label": "Banner height",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "default": 550,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "mobile_banner_height",
+      "label": "Mobile banner height",
+      "min": 200,
+      "max": 600,
+      "step": 10,
+      "default": 400,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "banner_heading_size",
+      "label": "Banner heading size",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "default": 64,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "mobile_banner_heading_size",
+      "label": "Mobile banner heading size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
+    },
+
+    {
+      "type": "select",
+      "id": "banner_text_alignment",
+      "label": "Banner text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+
+    {
+      "type": "color",
+      "id": "banner_heading_color",
+      "label": "Banner heading color",
+      "default": "#FFFFFF"
+    },
+
+    {
+      "type": "range",
+      "id": "banner_overlay_opacity",
+      "label": "Banner overlay",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 30,
+      "unit": "%"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Intro Content"
+    },
+
+    {
+      "type": "text",
+      "id": "intro_heading",
+      "label": "Heading",
+      "default": "Our Story"
+    },
+
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Text",
+      "default": "<p>Tell your customers about your brand, your story and what makes you different.</p>"
+    },
+
+    {
+      "type": "text",
+      "id": "intro_link_text",
+      "label": "Link text",
+      "default": "Learn More"
+    },
+
+    {
+      "type": "url",
+      "id": "intro_link_url",
+      "label": "Link URL"
+    },
+
+
+    {
+      "type": "header",
+      "content": "YouTube Video"
+    },
+
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube video URL",
+      "info": "Paste a YouTube video URL."
+    },
+
+    {
+      "type": "text",
+      "id": "video_alt_text",
+      "label": "Video image alt text",
+      "default": "Watch our story"
+    },
+
+    {
+      "type": "range",
+      "id": "video_radius",
+      "label": "Video corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 8,
+      "unit": "px"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Our Brand"
+    },
+
+    {
+      "type": "text",
+      "id": "brand_heading",
+      "label": "Heading",
+      "default": "Our Brand"
+    },
+
+    {
+      "type": "richtext",
+      "id": "brand_text",
+      "label": "Text",
+      "default": "<p>Share the story, values and vision behind your brand.</p>"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Founder"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "founder_image",
+      "label": "Founder image"
+    },
+
+    {
+      "type": "text",
+      "id": "founder_name",
+      "label": "Founder name",
+      "default": "Founder Name"
+    },
+
+    {
+      "type": "text",
+      "id": "founder_designation",
+      "label": "Founder designation",
+      "default": "Founder & Creative Director"
+    },
+
+    {
+      "type": "range",
+      "id": "founder_image_width",
+      "label": "Founder image width",
+      "min": 200,
+      "max": 600,
+      "step": 10,
+      "default": 400,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "founder_image_radius",
+      "label": "Founder image corner radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 8,
+      "unit": "px"
+    },
+
+
+    {
+      "type": "header",
+      "content": "General Styling"
+    },
+
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111111"
+    },
+
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#111111"
+    },
+
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content width",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "default": 1200,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "text_max_width",
+      "label": "Text maximum width",
+      "min": 500,
+      "max": 1000,
+      "step": 25,
+      "default": 800,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "section_spacing",
+      "label": "Section spacing",
+      "min": 30,
+      "max": 150,
+      "step": 10,
+      "default": 80,
+      "unit": "px"
+    },
+
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 20,
+      "max": 45,
+      "step": 1,
+      "default": 30,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body text size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 17,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "mobile_body_size",
+      "label": "Mobile body text size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "default": 15,
+      "unit": "px"
+    },
+
+    {
+      "type": "range",
+      "id": "founder_max_width",
+      "label": "Founder section width",
+      "min": 600,
+      "max": 1200,
+      "step": 50,
+      "default": 900,
+      "unit": "px"
+    }
+
   ],
-  "blocks": [
-    { "type": "promise_item", "name": "Promise item", "settings": [ { "type": "text", "id": "title", "label": "Title", "default": "Quality Products" }, { "type": "textarea", "id": "text", "label": "Text", "default": "Kid-safe, tested materials in every box." } ] }
-  ],
+
   "presets": [
-    { "name": "About Us", "blocks": [ { "type": "promise_item" }, { "type": "promise_item" }, { "type": "promise_item" }, { "type": "promise_item" } ] }
+    {
+      "name": "About Us"
+    }
   ]
+
 }
+
 {% endschema %}
