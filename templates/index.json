@@ -12,15 +12,6 @@
     "creste_hero": {
       "type": "creste-hero",
       "blocks": {
-        "slide_EH4BV7": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Banner-2-Candle-Kit-Desktop-r1-1.jpg",
-            "image_mobile": "shopify://shop_images/Banner-2-Candle-Kit-Mobile-r1-1.jpg",
-            "link": "shopify://collections/candles-kits",
-            "alt": "Creste banner"
-          }
-        },
         "slide_Hk4xrA": {
           "type": "slide",
           "settings": {
@@ -39,6 +30,15 @@
             "alt": "Creste banner"
           }
         },
+        "slide_EH4BV7": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Banner-2-Candle-Kit-Desktop-r1-1.jpg",
+            "image_mobile": "shopify://shop_images/Banner-2-Candle-Kit-Mobile-r1-1.jpg",
+            "link": "shopify://collections/candles-kits",
+            "alt": "Creste banner"
+          }
+        },
         "slide_AYawCN": {
           "type": "slide",
           "settings": {
@@ -50,9 +50,9 @@
         }
       },
       "block_order": [
-        "slide_EH4BV7",
         "slide_Hk4xrA",
         "slide_3jWpxH",
+        "slide_EH4BV7",
         "slide_AYawCN"
       ],
       "settings": {
