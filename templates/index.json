@@ -404,6 +404,7 @@
         },
         "review_W4yXC3": {
           "type": "review",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/ad54409d-f89d-42ba-aacd-aa38c040ba85.png",
             "title": "",
