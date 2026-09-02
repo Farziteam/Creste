@@ -187,13 +187,17 @@
       {% if section.settings.categories_list != blank %}
         <div class="about-us__pills">
           {% assign category_list = section.settings.categories_list | newline_to_br | split: '<br />' %}
+          {% assign pill_classes = 'about-us__pill--peach,about-us__pill--blue,about-us__pill--green,about-us__pill--purple' | split: ',' %}
+          {% assign pill_counter = 0 %}
           {% for category in category_list %}
             {% assign category_trimmed = category | strip %}
             {% if category_trimmed != blank %}
-              {% cycle pill_class: 'about-us__pill--peach', 'about-us__pill--blue', 'about-us__pill--green', 'about-us__pill--purple' %}
+              {% assign pill_mod = pill_counter | modulo: 4 %}
+              {% assign pill_class = pill_classes[pill_mod] %}
               <span class="about-us__pill {{ pill_class }}">
                 {{ category_trimmed }}
               </span>
+              {% assign pill_counter = pill_counter | plus: 1 %}
             {% endif %}
           {% endfor %}
         </div>
@@ -228,9 +232,12 @@
 
       {% if section.blocks.size > 0 %}
         <div class="about-us__promise-grid">
+          {% assign icon_classes = 'about-us__promise-icon--peach,about-us__promise-icon--blue,about-us__promise-icon--green,about-us__promise-icon--purple' | split: ',' %}
+          {% assign icon_counter = 0 %}
           {% for block in section.blocks %}
             {% if block.type == 'promise_item' %}
-              {% cycle icon_class: 'about-us__promise-icon--peach', 'about-us__promise-icon--blue', 'about-us__promise-icon--green', 'about-us__promise-icon--purple' %}
+              {% assign icon_mod = icon_counter | modulo: 4 %}
+              {% assign icon_class = icon_classes[icon_mod] %}
               <div class="about-us__promise-card" {{ block.shopify_attributes }}>
                 <div class="about-us__promise-icon {{ icon_class }}">
                   <span class="about-us__promise-icon-glyph"></span>
@@ -246,6 +253,7 @@
                   </p>
                 {% endif %}
               </div>
+              {% assign icon_counter = icon_counter | plus: 1 %}
             {% endif %}
           {% endfor %}
         </div>
