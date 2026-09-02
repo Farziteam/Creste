@@ -235,6 +235,7 @@
     },
     "creste_giftfinder_AzHjGG": {
       "type": "creste-giftfinder",
+      "disabled": true,
       "name": "Creste Banner",
       "settings": {
         "image": "shopify://shop_images/d10baee3-a25e-4f7c-b7c4-3495bede20d1.jpg",
