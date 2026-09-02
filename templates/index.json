@@ -904,7 +904,7 @@
         "heading_italic": "Favorites",
         "subtitle": "Grab 'em before they disappear!",
         "heading_color": "#2b1702",
-        "collection": "pdp-favourites",
+        "collection": "our-favrourites",
         "count": 10,
         "card_width": 250,
         "default_rating": "4.9",
