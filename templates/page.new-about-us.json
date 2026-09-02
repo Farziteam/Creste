@@ -11,43 +11,79 @@
   "sections": {
     "main": {
       "type": "about-us",
+      "blocks": {
+        "promise-1": {
+          "type": "promise_item",
+          "settings": {
+            "title": "Quality Products",
+            "text": "Kid-safe, tested materials in every box — made to last and lovely to make."
+          }
+        },
+        "promise-2": {
+          "type": "promise_item",
+          "settings": {
+            "title": "Unique Concepts",
+            "text": "Original kit ideas you won't find anywhere else, from story boxes to hand casting."
+          }
+        },
+        "promise-3": {
+          "type": "promise_item",
+          "settings": {
+            "title": "STEAM Focused",
+            "text": "Science, tech, art and craft woven together to build real, lasting skills."
+          }
+        },
+        "promise-4": {
+          "type": "promise_item",
+          "settings": {
+            "title": "Screen-Free Play",
+            "text": "Hands-on making that pulls kids away from screens and into their imagination."
+          }
+        }
+      },
+      "block_order": [
+        "promise-1",
+        "promise-2",
+        "promise-3",
+        "promise-4"
+      ],
       "settings": {
-        "banner_image": "shopify://shop_images/banner124.jpg",
-        "banner_heading": "About Us",
-        "banner_height": 550,
-        "mobile_banner_height": 400,
-        "banner_heading_size": 64,
-        "mobile_banner_heading_size": 40,
-        "banner_text_alignment": "center",
-        "banner_heading_color": "#ffffff",
-        "banner_overlay_opacity": 30,
-        "intro_heading": "\"Bringing All Age Group People Together with Engaging DIY Kits and Creative Events\"",
-        "intro_text": "<p> At Creste, we believe in the power of creativity to bring people together. Our DIY activity kits are designed to engage individuals of all ages, from children to adults, fostering a shared love for crafting and learning. Each kit is carefully curated with high-quality materials and step-by-step instructions, making it easy for anyone to create something special. We also host creative events to connect communities and inspire collaboration. Whether you're a beginner or an experienced crafter, our kits provide endless fun and the chance to make lasting memories with loved ones.<br/></p>",
-        "intro_link_text": "VISIT OUR OFFLINE STORE",
-        "intro_link_url": "https://share.google/BXuzEBjinX5LXzOAw",
+        "hero_eyebrow": "ABOUT CRESTE",
+        "hero_heading": "Creativity you can hold in your hands",
+        "hero_subheading": "Screen-free DIY kits and creative events that bring children and adults together to make, learn and play.",
+        "photo_image": "shopify://shop_images/banner124.jpg",
+        "photo_badge_text": "Hands-on workshops at our Lucknow studio",
+        "intro_heading": "",
+        "intro_text": "<p>At Creste, we believe creativity brings people together. Every kit is carefully curated with high-quality, kid-safe materials and clear step-by-step instructions — so whether you're four or forty, you can build something you're proud of. Beyond kits, we host workshops and events that turn making into a shared experience.</p>",
+        "intro_link_text": "",
+        "intro_link_url": "",
         "youtube_url": "",
         "video_alt_text": "Watch our story",
         "video_radius": 8,
-        "brand_heading": "Our Brand",
-        "brand_text": "<p>Most kids today know how to swipe before they learn how to hold a crayon. <br/>That shift didn’t sit right with Nidhi Sethia.<br/>In the middle of the 2020 lockdown, she saw something worrying. Screens had taken over playtime. Children were glued to mobiles, watching videos, playing games, and scrolling endlessly. <br/>But what was missing was much bigger: imagination, real-world fun, and the joy of making something with their own hands. That’s when Nidhi decided to build something better. She started with simple DIY kits for kids, fun and screen-free ways to explore, build, and learn.<br/>What began as a few DIY craft kits turned into Creste, a brand built to bring arts and crafts for kids back into everyday life. Today, Creste isn’t just about crafts.It’s about giving kids creative DIY kits that spark curiosity, confidence, and joy. It’s about designing every DIY arts and crafts kit to feel exciting, not like a task.<br/>And most of all, it’s about offering fun crafts for kids that help them grow with their hands, their ideas, and their spark. <br/>Today, Nidhi runs Creste with one goal: to put creativity and hands-on learning into every DIY kit, workshop, and experience. The team at Creste is all about making sure kids get to learn and create, and don’t just watch. From hands-on projects to fun crafts, everything we do is designed to inspire kids to build, explore, and have fun with their own two hands.</p>",
+        "categories_eyebrow": "WHAT WE MAKE",
+        "categories_list": "Art Kits\nCraft Kits\nScience Kits\nStory Boxes\nDIY Party Boxes\nReturn Gifts",
+        "promise_eyebrow": "THE CRESTE PROMISE",
+        "brand_eyebrow": "OUR STORY",
+        "brand_heading": "From screens back to little hands",
+        "brand_text": "<p>Most kids today learn to swipe before they learn to hold a crayon. That shift didn't sit right with our founder, Nidhi Sethia. During the 2020 lockdown, she watched screens take over playtime while the simple joy of making things by hand slipped away.</p><p>So she started small — a few screen-free DIY kits that gave children a fun way to explore, build and learn. What began as a handful of craft kits grew into Creste: a brand made to bring arts and crafts back into everyday life.</p><p>Today, every Creste kit is designed to feel exciting, never like a task — helping kids grow their curiosity, confidence and joy with their own two hands. We run Creste with one goal: to put real, hands-on creativity into every kit, workshop and experience.</p>",
         "founder_image": "shopify://shop_images/Nidhi-Sethia.jpg",
         "founder_name": "Nidhi Sethia",
-        "founder_designation": "Founder & Creative Director",
-        "founder_image_width": 400,
-        "founder_image_radius": 8,
-        "background_color": "#ffffff",
-        "text_color": "#333333",
-        "heading_color": "#111111",
-        "link_color": "#111111",
+        "founder_designation": "Founder & Director, Creste",
+        "banner_image": "shopify://shop_images/banner124.jpg",
+        "banner_heading": "About Us",
+        "banner_height": 550,
+        "background_color": "#FFFFFF",
+        "text_color": "#6E6A64",
+        "heading_color": "#2C2A27",
+        "link_color": "#2C2A27",
         "content_width": 1200,
-        "text_max_width": 800,
+        "text_max_width": 900,
         "section_spacing": 80,
         "content_alignment": "center",
         "heading_size": 40,
         "mobile_heading_size": 30,
         "body_size": 17,
-        "mobile_body_size": 15,
-        "founder_max_width": 900
+        "mobile_body_size": 15
       }
     }
   },
