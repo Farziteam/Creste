@@ -233,14 +233,14 @@
         "na_product": "bouquet-candle-kit"
       }
     },
-    "creste_giftfinder_dNJXW3": {
+    "creste_giftfinder_AzHjGG": {
       "type": "creste-giftfinder",
       "name": "Creste Banner",
       "settings": {
         "image": "shopify://shop_images/d10baee3-a25e-4f7c-b7c4-3495bede20d1.jpg",
         "image_mobile": "shopify://shop_images/d10baee3-a25e-4f7c-b7c4-3495bede20d1.jpg",
         "link": "",
-        "alt": "",
+        "alt": "Creste banner",
         "max_width": 1200,
         "radius": 24,
         "padding_top": 16,
@@ -250,6 +250,6 @@
   },
   "order": [
     "creste_header",
-    "creste_giftfinder_dNJXW3"
+    "creste_giftfinder_AzHjGG"
   ]
 }
