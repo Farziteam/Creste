@@ -19,30 +19,76 @@
 >
 
   <!-- =========================================
-       MAIN BANNER
-  ========================================== -->
+       HERO
+       ========================================== -->
 
-  <div
-    class="about-us__banner"
-    {% if section.settings.banner_image != blank %}
-      style="background-image: url('{{ section.settings.banner_image | image_url: width: 2400 }}');"
+  <div class="about-us__hero">
+
+    {% if section.settings.hero_eyebrow != blank %}
+      <p class="about-us__eyebrow about-us__eyebrow--orange">
+        {{ section.settings.hero_eyebrow }}
+      </p>
     {% endif %}
-  >
-    <div class="about-us__banner-overlay"></div>
 
-    <div class="about-us__banner-content">
-      {% if section.settings.banner_heading != blank %}
-        <h1 class="about-us__banner-heading">
-          {{ section.settings.banner_heading }}
-        </h1>
-      {% endif %}
-    </div>
+    {% if section.settings.hero_heading != blank %}
+      <h1 class="about-us__hero-heading">
+        {{ section.settings.hero_heading }}
+      </h1>
+    {% endif %}
+
+    {% if section.settings.hero_subheading != blank %}
+      <p class="about-us__hero-subheading">
+        {{ section.settings.hero_subheading }}
+      </p>
+    {% endif %}
+
   </div>
 
 
   <!-- =========================================
+       HERO PHOTO
+       ========================================== -->
+
+  {% if section.settings.photo_image != blank or section.settings.photo_badge_text != blank %}
+
+    <div class="about-us__container">
+
+      <div class="about-us__photo">
+
+        <span class="about-us__photo-blob about-us__photo-blob--1" aria-hidden="true"></span>
+        <span class="about-us__photo-blob about-us__photo-blob--2" aria-hidden="true"></span>
+        <span class="about-us__photo-blob about-us__photo-blob--3" aria-hidden="true"></span>
+
+        {% if section.settings.photo_image != blank %}
+          {{
+            section.settings.photo_image
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'lazy',
+              widths: '600, 900, 1200, 1400',
+              class: 'about-us__photo-image'
+          }}
+        {% endif %}
+
+        {% if section.settings.photo_badge_text != blank %}
+          <div class="about-us__photo-badge">
+            <span class="about-us__photo-badge-dot" aria-hidden="true"></span>
+            <span class="about-us__photo-badge-text">
+              {{ section.settings.photo_badge_text }}
+            </span>
+          </div>
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  {% endif %}
+
+
+  <!-- =========================================
        INTRO CONTENT
-  ========================================== -->
+       ========================================== -->
 
   <div class="about-us__container">
 
@@ -55,7 +101,7 @@
       {% endif %}
 
       {% if section.settings.intro_text != blank %}
-        <div class="about-us__text">
+        <div class="about-us__intro-text">
           {{ section.settings.intro_text }}
         </div>
       {% endif %}
@@ -71,12 +117,16 @@
 
     </div>
 
+  </div>
 
-    <!-- =========================================
-         YOUTUBE VIDEO
-    ========================================== -->
 
-    {% if youtube_id != blank %}
+  <!-- =========================================
+       YOUTUBE VIDEO
+       ========================================== -->
+
+  {% if youtube_id != blank %}
+
+    <div class="about-us__container">
 
       <div class="about-us__video-wrapper">
 
@@ -115,67 +165,155 @@
 
       </div>
 
-    {% endif %}
+    </div>
+
+  {% endif %}
 
 
-    <!-- =========================================
-         OUR BRAND
-    ========================================== -->
+  <!-- =========================================
+       WHAT WE MAKE
+       ========================================== -->
 
-    <div class="about-us__brand">
+  {% if section.settings.categories_eyebrow != blank or section.settings.categories_list != blank %}
 
-      {% if section.settings.brand_heading != blank %}
-        <h2 class="about-us__heading">
-          {{ section.settings.brand_heading }}
-        </h2>
+    <div class="about-us__categories">
+
+      {% if section.settings.categories_eyebrow != blank %}
+        <p class="about-us__eyebrow about-us__eyebrow--teal">
+          {{ section.settings.categories_eyebrow }}
+        </p>
       {% endif %}
 
-      {% if section.settings.brand_text != blank %}
-        <div class="about-us__text">
-          {{ section.settings.brand_text }}
+      {% if section.settings.categories_list != blank %}
+        <div class="about-us__pills">
+          {% assign category_list = section.settings.categories_list | newline_to_br | split: '<br />' %}
+          {% for category in category_list %}
+            {% assign category_trimmed = category | strip %}
+            {% if category_trimmed != blank %}
+              {% cycle pill_class: 'about-us__pill--peach', 'about-us__pill--blue', 'about-us__pill--green', 'about-us__pill--purple' %}
+              <span class="about-us__pill {{ pill_class }}">
+                {{ category_trimmed }}
+              </span>
+            {% endif %}
+          {% endfor %}
         </div>
       {% endif %}
 
     </div>
 
-
-    <!-- =========================================
-         FOUNDER
-    ========================================== -->
-
-    <div class="about-us__founder">
-
-      {% if section.settings.founder_image != blank %}
-        <div class="about-us__founder-image-wrapper">
-
-          {{
-            section.settings.founder_image
-            | image_url: width: 1000
-            | image_tag:
-              loading: 'lazy',
-              widths: '400, 600, 800, 1000',
-              class: 'about-us__founder-image'
-          }}
-
-        </div>
-      {% endif %}
+  {% endif %}
 
 
-      <div class="about-us__founder-info">
+  <!-- =========================================
+       THE CRESTE PROMISE
+       ========================================== -->
 
-        {% if section.settings.founder_name != blank %}
-          <h2 class="about-us__founder-name">
-            {{ section.settings.founder_name }}
-          </h2>
-        {% endif %}
+  {% if section.settings.promise_eyebrow != blank or section.blocks.size > 0 %}
 
-        {% if section.settings.founder_designation != blank %}
-          <p class="about-us__founder-designation">
-            {{ section.settings.founder_designation }}
+    <div class="about-us__promise">
+
+      <div class="about-us__promise-header">
+
+        {% if section.settings.promise_eyebrow != blank %}
+          <p class="about-us__eyebrow about-us__eyebrow--orange">
+            {{ section.settings.promise_eyebrow }}
           </p>
         {% endif %}
 
+        <h2 class="about-us__promise-heading">
+          What every box stands for
+        </h2>
+
       </div>
+
+      {% if section.blocks.size > 0 %}
+        <div class="about-us__promise-grid">
+          {% for block in section.blocks %}
+            {% if block.type == 'promise_item' %}
+              {% cycle icon_class: 'about-us__promise-icon--peach', 'about-us__promise-icon--blue', 'about-us__promise-icon--green', 'about-us__promise-icon--purple' %}
+              <div class="about-us__promise-card" {{ block.shopify_attributes }}>
+                <div class="about-us__promise-icon {{ icon_class }}">
+                  <span class="about-us__promise-icon-glyph"></span>
+                </div>
+                {% if block.settings.title != blank %}
+                  <p class="about-us__promise-title">
+                    {{ block.settings.title }}
+                  </p>
+                {% endif %}
+                {% if block.settings.text != blank %}
+                  <p class="about-us__promise-text">
+                    {{ block.settings.text }}
+                  </p>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+    </div>
+
+  {% endif %}
+
+
+  <!-- =========================================
+       OUR STORY
+       ========================================== -->
+
+  <div class="about-us__story-wrapper">
+
+    <div class="about-us__story">
+
+      {% if section.settings.brand_eyebrow != blank %}
+        <p class="about-us__eyebrow about-us__eyebrow--purple">
+          {{ section.settings.brand_eyebrow }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.brand_heading != blank %}
+        <h2 class="about-us__story-heading">
+          {{ section.settings.brand_heading }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.brand_text != blank %}
+        <div class="about-us__story-text">
+          {{ section.settings.brand_text }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.founder_name != blank or section.settings.founder_image != blank %}
+        <div class="about-us__story-founder">
+
+          {% if section.settings.founder_image != blank %}
+            <div class="about-us__story-avatar">
+              {{
+                section.settings.founder_image
+                | image_url: width: 96
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '48, 96',
+                  class: 'about-us__story-avatar-image'
+              }}
+            </div>
+          {% endif %}
+
+          <div class="about-us__story-founder-meta">
+            {% if section.settings.founder_name != blank %}
+              <p class="about-us__story-founder-name">
+                {{ section.settings.founder_name }}
+              </p>
+            {% endif %}
+
+            {% if section.settings.founder_designation != blank %}
+              <p class="about-us__story-founder-role">
+                {{ section.settings.founder_designation }}
+              </p>
+            {% endif %}
+          </div>
+
+        </div>
+      {% endif %}
 
     </div>
 
@@ -184,7 +322,7 @@
 
   <!-- =========================================
        YOUTUBE MODAL
-  ========================================== -->
+       ========================================== -->
 
   {% if youtube_id != blank %}
 
@@ -264,12 +402,13 @@
   #about-us-{{ section.id }} {
     background: var(--about-bg);
     color: var(--about-text);
+    overflow: hidden;
   }
 
 
   /* =========================================
      CONTAINER
-  ========================================== */
+     ========================================== */
 
   #about-us-{{ section.id }} .about-us__container {
     width: min(
@@ -282,64 +421,197 @@
 
 
   /* =========================================
-     BANNER
-  ========================================== */
+     EYEBROWS
+     ========================================== */
 
-  #about-us-{{ section.id }} .about-us__banner {
+  #about-us-{{ section.id }} .about-us__eyebrow {
+    margin: 0;
+
+    font-family: 'Quicksand', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  #about-us-{{ section.id }} .about-us__eyebrow--orange {
+    color: #f4793a;
+  }
+
+  #about-us-{{ section.id }} .about-us__eyebrow--teal {
+    color: #3aaccc;
+  }
+
+  #about-us-{{ section.id }} .about-us__eyebrow--purple {
+    color: #9b7fd4;
+  }
+
+
+  /* =========================================
+     HERO
+     ========================================== */
+
+  #about-us-{{ section.id }} .about-us__hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 20px 40px;
+
+    text-align: center;
+  }
+
+  #about-us-{{ section.id }} .about-us__hero-heading {
+    margin: 0;
+
+    max-width: 840px;
+
+    color: var(--about-heading);
+
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 900;
+    line-height: 1.18;
+    letter-spacing: -0.6px;
+  }
+
+  #about-us-{{ section.id }} .about-us__hero-subheading {
+    margin: 0;
+
+    max-width: 680px;
+
+    color: var(--about-text);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+
+
+  /* =========================================
+     HERO PHOTO
+     ========================================== */
+
+  #about-us-{{ section.id }} .about-us__photo {
     position: relative;
-    min-height: {{ section.settings.banner_height }}px;
 
-    background-color: #eeeeee;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    min-height: 440px;
+
+    margin-bottom: 8px;
+    padding: 0;
+
+    background: #ede7de;
+    border-radius: 18px;
+
+    overflow: hidden;
 
     display: flex;
     align-items: center;
     justify-content: center;
-
-    overflow: hidden;
   }
 
-  #about-us-{{ section.id }} .about-us__banner-overlay {
+  #about-us-{{ section.id }} .about-us__photo-blob {
     position: absolute;
-    inset: 0;
+    z-index: 1;
 
-    background: #000;
-    opacity: var(--about-overlay);
+    border-radius: 50%;
+
+    pointer-events: none;
   }
 
-  #about-us-{{ section.id }} .about-us__banner-content {
+  #about-us-{{ section.id }} .about-us__photo-blob--1 {
+    left: 8%;
+    top: 41%;
+
+    width: 25%;
+    height: 82%;
+
+    background: #fbe1d3;
+  }
+
+  #about-us-{{ section.id }} .about-us__photo-blob--2 {
+    right: 5%;
+    top: -9%;
+
+    width: 17%;
+    padding-bottom: 17%;
+
+    background: #d9eef6;
+  }
+
+  #about-us-{{ section.id }} .about-us__photo-blob--3 {
+    right: 24%;
+    bottom: 8%;
+
+    width: 10%;
+    padding-bottom: 10%;
+
+    background: #f3efe7;
+  }
+
+  #about-us-{{ section.id }} .about-us__photo-image {
     position: relative;
     z-index: 2;
 
-    width: min(
-      calc(100% - 40px),
-      {{ section.settings.content_width }}px
-    );
+    display: block;
 
-    text-align: {{ section.settings.banner_text_alignment }};
+    width: min(46%, 500px);
+    height: auto;
+
+    border-radius: 14px;
+
+    object-fit: cover;
+
+    box-shadow: 0 20px 45px rgba(44, 42, 39, 0.14);
   }
 
-  #about-us-{{ section.id }} .about-us__banner-heading {
-    margin: 0;
+  #about-us-{{ section.id }} .about-us__photo-badge {
+    position: absolute;
+    z-index: 3;
 
-    color: {{ section.settings.banner_heading_color }};
+    left: 32px;
+    bottom: 24px;
 
-    font-size: clamp(
-      36px,
-      5vw,
-      {{ section.settings.banner_heading_size }}px
-    );
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-    line-height: 1.1;
+    padding: 8px 16px 8px 14px;
+
+    background: #fff;
+    border-radius: 20px;
+
+    box-shadow: 0 8px 20px rgba(44, 42, 39, 0.12);
+  }
+
+  #about-us-{{ section.id }} .about-us__photo-badge-dot {
+    flex: none;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #f4793a;
+  }
+
+  #about-us-{{ section.id }} .about-us__photo-badge-text {
+    color: #2c2a27;
+
+    font-family: 'Quicksand', sans-serif;
+    font-size: 12.5px;
     font-weight: 600;
+    white-space: nowrap;
   }
 
 
   /* =========================================
      INTRO
-  ========================================== */
+     ========================================== */
 
   #about-us-{{ section.id }} .about-us__intro {
     max-width: {{ section.settings.text_max_width }}px;
@@ -347,10 +619,26 @@
     text-align: {{ section.settings.content_alignment }};
   }
 
+  #about-us-{{ section.id }} .about-us__intro-text {
+    color: var(--about-heading);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  #about-us-{{ section.id }} .about-us__intro-text p {
+    margin: 0 0 16px;
+  }
+
+  #about-us-{{ section.id }} .about-us__intro-text p:last-child {
+    margin-bottom: 0;
+  }
+
 
   /* =========================================
-     COMMON HEADING
-  ========================================== */
+     COMMON HEADING (legacy / intro heading)
+     ========================================== */
 
   #about-us-{{ section.id }} .about-us__heading {
     margin: 0 0 20px;
@@ -364,28 +652,8 @@
 
 
   /* =========================================
-     COMMON TEXT
-  ========================================== */
-
-  #about-us-{{ section.id }} .about-us__text {
-    color: var(--about-text);
-
-    font-size: {{ section.settings.body_size }}px;
-    line-height: 1.7;
-  }
-
-  #about-us-{{ section.id }} .about-us__text p {
-    margin: 0 0 16px;
-  }
-
-  #about-us-{{ section.id }} .about-us__text p:last-child {
-    margin-bottom: 0;
-  }
-
-
-  /* =========================================
      LINK
-  ========================================== */
+     ========================================== */
 
   #about-us-{{ section.id }} .about-us__link {
     display: inline-block;
@@ -410,7 +678,7 @@
 
   /* =========================================
      VIDEO
-  ========================================== */
+     ========================================== */
 
   #about-us-{{ section.id }} .about-us__video-wrapper {
     margin-top: {{ section.settings.section_spacing }}px;
@@ -447,8 +715,7 @@
     transition: transform 0.4s ease;
   }
 
-  #about-us-{{ section.id }} .about-us__video:hover
-  .about-us__video-thumbnail {
+  #about-us-{{ section.id }} .about-us__video:hover .about-us__video-thumbnail {
     transform: scale(1.03);
   }
 
@@ -478,91 +745,289 @@
       background 0.25s ease;
   }
 
-  #about-us-{{ section.id }} .about-us__video:hover
-  .about-us__video-play {
+  #about-us-{{ section.id }} .about-us__video:hover .about-us__video-play {
     transform: translate(-50%, -50%) scale(1.08);
     background: rgba(0, 0, 0, 0.9);
   }
 
 
   /* =========================================
-     BRAND
-  ========================================== */
+     WHAT WE MAKE
+     ========================================== */
 
-  #about-us-{{ section.id }} .about-us__brand {
-    max-width: {{ section.settings.text_max_width }}px;
+  #about-us-{{ section.id }} .about-us__categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
 
-    margin:
-      {{ section.settings.section_spacing }}px
-      auto 0;
+    padding: 44px 20px;
+  }
 
-    text-align: {{ section.settings.content_alignment }};
+  #about-us-{{ section.id }} .about-us__pills {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    max-width: 900px;
+  }
+
+  #about-us-{{ section.id }} .about-us__pill {
+    padding: 11px 20px;
+
+    border-radius: 24px;
+
+    color: #2c2a27;
+
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  #about-us-{{ section.id }} .about-us__pill--peach {
+    background: #fce9de;
+  }
+
+  #about-us-{{ section.id }} .about-us__pill--blue {
+    background: #ddf0f4;
+  }
+
+  #about-us-{{ section.id }} .about-us__pill--green {
+    background: #e2f0e6;
+  }
+
+  #about-us-{{ section.id }} .about-us__pill--purple {
+    background: #ece5f8;
   }
 
 
   /* =========================================
-     FOUNDER
-  ========================================== */
+     THE CRESTE PROMISE
+     ========================================== */
 
-  #about-us-{{ section.id }} .about-us__founder {
-    margin:
-      {{ section.settings.section_spacing }}px
-      auto
-      {{ section.settings.section_spacing }}px;
+  #about-us-{{ section.id }} .about-us__promise {
+    padding: 56px 20px 64px;
 
+    background: #f7f4ef;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-header {
     display: flex;
-
+    flex-direction: column;
     align-items: center;
+    gap: 8px;
 
-    justify-content: center;
-
-    gap: 50px;
-
-    max-width: {{ section.settings.founder_max_width }}px;
+    text-align: center;
   }
 
-  #about-us-{{ section.id }} .about-us__founder-image-wrapper {
-    flex: 0 0 {{ section.settings.founder_image_width }}px;
-
-    overflow: hidden;
-
-    border-radius: {{ section.settings.founder_image_radius }}px;
-  }
-
-  #about-us-{{ section.id }} .about-us__founder-image {
-    display: block;
-
-    width: 100%;
-    height: auto;
-  }
-
-  #about-us-{{ section.id }} .about-us__founder-info {
-    {% comment %} flex: 1; {% endcomment %}
-  }
-
-  #about-us-{{ section.id }} .about-us__founder-name {
-    margin: 0 0 8px;
+  #about-us-{{ section.id }} .about-us__promise-heading {
+    margin: 0;
 
     color: var(--about-heading);
 
-    font-size: 30px;
-    line-height: 1.2;
-    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.4px;
   }
 
-  #about-us-{{ section.id }} .about-us__founder-designation {
+  #about-us-{{ section.id }} .about-us__promise-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+
+    max-width: {{ section.settings.content_width }}px;
+    margin: 32px auto 0;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 26px 24px;
+
+    background: #fff;
+    border: 1px solid #e6e1d8;
+    border-radius: 16px;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 14px;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-icon-glyph {
+    display: block;
+
+    width: 20px;
+    height: 20px;
+
+    border-radius: 5px;
+    border: 1.5px solid currentColor;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-icon--peach {
+    background: #fce9de;
+    color: #f4793a;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-icon--blue {
+    background: #ddf0f4;
+    color: #3aaccc;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-icon--green {
+    background: #e2f0e6;
+    color: #5bad6f;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-icon--purple {
+    background: #ece5f8;
+    color: #9b7fd4;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-title {
+    margin: 0;
+
+    color: var(--about-heading);
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  #about-us-{{ section.id }} .about-us__promise-text {
     margin: 0;
 
     color: var(--about-text);
 
-    font-size: 17px;
-    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+
+  /* =========================================
+     OUR STORY
+     ========================================== */
+
+  #about-us-{{ section.id }} .about-us__story-wrapper {
+    padding: 56px 20px 64px;
+
+    background: #f7f4ef;
+  }
+
+  #about-us-{{ section.id }} .about-us__story {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    max-width: 760px;
+    margin: 0 auto;
+
+    background: #fff;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-heading {
+    margin: 0;
+
+    color: var(--about-heading);
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1.27;
+    letter-spacing: -0.4px;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-text {
+    width: 100%;
+
+    color: var(--about-text);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 15.5px;
+    line-height: 1.68;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-text p {
+    margin: 0 0 16px;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-founder {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding-top: 8px;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-avatar {
+    flex: none;
+
+    width: 48px;
+    height: 48px;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-avatar-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-founder-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-founder-name {
+    margin: 0;
+
+    color: var(--about-heading);
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  #about-us-{{ section.id }} .about-us__story-founder-role {
+    margin: 0;
+
+    color: #9c968d;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
   }
 
 
   /* =========================================
      VIDEO MODAL
-  ========================================== */
+     ========================================== */
 
   #about-us-{{ section.id }} .about-us__modal {
     position: fixed;
@@ -656,7 +1121,15 @@
 
   /* =========================================
      MOBILE
-  ========================================== */
+     ========================================== */
+
+  @media screen and (max-width: 989px) {
+
+    #about-us-{{ section.id }} .about-us__promise-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+  }
 
   @media screen and (max-width: 749px) {
 
@@ -664,19 +1137,37 @@
       width: calc(100% - 30px);
     }
 
-    #about-us-{{ section.id }} .about-us__banner {
-      min-height: {{ section.settings.mobile_banner_height }}px;
+    #about-us-{{ section.id }} .about-us__hero {
+      padding: 40px 20px 30px;
     }
 
-    #about-us-{{ section.id }} .about-us__banner-heading {
-      font-size: {{ section.settings.mobile_banner_heading_size }}px;
+    #about-us-{{ section.id }} .about-us__hero-heading {
+      font-size: {{ section.settings.mobile_heading_size }}px;
+    }
+
+    #about-us-{{ section.id }} .about-us__photo {
+      min-height: 320px;
+    }
+
+    #about-us-{{ section.id }} .about-us__photo-image {
+      width: 68%;
+    }
+
+    #about-us-{{ section.id }} .about-us__photo-badge {
+      left: 16px;
+      bottom: 16px;
+      padding: 7px 14px 7px 12px;
+    }
+
+    #about-us-{{ section.id }} .about-us__photo-badge-text {
+      white-space: normal;
     }
 
     #about-us-{{ section.id }} .about-us__heading {
       font-size: {{ section.settings.mobile_heading_size }}px;
     }
 
-    #about-us-{{ section.id }} .about-us__text {
+    #about-us-{{ section.id }} .about-us__intro-text {
       font-size: {{ section.settings.mobile_body_size }}px;
     }
 
@@ -685,25 +1176,16 @@
       height: 60px;
     }
 
-    #about-us-{{ section.id }} .about-us__founder {
-      flex-direction: column;
-
-      gap: 25px;
-
-      text-align: center;
+    #about-us-{{ section.id }} .about-us__promise-grid {
+      grid-template-columns: 1fr;
     }
 
-    #about-us-{{ section.id }} .about-us__founder-image-wrapper {
-      flex: none;
-
-      width: min(
-        {{ section.settings.founder_image_width }}px,
-        100%
-      );
-    }
-
-    #about-us-{{ section.id }} .about-us__founder-name {
+    #about-us-{{ section.id }} .about-us__promise-heading {
       font-size: 26px;
+    }
+
+    #about-us-{{ section.id }} .about-us__story-heading {
+      font-size: 24px;
     }
 
     #about-us-{{ section.id }} .about-us__modal {
@@ -826,6 +1308,52 @@
   "tag": "section",
   "class": "section-about-us",
   "settings": [
+
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow",
+      "default": "ABOUT CRESTE"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Heading",
+      "default": "Creativity you can hold in your hands"
+    },
+
+    {
+      "type": "textarea",
+      "id": "hero_subheading",
+      "label": "Subheading",
+      "default": "Screen-free DIY kits and creative events that bring children and adults together to make, learn and play."
+    },
+
+
+    {
+      "type": "header",
+      "content": "Hero Photo"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "photo_image",
+      "label": "Photo"
+    },
+
+    {
+      "type": "text",
+      "id": "photo_badge_text",
+      "label": "Badge text",
+      "default": "Hands-on workshops at our Lucknow studio"
+    },
+
 
     {
       "type": "header",
@@ -964,6 +1492,39 @@
 
     {
       "type": "header",
+      "content": "What We Make"
+    },
+
+    {
+      "type": "text",
+      "id": "categories_eyebrow",
+      "label": "Eyebrow",
+      "default": "WHAT WE MAKE"
+    },
+
+    {
+      "type": "textarea",
+      "id": "categories_list",
+      "label": "Categories (one per line)",
+      "default": "Art Kits\nCraft Kits\nScience Kits\nStory Boxes\nDIY Party Boxes\nReturn Gifts"
+    },
+
+
+    {
+      "type": "header",
+      "content": "The Creste Promise"
+    },
+
+    {
+      "type": "text",
+      "id": "promise_eyebrow",
+      "label": "Eyebrow",
+      "default": "THE CRESTE PROMISE"
+    },
+
+
+    {
+      "type": "header",
       "content": "YouTube Video"
     },
 
@@ -995,7 +1556,14 @@
 
     {
       "type": "header",
-      "content": "Our Brand"
+      "content": "Our Story"
+    },
+
+    {
+      "type": "text",
+      "id": "brand_eyebrow",
+      "label": "Eyebrow",
+      "default": "OUR STORY"
     },
 
     {
@@ -1041,7 +1609,7 @@
     {
       "type": "range",
       "id": "founder_image_width",
-      "label": "Founder image width",
+      "label": "Founder image width (legacy, unused)",
       "min": 200,
       "max": 600,
       "step": 10,
@@ -1052,7 +1620,7 @@
     {
       "type": "range",
       "id": "founder_image_radius",
-      "label": "Founder image corner radius",
+      "label": "Founder image corner radius (legacy, unused)",
       "min": 0,
       "max": 50,
       "step": 2,
@@ -1195,7 +1763,7 @@
     {
       "type": "range",
       "id": "founder_max_width",
-      "label": "Founder section width",
+      "label": "Founder section width (legacy, unused)",
       "min": 600,
       "max": 1200,
       "step": 50,
@@ -1205,9 +1773,42 @@
 
   ],
 
+  "blocks": [
+    {
+      "type": "promise_item",
+      "name": "Promise Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+
   "presets": [
     {
-      "name": "About Us"
+      "name": "About Us",
+      "blocks": [
+        {
+          "type": "promise_item"
+        },
+        {
+          "type": "promise_item"
+        },
+        {
+          "type": "promise_item"
+        },
+        {
+          "type": "promise_item"
+        }
+      ]
     }
   ]
 
