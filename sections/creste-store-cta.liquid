@@ -1,0 +1,67 @@
+<section id="store-cta-{{ section.id }}" class="store-cta">
+  <div class="store-cta__inner">
+    <div class="store-cta__text">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="store-cta__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="store-cta__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank -%}
+      <div class="store-cta__actions">
+        {%- if section.settings.primary_label != blank -%}
+          <a href="{{ section.settings.primary_link | default: 'https://api.whatsapp.com/send?phone=918081026320' }}" class="store-cta__btn store-cta__btn--primary" target="_blank" rel="noopener">{{ section.settings.primary_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.secondary_label != blank -%}
+          <a href="{{ section.settings.secondary_link | default: 'mailto:contact@crestekids.com' }}" class="store-cta__btn store-cta__btn--secondary">{{ section.settings.secondary_label }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #store-cta-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+  #store-cta-{{ section.id }} .store-cta__inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  #store-cta-{{ section.id }} .store-cta__text { max-width: 640px; }
+  #store-cta-{{ section.id }} .store-cta__heading { margin: 0; color: #fff; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.5px; }
+  #store-cta-{{ section.id }} .store-cta__subheading { margin: 10px 0 0; color: #d8d4ce; font-family: 'Poppins', sans-serif; font-size: 15px; line-height: 1.6; }
+  #store-cta-{{ section.id }} .store-cta__actions { flex: none; display: flex; align-items: center; gap: 12px; }
+  #store-cta-{{ section.id }} .store-cta__btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; border-radius: 999px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: transform 0.15s ease, opacity 0.15s ease; border: 1.5px solid transparent; }
+  #store-cta-{{ section.id }} .store-cta__btn:hover { transform: translateY(-1px); opacity: 0.92; }
+  #store-cta-{{ section.id }} .store-cta__btn--primary { background: #f4793a; color: #fff; }
+  #store-cta-{{ section.id }} .store-cta__btn--secondary { background: transparent; color: #fff; border-color: #55514b; }
+  @media screen and (max-width: 749px) {
+    #store-cta-{{ section.id }} .store-cta__inner { flex-direction: column; align-items: stretch; text-align: center; gap: 20px; }
+    #store-cta-{{ section.id }} .store-cta__text { max-width: none; }
+    #store-cta-{{ section.id }} .store-cta__actions { flex-direction: column; width: 100%; }
+    #store-cta-{{ section.id }} .store-cta__btn { width: 100%; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Store CTA",
+  "tag": "section",
+  "class": "section-store-cta",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Planning a visit or a bulk order?" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Reach our team for workshop bookings, return gifts and wholesale enquiries." },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Chat on WhatsApp" },
+    { "type": "url", "id": "primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Email us" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary button link" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#2C2A27" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "default": 56 }
+  ],
+  "presets": [
+    { "name": "Store CTA" }
+  ]
+}
+{% endschema %}
