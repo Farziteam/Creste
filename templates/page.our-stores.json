@@ -18,7 +18,11 @@
       },
       "block_order": ["stat-1", "stat-2", "stat-3"],
       "settings": {}
+    },
+    "store_flagship": {
+      "type": "creste-store-flagship",
+      "settings": {}
     }
   },
-  "order": ["store_hero"]
+  "order": ["store_hero", "store_flagship"]
 }
