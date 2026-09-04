@@ -15,29 +15,29 @@
         "promise-1": {
           "type": "promise_item",
           "settings": {
-            "title": "Quality Products",
-            "text": "Kid-safe, tested materials in every box — made to last and lovely to make."
+            "title": "Materials that hold up",
+            "text": "Kid-safe, tested materials in every DIY kit. Sturdy enough for real use, gentle enough for small\nhands."
           }
         },
         "promise-2": {
           "type": "promise_item",
           "settings": {
-            "title": "Unique Concepts",
-            "text": "Original kit ideas you won't find anywhere else, from story boxes to hand casting."
+            "title": "Nowhere else in India",
+            "text": "Original kit ideas you will not find anywhere else, from story boxes to hand casting."
           }
         },
         "promise-3": {
           "type": "promise_item",
           "settings": {
-            "title": "STEAM Focused",
-            "text": "Science, tech, art and craft woven together to build real, lasting skills."
+            "title": "Learning that never feels like one",
+            "text": "Science, technology, art and craft taught through doing, so concepts stay for life, not until the\nnext exam."
           }
         },
         "promise-4": {
           "type": "promise_item",
           "settings": {
-            "title": "Screen-Free Play",
-            "text": "Hands-on making that pulls kids away from screens and into their imagination."
+            "title": "Better than scrolling",
+            "text": "Hands-on making that gives kids something real to do, and something real to keep after."
           }
         }
       },
