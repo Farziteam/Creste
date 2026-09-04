@@ -9,6 +9,9 @@
           {%- if block.type == 'location' -%}
             <div class="store-locations__card" {{ block.shopify_attributes }}>
               <div class="store-locations__photo store-locations__photo--{{ block.settings.color }}">
+                {%- if block.settings.image != blank -%}
+        {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: block.settings.name }}
+      {%- endif -%}
                 <span class="store-locations__photo-circle" aria-hidden="true"></span>
                 {%- if block.settings.status_label != blank -%}
                   <span class="store-locations__badge store-locations__badge--{{ block.settings.color }}">{{ block.settings.status_label }}</span>
@@ -22,7 +25,7 @@
                   <p class="store-locations__text">{{ block.settings.body_text }}</p>
                 {%- endif -%}
                 {%- if block.settings.link_label != blank -%}
-                  <a href="{{ block.settings.link_url | default: '#' }}" class="store-locations__link">{{ block.settings.link_label }} <span aria-hidden="true">→</span></a>
+                  <a href="{{ block.settings.link_url | default: '#' }}" class="store-locations__link" style="color: {{ block.settings.color }}">{{ block.settings.link_label }} <span aria-hidden="true">→</span></a>
                 {%- endif -%}
               </div>
             </div>
@@ -42,7 +45,7 @@
   #store-locations-{{ section.id }} .store-locations__heading { margin: 0 0 32px; color: #2c2a27; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.5px; }
   #store-locations-{{ section.id }} .store-locations__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   #store-locations-{{ section.id }} .store-locations__card { background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 24px rgba(44, 42, 39, 0.05); }
-  #store-locations-{{ section.id }} .store-locations__photo { position: relative; height: 96px; overflow: hidden; }
+  #store-locations-{{ section.id }} .store-locations__photo { position: relative; height: 160px; overflow: hidden; }
   #store-locations-{{ section.id }} .store-locations__photo-circle { position: absolute; right: -18px; bottom: -30px; width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.35); }
   #store-locations-{{ section.id }} .store-locations__photo--teal { background: #e3f4f8; }
   #store-locations-{{ section.id }} .store-locations__photo--purple { background: #ece6f8; }
@@ -77,6 +80,7 @@
   "blocks": [
     { "type": "location", "name": "Location", "settings": [
         { "type": "text", "id": "name", "label": "Store name", "default": "City name" },
+        { "type": "image_picker", "id": "image", "label": "Location image" },
         { "type": "select", "id": "color", "label": "Accent color", "options": [
             { "value": "teal", "label": "Teal" }, { "value": "purple", "label": "Purple" }, { "value": "pink", "label": "Pink" }
           ], "default": "teal" },
