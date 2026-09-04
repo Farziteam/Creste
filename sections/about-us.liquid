@@ -242,6 +242,7 @@
                 <div class="about-us__promise-icon {{ icon_class }}">
                   <span class="about-us__promise-icon-glyph"></span>
                 </div>
+                <div class="mobile-wrap">
                 {% if block.settings.title != blank %}
                   <p class="about-us__promise-title">
                     {{ block.settings.title }}
@@ -252,6 +253,7 @@
                     {{ block.settings.text }}
                   </p>
                 {% endif %}
+              </div>
               </div>
               {% assign icon_counter = icon_counter | plus: 1 %}
             {% endif %}
@@ -398,7 +400,9 @@
 
 
 <style>
-
+  .about-us-section{
+    margin-top: 65px;
+  }
   #about-us-{{ section.id }} {
     --about-bg: {{ section.settings.background_color }};
     --about-text: {{ section.settings.text_color }};
@@ -436,7 +440,7 @@
     margin: 0;
 
     font-family: 'Quicksand', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -567,8 +571,10 @@
 
     display: block;
 
-    width: min(46%, 500px);
-    height: auto;
+    width: 100%;
+    min-height:440px;
+
+    {% comment %} height: auto; {% endcomment %}
 
     border-radius: 14px;
 
@@ -783,7 +789,7 @@
   }
 
   #about-us-{{ section.id }} .about-us__pill {
-    padding: 11px 20px;
+    padding: 10px 20px;
 
     border-radius: 24px;
 
@@ -817,7 +823,7 @@
      ========================================== */
 
   #about-us-{{ section.id }} .about-us__promise {
-    padding: 56px 20px 64px;
+    padding: 56px 20px 45px;
 
     background: #f7f4ef;
   }
@@ -849,6 +855,8 @@
 
     max-width: {{ section.settings.content_width }}px;
     margin: 32px auto 0;
+    background: white;
+    padding: 20px 10px 20px 10px;
   }
 
   #about-us-{{ section.id }} .about-us__promise-card {
@@ -931,7 +939,7 @@
      ========================================== */
 
   #about-us-{{ section.id }} .about-us__story-wrapper {
-    padding: 56px 20px 64px;
+    padding: 22px 20px 64px;
 
     background: #f7f4ef;
   }
@@ -942,10 +950,11 @@
     align-items: flex-start;
     gap: 16px;
 
-    max-width: 760px;
+    max-width: 1000px;
     margin: 0 auto;
 
     background: #fff;
+    padding: 41px;
   }
 
   #about-us-{{ section.id }} .about-us__story-heading {
@@ -1158,7 +1167,7 @@
     }
 
     #about-us-{{ section.id }} .about-us__photo-image {
-      width: 68%;
+      width: 100%;
     }
 
     #about-us-{{ section.id }} .about-us__photo-badge {
@@ -1203,8 +1212,63 @@
     #about-us-{{ section.id }} .about-us__modal-close {
       top: -42px;
     }
+    #about-us-{{ section.id }} .about-us__story-text {
+      font-size:14px;
+    }
+    #about-us-{{ section.id }} .about-us__story{
+        padding: 22px 6px 20px 19px;
+    }
+    #about-us-{{ section.id }} .about-us__promise-card {
+      gap: 13px;
+     padding: 9px 14px;
+    }
+    #about-us-{{ section.id }} .about-us__promise-title{
+      font-size:15px
+    }
+     #about-us-{{ section.id }} .about-us__promise-text{
+      font-size:13px
+    }
+    #about-us-{{ section.id }} .about-us__promise-grid{
+        gap: 12px;
+        margin: 14px auto 0;
+        background: white;
+        padding: 20px 10px 10px;
 
+    }
+    #about-us-{{ section.id }} .about-us__promise {
+      padding: 35px 20px 0px;
+    }
+     #about-us-{{ section.id }}  .about-us__story-wrapper{
+       padding: 25px 20px 64px;
+    }
+     #about-us-{{ section.id }} .about-us__intro{
+      margin: 38px auto 0;
+    }
+   #about-us-{{ section.id }} .about-us__categories{
+        padding: 27px 8px;
+    }
+   #about-us-{{ section.id }} .about-us__hero-subheading {
+        font-size: 14px;
+    }
+   #about-us-{{ section.id }} .about-us__photo-badge{
+      padding: 7px 12px 7px 12px;
+    }
+    #about-us-{{ section.id }} .about-us__pills{
+      gap:7px;
+    }
+   #about-us-{{ section.id }} .about-us__promise-card {
+      flex-direction: row;
+    }
+    #about-us-{{ section.id }} .about-us__promise-icon {
+        width: 88px;
+        height: 43px;
+    }
+    #about-us-{{ section.id }} .about-us__promise-icon-glyph {
+      width: 15px;
+      height: 15px;
+    }
   }
+
 
 </style>
 
