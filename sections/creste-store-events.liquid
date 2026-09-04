@@ -1,0 +1,109 @@
+<section id="store-events-{{ section.id }}" class="store-events">
+  <div class="store-events__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="store-events__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="store-events__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="store-events__list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'event' -%}
+            <div class="store-events__card" {{ block.shopify_attributes }}>
+              <div class="store-events__date store-events__date--{{ block.settings.color }}">
+                <span class="store-events__date-day">{{ block.settings.date_day }}</span>
+                <span class="store-events__date-month">{{ block.settings.date_month }}</span>
+              </div>
+              <div class="store-events__info">
+                {%- if block.settings.title != blank -%}
+                  <p class="store-events__title">{{ block.settings.title }}</p>
+                {%- endif -%}
+                {%- if block.settings.meta != blank -%}
+                  <p class="store-events__meta">{{ block.settings.meta }}</p>
+                {%- endif -%}
+                {%- if block.settings.badge_label != blank -%}
+                  <span class="store-events__badge store-events__badge--{{ block.settings.color }}">{{ block.settings.badge_label }}</span>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.button_label != blank -%}
+                <a href="{{ block.settings.button_link | default: '#' }}" class="store-events__btn">{{ block.settings.button_label }}</a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #store-events-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+  #store-events-{{ section.id }} .store-events__inner { max-width: 600px; margin: 0 auto; padding: 0 20px; text-align: center; }
+  #store-events-{{ section.id }} .store-events__eyebrow { margin: 0; font-family: 'Quicksand', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #f4793a; }
+  #store-events-{{ section.id }} .store-events__heading { margin: 8px 0 24px; color: #2c2a27; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: clamp(22px, 6vw, 28px); letter-spacing: -0.5px; }
+  #store-events-{{ section.id }} .store-events__list { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+  #store-events-{{ section.id }} .store-events__card { display: flex; align-items: center; gap: 14px; padding: 14px; background: #fff; border-radius: 14px; box-shadow: 0 6px 18px rgba(44, 42, 39, 0.06); }
+  #store-events-{{ section.id }} .store-events__date { flex: none; width: 54px; height: 54px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  #store-events-{{ section.id }} .store-events__date-day { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 18px; line-height: 1.1; }
+  #store-events-{{ section.id }} .store-events__date-month { font-family: 'Poppins', sans-serif; font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  #store-events-{{ section.id }} .store-events__date--orange { background: #fdeada; color: #f4793a; }
+  #store-events-{{ section.id }} .store-events__date--blue { background: #dcedf3; color: #3aaccc; }
+  #store-events-{{ section.id }} .store-events__date--green { background: #dfeee2; color: #3f8a56; }
+  #store-events-{{ section.id }} .store-events__date--purple { background: #e7dff5; color: #9b7fd4; }
+  #store-events-{{ section.id }} .store-events__info { flex: 1 1 auto; min-width: 0; }
+  #store-events-{{ section.id }} .store-events__title { margin: 0; color: #2c2a27; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15.5px; }
+  #store-events-{{ section.id }} .store-events__meta { margin: 2px 0 6px; color: #9c968d; font-family: 'Poppins', sans-serif; font-size: 12.5px; }
+  #store-events-{{ section.id }} .store-events__badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; }
+  #store-events-{{ section.id }} .store-events__badge--orange { background: #fdeada; color: #f4793a; }
+  #store-events-{{ section.id }} .store-events__badge--blue { background: #dcedf3; color: #3aaccc; }
+  #store-events-{{ section.id }} .store-events__badge--green { background: #dfeee2; color: #3f8a56; }
+  #store-events-{{ section.id }} .store-events__badge--purple { background: #e7dff5; color: #9b7fd4; }
+  #store-events-{{ section.id }} .store-events__btn { flex: none; padding: 9px 16px; border-radius: 999px; background: #2c2a27; color: #fff; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; }
+  #store-events-{{ section.id }} .store-events__btn:hover { opacity: 0.88; }
+  @media screen and (min-width: 750px) {
+    #store-events-{{ section.id }} { display: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Store Events",
+  "tag": "section",
+  "class": "section-store-events",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Workshops & events" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What's on this month" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#F7F4EF" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "default": 48 },
+    { "type": "paragraph", "content": "This section is hidden on desktop to match the desktop layout, which shows the Studio Gallery instead." }
+  ],
+  "blocks": [
+    { "type": "event", "name": "Event", "settings": [
+        { "type": "text", "id": "date_day", "label": "Date (day)", "default": "14" },
+        { "type": "text", "id": "date_month", "label": "Date (month)", "default": "JUN" },
+        { "type": "select", "id": "color", "label": "Accent color", "options": [
+            { "value": "orange", "label": "Orange" }, { "value": "blue", "label": "Blue" }, { "value": "green", "label": "Green" }, { "value": "purple", "label": "Purple" }
+          ], "default": "orange" },
+        { "type": "text", "id": "title", "label": "Event title", "default": "Workshop name" },
+        { "type": "text", "id": "meta", "label": "Time / age line", "default": "11:00 AM · Age 8+" },
+        { "type": "text", "id": "badge_label", "label": "Availability badge", "default": "6 spots left" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Book" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ] }
+  ],
+  "presets": [
+    { "name": "Store Events", "blocks": [
+        { "type": "event", "settings": { "date_day": "14", "date_month": "JUN", "color": "orange", "title": "Candle Making Workshop", "meta": "11:00 AM · Age 8+", "badge_label": "6 spots left" } },
+        { "type": "event", "settings": { "date_day": "15", "date_month": "JUN", "color": "blue", "title": "Slime Lab", "meta": "4:00 PM · Age 5+", "badge_label": "Few spots" } },
+        { "type": "event", "settings": { "date_day": "21", "date_month": "JUN", "color": "green", "title": "Story Box Saturday", "meta": "10:30 AM · Age 3-6", "badge_label": "Free entry" } },
+        { "type": "event", "settings": { "date_day": "22", "date_month": "JUN", "color": "purple", "title": "Terrazzo Tray Making", "meta": "3:00 PM · Age 12+", "badge_label": "4 spots left" } }
+      ] }
+  ]
+}
+{% endschema %}

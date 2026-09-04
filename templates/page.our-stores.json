@@ -22,7 +22,45 @@
     "store_flagship": {
       "type": "creste-store-flagship",
       "settings": {}
+    },
+    "store_locations": {
+      "type": "creste-store-locations",
+      "blocks": {
+        "loc-1": { "type": "location", "settings": { "name": "Kanpur", "color": "teal", "status_label": "Opening soon", "body_text": "[ Add store address ]", "link_label": "Notify me" } },
+        "loc-2": { "type": "location", "settings": { "name": "Varanasi", "color": "purple", "status_label": "Opening soon", "body_text": "[ Add store address ]", "link_label": "Notify me" } },
+        "loc-3": { "type": "location", "settings": { "name": "Your city?", "color": "pink", "status_label": "Suggest a city", "body_text": "Tell us where to open next", "link_label": "Notify me" } }
+      },
+      "block_order": ["loc-1", "loc-2", "loc-3"],
+      "settings": {}
+    },
+    "store_gallery": {
+      "type": "creste-store-gallery",
+      "blocks": {
+        "tile-1": { "type": "tile", "settings": { "label": "the craft table", "color": "peach" } },
+        "tile-2": { "type": "tile", "settings": { "label": "kit shelves", "color": "blue" } },
+        "tile-3": { "type": "tile", "settings": { "label": "workshop corner", "color": "green" } },
+        "tile-4": { "type": "tile", "settings": { "label": "story-time nook", "color": "purple" } },
+        "tile-5": { "type": "tile", "settings": { "label": "the paint bar", "color": "yellow" } },
+        "tile-6": { "type": "tile", "settings": { "label": "gifting counter", "color": "pink" } }
+      },
+      "block_order": ["tile-1", "tile-2", "tile-3", "tile-4", "tile-5", "tile-6"],
+      "settings": {}
+    },
+    "store_events": {
+      "type": "creste-store-events",
+      "blocks": {
+        "event-1": { "type": "event", "settings": { "date_day": "14", "date_month": "JUN", "color": "orange", "title": "Candle Making Workshop", "meta": "11:00 AM · Age 8+", "badge_label": "6 spots left" } },
+        "event-2": { "type": "event", "settings": { "date_day": "15", "date_month": "JUN", "color": "blue", "title": "Slime Lab", "meta": "4:00 PM · Age 5+", "badge_label": "Few spots" } },
+        "event-3": { "type": "event", "settings": { "date_day": "21", "date_month": "JUN", "color": "green", "title": "Story Box Saturday", "meta": "10:30 AM · Age 3-6", "badge_label": "Free entry" } },
+        "event-4": { "type": "event", "settings": { "date_day": "22", "date_month": "JUN", "color": "purple", "title": "Terrazzo Tray Making", "meta": "3:00 PM · Age 12+", "badge_label": "4 spots left" } }
+      },
+      "block_order": ["event-1", "event-2", "event-3", "event-4"],
+      "settings": {}
+    },
+    "store_cta": {
+      "type": "creste-store-cta",
+      "settings": {}
     }
   },
-  "order": ["store_hero", "store_flagship"]
+  "order": ["store_hero", "store_flagship", "store_locations", "store_gallery", "store_events", "store_cta"]
 }
