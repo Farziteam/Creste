@@ -242,6 +242,7 @@
                 <div class="about-us__promise-icon {{ icon_class }}">
                   <span class="about-us__promise-icon-glyph"></span>
                 </div>
+                <div class="mobile-wrap">
                 {% if block.settings.title != blank %}
                   <p class="about-us__promise-title">
                     {{ block.settings.title }}
@@ -252,6 +253,7 @@
                     {{ block.settings.text }}
                   </p>
                 {% endif %}
+              </div>
               </div>
               {% assign icon_counter = icon_counter | plus: 1 %}
             {% endif %}
@@ -821,7 +823,7 @@
      ========================================== */
 
   #about-us-{{ section.id }} .about-us__promise {
-    padding: 56px 20px 59px;
+    padding: 56px 20px 45px;
 
     background: #f7f4ef;
   }
@@ -853,6 +855,8 @@
 
     max-width: {{ section.settings.content_width }}px;
     margin: 32px auto 0;
+    background: white;
+    padding: 20px 10px 20px 10px;
   }
 
   #about-us-{{ section.id }} .about-us__promise-card {
@@ -1163,7 +1167,7 @@
     }
 
     #about-us-{{ section.id }} .about-us__photo-image {
-      width: 68%;
+      width: 100%;
     }
 
     #about-us-{{ section.id }} .about-us__photo-badge {
@@ -1215,7 +1219,7 @@
         padding: 22px 6px 20px 19px;
     }
     #about-us-{{ section.id }} .about-us__promise-card {
-      gap: 5px;
+      gap: 13px;
      padding: 9px 14px;
     }
     #about-us-{{ section.id }} .about-us__promise-title{
@@ -1248,6 +1252,20 @@
     }
    #about-us-{{ section.id }} .about-us__photo-badge{
       padding: 7px 12px 7px 12px;
+    }
+    #about-us-{{ section.id }} .about-us__pills{
+      gap:7px;
+    }
+   #about-us-{{ section.id }} .about-us__promise-card {
+      flex-direction: row;
+    }
+    #about-us-{{ section.id }} .about-us__promise-icon {
+        width: 88px;
+        height: 43px;
+    }
+    #about-us-{{ section.id }} .about-us__promise-icon-glyph {
+      width: 15px;
+      height: 15px;
     }
   }
 
