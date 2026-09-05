@@ -12,55 +12,272 @@
     "store_hero": {
       "type": "creste-store-hero",
       "blocks": {
-        "stat-1": { "type": "stat", "settings": { "value": "3", "label": "stores & counting", "color": "orange" } },
-        "stat-2": { "type": "stat", "settings": { "value": "Weekly", "label": "hands-on workshops", "color": "teal" } },
-        "stat-3": { "type": "stat", "settings": { "value": "1000+", "label": "little makers hosted", "color": "purple" } }
+        "stat-1": {
+          "type": "stat",
+          "settings": {
+            "value": "3",
+            "label": "stores & counting",
+            "color": "orange"
+          }
+        },
+        "stat-2": {
+          "type": "stat",
+          "settings": {
+            "value": "Weekly",
+            "label": "hands-on workshops",
+            "color": "teal"
+          }
+        },
+        "stat-3": {
+          "type": "stat",
+          "settings": {
+            "value": "1000+",
+            "label": "little makers hosted",
+            "color": "purple"
+          }
+        }
       },
-      "block_order": ["stat-1", "stat-2", "stat-3"],
-      "settings": {}
+      "block_order": [
+        "stat-1",
+        "stat-2",
+        "stat-3"
+      ],
+      "custom_css": [
+        "{margin-top: 65px;}"
+      ],
+      "settings": {
+        "eyebrow": "Visit us",
+        "heading": "Come make with us in store",
+        "subheading": "<p>Browse kits, join a hands-on workshop, or plan return gifts and bulk orders with our team. Drop by — the kettle's on and the craft table's ready.</p>",
+        "primary_label": "Find a store near you",
+        "primary_link": "",
+        "secondary_label": "Book a workshop",
+        "secondary_link": "",
+        "background_color": "#f7f4ef",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
     },
     "store_flagship": {
       "type": "creste-store-flagship",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Our flagship store",
+        "heading": "Creste Studio — Lucknow",
+        "photo_placeholder": "Store photo / map coming soon",
+        "status_label": "Open now · closes 7:00 PM",
+        "status_color": "open",
+        "address": "Flat no.1, 1st Floor, 3 Gokhle Marg, Near Red Hill School, Lucknow — 226001, Uttar Pradesh",
+        "hours": "Mon – Sat · 10:00 AM – 7:00 PM",
+        "phone": "+91 80810 26320",
+        "directions_link": "",
+        "background_color": "#f7f4ef",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     },
     "store_locations": {
       "type": "creste-store-locations",
       "blocks": {
-        "loc-1": { "type": "location", "settings": { "name": "Kanpur", "color": "teal", "status_label": "Opening soon", "body_text": "[ Add store address ]", "link_label": "Notify me" } },
-        "loc-2": { "type": "location", "settings": { "name": "Varanasi", "color": "purple", "status_label": "Opening soon", "body_text": "[ Add store address ]", "link_label": "Notify me" } },
-        "loc-3": { "type": "location", "settings": { "name": "Your city?", "color": "pink", "status_label": "Suggest a city", "body_text": "Tell us where to open next", "link_label": "Notify me" } }
+        "loc-1": {
+          "type": "location",
+          "settings": {
+            "name": "Kanpur",
+            "color": "teal",
+            "status_label": "Opening soon",
+            "body_text": "[ Add store address ]",
+            "link_label": "Notify me",
+            "link_url": ""
+          }
+        },
+        "loc-2": {
+          "type": "location",
+          "settings": {
+            "name": "Varanasi",
+            "color": "purple",
+            "status_label": "Opening soon",
+            "body_text": "[ Add store address ]",
+            "link_label": "Notify me",
+            "link_url": ""
+          }
+        },
+        "loc-3": {
+          "type": "location",
+          "settings": {
+            "name": "Your city?",
+            "color": "pink",
+            "status_label": "Suggest a city",
+            "body_text": "Tell us where to open next",
+            "link_label": "Notify me",
+            "link_url": ""
+          }
+        }
       },
-      "block_order": ["loc-1", "loc-2", "loc-3"],
-      "settings": {}
+      "block_order": [
+        "loc-1",
+        "loc-2",
+        "loc-3"
+      ],
+      "settings": {
+        "heading": "More Creste stores",
+        "background_color": "#ffffff",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
     },
     "store_gallery": {
       "type": "creste-store-gallery",
       "blocks": {
-        "tile-1": { "type": "tile", "settings": { "label": "the craft table", "color": "peach" } },
-        "tile-2": { "type": "tile", "settings": { "label": "kit shelves", "color": "blue" } },
-        "tile-3": { "type": "tile", "settings": { "label": "workshop corner", "color": "green" } },
-        "tile-4": { "type": "tile", "settings": { "label": "story-time nook", "color": "purple" } },
-        "tile-5": { "type": "tile", "settings": { "label": "the paint bar", "color": "yellow" } },
-        "tile-6": { "type": "tile", "settings": { "label": "gifting counter", "color": "pink" } }
+        "tile-1": {
+          "type": "tile",
+          "settings": {
+            "label": "the craft table",
+            "color": "peach"
+          }
+        },
+        "tile-2": {
+          "type": "tile",
+          "settings": {
+            "label": "kit shelves",
+            "color": "blue"
+          }
+        },
+        "tile-3": {
+          "type": "tile",
+          "settings": {
+            "label": "workshop corner",
+            "color": "green"
+          }
+        },
+        "tile-4": {
+          "type": "tile",
+          "settings": {
+            "label": "story-time nook",
+            "color": "purple"
+          }
+        },
+        "tile-5": {
+          "type": "tile",
+          "settings": {
+            "label": "the paint bar",
+            "color": "yellow"
+          }
+        },
+        "tile-6": {
+          "type": "tile",
+          "settings": {
+            "label": "gifting counter",
+            "color": "pink"
+          }
+        }
       },
-      "block_order": ["tile-1", "tile-2", "tile-3", "tile-4", "tile-5", "tile-6"],
-      "settings": {}
+      "block_order": [
+        "tile-1",
+        "tile-2",
+        "tile-3",
+        "tile-4",
+        "tile-5",
+        "tile-6"
+      ],
+      "settings": {
+        "eyebrow": "Step inside",
+        "heading": "A peek inside our studio",
+        "subheading": "Bright craft tables, shelves of kits, and a workshop corner where the magic happens.",
+        "background_color": "#f7f4ef",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
     },
     "store_events": {
       "type": "creste-store-events",
       "blocks": {
-        "event-1": { "type": "event", "settings": { "date_day": "14", "date_month": "JUN", "color": "orange", "title": "Candle Making Workshop", "meta": "11:00 AM · Age 8+", "badge_label": "6 spots left" } },
-        "event-2": { "type": "event", "settings": { "date_day": "15", "date_month": "JUN", "color": "blue", "title": "Slime Lab", "meta": "4:00 PM · Age 5+", "badge_label": "Few spots" } },
-        "event-3": { "type": "event", "settings": { "date_day": "21", "date_month": "JUN", "color": "green", "title": "Story Box Saturday", "meta": "10:30 AM · Age 3-6", "badge_label": "Free entry" } },
-        "event-4": { "type": "event", "settings": { "date_day": "22", "date_month": "JUN", "color": "purple", "title": "Terrazzo Tray Making", "meta": "3:00 PM · Age 12+", "badge_label": "4 spots left" } }
+        "event-1": {
+          "type": "event",
+          "settings": {
+            "date_day": "14",
+            "date_month": "JUN",
+            "color": "orange",
+            "title": "Candle Making Workshop",
+            "meta": "11:00 AM · Age 8+",
+            "badge_label": "6 spots left",
+            "button_label": "Book",
+            "button_link": ""
+          }
+        },
+        "event-2": {
+          "type": "event",
+          "settings": {
+            "date_day": "15",
+            "date_month": "JUN",
+            "color": "blue",
+            "title": "Slime Lab",
+            "meta": "4:00 PM · Age 5+",
+            "badge_label": "Few spots",
+            "button_label": "Book",
+            "button_link": ""
+          }
+        },
+        "event-3": {
+          "type": "event",
+          "settings": {
+            "date_day": "21",
+            "date_month": "JUN",
+            "color": "green",
+            "title": "Story Box Saturday",
+            "meta": "10:30 AM · Age 3-6",
+            "badge_label": "Free entry",
+            "button_label": "Book",
+            "button_link": ""
+          }
+        },
+        "event-4": {
+          "type": "event",
+          "settings": {
+            "date_day": "22",
+            "date_month": "JUN",
+            "color": "purple",
+            "title": "Terrazzo Tray Making",
+            "meta": "3:00 PM · Age 12+",
+            "badge_label": "4 spots left",
+            "button_label": "Book",
+            "button_link": ""
+          }
+        }
       },
-      "block_order": ["event-1", "event-2", "event-3", "event-4"],
-      "settings": {}
+      "block_order": [
+        "event-1",
+        "event-2",
+        "event-3",
+        "event-4"
+      ],
+      "settings": {
+        "eyebrow": "Workshops & events",
+        "heading": "What's on this month",
+        "background_color": "#f7f4ef",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
     },
     "store_cta": {
       "type": "creste-store-cta",
-      "settings": {}
+      "settings": {
+        "heading": "Planning a visit or a bulk order?",
+        "subheading": "Reach our team for workshop bookings, return gifts and wholesale enquiries.",
+        "primary_label": "Chat on WhatsApp",
+        "primary_link": "",
+        "secondary_label": "Email us",
+        "secondary_link": "",
+        "background_color": "#2c2a27",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
     }
   },
-  "order": ["store_hero", "store_flagship", "store_locations", "store_gallery", "store_events", "store_cta"]
+  "order": [
+    "store_hero",
+    "store_flagship",
+    "store_locations",
+    "store_gallery",
+    "store_events",
+    "store_cta"
+  ]
 }
