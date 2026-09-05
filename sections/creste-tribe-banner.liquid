@@ -1,0 +1,47 @@
+{{ 'https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600&family=Fredoka+One&family=Quicksand:wght@500;600;700&display=swap' | stylesheet_tag }}
+
+<section class="tribe-banner" id="tribe-banner-{{ section.id }}" aria-label="Creste tribe">
+  <div class="tribe-banner__track">
+    {% assign text = section.settings.text | default: 'What #CresteTribe Says?' %}
+    {% for i in (1..8) %}
+      <div class="tribe-banner__item">{{ text }} <span class="tribe-banner__heart">♥</span></div>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+#tribe-banner-{{ section.id }}{
+  --orange:#F4793A; --yellow:#F7CB45; --f-accent:'Fredoka One','Nunito',cursive;
+  background:var(--orange);transform:rotate(-1.9deg) scale(1.06);
+  margin-block:clamp(2.6rem,5vw,4.5rem);overflow:hidden;
+  box-shadow:0 18px 40px rgba(244,121,58,.26)
+}
+#tribe-banner-{{ section.id }} .tribe-banner__track{
+  display:flex;width:max-content;align-items:center;gap:2.6rem;
+  padding-block:clamp(.75rem,1.5vw,1.2rem);
+  animation:tribe-banner-slide-{{ section.id }} 26s linear infinite
+}
+#tribe-banner-{{ section.id }} .tribe-banner__track:hover{animation-play-state:paused}
+@keyframes tribe-banner-slide-{{ section.id }}{to{transform:translateX(-50%)}}
+#tribe-banner-{{ section.id }} .tribe-banner__item{
+  display:flex;align-items:center;gap:2.6rem;color:#fff;
+  font-family:var(--f-accent);font-weight:400;white-space:nowrap;
+  font-size:clamp(1.4rem,3.2vw,2.7rem)
+}
+#tribe-banner-{{ section.id }} .tribe-banner__heart{font-size:.82em;line-height:1;color:var(--yellow)}
+@media(max-width:640px){
+  #tribe-banner-{{ section.id }}{transform:rotate(-2.6deg) scale(1.1)}
+}
+</style>
+
+{% schema %}
+{
+  "name": "Tribe Banner",
+  "tag": "section",
+  "class": "section-tribe-banner",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Repeating text", "default": "What #CresteTribe Says?" }
+  ],
+  "presets": [{ "name": "Tribe Banner" }]
+}
+{% endschema %}
