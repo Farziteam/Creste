@@ -1,0 +1,77 @@
+{{ 'https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600&family=Fredoka+One&family=Quicksand:wght@500;600;700&display=swap' | stylesheet_tag }}
+
+<section class="tribe-ugc" id="tribe-ugc-{{ section.id }}" aria-label="{{ section.settings.aria_label | default: 'Our makers' }}">
+  <div class="tribe-ugc__marquee">
+    {% for i in (1..2) %}
+      {% for block in section.blocks %}
+        <div class="tribe-ugc__item" {% if i == 1 %}{{ block.shopify_attributes }}{% endif %}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 320 | image_tag: loading: 'lazy', widths: '160,220,320' }}
+          {% else %}
+            <div class="tribe-ugc__ph"></div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+#tribe-ugc-{{ section.id }}{
+  --cream-2:#FBF9F5; --white:#FFFFFF; --yellow:#F7CB45; --teal:#3AACCC; --pink:#E87BAC; --green:#5BAD6F; --purple:#9B7FD4;
+  background:var(--cream-2);padding-block:clamp(1.6rem,3vw,2.6rem);overflow:hidden;
+}
+#tribe-ugc-{{ section.id }} .tribe-ugc__marquee{display:flex;width:max-content;will-change:transform;
+  animation:tribe-ugc-slide-{{ section.id }} 46s linear infinite}
+#tribe-ugc-{{ section.id }} .tribe-ugc__marquee:hover{animation-play-state:paused}
+@keyframes tribe-ugc-slide-{{ section.id }}{to{transform:translateX(-50%)}}
+#tribe-ugc-{{ section.id }} .tribe-ugc__item{
+  flex:0 0 auto;width:clamp(108px,11vw,158px);aspect-ratio:1/1.02;
+  margin-inline:clamp(5px,.6vw,10px);border-radius:16px;overflow:hidden;
+  border:4px solid var(--white);box-shadow:0 6px 18px rgba(122,92,62,.12)
+}
+#tribe-ugc-{{ section.id }} .tribe-ugc__item img{width:100%;height:100%;object-fit:cover;display:block}
+#tribe-ugc-{{ section.id }} .tribe-ugc__ph{width:100%;height:100%;position:relative;overflow:hidden;
+  background:linear-gradient(140deg,var(--yellow),var(--cream-2) 45%,var(--pink))}
+#tribe-ugc-{{ section.id }} .tribe-ugc__ph::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 25% 12%,rgba(255,255,255,.6),transparent 62%)}
+#tribe-ugc-{{ section.id }} .tribe-ugc__item:nth-child(3n){transform:translateY(-9px) rotate(-1.8deg);border-color:var(--yellow)}
+#tribe-ugc-{{ section.id }} .tribe-ugc__item:nth-child(3n+1){transform:translateY(6px) rotate(1.3deg);border-color:var(--teal)}
+#tribe-ugc-{{ section.id }} .tribe-ugc__item:nth-child(4n){transform:translateY(-3px) rotate(2.2deg);border-color:var(--pink)}
+#tribe-ugc-{{ section.id }} .tribe-ugc__item:nth-child(5n){transform:translateY(10px) rotate(-.9deg);border-color:var(--green)}
+#tribe-ugc-{{ section.id }} .tribe-ugc__item:nth-child(7n){border-color:var(--purple)}
+</style>
+
+{% schema %}
+{
+  "name": "Tribe UGC Marquee",
+  "tag": "section",
+  "class": "section-tribe-ugc",
+  "settings": [
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Accessible label",
+      "default": "Our makers"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tribe UGC Marquee"
+    }
+  ]
+}
+{% endschema %}
