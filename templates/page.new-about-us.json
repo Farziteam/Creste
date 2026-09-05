@@ -15,29 +15,33 @@
         "promise-1": {
           "type": "promise_item",
           "settings": {
-            "title": "Quality Products",
-            "text": "Kid-safe, tested materials in every box — made to last and lovely to make."
+            "image": "shopify://shop_images/icon_1_7482fddc-ac66-409b-bec5-6f61bcceacb5.png",
+            "title": "Materials that hold up",
+            "text": "Kid-safe, tested materials in every DIY kit. Sturdy enough for real use, gentle enough for small\nhands."
           }
         },
         "promise-2": {
           "type": "promise_item",
           "settings": {
-            "title": "Unique Concepts",
-            "text": "Original kit ideas you won't find anywhere else, from story boxes to hand casting."
+            "image": "shopify://shop_images/icon_2.png",
+            "title": "Nowhere else in India",
+            "text": "Original kit ideas you will not find anywhere else, from story boxes to hand casting."
           }
         },
         "promise-3": {
           "type": "promise_item",
           "settings": {
-            "title": "STEAM Focused",
-            "text": "Science, tech, art and craft woven together to build real, lasting skills."
+            "image": "shopify://shop_images/icon_-_3.png",
+            "title": "Learning that never feels like one",
+            "text": "Science, technology, art and craft taught through doing, so concepts stay for life, not until the\nnext exam."
           }
         },
         "promise-4": {
           "type": "promise_item",
           "settings": {
-            "title": "Screen-Free Play",
-            "text": "Hands-on making that pulls kids away from screens and into their imagination."
+            "image": "shopify://shop_images/icon_4.png",
+            "title": "Better than scrolling",
+            "text": "Hands-on making that gives kids something real to do, and something real to keep after."
           }
         }
       },
@@ -50,40 +54,49 @@
       "settings": {
         "hero_eyebrow": "ABOUT CRESTE",
         "hero_heading": "Creativity you can hold in your hands",
-        "hero_subheading": "Screen-free DIY kits and creative events that bring children and adults together to make, learn and play.",
-        "photo_image": "shopify://shop_images/banner124.jpg",
+        "hero_subheading": "India's leading screen-free DIY kits, hands-on workshops and creative events for children and\nadults.",
+        "photo_image": "shopify://shop_images/about_us_desktop.png",
         "photo_badge_text": "Hands-on workshops at our Lucknow studio",
+        "banner_image": "shopify://shop_images/about_us_mobile.jpg",
+        "banner_heading": "About Us",
+        "banner_height": 300,
+        "mobile_banner_height": 210,
+        "banner_heading_size": 38,
+        "mobile_banner_heading_size": 40,
+        "banner_text_alignment": "center",
+        "banner_heading_color": "#ffffff",
+        "banner_overlay_opacity": 30,
         "intro_heading": "",
-        "intro_text": "<p>At Creste, we believe creativity brings people together. Every kit is carefully curated with high-quality, kid-safe materials and clear step-by-step instructions — so whether you're four or forty, you can build something you're proud of. Beyond kits, we host workshops and events that turn making into a shared experience.</p>",
+        "intro_text": "<p>At Creste, the answer to too much screen time was never less screen time. It was something<br/>better to do instead. Every DIY kit arrives with high-quality, kid-safe materials and step-by-step<br/>instructions, so whether you are four or forty, you finish something you are proud of. Over<br/>100,000 people across India have made something with us, from classrooms and corporate<br/>offices to city art festivals and Lucknow's biggest Christmas carnival. Our work has been<br/>covered by Femina, Outlook Business and leading Indian newspapers.</p>",
         "intro_link_text": "",
         "intro_link_url": "",
-        "youtube_url": "",
-        "video_alt_text": "Watch our story",
-        "video_radius": 8,
         "categories_eyebrow": "WHAT WE MAKE",
         "categories_list": "Art Kits\nCraft Kits\nScience Kits\nStory Boxes\nDIY Party Boxes\nReturn Gifts",
         "promise_eyebrow": "THE CRESTE PROMISE",
-        "brand_eyebrow": "OUR STORY",
-        "brand_heading": "From screens back to little hands",
-        "brand_text": "<p>Most kids today learn to swipe before they learn to hold a crayon. That shift didn't sit right with our founder, Nidhi Sethia. During the 2020 lockdown, she watched screens take over playtime while the simple joy of making things by hand slipped away.</p><p>So she started small — a few screen-free DIY kits that gave children a fun way to explore, build and learn. What began as a handful of craft kits grew into Creste: a brand made to bring arts and crafts back into everyday life.</p><p>Today, every Creste kit is designed to feel exciting, never like a task — helping kids grow their curiosity, confidence and joy with their own two hands. We run Creste with one goal: to put real, hands-on creativity into every kit, workshop and experience.</p>",
+        "youtube_url": "",
+        "video_alt_text": "Watch our story",
+        "video_radius": 8,
+        "brand_eyebrow": "BRAND STORY",
+        "brand_heading": "How Creste became India's best DIY company",
+        "brand_text": "<p>Most kids today learn to swipe before they learn to hold a crayon. That shift didn't sit right with our founder, Nidhi Sethia. In the middle of the 2020 lockdown, she watched screens take over playtime while the joy of making things by hand quietly slipped away.</p><p><br/>So she started small, at her own dining table, with a few screen-free DIY projects for her children. Other parents asked if she could do the same for theirs. Word of mouth spread. That little experiment turned into Creste.</p><p><br/>Today Creste makes DIY activity kits for every age and runs hands-on workshops across India, and has become the best DIY company in India. And no, Creste doesn't call itself that. Parents, schools, malls and everyone who has had a Creste moment does. That is the only way a title like this means anything.</p>",
         "founder_image": "shopify://shop_images/Nidhi-Sethia.jpg",
         "founder_name": "Nidhi Sethia",
         "founder_designation": "Founder & Director, Creste",
-        "banner_image": "shopify://shop_images/banner124.jpg",
-        "banner_heading": "About Us",
-        "banner_height": 550,
-        "background_color": "#FFFFFF",
-        "text_color": "#6E6A64",
-        "heading_color": "#2C2A27",
-        "link_color": "#2C2A27",
-        "content_width": 1200,
-        "text_max_width": 900,
+        "founder_image_width": 400,
+        "founder_image_radius": 8,
+        "background_color": "#ffffff",
+        "text_color": "#6e6a64",
+        "heading_color": "#2c2a27",
+        "link_color": "#2c2a27",
+        "content_width": 1600,
+        "text_max_width": 1000,
         "section_spacing": 80,
         "content_alignment": "center",
         "heading_size": 40,
         "mobile_heading_size": 30,
         "body_size": 17,
-        "mobile_body_size": 15
+        "mobile_body_size": 15,
+        "founder_max_width": 900
       }
     }
   },

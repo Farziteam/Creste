@@ -235,18 +235,23 @@
           {% assign icon_classes = 'about-us__promise-icon--peach,about-us__promise-icon--blue,about-us__promise-icon--green,about-us__promise-icon--purple' | split: ',' %}
           {% assign icon_counter = 0 %}
           {% for block in section.blocks %}
-            {% if block.type == 'promise_item' %}
-              {% assign icon_mod = icon_counter | modulo: 4 %}
-              {% assign icon_class = icon_classes[icon_mod] %}
-              <div class="about-us__promise-card" {{ block.shopify_attributes }}>
-                <div class="about-us__promise-icon {{ icon_class }}">
-                  <span class="about-us__promise-icon-glyph"></span>
-                </div>
-                <div class="mobile-wrap">
-                {% if block.settings.title != blank %}
-                  <p class="about-us__promise-title">
-                    {{ block.settings.title }}
-                  </p>
+        {% if block.type == 'promise_item' %}
+  {% assign icon_mod = icon_counter | modulo: 4 %}
+  {% assign icon_class = icon_classes[icon_mod] %}
+  <div class="about-us__promise-card" {{ block.shopify_attributes }}>
+    <div class="about-us__promise-icon {{ icon_class }}">
+      {% if block.settings.image != blank %}
+        {{ block.settings.image | image_url: width: 100 | image_tag: class: 'about-us__promise-icon-image', alt: block.settings.title }}
+      {% else %}
+        <span class="about-us__promise-icon-glyph"></span>
+      {% endif %}
+    </div>
+    <div class="mobile-wrap">
+    {% if block.settings.title != blank %}
+      <p class="about-us__promise-title">
+        {{ block.settings.title }}
+      </p>
+
                 {% endif %}
                 {% if block.settings.text != blank %}
                   <p class="about-us__promise-text">
@@ -400,6 +405,12 @@
 
 
 <style>
+  .about-us__promise-icon-image {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+}
+
   .about-us-section{
     margin-top: 65px;
   }
@@ -573,7 +584,7 @@
 
     width: 100%;
     min-height:440px;
-
+    max-height:440px;
     {% comment %} height: auto; {% endcomment %}
 
     border-radius: 14px;
@@ -1164,6 +1175,7 @@
 
     #about-us-{{ section.id }} .about-us__photo {
       min-height: 320px;
+      max-height:320px;
     }
 
     #about-us-{{ section.id }} .about-us__photo-image {
@@ -1171,7 +1183,7 @@
     }
 
     #about-us-{{ section.id }} .about-us__photo-badge {
-      left: 16px;
+      left: 9px;
       bottom: 16px;
       padding: 7px 14px 7px 12px;
     }
@@ -1261,7 +1273,7 @@
     }
     #about-us-{{ section.id }} .about-us__promise-icon {
         width: 88px;
-        height: 43px;
+        {% comment %} height: 43px; {% endcomment %}
     }
     #about-us-{{ section.id }} .about-us__promise-icon-glyph {
       width: 15px;
@@ -1850,6 +1862,12 @@
       "type": "promise_item",
       "name": "Promise Item",
       "settings": [
+         {
+          "type": "image_picker",
+          "id": "image",
+          "label": "svg_icon"
+        },
+
         {
           "type": "text",
           "id": "title",

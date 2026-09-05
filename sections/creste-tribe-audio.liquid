@@ -1,0 +1,175 @@
+{{ 'https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600&family=Fredoka+One&family=Quicksand:wght@500;600;700&display=swap' | stylesheet_tag }}
+
+<section class="tribe-audio" id="tribe-audio-{{ section.id }}">
+  <div class="tribe-audio__wrap">
+    <p class="tribe-audio__eyebrow">{{ section.settings.eyebrow | default: 'In their own voice' }}</p>
+    <h2 class="tribe-audio__h2">{{ section.settings.heading | default: 'Great kits. Even better service.' }}</h2>
+    <p class="tribe-audio__sub">{{ section.settings.subheading | default: 'Short voice notes our support team was kind enough to be sent.' }}</p>
+    <div class="tribe-audio__grid">
+      {% assign colors = 'F4793A,3AACCC,5BAD6F,9B7FD4,E87BAC,F7CB45' | split: ',' %}
+      {% for block in section.blocks %}
+        {% if block.type == 'clip' %}
+          {% assign c_idx = forloop.index0 | modulo: 6 %}
+          {% assign c = colors[c_idx] %}
+          <article class="tribe-audio__card" style="--accent-c:#{{ c }}" {{ block.shopify_attributes }}>
+            <h3>{{ block.settings.title }}</h3>
+            <p class="tribe-audio__quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+            <div class="tribe-audio__bar">
+              <button class="tribe-audio__btn" type="button" aria-label="Play {{ block.settings.title }}">▶</button>
+              <div class="tribe-audio__wave">
+                {% for i in (1..26) %}<i style="height:{{ i | times: 7 | modulo: 62 | plus: 22 }}%;animation-delay:{{ i | times: 45 }}ms"></i>{% endfor %}
+              </div>
+              <span class="tribe-audio__time">0:00</span>
+            </div>
+            {% if block.settings.audio_file != blank %}
+              <audio class="tribe-audio__el" src="{{ block.settings.audio_file }}" preload="none"></audio>
+            {% endif %}
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+#tribe-audio-{{ section.id }}{
+  --cream:#F5F1EB; --cream-2:#FBF9F5; --white:#FFFFFF; --ink:#3B2D22; --body-soft:#96826C; --line:#E6DDD1; --orange:#F4793A;
+  --f-display:'Nunito','Trebuchet MS',sans-serif; --f-ui:'Quicksand','Nunito',sans-serif; --f-body:'Poppins','Helvetica Neue',sans-serif;
+  --maxw:1280px; --pad:clamp(1.1rem,4vw,3.5rem); --sec:clamp(3.5rem,7vw,6.5rem); --r-lg:30px;
+  --shadow:0 10px 30px rgba(122,92,62,.10);
+  background:var(--cream-2);padding-block:var(--sec);font-family:var(--f-body);
+}
+#tribe-audio-{{ section.id }} *{box-sizing:border-box}
+#tribe-audio-{{ section.id }} .tribe-audio__wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+#tribe-audio-{{ section.id }} .tribe-audio__eyebrow{
+  font-family:var(--f-ui);font-weight:700;font-size:.74rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--orange);margin:0 0 .7rem
+}
+#tribe-audio-{{ section.id }} .tribe-audio__h2{
+  font-family:var(--f-display);font-weight:800;line-height:1.12;margin:0;color:var(--ink);
+  font-size:clamp(1.85rem,3.7vw,3.1rem)
+}
+#tribe-audio-{{ section.id }} .tribe-audio__sub{color:var(--body-soft);margin:.7rem 0 0;max-width:58ch}
+#tribe-audio-{{ section.id }} .tribe-audio__grid{display:grid;gap:1.2rem;margin-top:2.4rem;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+#tribe-audio-{{ section.id }} .tribe-audio__card{
+  background:var(--white);border:2px solid var(--line);border-radius:var(--r-lg);
+  padding:clamp(1.4rem,2.4vw,2rem);text-align:center;transition:.25s ease
+}
+#tribe-audio-{{ section.id }} .tribe-audio__card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+#tribe-audio-{{ section.id }} .tribe-audio__card h3{
+  font-family:var(--f-display);font-weight:800;margin:0;color:var(--ink);font-size:clamp(1.15rem,1.9vw,1.5rem)
+}
+#tribe-audio-{{ section.id }} .tribe-audio__quote{color:var(--body-soft);margin:.55rem 0 1.4rem;font-size:.95rem}
+#tribe-audio-{{ section.id }} .tribe-audio__bar{
+  display:flex;align-items:center;gap:.9rem;background:var(--cream);
+  border-radius:999px;padding:.55rem .85rem
+}
+#tribe-audio-{{ section.id }} .tribe-audio__btn{
+  flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--accent-c,var(--orange));color:#fff;
+  display:grid;place-items:center;transition:.2s ease;font-size:.85rem
+}
+#tribe-audio-{{ section.id }} .tribe-audio__btn:hover{transform:scale(1.08);filter:brightness(.92)}
+#tribe-audio-{{ section.id }} .tribe-audio__wave{flex:1;display:flex;align-items:center;gap:3px;height:34px;overflow:hidden}
+#tribe-audio-{{ section.id }} .tribe-audio__wave i{
+  flex:1;min-width:2px;background:var(--line);border-radius:3px;
+  height:22%;transition:height .18s ease,background .18s ease
+}
+#tribe-audio-{{ section.id }} .tribe-audio__card.is-playing .tribe-audio__wave i{
+  animation:tribe-audio-bounce-{{ section.id }} 1s ease-in-out infinite;
+  background:var(--accent-c,var(--orange))}
+@keyframes tribe-audio-bounce-{{ section.id }}{0%,100%{height:20%}50%{height:92%}}
+#tribe-audio-{{ section.id }} .tribe-audio__time{flex:0 0 auto;font-family:var(--f-ui);font-weight:600;
+  font-variant-numeric:tabular-nums;font-size:.82rem;color:var(--body-soft)}
+</style>
+
+<script>
+(function(){
+  var root = document.getElementById('tribe-audio-{{ section.id }}');
+  if(!root) return;
+  var cards = root.querySelectorAll('.tribe-audio__card');
+  function fmt(s){ s = Math.floor(s); return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+  cards.forEach(function(card){
+    var btn = card.querySelector('.tribe-audio__btn');
+    var audio = card.querySelector('.tribe-audio__el');
+    var time = card.querySelector('.tribe-audio__time');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      if(!audio){ return; }
+      cards.forEach(function(c){
+        if(c !== card){
+          c.classList.remove('is-playing');
+          var a = c.querySelector('.tribe-audio__el'); if(a) a.pause();
+          var b = c.querySelector('.tribe-audio__btn'); if(b) b.textContent = '▶';
+        }
+      });
+      if(audio.paused){
+        audio.play().then(function(){ card.classList.add('is-playing'); btn.textContent = '❚❚'; }).catch(function(){ time.textContent = 'no file'; });
+      } else {
+        audio.pause(); card.classList.remove('is-playing'); btn.textContent = '▶';
+      }
+    });
+    if(audio){
+      audio.addEventListener('timeupdate', function(){ time.textContent = fmt(audio.currentTime); });
+      audio.addEventListener('ended', function(){ card.classList.remove('is-playing'); btn.textContent = '▶'; });
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Tribe Audio Reviews",
+  "tag": "section",
+  "class": "section-tribe-audio",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "In their own voice"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Great kits. Even better service."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Short voice notes our support team was kind enough to be sent."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "clip",
+      "name": "Audio clip",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "url",
+          "id": "audio_file",
+          "label": "Audio file URL (mp3)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tribe Audio Reviews"
+    }
+  ]
+}
+{% endschema %}
