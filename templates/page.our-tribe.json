@@ -9,93 +9,143 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "disabled": true,
+    "tribe_hero": {
+      "type": "creste-tribe-hero",
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
-      }
-    },
-    "rich_text_mEnaK6": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_aGQfRL": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
-          }
-        },
-        "text_ipPrNx": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
-          }
-        },
-        "button_mj7Wim": {
-          "type": "button",
-          "disabled": true,
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
+        "hashtag": "OurHappyTribe",
+        "heading": "Real Kids. Real Reviews.",
+        "note": "See why families love making with Creste.",
+        "cta_text": "Read the reviews",
+        "cta_link": "#tribe-reviews"
       },
-      "block_order": [
-        "heading_aGQfRL",
-        "text_ipPrNx",
-        "button_mj7Wim"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "1787720219aed19e35": {
-      "type": "apps",
       "blocks": {
-        "forms_inline_qpmtDW": {
-          "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
-          "settings": {
-            "form_id": "1126955",
-            "text_color": "#202020",
-            "button_background_color": "#202020",
-            "button_label_color": "#FFFFFF",
-            "links_color": "#1878B9",
-            "errors_color": "#E02229",
-            "text_alignment": "center",
-            "form_alignment": "center",
-            "padding_top": 29,
-            "padding_bottom": 24,
-            "padding_right": 0,
-            "padding_left": 0
-          }
-        }
+        "rc1": { "type": "review_card", "settings": { "quote": "My 6-year-old finished the whole kit in one sitting and asked for another. Everything was in the box.", "author": "Aanya R." } },
+        "rc2": { "type": "review_card", "settings": { "quote": "Finally a craft kit where the instructions actually make sense. Zero screen time for two hours!", "author": "Shreya Bharti" } },
+        "rc3": { "type": "review_card", "settings": { "quote": "Gifted the Paper Craft Adventure Kit at a birthday party. Three parents asked me where I got it.", "author": "Reeja Abidi" } },
+        "rc4": { "type": "review_card", "settings": { "quote": "Second order already. Delivered a day early and packed beautifully.", "author": "Sonali Fad" } }
       },
-      "block_order": [
-        "forms_inline_qpmtDW"
-      ],
-      "custom_css": [],
+      "block_order": ["rc1", "rc2", "rc3", "rc4"]
+    },
+    "tribe_ugc": {
+      "type": "creste-tribe-ugc",
+      "settings": { "aria_label": "Our makers" },
+      "blocks": {
+        "p1": { "type": "photo", "settings": {} },
+        "p2": { "type": "photo", "settings": {} },
+        "p3": { "type": "photo", "settings": {} },
+        "p4": { "type": "photo", "settings": {} },
+        "p5": { "type": "photo", "settings": {} },
+        "p6": { "type": "photo", "settings": {} },
+        "p7": { "type": "photo", "settings": {} },
+        "p8": { "type": "photo", "settings": {} },
+        "p9": { "type": "photo", "settings": {} },
+        "p10": { "type": "photo", "settings": {} },
+        "p11": { "type": "photo", "settings": {} },
+        "p12": { "type": "photo", "settings": {} }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12"]
+    },
+    "tribe_banner": {
+      "type": "creste-tribe-banner",
+      "settings": { "text": "What #CresteTribe Says?" }
+    },
+    "tribe_reviews": {
+      "type": "creste-tribe-reviews",
       "settings": {
-        "include_margins": true
-      }
+        "eyebrow": "Verified buyers",
+        "heading": "What the #CresteTribe says",
+        "subheading": "Every review below comes from a confirmed order. Scroll for more."
+      },
+      "blocks": {
+        "r1": { "type": "review", "settings": { "quote": "The Paper Craft Adventure Kit is too good. Everything you need is in the box and my daughter didn't need me once after the first step.", "author": "Vansh Arora", "rating": 5, "badge": "Verified purchase" } },
+        "r2": { "type": "review", "settings": { "quote": "With two kids at different ages, finding one activity they'll both sit through has always been a challenge — some kits are too fiddly, others too babyish. Creste hits the balance perfectly.", "author": "Mrinal Sharma", "rating": 5, "badge": "Verified purchase" } },
+        "r3": { "type": "review", "settings": { "quote": "It is my second purchase and I loved it. This time it was delivered a day before the expected date, so I'm very happy.", "author": "Harshita Sharma", "rating": 5, "badge": "Repeat customer" } },
+        "r4": { "type": "review", "settings": { "quote": "Bought it as a rainy-day backup and it turned into a full weekend project. The instruction booklet is genuinely well designed.", "author": "Neha Kulkarni", "rating": 5, "badge": "Verified purchase" } },
+        "r5": { "type": "review", "settings": { "quote": "Ordered for my nephew's 5th birthday. Sturdy pieces, no sharp edges, and nothing went missing in the post. He's already asked for the next one.", "author": "Aditya Menon", "rating": 4, "badge": "Gifted" } },
+        "r6": { "type": "review", "settings": { "quote": "Packaging is gorgeous but the contents are the real win — 24 pieces and every single one had a purpose. No filler.", "author": "Ritika Bansal", "rating": 5, "badge": "Verified purchase" } },
+        "r7": { "type": "review", "settings": { "quote": "Support answered my query in under an hour and helped me pick the right kit for a 4-year-old. Rare these days.", "author": "Sameer Qureshi", "rating": 5, "badge": "Support experience" } },
+        "r8": { "type": "review", "settings": { "quote": "Honestly did not expect much at this price. Six kits later, it's our default birthday gift for the whole class. Converted.", "author": "Prachi Deshmukh", "rating": 5, "badge": "Repeat customer" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8"]
+    },
+    "tribe_gram": {
+      "type": "creste-tribe-gram",
+      "settings": {
+        "eyebrow": "DMs & stories",
+        "heading": "Straight From The Gram",
+        "subheading": "Unedited, unpaid, straight out of our inbox."
+      },
+      "blocks": {
+        "g1": { "type": "story", "settings": {} },
+        "g2": { "type": "story", "settings": {} },
+        "g3": { "type": "story", "settings": {} },
+        "g4": { "type": "story", "settings": {} },
+        "g5": { "type": "story", "settings": {} },
+        "g6": { "type": "story", "settings": {} },
+        "g7": { "type": "story", "settings": {} },
+        "g8": { "type": "story", "settings": {} }
+      },
+      "block_order": ["g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8"]
+    },
+    "tribe_audio": {
+      "type": "creste-tribe-audio",
+      "settings": {
+        "eyebrow": "In their own voice",
+        "heading": "Great kits. Even better service.",
+        "subheading": "Short voice notes our support team was kind enough to be sent."
+      },
+      "blocks": {
+        "a1": { "type": "clip", "settings": { "title": "Trusted Support", "quote": "Hani made sure all my questions were answered, kindly." } },
+        "a2": { "type": "clip", "settings": { "title": "Fast Resolution", "quote": "Missing piece replaced the same day I called. No arguing." } },
+        "a3": { "type": "clip", "settings": { "title": "Real Guidance", "quote": "They talked me out of a kit that was too old for my son. Who does that?" } }
+      },
+      "block_order": ["a1", "a2", "a3"]
+    },
+    "tribe_press": {
+      "type": "creste-tribe-press",
+      "settings": { "eyebrow": "Press", "heading": "Creste In The News" },
+      "blocks": {
+        "pr1": { "type": "logo", "settings": { "name": "FORBES" } },
+        "pr2": { "type": "logo", "settings": { "name": "YourStory" } },
+        "pr3": { "type": "logo", "settings": { "name": "The Better India" } },
+        "pr4": { "type": "logo", "settings": { "name": "ET NOW" } },
+        "pr5": { "type": "logo", "settings": { "name": "Inc42" } },
+        "pr6": { "type": "logo", "settings": { "name": "Financial Express" } },
+        "pr7": { "type": "logo", "settings": { "name": "Josh Talks" } },
+        "pr8": { "type": "logo", "settings": { "name": "Mint" } },
+        "pr9": { "type": "logo", "settings": { "name": "Business Today" } }
+      },
+      "block_order": ["pr1", "pr2", "pr3", "pr4", "pr5", "pr6", "pr7", "pr8", "pr9"]
+    },
+    "tribe_journey": {
+      "type": "creste-tribe-journey",
+      "settings": { "eyebrow": "Milestones", "heading": "Our Journey" },
+      "blocks": {
+        "j1": { "type": "stat", "settings": { "number": 9000000, "suffix": "+", "decimals": "0", "label": "Happy Makers" } },
+        "j2": { "type": "stat", "settings": { "number": 10000, "suffix": "+", "decimals": "0", "label": "Reviews Collected" } },
+        "j3": { "type": "stat", "settings": { "number": 4.6, "suffix": "/5", "decimals": "1", "label": "Average Rating" } },
+        "j4": { "type": "stat", "settings": { "number": 120, "suffix": "+", "decimals": "0", "label": "Cities Shipped To" } }
+      },
+      "block_order": ["j1", "j2", "j3", "j4"]
+    },
+    "tribe_gang": {
+      "type": "creste-tribe-gang",
+      "settings": {
+        "eyebrow": "Community",
+        "heading": "Join The Gang",
+        "tagline": "Gifts. Giggle. Gang.",
+        "subheading": "Early drops, new kit launches and the occasional very good discount.",
+        "button_text": "Count me in",
+        "success_message": "You're in. Welcome to the gang ♥"
+      },
+      "blocks": {
+        "s1": { "type": "social", "settings": { "platform": "instagram", "name": "Instagram", "meta": "791K Followers" } },
+        "s2": { "type": "social", "settings": { "platform": "youtube", "name": "YouTube", "meta": "34K Subscribers" } },
+        "s3": { "type": "social", "settings": { "platform": "linkedin", "name": "LinkedIn", "meta": "58K Followers" } },
+        "s4": { "type": "social", "settings": { "platform": "whatsapp", "name": "WhatsApp", "meta": "Join the channel" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
     }
   },
-  "order": [
-    "main",
-    "rich_text_mEnaK6",
-    "1787720219aed19e35"
-  ]
+  "order": ["tribe_hero", "tribe_ugc", "tribe_banner", "tribe_reviews", "tribe_gram", "tribe_audio", "tribe_press", "tribe_journey", "tribe_gang"]
 }
