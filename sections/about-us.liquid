@@ -584,7 +584,7 @@
 
     width: 100%;
     min-height:440px;
-
+    max-height:440px;
     {% comment %} height: auto; {% endcomment %}
 
     border-radius: 14px;
@@ -1175,6 +1175,7 @@
 
     #about-us-{{ section.id }} .about-us__photo {
       min-height: 320px;
+      max-height:320px;
     }
 
     #about-us-{{ section.id }} .about-us__photo-image {
@@ -1182,7 +1183,7 @@
     }
 
     #about-us-{{ section.id }} .about-us__photo-badge {
-      left: 16px;
+      left: 9px;
       bottom: 16px;
       padding: 7px 14px 7px 12px;
     }
@@ -1272,7 +1273,7 @@
     }
     #about-us-{{ section.id }} .about-us__promise-icon {
         width: 88px;
-        height: 43px;
+        {% comment %} height: 43px; {% endcomment %}
     }
     #about-us-{{ section.id }} .about-us__promise-icon-glyph {
       width: 15px;
