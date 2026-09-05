@@ -63,6 +63,7 @@
       "settings": {
         "eyebrow": "Our flagship store",
         "heading": "Creste Studio — Lucknow",
+        "image": "shopify://shop_images/WhatsAppImage2026-07-10at12.28.01PM_1.jpg",
         "photo_placeholder": "Store photo / map coming soon",
         "status_label": "Open now · closes 7:00 PM",
         "status_color": "open",
@@ -130,6 +131,7 @@
         "tile-1": {
           "type": "tile",
           "settings": {
+            "image": "shopify://shop_images/about_us_desktop.png",
             "label": "the craft table",
             "color": "peach"
           }
@@ -144,6 +146,7 @@
         "tile-3": {
           "type": "tile",
           "settings": {
+            "image": "shopify://shop_images/banner124.jpg",
             "label": "workshop corner",
             "color": "green"
           }
@@ -151,6 +154,7 @@
         "tile-4": {
           "type": "tile",
           "settings": {
+            "image": "shopify://shop_images/finger-puppets_desktop_1440x480_25fc3686-1d18-45f5-aa00-1335b1c14962.png",
             "label": "story-time nook",
             "color": "purple"
           }
