@@ -18,7 +18,8 @@
       {% endfor %}
     </div>
 
-    {% form 'customer', id: 'tribe-gang-form-' | append: section.id, class: 'tribe-gang__form' %}
+    {% assign gang_form_id = 'tribe-gang-form-' | append: section.id %}
+    {% form 'customer', id: gang_form_id, class: 'tribe-gang__form' %}
       {% if form.posted_successfully? %}
         <p class="tribe-gang__msg tribe-gang__msg--ok">{{ section.settings.success_message | default: "You're in. Welcome to the gang ♥" }}</p>
       {% endif %}
