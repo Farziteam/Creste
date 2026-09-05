@@ -1,0 +1,188 @@
+{{ 'https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600&family=Fredoka+One&family=Quicksand:wght@500;600;700&display=swap' | stylesheet_tag }}
+
+<section class="tribe-gang" id="tribe-gang-{{ section.id }}">
+  <div class="tribe-gang__wrap">
+    <p class="tribe-gang__eyebrow">{{ section.settings.eyebrow | default: 'Community' }}</p>
+    <h2 class="tribe-gang__h2">{{ section.settings.heading | default: 'Join The Gang' }}</h2>
+    <p class="tribe-gang__tagline">{{ section.settings.tagline | default: 'Gifts. Giggle. Gang.' }}</p>
+    <p class="tribe-gang__sub">{{ section.settings.subheading | default: 'Early drops, new kit launches and the occasional very good discount.' }}</p>
+
+    <div class="tribe-gang__grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'social' %}
+          <a class="tribe-gang__social tribe-gang__social--{{ block.settings.platform }}" href="{{ block.settings.link | default: '#' }}" {% if block.settings.link != blank %}target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}>
+            <span class="tribe-gang__social-name">{{ block.settings.name }}</span>
+            <span class="tribe-gang__social-meta">{{ block.settings.meta }} →</span>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% form 'customer', id: 'tribe-gang-form-' | append: section.id, class: 'tribe-gang__form' %}
+      {% if form.posted_successfully? %}
+        <p class="tribe-gang__msg tribe-gang__msg--ok">{{ section.settings.success_message | default: "You're in. Welcome to the gang ♥" }}</p>
+      {% endif %}
+      {% if form.errors %}
+        <p class="tribe-gang__msg tribe-gang__msg--err">{{ form.errors.messages['email'] | default: "That email doesn't look right — mind checking?" }}</p>
+      {% endif %}
+      <input type="hidden" name="contact[tags]" value="newsletter,tribe-signup">
+      <input type="email" name="contact[email]" placeholder="you@email.com" aria-label="Email address" required>
+      <button type="submit">{{ section.settings.button_text | default: 'Count me in' }}</button>
+    {% endform %}
+  </div>
+</section>
+
+<style>
+#tribe-gang-{{ section.id }}{
+  --brown:#7A5C3E; --cream:#F5F1EB; --white:#FFFFFF; --yellow:#F7CB45; --orange:#F4793A;
+  --teal:#3AACCC; --teal-dk:#2B8FAC; --green:#5BAD6F; --pink:#E87BAC; --purple:#9B7FD4;
+  --f-display:'Nunito','Trebuchet MS',sans-serif; --f-ui:'Quicksand','Nunito',sans-serif; --f-accent:'Fredoka One','Nunito',cursive; --f-body:'Poppins','Helvetica Neue',sans-serif;
+  --maxw:1280px; --pad:clamp(1.1rem,4vw,3.5rem); --sec:clamp(3.5rem,7vw,6.5rem); --r-md:22px;
+  background:var(--brown);color:var(--cream);padding-block:var(--sec);font-family:var(--f-body);
+}
+#tribe-gang-{{ section.id }} *{box-sizing:border-box}
+#tribe-gang-{{ section.id }} .tribe-gang__wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+#tribe-gang-{{ section.id }} .tribe-gang__eyebrow{
+  font-family:var(--f-ui);font-weight:700;font-size:.74rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--yellow);margin:0 0 .7rem
+}
+#tribe-gang-{{ section.id }} .tribe-gang__h2{
+  font-family:var(--f-display);font-weight:800;line-height:1.12;margin:0;color:var(--white);
+  font-size:clamp(1.85rem,3.7vw,3.1rem)
+}
+#tribe-gang-{{ section.id }} .tribe-gang__tagline{font-family:var(--f-accent);color:var(--yellow);
+  font-size:clamp(1.3rem,2.6vw,2rem);margin:.4rem 0 0}
+#tribe-gang-{{ section.id }} .tribe-gang__sub{color:rgba(245,241,235,.75);margin:.7rem 0 0;max-width:58ch}
+#tribe-gang-{{ section.id }} .tribe-gang__grid{display:grid;gap:1rem;margin-top:2.4rem;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+#tribe-gang-{{ section.id }} .tribe-gang__social{
+  position:relative;border-radius:var(--r-md);overflow:hidden;min-height:200px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:1.3rem;color:#fff;transition:.28s ease;isolation:isolate;text-decoration:none
+}
+#tribe-gang-{{ section.id }} .tribe-gang__social::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:var(--bg);transition:.35s ease}
+#tribe-gang-{{ section.id }} .tribe-gang__social:hover{transform:translateY(-6px) rotate(-1.2deg)}
+#tribe-gang-{{ section.id }} .tribe-gang__social:hover::before{filter:brightness(1.1)}
+#tribe-gang-{{ section.id }} .tribe-gang__social-name{font-family:var(--f-display);font-weight:800;font-size:1.25rem}
+#tribe-gang-{{ section.id }} .tribe-gang__social-meta{font-family:var(--f-ui);font-weight:600;opacity:.92;font-size:.9rem}
+#tribe-gang-{{ section.id }} .tribe-gang__social--instagram{--bg:linear-gradient(150deg,var(--yellow),var(--pink) 55%,var(--purple))}
+#tribe-gang-{{ section.id }} .tribe-gang__social--youtube{--bg:linear-gradient(150deg,var(--orange),#C1441C)}
+#tribe-gang-{{ section.id }} .tribe-gang__social--linkedin{--bg:linear-gradient(150deg,var(--teal),var(--teal-dk))}
+#tribe-gang-{{ section.id }} .tribe-gang__social--whatsapp{--bg:linear-gradient(150deg,#7ED39B,var(--green))}
+#tribe-gang-{{ section.id }} .tribe-gang__form{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:2.4rem;max-width:540px}
+#tribe-gang-{{ section.id }} .tribe-gang__form input{
+  flex:1 1 240px;background:rgba(255,255,255,.10);border:2px solid rgba(245,241,235,.24);
+  color:#fff;border-radius:999px;padding:.9rem 1.4rem;font-family:var(--f-ui);
+  font-weight:600;outline:none;transition:.2s
+}
+#tribe-gang-{{ section.id }} .tribe-gang__form input::placeholder{color:rgba(245,241,235,.5)}
+#tribe-gang-{{ section.id }} .tribe-gang__form input:focus{border-color:var(--yellow);background:rgba(255,255,255,.16)}
+#tribe-gang-{{ section.id }} .tribe-gang__form button{
+  background:var(--orange);color:#fff;font-family:var(--f-ui);font-weight:700;
+  border-radius:999px;padding:.9rem 2rem;transition:.22s ease;border:0;cursor:pointer
+}
+#tribe-gang-{{ section.id }} .tribe-gang__form button:hover{background:var(--yellow);color:var(--brown)}
+#tribe-gang-{{ section.id }} .tribe-gang__msg{margin:0 0 .6rem;font-family:var(--f-ui);font-weight:600;
+  font-size:.85rem;width:100%}
+#tribe-gang-{{ section.id }} .tribe-gang__msg--ok{color:var(--yellow)}
+#tribe-gang-{{ section.id }} .tribe-gang__msg--err{color:#FFB3B3}
+</style>
+
+{% schema %}
+{
+  "name": "Tribe Join The Gang",
+  "tag": "section",
+  "class": "section-tribe-gang",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Community"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Join The Gang"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Gifts. Giggle. Gang."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Early drops, new kit launches and the occasional very good discount."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Count me in"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "You're in. Welcome to the gang \u2665"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "social",
+      "name": "Social card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "platform",
+          "label": "Platform",
+          "options": [
+            {
+              "value": "instagram",
+              "label": "Instagram"
+            },
+            {
+              "value": "youtube",
+              "label": "YouTube"
+            },
+            {
+              "value": "linkedin",
+              "label": "LinkedIn"
+            },
+            {
+              "value": "whatsapp",
+              "label": "WhatsApp"
+            }
+          ],
+          "default": "instagram"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Meta text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tribe Join The Gang"
+    }
+  ]
+}
+{% endschema %}
