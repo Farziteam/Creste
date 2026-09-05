@@ -1,0 +1,180 @@
+{{ 'https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600&family=Fredoka+One&family=Quicksand:wght@500;600;700&display=swap' | stylesheet_tag }}
+
+<header class="tribe-hero" id="tribe-hero-{{ section.id }}">
+  <div class="tribe-hero__media">
+    {% if section.settings.bg_video != blank %}
+      {{ section.settings.bg_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, image_size: '1920x' }}
+    {% elsif section.settings.bg_image != blank %}
+      {{ section.settings.bg_image | image_url: width: 1920 | image_tag: loading: 'eager', widths: '750,1100,1500,1920' }}
+    {% else %}
+      <svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs><linearGradient id="tribeheroG{{ section.id }}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#F5F1EB"/><stop offset="1" stop-color="#E9E0D4"/>
+        </linearGradient></defs>
+        <rect width="1920" height="1080" fill="url(#tribeheroG{{ section.id }})"/>
+        <circle cx="250" cy="200" r="150" fill="#F7CB45" opacity=".3"/>
+        <circle cx="1700" cy="300" r="190" fill="#3AACCC" opacity=".22"/>
+        <circle cx="1500" cy="900" r="220" fill="#E87BAC" opacity=".18"/>
+        <circle cx="360" cy="880" r="180" fill="#5BAD6F" opacity=".2"/>
+      </svg>
+    {% endif %}
+  </div>
+
+  <div class="tribe-hero__cards" aria-hidden="true">
+    {% assign colors = 'green,teal,purple,pink' | split: ',' %}
+    {% for block in section.blocks %}
+      {% if block.type == 'review_card' %}
+        {% assign idx = forloop.index0 | modulo: 4 | plus: 1 %}
+        <article class="tribe-hero__rcard tribe-hero__rc-{{ idx }}" {{ block.shopify_attributes }}>
+          <p>{{ block.settings.quote }}</p>
+          <div class="tribe-hero__rc-foot"><span>{{ block.settings.author }}</span><span class="tribe-hero__stars">{% for i in (1..5) %}★{% endfor %}</span></div>
+        </article>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="tribe-hero__inner">
+    <h1 class="tribe-hero__tag"><span class="tribe-hero__hash">#</span>{{ section.settings.hashtag | default: 'OurHappyTribe' }}</h1>
+    <p class="tribe-hero__line">{{ section.settings.heading | default: 'Real Kids. Real Reviews.' }}</p>
+    <p class="tribe-hero__note">{{ section.settings.note | default: 'See why families love making with Creste.' }}</p>
+    {% if section.settings.cta_text != blank %}
+      <a class="tribe-hero__cta" href="{{ section.settings.cta_link | default: '#tribe-reviews' }}">{{ section.settings.cta_text }} <span aria-hidden="true">→</span></a>
+    {% endif %}
+  </div>
+</header>
+
+<style>
+#tribe-hero-{{ section.id }}{
+  --orange:#F4793A; --green:#5BAD6F; --teal:#3AACCC; --brown:#7A5C3E;
+  --yellow:#F7CB45; --pink:#E87BAC; --purple:#9B7FD4; --cream:#F5F1EB;
+  --ink:#3B2D22; --body-soft:#96826C; --orange-dk:#DC6329;
+  --f-display:'Nunito','Trebuchet MS',sans-serif; --f-body:'Poppins','Helvetica Neue',sans-serif;
+  --f-accent:'Fredoka One','Nunito',cursive; --f-ui:'Quicksand','Nunito',sans-serif;
+  --fs-hero:clamp(2.5rem,6.2vw,5.2rem);
+  --pad:clamp(1.1rem,4vw,3.5rem);
+  position:relative;min-height:clamp(520px,88vh,860px);
+  display:grid;place-items:center;text-align:center;overflow:hidden;background:var(--cream);
+  font-family:var(--f-body);
+}
+#tribe-hero-{{ section.id }} *{box-sizing:border-box}
+#tribe-hero-{{ section.id }} .tribe-hero__media{position:absolute;inset:0;z-index:0}
+#tribe-hero-{{ section.id }} .tribe-hero__media img,
+#tribe-hero-{{ section.id }} .tribe-hero__media video,
+#tribe-hero-{{ section.id }} .tribe-hero__media svg{width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(.6) contrast(.95) brightness(1.08)}
+#tribe-hero-{{ section.id }} .tribe-hero__media::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(245,241,235,.68),rgba(245,241,235,.55) 45%,rgba(245,241,235,.84)),
+    radial-gradient(68% 55% at 50% 50%,rgba(255,255,255,.75),transparent 72%);
+  backdrop-filter:blur(2px) saturate(.7); -webkit-backdrop-filter:blur(2px) saturate(.7);
+}
+#tribe-hero-{{ section.id }} .tribe-hero__inner{position:relative;z-index:3;padding:var(--pad);max-width:920px}
+#tribe-hero-{{ section.id }} .tribe-hero__tag{
+  font-family:var(--f-accent);font-weight:400;font-size:var(--fs-hero);
+  line-height:1.02;margin:0;color:var(--orange)
+}
+#tribe-hero-{{ section.id }} .tribe-hero__hash{color:var(--teal)}
+#tribe-hero-{{ section.id }} .tribe-hero__line{
+  font-family:var(--f-display);font-weight:900;color:var(--ink);
+  font-size:clamp(1.1rem,2.3vw,1.75rem);margin:.9rem 0 0
+}
+#tribe-hero-{{ section.id }} .tribe-hero__note{font-family:var(--f-ui);font-weight:600;margin:.45rem 0 0;color:var(--body-soft)}
+#tribe-hero-{{ section.id }} .tribe-hero__cta{
+  margin-top:1.9rem;display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--f-ui);font-weight:700;background:var(--orange);color:#fff;
+  padding:.9rem 1.9rem;border-radius:999px;transition:.24s ease;text-decoration:none;
+  box-shadow:0 10px 24px rgba(244,121,58,.30)
+}
+#tribe-hero-{{ section.id }} .tribe-hero__cta:hover{background:var(--orange-dk);transform:translateY(-2px)}
+#tribe-hero-{{ section.id }} .tribe-hero__cards{position:absolute;inset:0;z-index:2;pointer-events:none}
+#tribe-hero-{{ section.id }} .tribe-hero__rcard{
+  position:absolute;background:var(--teal);color:#fff;
+  border-radius:14px;padding:1rem 1.15rem;width:min(320px,33vw);
+  box-shadow:0 14px 32px rgba(122,92,62,.14);opacity:.95
+}
+#tribe-hero-{{ section.id }} .tribe-hero__rcard p{margin:0 0 .7rem;font-size:.88rem;line-height:1.5}
+#tribe-hero-{{ section.id }} .tribe-hero__rc-foot{display:flex;justify-content:space-between;align-items:center;gap:.6rem;
+  border-top:1.5px solid rgba(255,255,255,.45);padding-top:.55rem;
+  font-family:var(--f-display);font-weight:800;font-size:.9rem}
+#tribe-hero-{{ section.id }} .tribe-hero__stars{color:var(--yellow);letter-spacing:2px;font-size:.95rem}
+#tribe-hero-{{ section.id }} .tribe-hero__rc-1{top:6%;left:-4%;transform:rotate(-3deg);background:var(--green)}
+#tribe-hero-{{ section.id }} .tribe-hero__rc-2{top:4%;right:2%;transform:rotate(2deg);background:var(--teal)}
+#tribe-hero-{{ section.id }} .tribe-hero__rc-3{bottom:10%;left:3%;transform:rotate(2.5deg);background:var(--purple)}
+#tribe-hero-{{ section.id }} .tribe-hero__rc-4{bottom:6%;right:-3%;transform:rotate(-2deg);background:var(--pink)}
+@media(max-width:900px){#tribe-hero-{{ section.id }} .tribe-hero__cards{display:none}}
+</style>
+
+{% schema %}
+{
+  "name": "Tribe Hero",
+  "tag": "section",
+  "class": "section-tribe-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hashtag",
+      "label": "Hashtag",
+      "default": "OurHappyTribe"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading line",
+      "default": "Real Kids. Real Reviews."
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note",
+      "default": "See why families love making with Creste."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Read the reviews"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (used if no video)"
+    },
+    {
+      "type": "video",
+      "id": "bg_video",
+      "label": "Background video (optional, overrides image)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review_card",
+      "name": "Floating review card",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "My 6-year-old finished the whole kit in one sitting and asked for another."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Aanya R."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tribe Hero"
+    }
+  ]
+}
+{% endschema %}
