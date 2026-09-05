@@ -15,6 +15,7 @@
         "promise-1": {
           "type": "promise_item",
           "settings": {
+            "image": "shopify://shop_images/icon_1_7482fddc-ac66-409b-bec5-6f61bcceacb5.png",
             "title": "Materials that hold up",
             "text": "Kid-safe, tested materials in every DIY kit. Sturdy enough for real use, gentle enough for small\nhands."
           }
@@ -22,6 +23,7 @@
         "promise-2": {
           "type": "promise_item",
           "settings": {
+            "image": "shopify://shop_images/icon_2.png",
             "title": "Nowhere else in India",
             "text": "Original kit ideas you will not find anywhere else, from story boxes to hand casting."
           }
@@ -29,6 +31,7 @@
         "promise-3": {
           "type": "promise_item",
           "settings": {
+            "image": "shopify://shop_images/icon_-_3.png",
             "title": "Learning that never feels like one",
             "text": "Science, technology, art and craft taught through doing, so concepts stay for life, not until the\nnext exam."
           }
@@ -36,6 +39,7 @@
         "promise-4": {
           "type": "promise_item",
           "settings": {
+            "image": "shopify://shop_images/icon_4.png",
             "title": "Better than scrolling",
             "text": "Hands-on making that gives kids something real to do, and something real to keep after."
           }
