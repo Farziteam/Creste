@@ -169,6 +169,7 @@
         "tile-6": {
           "type": "tile",
           "settings": {
+            "image": "shopify://shop_images/38e7b276-3621-41c5-9d63-f5ba4fca3f6c.png",
             "label": "gifting counter",
             "color": "pink"
           }
