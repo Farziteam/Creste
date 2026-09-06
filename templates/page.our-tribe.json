@@ -55,7 +55,8 @@
         "heading": "Real Kids. Real Reviews.",
         "note": "See why families love making with Creste.",
         "cta_text": "Read the reviews",
-        "cta_link": "#tribe-reviews"
+        "cta_link": "#tribe-reviews",
+        "bg_image": "shopify://shop_images/our_tribe_desktop.png"
       }
     },
     "tribe_ugc": {
@@ -231,35 +232,51 @@
       "blocks": {
         "g1": {
           "type": "story",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG_3644.png"
+          }
         },
         "g2": {
           "type": "story",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG_3647.png"
+          }
         },
         "g3": {
           "type": "story",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG_3661.png"
+          }
         },
         "g4": {
           "type": "story",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG_3650.png"
+          }
         },
         "g5": {
           "type": "story",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG_3651_bf614bd7-4b9f-4a1d-adc8-68ccbf443f74.png"
+          }
         },
         "g6": {
           "type": "story",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG_3651.png"
+          }
         },
         "g7": {
           "type": "story",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-09-01_at_20.19.32.jpg"
+          }
         },
         "g8": {
           "type": "story",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-09-01_at_20.19.31.jpg"
+          }
         }
       },
       "block_order": [
