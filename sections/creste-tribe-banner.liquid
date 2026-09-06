@@ -14,7 +14,9 @@
   --orange:#F4793A; --yellow:#F7CB45; --f-accent:'Fredoka One','Nunito',cursive;
   background:var(--orange);transform:rotate(-1.9deg) scale(1.06);
   margin-block:clamp(2.6rem,5vw,4.5rem);overflow:hidden;
-  box-shadow:0 18px 40px rgba(244,121,58,.26)
+  box-shadow:0 18px 40px rgba(244,121,58,.26);
+  max-width:1400px;
+  width:97%;
 }
 #tribe-banner-{{ section.id }} .tribe-banner__track{
   display:flex;width:max-content;align-items:center;gap:2.6rem;
@@ -30,7 +32,7 @@
 }
 #tribe-banner-{{ section.id }} .tribe-banner__heart{font-size:.82em;line-height:1;color:var(--yellow)}
 @media(max-width:640px){
-  #tribe-banner-{{ section.id }}{transform:rotate(-2.6deg) scale(1.1)}
+  #tribe-banner-{{ section.id }}{transform:rotate(-2.6deg) scale(1.1) ; width:95%}
 }
 </style>
 
