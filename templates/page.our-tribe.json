@@ -328,6 +328,7 @@
         "a2",
         "a3"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "In their own voice",
         "heading": "Great kits. Even better service.",
