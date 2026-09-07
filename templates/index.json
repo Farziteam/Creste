@@ -1028,6 +1028,17 @@
         "heading": "Parents Often Ask...",
         "subtitle": ""
       }
+    },
+    "creste_birthday_bqk3yn": {
+      "type": "creste-birthday",
+      "name": "Creste Birthday Banner",
+      "settings": {
+        "heading": "Birthday coming up?",
+        "text": "Return gifts from Rs. 375 · DIY Party Box Kits for the whole gang!",
+        "button_label": "EXPLORE NOW",
+        "button_url": "shopify://collections/gifts",
+        "bg_color": "#7C5CE0"
+      }
     }
   },
   "order": [
@@ -1045,6 +1056,7 @@
     "creste_favourites",
     "creste_buildbox",
     "creste_families",
-    "creste_faq"
+    "creste_faq",
+    "creste_birthday_bqk3yn"
   ]
 }
