@@ -256,24 +256,28 @@
       "blocks": {
         "g1": {
           "type": "story",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/IMG_3644.png"
           }
         },
         "g2": {
           "type": "story",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/IMG_3647.png"
           }
         },
         "g3": {
           "type": "story",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/IMG_3661.png"
           }
         },
         "g4": {
           "type": "story",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/IMG_3650.png"
           }
@@ -286,6 +290,7 @@
         },
         "g6": {
           "type": "story",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/IMG_3651.png"
           }
