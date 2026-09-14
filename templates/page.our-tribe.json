@@ -453,9 +453,9 @@
         "j2": {
           "type": "stat",
           "settings": {
-            "number": 0,
+            "number": 20000,
             "suffix": "+",
-            "decimals": "0",
+            "decimals": "",
             "label": "Reviews Collected"
           }
         },
