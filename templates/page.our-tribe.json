@@ -444,7 +444,7 @@
         "j1": {
           "type": "stat",
           "settings": {
-            "number": 9000000,
+            "number": 100000,
             "suffix": "+",
             "decimals": "0",
             "label": "Happy Makers"
@@ -453,7 +453,7 @@
         "j2": {
           "type": "stat",
           "settings": {
-            "number": 10000,
+            "number": 0,
             "suffix": "+",
             "decimals": "0",
             "label": "Reviews Collected"
@@ -462,7 +462,7 @@
         "j3": {
           "type": "stat",
           "settings": {
-            "number": 4.6,
+            "number": 4.9,
             "suffix": "/5",
             "decimals": "1",
             "label": "Average Rating"
