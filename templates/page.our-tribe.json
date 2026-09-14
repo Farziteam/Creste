@@ -64,51 +64,75 @@
       "blocks": {
         "p1": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0036.jpg"
+          }
         },
         "p2": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0035.jpg"
+          }
         },
         "p3": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0037.jpg"
+          }
         },
         "p4": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0039.jpg"
+          }
         },
         "p5": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0040.jpg"
+          }
         },
         "p6": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0041.jpg"
+          }
         },
         "p7": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0058.jpg"
+          }
         },
         "p8": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0059.jpg"
+          }
         },
         "p9": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0063.jpg"
+          }
         },
         "p10": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0065.jpg"
+          }
         },
         "p11": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260911-WA0066.jpg"
+          }
         },
         "p12": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/IMG-20260910-WA0034.jpg"
+          }
         }
       },
       "block_order": [
