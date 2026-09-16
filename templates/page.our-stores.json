@@ -118,6 +118,7 @@
         "loc-2",
         "loc-3"
       ],
+      "disabled": true,
       "settings": {
         "heading": "More Creste stores",
         "background_color": "#ffffff",
