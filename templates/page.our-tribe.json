@@ -296,6 +296,7 @@
         },
         "g5": {
           "type": "story",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-09-01_at_20.19.31_2.jpg"
           }
