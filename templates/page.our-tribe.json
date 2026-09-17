@@ -254,6 +254,18 @@
     "tribe_gram": {
       "type": "creste-tribe-gram",
       "blocks": {
+        "story_kY739X": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-09-01_at_20.19.31_2_13e4151c-0c48-45ee-a331-af62b7af3d78.jpg"
+          }
+        },
+        "story_nFFhtX": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-09-01_at_20.19.31_1_4afda0d2-ef82-4ba7-a0ce-868b98a2d216.jpg"
+          }
+        },
         "g1": {
           "type": "story",
           "disabled": true,
@@ -309,6 +321,8 @@
         }
       },
       "block_order": [
+        "story_kY739X",
+        "story_nFFhtX",
         "g1",
         "g2",
         "g3",
